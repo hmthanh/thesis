@@ -1,6 +1,7 @@
 # Knowledge Graph Embedding for Link Prediction: A Comparative Analysis
 Knowledge Graph Embedding for Link Prediction: A Comparative Analysis
-
+<h3>Kế hoạch làm luận văn</h3>
+https://calendar.google.com/calendar?cid=OWd0OXFkamkwMWxua2M5bmNsaGVvM3RodGdAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ
 Các mốc thời gian dự kiến làm luận văn
 
 * 21/08/2020 : Thông báo danh sách bảo vệ
@@ -11,6 +12,7 @@ Các mốc thời gian dự kiến làm luận văn
 * 15/10/2020 : Nộp khóa luận chính thức sau bảo vệ
 
 Các mốc thời gian theo mục tiêu cần hoàn thành :
+
 Bắt đầu :
 * 15/06 : Đọc hiểu bài báo và các báo cáo liên quan
 * 29/06 : Cài đặt được thuật toán
