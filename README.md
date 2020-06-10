@@ -8,7 +8,7 @@ Author github source : https://github.com/Accenture/AmpliGraph
 
 Hoàng Minh Thanh (hmthanhgm@gmail.com) - Phan Minh Tâm (phanminhtam247@gmail.com)
 
-Hàng tuần sẽ báo cáo lại ở đây : https://github.com/hmthanh/thesis/tree/master/notes
+Document hàng tuần ở đây : https://github.com/hmthanh/thesis/tree/master/notes
 
 # Kế hoạch làm luận văn
 
