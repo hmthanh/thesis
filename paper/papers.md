@@ -134,7 +134,7 @@ and search personalization. In NAACL-HLT (1), pages 2180–2189. Association for
 [45] M. Nickel, K. Murphy, V. Tresp, and E. Gabrilovich. A review of relational machine learning for knowledge graphs. Proceedings of the IEEE, 104(1):
 11–33, 2015.
 
-[46] M. Nickel, L. Rosasco, and T. A. Poggio. Holographic embeddings of knowledge graphs. In Proceedings of the irtieth AAAI Conference on Articial
+[46] M. Nickel, L. Rosasco, and T. A. Poggio. Holographic embeddings of knowledge graphs. In Proceedings of the irtieth AAAI Conference on Artificial
 Intelligence, February 12-17, 2016, Phoenix, Arizona, USA., pages 1955–1961, 2016. URL http://www.aaai.org/ocs/index.php/AAAI/AAAI16/paper/
 view/12484
 
