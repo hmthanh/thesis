@@ -1,0 +1,1 @@
+# Mỗi những ghi chú có công thức toán học sẽ được note bằng jupyter notebook:
