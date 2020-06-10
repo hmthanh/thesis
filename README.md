@@ -21,7 +21,7 @@ https://github.com/hmthanh/thesis/projects/1
 * 05-09/10/2020 : Thời gian bảo vệ khóa luận tốt nghiệp
 * 15/10/2020 : Nộp khóa luận chính thức sau bảo vệ
 
-## Các mốc thời gian theo mục tiêu cần hoàn thành :
+## Kế hoạch làm luận văn :
 
 * 15/06 : Bắt đầu đọc hiểu bài báo và các báo cáo liên quan
 * 29/06 : Bắt đầu cài đặt được thuật toán
