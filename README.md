@@ -14,8 +14,7 @@ https://calendar.google.com/calendar?cid=OWd0OXFkamkwMWxua2M5bmNsaGVvM3RodGdAZ3J
 
 ## Các mốc thời gian theo mục tiêu cần hoàn thành :
 
-Bắt đầu :
-* 15/06 : Đọc hiểu bài báo và các báo cáo liên quan
-* 29/06 : Cài đặt được thuật toán
-* 27/07 : Tìm cách cải thiện hoặc bổ sung
-* 17/08 : Tiến hành viết báo cáo
+* 15/06 : Bắt đầu đọc hiểu bài báo và các báo cáo liên quan
+* 29/06 : Bắt đầu cài đặt được thuật toán
+* 27/07 : Bắt đầu tìm cách cải thiện hoặc bổ sung
+* 17/08 : Bắt đầu tiến hành viết báo cáo
