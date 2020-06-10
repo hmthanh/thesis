@@ -15,7 +15,7 @@ Document hàng tuần ở đây : https://github.com/hmthanh/thesis/tree/master/
 * Lịch : 
 https://calendar.google.com/calendar?cid=OWd0OXFkamkwMWxua2M5bmNsaGVvM3RodGdAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ
 
-* Ghi chú tại :
+* Kế hoạch hoàn thành ở đây :
 https://github.com/hmthanh/thesis/projects/1
 
 ## Các mốc thời gian dự kiến làm luận văn của nhà trường
