@@ -1,8 +1,12 @@
-# Knowledge Graph Embedding for Link Prediction: A Comparative Analysis
+# Thesis : Knowledge Graph Embedding for Link Prediction: A Comparative Analysis
 Knowledge Graph Embedding for Link Prediction: A Comparative Analysis
-<h3>Kế hoạch làm luận văn</h3>
+https://arxiv.org/pdf/2002.00819.pdf
 
-* Lịch
+Hoàng Minh Thanh (hmthanhgm@gmail.com) - Phan Minh Tâm (phanminhtam247@gmail.com)
+
+# Kế hoạch làm luận văn
+
+* Lịch : 
 https://calendar.google.com/calendar?cid=OWd0OXFkamkwMWxua2M5bmNsaGVvM3RodGdAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ
 
 * Ghi chú tại :
@@ -23,3 +27,5 @@ https://github.com/hmthanh/thesis/projects/1
 * 29/06 : Bắt đầu cài đặt được thuật toán
 * 27/07 : Bắt đầu tìm cách cải thiện hoặc bổ sung
 * 17/08 : Bắt đầu tiến hành viết báo cáo
+
+## Mục tiêu cần đạt được
