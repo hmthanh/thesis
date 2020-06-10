@@ -1,7 +1,12 @@
 # Knowledge Graph Embedding for Link Prediction: A Comparative Analysis
 Knowledge Graph Embedding for Link Prediction: A Comparative Analysis
 <h3>Kế hoạch làm luận văn</h3>
+
+* Lịch
 https://calendar.google.com/calendar?cid=OWd0OXFkamkwMWxua2M5bmNsaGVvM3RodGdAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ
+
+* Ghi chú tại :
+https://github.com/hmthanh/thesis/projects/1
 
 ## Các mốc thời gian dự kiến làm luận văn của nhà trường
 
