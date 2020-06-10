@@ -10,3 +10,9 @@ Các mốc thời gian dự kiến làm luận văn
 * 05-09/10/2020 : Thời gian bảo vệ khóa luận tốt nghiệp
 * 15/10/2020 : Nộp khóa luận chính thức sau bảo vệ
 
+Các mốc thời gian theo mục tiêu cần hoàn thành :
+Bắt đầu :
+* 15/06 : Đọc hiểu bài báo và các báo cáo liên quan
+* 29/06 : Cài đặt được thuật toán
+* 27/07 : Tìm cách cải thiện hoặc bổ sung
+* 17/08 : Tiến hành viết báo cáo
