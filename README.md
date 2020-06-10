@@ -1,8 +1,8 @@
 # Thesis : Knowledge Graph Embedding for Link Prediction: A Comparative Analysis
-Knowledge Graph Embedding for Link Prediction: A Comparative Analysis
-https://arxiv.org/pdf/2002.00819.pdf
+Paper : Knowledge Graph Embedding for Link Prediction: A Comparative Analysis
+(https://arxiv.org/pdf/2002.00819.pdf)
 
-Github source : https://github.com/Accenture/AmpliGraph
+Author github source : https://github.com/Accenture/AmpliGraph
 
 Hoàng Minh Thanh (hmthanhgm@gmail.com) - Phan Minh Tâm (phanminhtam247@gmail.com)
 
