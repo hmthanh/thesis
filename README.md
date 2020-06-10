@@ -8,8 +8,6 @@ Author github source : https://github.com/Accenture/AmpliGraph
 
 Hoàng Minh Thanh (hmthanhgm@gmail.com) - Phan Minh Tâm (phanminhtam247@gmail.com)
 
-<hr/>
-
 # Kế hoạch làm luận văn
 
 * Lịch : 
