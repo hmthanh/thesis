@@ -1,4 +1,4 @@
-# Thesis : Knowledge Graph Embedding for Link Prediction: A Comparative Analysis
+# Luận văn : Dự đoán liên kết trong đồ thị phức
 Paper : Knowledge Graph Embedding for Link Prediction: A Comparative Analysis
 (https://arxiv.org/pdf/2002.00819.pdf)
 
