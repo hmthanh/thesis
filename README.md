@@ -34,4 +34,15 @@ https://github.com/hmthanh/thesis/projects/1
 * 27/07 : Bắt đầu tìm cách cải thiện hoặc bổ sung
 * 17/08 : Bắt đầu tiến hành viết báo cáo
 
-## Mục tiêu cần đạt được
+## Các công việc cần thực hiện:
+- Tìm hiểu thế nào là knowledge graph, ứng dụng.
+- Các dataset, kích thước, đặc điểm.
+- Các hướng đang thực hiện cho bài toán link prediction. 
+(Bài báo thầy đưa chỉ là một khởi đầu, các em phải tìm tiếp các bài báo liên quan)
+- Vừa document vừa vẽ mindmap, để trả lời câu hỏi có những bài toán con cần giải quyết là gì, phương pháp mỗi bài toán con, điểm mạnh điểm yếu, cái nào được đánh giá tốt hiện nay.
+- Tìm các code có sẵn (nếu có) và chạy trước, đọc hiểu sau.
+- Nếu thuật toán chưa có thì cài lại.
+- Suy nghĩ hướng cải tiến.
+- Chạy thực nghiệm.
+- Viết báo cáo
+
