@@ -4,7 +4,11 @@ Paper : Knowledge Graph Embedding for Link Prediction: A Comparative Analysis
 
 Author github source : https://github.com/Accenture/AmpliGraph
 
+<hr/>
+
 Hoàng Minh Thanh (hmthanhgm@gmail.com) - Phan Minh Tâm (phanminhtam247@gmail.com)
+
+<hr/>
 
 # Kế hoạch làm luận văn
 
