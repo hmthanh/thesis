@@ -2,6 +2,10 @@
 [Knowledge Graphs-KG](#Knowledge-Graphs-KG)
 
 [THE LINK PREDICTION PROBLEM](#THE-LINK-PREDICTION-PROBLEM)
+
+[KEY TAKEAWAYS AND RESEARCH DIRECTIONS](#KEY_TAKEAWAYS_AND_RESEARCH_DIRECTIONS)
+
+[Tầm quan trọng của cấu trúc đồ thị](#The_importance_of_the_graph_structure)
 ## Knowledge Graphs-KG
 Đồ thị tri thức (***Knowledge Graphs-KG***) là các biểu diễn cấu trúc của thông tin thế giới thực.
 
@@ -105,3 +109,18 @@ H@K = |{q ∈ Q : q ≤ K}| / |Q|
 Các giá trị phổ biến cho K là 1, 3, 5, 10. H@K càng cao, kết quả mô hình càng cao. Cụ thể, khi K = 1, nó đo tỷ lệ của các sự kiện thử nghiệm trong đó mục tiêu được dự đoán chính xác trong lần thử đầu tiên. H@1 và MRR có liên quan chặt chẽ với nhau, bởi vì những dự đoán này cũng tương ứng với các phần bổ sung có liên quan nhất vào công thức MRR.
 
 Số liệu có thể được tính riêng cho các tập hợp dự đoán (ví dụ: xem xét dự đoán head và tail riêng biệt) hoặc xem xét tất cả các dự đoán kiểm tra hoàn toàn.
+
+## KEY_TAKEAWAYS_AND_RESEARCH_DIRECTIONS
+## Hiệu quả của các lựa chọn thiết kế
+Bài báo thảo luận ở đây những quan sát toàn diện về hiệu suất của các mô hình cũng như sự mạnh mẽ của chúng trên các bộ dữ liệu và số liệu đánh giá. bài báo  báo cáo những phát hiện liên quan đến xu hướng nghiên cứu dựa trên các lựa chọn thiết kế cụ thể, cũng như những kỳ công độc đáo được hiển thị bởi các mô hình riêng lẻ.
+
+Các mô hình Tensor Decomposition cho thấy kết quả chắc chắn nhất trên các tập dữ liệu. Trong các triển khai được so sánh, hầu hết các hệ thống này hiển thị hiệu suất thống nhất trên tất cả các số liệu đánh giá trên các bộ dữ liệu phân tích (với các *potential exceptions* của ANALOGY và SimplE, dường như có nhiều biến động hơn). Cụ thể, ComplEx với tính chính quy N3 của nó hiển thị kết quả tuyệt vời trên tất cả các số liệu trên tất cả các bộ dữ liệu, là mô hình dựa trên nhúng duy nhất-(embedding-based model consistently) luôn có thể so sánh với đường cơ sở AnykinaL.
+
+Mặt khác, họ các phương pháp hình học cho thấy kết quả không ổn định hơn một chút. Trong những năm qua, nghiên cứu đã dành một lượng lớn đáng kể cho các mô hình tịnh tiến, từ **TransE** có nhiều người kế thừa các luật đa nhúng để xử lý các mối quan hệ nhiều-một, một-nhiều và nhiều-nhiều. Các mô hình cho thấy những kết quả thú vị, nhưng vẫn có một số bất thường trên các số liệu và bộ dữ liệu. Chẳng hạn, các mô hình như **TransE** và **STransE** dường như đặc biệt đấu tranh trên bộ dữ liệu **WN18RR**, đặc biệt là khi nói đến các số liệu H@1 và MRR. Nói chung, các mô hình chỉ dựa vào các bản dịch *translations* dường như đã bị vượt qua bởi các bản dịch roto **roto-translational** gần đây. Về vấn đề này, **RotatE** cho thấy hiệu suất ổn định đáng kể trên tất cả các bộ dữ liệu và nó đặc biệt tỏa sáng khi tính đến H@10.
+
+Các mô hình Deep Learning, cuối cùng là họ các phương pháp đa dạng nhất, với kết quả khác nhau tùy thuộc vào sự lựa chọn kiến trúc của các mô hình và vào việc triển khai của họ. **ConvR** và **RSN** hiển thị cho kết quả tốt nhất trong họ này, đạt được hiệu suất rất giống nhau, state-of-the-art performance trong **FB15k**, **WN18** và **YAGO3-10**. Trong **FB15k-237** và **WN18RR**, có các quy trình lọc đã cắt đi các đường đi phù hợp nhất, **RSN** dường như có một thời gian khó khăn hơn, có lẽ là do công thức của nó thúc đẩy rõ ràng các đường đi. Mặt khác, các mô hình như **ConvKB** và **CapsE** đạt được kết quả đầy hứa hẹn trên các số liệu H@10 và MR, trong khi chúng dường như phải vật lộn với H@1 và MRR; hơn nữa, trong một số bộ dữ liệu, chúng bị cản trở rõ ràng bởi các vấn đề của chúng với các luật ràng buộc được mô tả trong Phần 5.4.1
+
+Chúng tôi nhấn mạnh rằng trong nhiệm vụ LP, AnyburL dựa trên quy tắc chứng tỏ là một mô hình hoạt động tốt đáng chú ý, vì nó luôn được **xếp hạng** trong số các mô hình tốt nhất trên hầu hết các bộ dữ liệu và số liệu.
+## The_importance_of_the_graph_structure
+### Tầm quan trọng của cấu trúc đồ thị
+Chúng tôi báo cáo rằng sự khác biệt trong các chính sách được sử dụng để xử lý các mối quan hệ điểm số có thể dẫn đến sự khác biệt lớn trong hiệu suất dự đoán trong đánh giá. Trên thực tế, các chính sách như vậy ngày nay được coi là chi tiết triển khai gần như không đáng kể và chúng hầu như không bao giờ được báo cáo khi trình bày các mô hình LP mới. Tuy nhiên, chúng tôi cho thấy rằng các màn trình diễn được tính toán dựa trên rủi ro chính sách khác nhau không thể so sánh trực tiếp với nhau và thậm chí có thể không phản ánh tính hiệu quả dự đoán thực tế của các mô hình. Vì vậy, chúng tôi khuyên các nhà nghiên cứu nên sử dụng chính sách tương tự trong tương lai; theo ý kiến ​​của chúng tôi, chính sách trung bình của người dùng có vẻ là sự lựa chọn hợp lý nhất Chúng tôi cũng đã tìm thấy bằng chứng thực nghiệm mạnh mẽ cho thấy các chức năng kích hoạt bão hòa, như ReLU, đóng vai trò chính trong các mô hình hàng đầu để gán cùng số điểm cho nhiều thực thể trong cùng một dự đoán; các xấp xỉ cũng có thể dẫn đến các hàm không bão hòa, như Sigmoid, hoạt động như bão hòa ở các khu vực nơi độ dốc của chúng đặc biệt gần bằng 0.
