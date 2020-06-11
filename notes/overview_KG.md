@@ -54,4 +54,54 @@ Các bộ dữ liệu được sử dụng trong nghiên cứu LP thường thu 
 
 Hầu hết các mô hình LP dựa trên các *embeddings* là một hàm cho điểm để ước tính tính hợp lý của bất kỳ fact <h, r, t> bằng cách sử dụng các *embeddings* của chúng: ϕ(h, r,t).
 
-Trong quá trình đào tạo, các *embeddings* thường được khởi tạo ngẫu nhiên và sau đó được cải thiện với các thuật toán tối ưu hóa như lan truyền ngược với độ dốc giảm dần. Các mẫu dương tính trong G_train bị hỏng ngẫu nhiên để tạo các mẫu âm tính. Quá trình tối ưu hóa nhằm mục đích tối đa hóa tính hợp lý của các sự kiện tích cực cũng như giảm thiểu tính hợp lý của các sự kiện tiêu cực; đây là số tiền để sử dụng chức năng mất bộ ba. Theo thời gian, nhiều cách hiệu quả hơn để tạo ra bộ ba âm đã được đề xuất, chẳng hạn như lấy mẫu từ bản phân phối Bernouilli [66]
+Trong quá trình đào tạo, các *embeddings* thường được khởi tạo ngẫu nhiên và sau đó được cải thiện với các thuật toán tối ưu hóa như lan truyền ngược với độ dốc giảm dần. Các mẫu dương tính trong G_train bị hỏng ngẫu nhiên để tạo các mẫu âm tính. Quá trình tối ưu hóa nhằm mục đích tối đa hóa tính hợp lý của các sự kiện đúng cũng như giảm thiểu tính hợp lý của các sự kiện sai; đây là số tiền để sử dụng chức năng **triplet loss**. Theo thời gian, nhiều cách hiệu quả hơn để tạo ra bộ ba âm tính (sai) đã được đề xuất, chẳng hạn như lấy mẫu từ bản phân phối Bernouilli.hoặc tạo ra chúng bằng các thuật toán **adversarial** [55]. Ngoài các phần tử nhúng của các phần tử KG, các mô hình cũng có thể sử dụng các thuật toán tối ưu hóa tương tự để tìm hiểu các tham số bổ sung (ví dụ: trọng số của các neural layers). Các tham số như vậy, nếu có, được sử dụng trong hàm chấm điểm ϕ để xử lý các nhúng thực sự ** actual embeddings** của các thực thể và quan hệ. Vì chúng không được chỉ định cho bất kỳ phần tử KG nào, chúng được gọi là các tham số chia sẻ *shared parameters*.
+
+Trong giai đoạn dự đoán, với một bộ ba không hoàn chỉnh <h, r, ?> tail bị thiếu được suy ra là thực thể, hoàn thành bộ ba, dẫn đến số điểm cao nhất. 
+t = argmax ϕ(h, r, e) với e ∈ E
+
+Head prediction được thực hiện tương tự.
+Đánh giá được thực hiện bằng cách thực hiện cả Head prediction và Tail prediction trên tất cả các bộ ba thử nghiệm trong G_test và tính toán cho từng dự đoán về cách thực thể mục tiêu xếp hạng so với tất cả các dự đoán khác. Lý tưởng nhất, thực thể mục tiêu sẽ mang lại tính hợp lý cao nhất.
+
+Ranks có thể được tính theo hai phần lớn khác nhau, được gọi là các kịch bản thô và đã lọc. Trên thực tế, một dự đoán có thể có nhiều câu trả lời hợp lệ: ví dụ, khi dự đoán Tail cho <Barack Obama, parent, Natasha Obama>, một mẫu có thể liên kết số điểm cao hơn với Malia Obama so với Natasha Obama. Tổng quát hơn, nếu liên kết dự đoán được chứa trong G (nghĩa là trong G_train hoặc trong G_valid hoặc trong G_test), câu trả lời là hợp lệ. Tùy thuộc vào việc câu trả lời hợp lệ có nên được xem là chấp nhận hay không, hai câu hỏi riêng biệt đã được đưa ra:
+* Kịch bản thô: trong kịch bản này, các thực thể hợp lệ vượt quá mục tiêu được coi là sai lầm. Vì vậy, họ đóng góp vào tính toán Ranks. Với một thực tế thử nghiệm ⟨h, r, t⟩ Gtest, Ranks r_t thứ hạng thô của Tail mục tiêu t được tính là:
+
+r_t = |{e ∈ E \ {t } : ϕ(h, r, e) > ϕ(h, r,t)}| + 1
+
+phát biểu bằng lời: r_t được tính max của ϕ(h, r, e) trong đó e thuộc tập các node E trừ node t. 
+
+Ranks thô trong Head prediction có thể được tính tương tự
+
+* Kịch bản được lọc *Filtered Scenario*: trong kịch bản này, các thực thể hợp lệ vượt quá mục tiêu không được coi là sai lầm. Vì vậy, chúng sẽ bị bỏ qua khi tính toán Ranks. Với một thực tế thử nghiệm ⟨h, r, t⟩ G_test, r_t là Ranks của tail t được tính là:
+
+r_t = |{e ∈ E \ {t } : ϕ(h, r, e) > ϕ(h, r,t) ∧ <h, r, e> not in G}| + 1
+
+Head prediction có thể được tính tương tự
+
+Để tính Ranks, cũng cần phải xác định các luật áp dụng khi thực thể mục tiêu đạt được số điểm tương tự như các điểm khác. Sự kiện này được gọi là *tie* (mối ràng buộc) và nó có thể được xử lý bằng các các luật khác nhau:
+* min: mục tiêu có Ranks thấp nhất trong số các thực thể ràng buộc. Đây là luật được dễ dãi nhất nhất và nó có thể dẫn đến kết quả một cách giả tăng hiệu suất: như một ví dụ một mô hình đạt được một cách có hệ thống điểm số tương tự cho tất cả các thực thể sẽ đạt được kết quả hoàn hảo theo chính sách này.
+* average: mục tiêu có Ranks trung bình trong số các thực thể ràng buộc.
+* Random: mục tiêu có Ranks ngẫu nhiên trong số các thực thể trong tie. Trên các bộ thử nghiệm lớn, luật này sẽ có giá trị globally cho luật trung bình.
+* ordinal: các thực thể trong tie được xếp hạng-Ranks dựa trên thứ tự mà chúng đã được truyền (duyệt) cho mô hình. Điều này thường phụ thuộc vào các định danh nội bộ của các thực thể, độc lập với điểm số của chúng: do đó luật này sẽ tương ứng trên globally với luật ngẫu nhiên.
+* max: mục tiêu có Ranks cao nhất (tệ nhất) trong số các thực thể trong tie. Đây là luật nghiêm ngặt nhất.
+
+Ranks Q thu được từ các dự đoán kiểm tra thường được sử dụng để tính toán các số liệu globally tiêu chuẩn. Các số liệu được sử dụng phổ biến nhất trong LP là:
+
+Mean Rank (MR). Nó là trung bình của các ranks thu được:
+
+MR = 1/Q sum{q | q in Q}
+
+Nó luôn nằm trong khoảng từ 1 đến | E |, và càng thấp, kết quả mô hình càng tốt. Nó rất nhạy cảm với các ngoại lệ, do đó các nhà nghiên cứu gần đây đã bắt đầu tránh nó, thay vào đó, sử dụng Mean Reciprocal Rank (Xếp hạng đối ứng trung bình).
+
+Mean Reciprocal Rank (MRR): Đây là trung bình nghịch đảo của các ranks thu được:
+
+MRR = 1/Q sum {1/q | q in Q}
+
+Nó luôn nằm trong khoảng từ 0 đến 1 và càng lớn, kết quả mô hình càng tốt
+
+Hits@K (H@K). Đó là tỷ lệ dự đoán mà thứ hạng bằng hoặc nhỏ hơn ngưỡng *K*:
+
+H@K = |{q ∈ Q : q ≤ K}| / |Q|
+
+Các giá trị phổ biến cho K là 1, 3, 5, 10. H@K càng cao, kết quả mô hình càng cao. Cụ thể, khi K = 1, nó đo tỷ lệ của các sự kiện thử nghiệm trong đó mục tiêu được dự đoán chính xác trong lần thử đầu tiên. H@1 và MRR có liên quan chặt chẽ với nhau, bởi vì những dự đoán này cũng tương ứng với các phần bổ sung có liên quan nhất vào công thức MRR.
+
+Số liệu có thể được tính riêng cho các tập hợp dự đoán (ví dụ: xem xét dự đoán head và tail riêng biệt) hoặc xem xét tất cả các dự đoán kiểm tra hoàn toàn.
