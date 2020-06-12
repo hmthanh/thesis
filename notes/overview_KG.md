@@ -143,6 +143,12 @@ Bài báo cũng quan sát rằng việc áp dụng các mô hình LP dựa trên
 ### Tầm quan trọng của các luật ràng buộc
 Bài báo báo cáo rằng sự khác biệt trong các luật được sử dụng để xử lý các mối quan hệ điểm số có thể dẫn đến sự khác biệt lớn trong hiệu suất dự đoán trong đánh giá. Trên thực tế, các luật như vậy ngày nay được coi là chi tiết triển khai gần như không đáng kể và chúng hầu như không bao giờ được báo cáo khi trình bày các mô hình LP mới. Tuy nhiên, Bài báo cho thấy rằng các biểu diễn được tính toán dựa trên rủi ro luật khác nhau không thể so sánh trực tiếp với nhau và thậm chí có thể không phản ánh tính hiệu quả dự đoán thực tế của các mô hình. Vì vậy, bài báo khuyên các nhà nghiên cứu nên sử dụng luật tương tự trong tương lai; theo ý kiến ​​của trong bài báo, luật trung bình “average” có vẻ là sự lựa chọn hợp lý nhất. Bài báo cũng đã tìm thấy bằng chứng thực nghiệm mạnh mẽ cho thấy các chức hàm hoạt bão hòa, như **ReLU**, đóng vai trò chính trong các mô hình hàng đầu để gán cùng số điểm cho nhiều thực thể trong cùng một dự đoán; các xấp xỉ cũng có thể dẫn đến các hàm không bão hòa, như **Sigmoid**, hoạt động như bão hòa ở các khu vực nơi độ dốc của chúng đặc biệt gần bằng 0.
 
+
+##  RELATED-WORKS
+### CÔNG TRÌNH LIÊN QUAN
+
+Các công việc liên quan đến bài báo có thể tạm chia thành hai loại chính: phân tích và khảo sát. Các phân tích thường thực hiện các thử nghiệm tiếp theo cố gắng truyền đạt những hiểu biết sâu sắc hơn về các mô hình LP, trong khi các cuộc khảo sát thường cố gắng tổ chức chúng thành các phân loại toàn diện dựa trên các tính năng và khả năng của chúng.
+
 Analyses. Chandrahas et al. [51] nghiên cứu tính chất hình học của các **embeddings** được thu được trong không gian ẩn. Họ tách các mô hình thành thành phần  phụ và multiplicative và đo lường Align To mean (ATM) và độ chính xác-conicity của các vectơ đã học, cho thấy các **additive models** có xu hướng tìm hiểu các vectơ thưa thớt hơn so với các vectơ dày đặc. Sau đó, hãy kiểm tra xem điều này diễn ra như thế nào trên các mẫu của mô hình. Các quan sát của họ rất hấp dẫn, đặc biệt là đối với các mô hình multiplicative, trong đó độ chính xác cao (và do đó độ lây lan của vectơ thấp) dường như tương quan với hiệu quả của nó.
 
 Wang và cộng sự. [64] cung cấp một bài phê bình về các thử nghiệm đo điểm chuẩn hiện tại. Họ quan sát rằng các thực tiễn đánh giá hiện tại chỉ tính toán Ranks cho các sự kiện kiểm tra; do đó, chúng ta chỉ xác minh rằng, khi một câu hỏi có ý nghĩa và có câu trả lời, các mô hình của chúng ta ưu tiên những câu hỏi đúng hơn những câu hỏi sai. Đó là chi phí để thực hiện trả lời câu hỏi thay vì hoàn thành KG, bởi vì chúng ta không đảm bảo rằng các câu hỏi không có câu trả lời (và do đó không có trong tập dữ liệu) dẫn đến điểm thấp-low scores. Do đó, họ đề xuất một cách đánh đánh giá mới, được gọi là Xếp hạng thực thể (PR)-**Entity-Pair Ranking** bao gồm tất cả các kết hợp có thể có trong E × R × E. Chúng tôi hoàn toàn đồng ý với các quan sát của họ; thật không may, chúng tôi thấy rằng đối với các thử nghiệm của mình, trong đó xếp hạng đầy đủ cho tất cả các dự đoán là bắt buộc cho tất cả các mô hình trong tất cả các bộ dữ liệu, việc đánh giá PR quá tốn thời gian và do đó không khả thi.
@@ -163,8 +169,6 @@ Cai et al. [9] cung cấp một cuộc khảo sát cho toàn bộ trường hợ
 
 Công việc của chúng tôi về cơ bản khác với các khảo sát này: mặc dù chúng chỉ báo cáo kết quả có sẵn trong các bài báo gốc, chúng tôi thiết kế các thí nghiệm để điều tra rộng rãi các hành vi thực nghiệm của các mô hình. Như đã thảo luận trong Phần 1, các kết quả được báo cáo trong các bài báo gốc thường thu được trong các trường hợp rất khác nhau và chúng thường là các số liệu global trên toàn bộ các bộ kiểm tra; như một hệ quả, đó là di giáo để giải thích và so sánh chúng.
 
-##  RELATED-WORKS
-### CÔNG TRÌNH LIÊN QUAN
 
 ## CONCLUSIONS
 ### KẾT LUẬN
