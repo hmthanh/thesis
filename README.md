@@ -46,3 +46,30 @@ https://github.com/hmthanh/thesis/projects/1
 - Chạy thực nghiệm.
 - Viết báo cáo
 
+## Cấu trúc thư mục :
+```
+Root
+├── images
+│   └── *.png/jpg // hình ảnh
+├── ipynb
+│   └── *.ipynb // file ghi chú hoặc thực thi
+├── notes
+│   └── *.* // Ghi chú trong quá trình làm  
+├── papers
+│   ├── addition
+│   │   ├── *.pdf // paper về bổ sung trong quá trình tìm hiểu
+│   ├── basic
+│   │   ├── *.pdf // paper cung cấp kiến thức cơ bản
+│   ├── dataset
+│   │   ├── *.pdf // paper về các tập dữ liệu
+│   ├── kg
+│   │   ├── *.pdf // paper về các Biểu đồ tri thức
+│   ├── model
+│   │   ├── *.pdf // paper về các mô hình
+│   ├── state_of_art
+│   │   ├── *.pdf // paper mới nhất
+│   └── *.pdf // paper gốc
+├── outline
+│   └── *.* // Đề cương
+└── README.md
+```

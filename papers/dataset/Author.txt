@@ -1,0 +1,12 @@
+ConvE : 
+https://github.com/TimDettmers
+
+Blog Author ConvE
+https://timdettmers.com/
+
+Bài viết hay
+- A Full Hardware Guide to Deep Learning
+https://timdettmers.com/2018/12/16/deep-learning-hardware-guide/
+
+- Building your own Deep learning Rig
+https://www.linkedin.com/pulse/building-your-own-deep-learning-rig-vijayachandran-mariappan/

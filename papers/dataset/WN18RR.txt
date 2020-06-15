@@ -1,0 +1,2 @@
+A. Bordes, N. Usunier, A. Garcia-Duran, J. Weston, and O. Yakhnenko. Translating embeddings for modeling multi-relational data. In Advances in
+neural information processing systems, pages 2787–2795. NIPS, 2013.
