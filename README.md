@@ -49,6 +49,8 @@ https://github.com/hmthanh/thesis/projects/1
 ## Cấu trúc thư mục :
 ```
 Root
+├── datasets
+│   └── *.* // tập dữ liệu
 ├── images
 │   └── *.png/jpg // hình ảnh
 ├── ipynb
