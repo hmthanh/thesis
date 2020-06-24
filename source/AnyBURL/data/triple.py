@@ -1,4 +1,4 @@
-class Triple (object):
+class Triple:
 
   '''A triple represents a labeled edge a knowledge graph.'''
   def __init__(self, head, relation, tail):
