@@ -41,6 +41,9 @@ class TripleSet (object):
       self.__add_triple_to_index(triple)
     print('* set up index for {} relations, {} head entities, and {} tail entities'.format(len(self.relation_to_list.keys()), len(self.head_to_list.keys()), len(self.tail_to_list.keys())));
 
+  def get_triples_by_head(self, head):
+    return self.head_to_list.get(head)
+
   def __add_triple_to_index(self, triple):
     head = triple.head
     tail = triple.tail
