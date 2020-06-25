@@ -22,6 +22,7 @@ class Path():
       if self.nodes[i] in visited_entities:
         return False
       visited_entities.add(self.nodes[i])
+    return True
 
   def __marked_node_to_string(self, index):
     if index % 2 == 1:

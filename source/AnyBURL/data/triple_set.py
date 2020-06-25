@@ -44,6 +44,9 @@ class TripleSet (object):
   def get_triples_by_head(self, head):
     return self.head_to_list.get(head)
 
+  def get_triples_by_tail(self, tail):
+    return self.tail_to_list.get(tail)
+
   def __add_triple_to_index(self, triple):
     head = triple.head
     tail = triple.tail
