@@ -28,7 +28,7 @@ class PathSampler():
     while index < steps:
       candidate_triples = None
       if random.random() < 0.5:
-        candidate_triples = triple_set.get_triples_by_head(nodes[index * 2])
+        candidate_triples = self.triple_set.get_triples_by_head(nodes[index * 2])
         if candidate_triples is None:
           return None
         next_triple = None
@@ -47,7 +47,7 @@ class PathSampler():
         nodes[index*2+2] = nextTriple.tail
         markers[index] = '+'
       else:
-        candidate_triples = triple_set.get_triples_by_tail(nodes[index * 2])
+        candidate_triples = self.triple_set.get_triples_by_tail(nodes[index * 2])
         if candidate_triples is None:
           return None
         next_triple = None

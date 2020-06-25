@@ -26,7 +26,7 @@ class Path():
 
   def __marked_node_to_string(self, index):
     if index % 2 == 1:
-      return self.markers[(index-1) / 2] + self.nodes[index]	
+      return self.markers[(index - 1) // 2] + self.nodes[index]	
     else:
       return self.nodes[index]
   
