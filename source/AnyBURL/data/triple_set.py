@@ -31,8 +31,9 @@ class TripleSet (object):
       if len(token) == 3:
         triple = Triple(token[0], token[1], token[2])
         self.triples.append(triple)
+    self.__index_triples()
 
-  def index_triples(self):
+  def __index_triples(self):
     counter = 0
     for triple in self.triples:
       counter += 1

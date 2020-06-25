@@ -9,20 +9,20 @@ class PathSampler():
     self.triple_set = triple_set
   
   def sample_path(self, steps, cyclic=False):
-    triple = random.choice(triple_set)
-    nodes,markers = [None] * steps, [None] * (1 + steps * 2)
+    triple = random.choice(self.triple_set.triples)
+    nodes, markers = [None] * (1 + steps * 2), [None] * steps
     if triple.head == triple.tail:
       return None
     if random.random() < 0.5:
       markers[0] = '+'
       nodes[0] = triple.head
-			nodes[1] = triple.relation
-			nodes[2] = triple.tail
+      nodes[1] = triple.relation
+      nodes[2] = triple.tail
     else:
       markers[0] = '-'
-			nodes[2] = triple.head
-			nodes[1] = triple.relation
-			nodes[0] = triple.tail
+      nodes[2] = triple.head
+      nodes[1] = triple.relation
+      nodes[0] = triple.tail
     # add next hop
     index = 1
     while index < steps:
@@ -34,7 +34,7 @@ class PathSampler():
         next_triple = None
         if cyclic and index + 1 == steps:
           cyclic_candidate_triples = []
-          for candidate : candidate_triples:
+          for candidate in candidate_triples:
             if candidate.tail == nodes[0]:
               cyclic_candidate_triples.append(candidate)
           if len(candidate_triples) == 0:
@@ -44,8 +44,8 @@ class PathSampler():
           nextTriple = random.choice(candidate_triples)
 
         nodes[index*2+1] = nextTriple.relation
-				nodes[index*2+2] = nextTriple.tail
-				markers[index] = '+'
+        nodes[index*2+2] = nextTriple.tail
+        markers[index] = '+'
       else:
         candidate_triples = triple_set.get_triples_by_tail(nodes[index * 2])
         if candidate_triples is None:
@@ -53,7 +53,7 @@ class PathSampler():
         next_triple = None
         if cyclic and index + 1 == steps:
           cyclic_candidate_triples = []
-          for candidate : candidate_triples:
+          for candidate in candidate_triples:
             if candidate.head == nodes[0]:
               cyclic_candidate_triples.append(candidate)
           if len(candidate_triples) == 0:
@@ -63,8 +63,8 @@ class PathSampler():
           nextTriple = random.choice(candidate_triples)
 
         nodes[index*2+1] = nextTriple.relation
-				nodes[index*2+2] = nextTriple.head
-				markers[index] = '-'
+        nodes[index*2+2] = nextTriple.head
+        markers[index] = '-'
 
       index += 1
 
