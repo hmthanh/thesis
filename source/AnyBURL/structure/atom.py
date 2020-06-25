@@ -28,7 +28,8 @@ class Atom(object):
   def more_special(self, other):
     if isinstance(other, self.__class__):
       if self.relation == other.relation:
-        return True
+        if self == other:
+          return True
 
         if self.left == other.left:
           if not other.right_c and self.right_c:
@@ -39,6 +40,7 @@ class Atom(object):
           if not other.left_c and self.left_c:
             return True
           return False
+
         if not other.left_c and not other.right_c and self.left_c and self.right_c:
             return True
         return False
@@ -73,7 +75,7 @@ class Atom(object):
 
   def __eq__(self, other):
     if isinstance(other, self.__class__):
-      return self.relation = other.relation and self.left = other.left and self.right = other.right
+      return self.relation == other.relation and self.left == other.left and self.right == other.right
     return False
 
   def __ne__(self, other):
