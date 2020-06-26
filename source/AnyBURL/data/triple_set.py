@@ -31,8 +31,9 @@ class TripleSet (object):
       if len(token) == 3:
         triple = Triple(token[0], token[1], token[2])
         self.triples.append(triple)
+    self.__index_triples()
 
-  def index_triples(self):
+  def __index_triples(self):
     counter = 0
     for triple in self.triples:
       counter += 1
@@ -40,6 +41,12 @@ class TripleSet (object):
         print('* indexed {} triples'.format(counter))
       self.__add_triple_to_index(triple)
     print('* set up index for {} relations, {} head entities, and {} tail entities'.format(len(self.relation_to_list.keys()), len(self.head_to_list.keys()), len(self.tail_to_list.keys())));
+
+  def get_triples_by_head(self, head):
+    return self.head_to_list.get(head)
+
+  def get_triples_by_tail(self, tail):
+    return self.tail_to_list.get(tail)
 
   def __add_triple_to_index(self, triple):
     head = triple.head
