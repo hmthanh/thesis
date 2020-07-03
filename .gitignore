@@ -127,3 +127,6 @@ playground
 
 .vscode/*
 .vscode/settings.json
+
+# Jupyter file
+.ipynb_checkpoints/

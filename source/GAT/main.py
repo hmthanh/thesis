@@ -85,7 +85,7 @@ args = parse_args()
 # %%
 
 
-def load_data(args):
+def load_data_main(args):
     train_data, validation_data, test_data, entity2id, relation2id, headTailSelector, unique_entities_train = build_data(
         args.data, is_unweigted=False, directed=True)
 
@@ -107,7 +107,7 @@ def load_data(args):
     return corpus, torch.FloatTensor(entity_embeddings), torch.FloatTensor(relation_embeddings)
 
 
-Corpus_, entity_embeddings, relation_embeddings = load_data(args)
+Corpus_, entity_embeddings, relation_embeddings = load_data_main(args)
 
 
 if(args.get_2hop):
