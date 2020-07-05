@@ -3,7 +3,7 @@ from structure.path import Path
 
 import random
 
-class PathSampler():
+class PathSampler(object):
   ''' This class is responsible for sampling grounded pathes.'''
   def __init__(self, triple_set):
     self.triple_set = triple_set
