@@ -1,11 +1,11 @@
 class Atom(object):
 
-  def __init__(self, left=None, relation=None, right=None, left_c=True, right_c=True):
+  def __init__(self, left=None, relation=None, right=None, is_left_constant=True, is_right_constant=True):
     self.left = left
     self.relation = relation
     self.right = right
-    self.left_c = left_c
-    self.right_c = right_c
+    self.is_left_constant = is_left_constant
+    self.is_right_constant = is_right_constant
     self.hashcode = None
 
   def from_atom_representation(self, string_atom=''):
@@ -19,8 +19,8 @@ class Atom(object):
     self.relation = relation
     self.left = left
     self.right = right
-    self.left_c = len(self.left) != 1
-    self.right_c = len(self.right) != 1
+    self.is_left_constant = len(self.left) != 1
+    self.is_right_constant = len(self.right) != 1
 
   def contains(self, term):
     return self.left == term or self.right == term
@@ -37,11 +37,11 @@ class Atom(object):
           return False
 
         if self.right == other.right:
-          if not other.left_c and self.left_c:
+          if not other.is_left_constant and self.is_left_constant:
             return True
           return False
 
-        if not other.left_c and not other.right_c and self.left_c and self.right_c:
+        if not other.is_left_constant and not other.is_right_constant and self.is_left_constant and self.is_right_constant:
             return True
         return False
     else:
@@ -49,20 +49,20 @@ class Atom(object):
 
   def is_LRC(self, left_not_right):
     if left_not_right:
-      return self.left_c
-    return self.right_c
+      return self.is_left_constant
+    return self.is_right_constant
 
   def clone(self):
-    return Atom(left=self.left, relation=self.relation, right=self.right, left_c=self.left_c, right_c=self.right_c)
+    return Atom(left=self.left, relation=self.relation, right=self.right, is_left_constant=self.is_left_constant, is_right_constant=self.is_right_constant)
 
   def replace_by_variable(self, constant='', variable=''):
     count = 0
-    if self.left_c and self.left == constant:
-      self.left_c = False
+    if self.is_left_constant and self.left == constant:
+      self.is_left_constant = False
       self.left = variable
       count += 1
-    if self.right_c and self.right == constant:
-      self.right_c = False
+    if self.is_right_constant and self.right == constant:
+      self.is_right_constant = False
       self.right = variable
       count += 1
     return count
@@ -71,7 +71,7 @@ class Atom(object):
     return '{} ({}, {})'.format(self.relation, self.left, self.right)
 
   def __repr__(self):
-    return ((self.left, self.relation, self.right)(self.left_c, self.right_c))
+    return ((self.left, self.relation, self.right)(self.is_left_constant, self.is_right_constant))
 
   def __eq__(self, other):
     if isinstance(other, self.__class__):

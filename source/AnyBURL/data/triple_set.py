@@ -43,10 +43,22 @@ class TripleSet (object):
     print('* set up index for {} relations, {} head entities, and {} tail entities'.format(len(self.relation_to_list.keys()), len(self.head_to_list.keys()), len(self.tail_to_list.keys())));
 
   def get_triples_by_head(self, head):
-    return self.head_to_list.get(head)
+    res = self.head_to_list.get(head)
+    if res == None:
+      return []
+    return res
 
   def get_triples_by_tail(self, tail):
-    return self.tail_to_list.get(tail)
+    res = self.tail_to_list.get(tail)
+     if res == None:
+      return []
+    return res
+  
+  def get_triples_by_relation(self, relation) {
+		if self.relation_to_list.get(relation) :
+			return self.relation_to_list.get(relation);
+		else:
+			return []
 
   def __add_triple_to_index(self, triple):
     head = triple.head
