@@ -6,6 +6,12 @@ class Triple(object):
     self.relation = relation
     self.tail = tail
 
+  def get_value(self, head_not_tail):
+		if head_not_tail:
+      return self.head;
+		else:
+      return this.tail
+
   def __str__(self):
     return '{0} {1} {2}'.format(self.head, self.relation, self.tail)
 

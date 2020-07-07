@@ -67,6 +67,12 @@ class Atom(object):
       count += 1
     return count
 
+  def get_LR(self, left_not_right):
+		if (left_not_right):
+      return self.left
+		else:
+      return self.right
+
   def __str__(self):
     return '{} ({}, {})'.format(self.relation, self.left, self.right)
 

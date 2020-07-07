@@ -133,8 +133,8 @@ class Rule(object):
 
     return generalizations
   
-''''TODO'''
-  def _get_cyclic(self, current_variable, last_variable, value, body_index, direction, triples, previous_values, final_results, counter):
+
+  def get_cyclic(self, current_variable, last_variable, value, body_index, direction, triples, previous_values, final_results, counter):
 		# print("currentVariable=" + current_variable + " lastVariable=" +  last_variable + " value=" + value + " bodyIndex=" + body_index)
 		if Rule.application_mode and len(final_results) >= Apply.discrimination_bound :
 			final_results.clear()
@@ -147,7 +147,7 @@ class Rule(object):
       return
 		# check if the value has been seen before as grounding of another variable
 		atom = self.body.get(body_index)
-		head_not_tail = atom.left == currentVariable)
+		head_not_tail = atom.left == currentVariable
     if  value in previous_values:
       return		
 		# the current atom is the last
@@ -160,27 +160,22 @@ class Rule(object):
 			return
 		## the current atom is not the last
 		else: 
-			Set<String> results = triples.getEntities(atom.getRelation(), value, headNotTail);
-			// System.out.println("atom.getRelation()=" + atom.getRelation() + " value=" + value + " headNotTail=" + headNotTail);
-			String nextVariable = headNotTail ? atom.getRight() : atom.getLeft();
-			HashSet<String> currentValues = new HashSet<String>();
-			currentValues.addAll(previousValues);
-			currentValues.add(value);
-			int i = 0;
-			for (String nextValue : results) {
-				if (!Rule.APPLICATION_MODE && i >= Learn.SAMPLE_SIZE) break;
-				int updatedBodyIndex = (direction) ? bodyIndex + 1 : bodyIndex - 1;
-				getCyclic(nextVariable, lastVariable, nextValue, updatedBodyIndex, direction, triples, currentValues, finalResults, count);
-				i++;
-			}
-			return;
-		}
-	}
-  
-  def ground_body_cyclic(self, first_variable, last_variable, triples, sampling_on) {
+			results = triples.get_entities(atom.relation, value, head_not_tail)
+			# System.out.println("atom.getRelation()=" + atom.getRelation() + " value=" + value + " headNotTail=" + headNotTail);
+			next_variable = head_not_tail ? atom.right : atom.left
+			current_values = previousValues.copy()
+			current_values.add(value)
+			for next_value in results:
+				if not Rule.APPLICATION_MODE and i >= Learn.e):
+          break
+				updated_body_index = direction ? body_index + 1 : body_index - 1
+				self._get_cyclic(next_variable, last_variable, next_value, updated_body_index, direction, triples, current_values, final_results, counter)
+			return
+	
+  def ground_body_cyclic(self, first_variable, last_variable, triples, sampling_on):
 		groundings = SampledPairedResultSet()
 		atom = self.body.get(0);
-		head_not_tail = atom.left == firstVariable
+		head_not_tail = atom.left == first_variable
 		rtriples = triples.get_triples_by_relation(atom.relation)
 		counter = 0
 		count = Counter()
@@ -188,59 +183,120 @@ class Rule(object):
 			counter += 1
 			last_variable_groundings = set([])
 			## Learn.takeTime();
-		
-			getCyclic(firstVariable, lastVariable, t.getValue(headNotTail), 0, true, triples, new HashSet<String>(), lastVariableGroundings, count);
+      triple_val = triple.get_value(head_not_tail)
+			self._get_cyclic(first_variable, last_variable, triple_val, 0, true, triples, set([]), last_variable_groundings, count)
 			
-			// Learn.showElapsedMoreThan(500, "call to getCyclic");
+			# Learn.showElapsedMoreThan(500, "call to getCyclic");
 			
-			if (lastVariableGroundings.size() > 0) {
-				if (firstVariable.equals("X")) {
-					groundings.addKey(t.getValue(headNotTail));
-					for (String lastVariableValue : lastVariableGroundings) {
-						groundings.addValue(lastVariableValue);
-					}
-				}
-				else {
-					for (String lastVariableValue : lastVariableGroundings) {
-						groundings.addKey(lastVariableValue);
-						groundings.addValue(t.getValue(headNotTail));
-						
-					}
+			if len(last_variable_groundings) > 0:
+				if firstVariable.equals('X'):
+					groundings.add_key(triple_val)
+					for last_variable_value in last_variable_groundings:
+						groundings.add_value(last_variable_value) 
+				else:
+					for last_variable_value in last_variable_groundings:
+						groundings.add_key(last_variable_value)
+						groundings.add_key(triple_val)
+			if (counter >  Learn.SAMPLE_SIZE or groundings.size() > Learn.SAMPLE_SIZE) and sampling_on:
+				break
+			if not Rule.APPLICATION_MODE and count.get() >= Learn.TRIAL_SIZE:
+        break
+		return groundings
+
+  def get_unbound_variable(self):
+		if self.body.get(len(self.body) - 1).is_left_constant or self.body.get(len(self.body) - 1-1).is_right_constant):
+      return None
+		counter = {}
+		for atom : self.body:
+			if not atom.left == 'X' and not atom.left == 'Y':
+				if atom.left in counter:
+          counter[atom.left] = 2
+				else:
+          counter[atom.left] = 1
+			if not atom.right == 'X' and not atom..right == 'X':
+				if atom.left in counter:
+          counter[atom.right] = 2
+				else:
+          counter[atom.right] = 1
+		for variable : counter.keys():
+			if counter.get(variable) == 1:
+				return variable
+		return None
+
+  def compute_values_reversed(self, target_variable, target_values, triple_set):
+		atom_index = self.body.size() - 1
+		last_atom = self.body.get(atom_index)
+		unbound_variable = self.get_unbound_variable()
+		if unbound_variable is None:
+			next_var_is_left = False
+			if last_atom.is_right_constant:
+        next_var_is_left = True
+			constant = last_atom.get_LR(not next_var_is_left)
+			next_variable = last_atom.get_LR(next_var_is_left);
+			values = triple_set.get_entities(last_atom.relation, constant, not next_var_is_left)
+			previous_values = set([])
+			previous_values.add(constant)
+			for value in values:
+        '''
+        todo forwardReversed
+        '''
+				forwardReversed(nextVariable, value, atomIndex-1, targetVariable, targetValues, ts, previousValues);
+				if !Rule.APPLICATION_MODE and targetValues.size() >= Learn.SAMPLE_SIZE:
+          return
+				
+				if Rule.APPLICATION_MODE && targetValues.size() >= Apply.DISCRIMINATION_BOUND:
+					targetValues.clear()
+					return
+		else :##
+      '''
+        todo else
+        '''
+			boolean nextVarIsLeft;
+			if (lastAtom.getLeft().equals(unboundVariable)) nextVarIsLeft = false;
+			else nextVarIsLeft = true;
+			String nextVariable = lastAtom.getLR(nextVarIsLeft);
+			ArrayList<Triple> triples = ts.getTriplesByRelation(lastAtom.getRelation());
+			for (Triple t : triples) {
+				String value = t.getValue(nextVarIsLeft);
+				HashSet<String> previousValues = new HashSet<String>();
+				String previousValue = t.getValue(!nextVarIsLeft);
+				previousValues.add(previousValue);
+				forwardReversed(nextVariable, value, atomIndex-1, targetVariable, targetValues, ts, previousValues);
+				if (!Rule.APPLICATION_MODE && targetValues.size() >= Learn.SAMPLE_SIZE) return;
+				
+				if (Rule.APPLICATION_MODE && targetValues.size() >= Apply.DISCRIMINATION_BOUND) {
+					targetValues.clear();
+					return;
 				}
 				
 			}
-			if ((counter >  Learn.SAMPLE_SIZE || groundings.size() > Learn.SAMPLE_SIZE) && samplingOn) {
-				break;
-			}
-			if (!Rule.APPLICATION_MODE && count.get() >= Learn.TRIAL_SIZE) break;
 		}
-		return groundings;
 	}
 
   def compute_scores(self, triples):
     if self.is_XY_rule():
 			## X is given in first body atom
 			xypairs = None
-			if self.body.contains():
-				xypairs = groundBodyCyclic("X", "Y", triples)
-			else:
-				xypairs = groundBodyCyclic("Y", "X", triples)
-			// body groundings		
-			int correctlyPredicted = 0;
-			int predicted = 0;
-			for (String key : xypairs.getValues().keySet()) {
-				for (String value : xypairs.getValues().get(key)) {
-					predicted++;
-					if (triples.isTrue(key, this.head.getRelation(), value)) correctlyPredicted++;
-				}
-			}
-			this.predicted = predicted;
-			this.correctlyPredicted = correctlyPredicted;
-			this.confidence = (double)correctlyPredicted / (double)predicted;
-		}
-		if (this.isXRule()) {
-			HashSet<String> xvalues = new HashSet<String>();
-			computeValuesReversed("X", xvalues, triples);
+			# if self.body.contains():
+			# 	xypairs = groundBodyCyclic("X", "Y", triples)
+			# else:
+			xypairs = ground_body_cyclic('Y', 'X', triples)
+		  # body groundings		
+			correctly_predicted = 0
+			predicted = 0
+			for key in xypairs.values.keys():
+				for value : xypairs.values.get(key):
+					predicted += 1
+					if triples.isTrue(key, this.head.getRelation(), value):
+            correctly_predicted += 1
+
+			self.predicted = predicted
+			self.correctly_predicted = correctly_predicted
+			self.confidence = correctly_predicted / predicted
+		if self.is_XY_rule():
+			xvalues = set([])
+			computeValuesReversed("X", xvalues, triples)
+      ## TODO
 			int predicted = 0, correctlyPredicted = 0;
 			for (String xvalue : xvalues) {
 				predicted++;
