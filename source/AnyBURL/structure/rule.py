@@ -1,9 +1,12 @@
 from atom import Atom
 from data.sampled_paired_result_set import SampledPairedResultSet
 from counter import Counter
+from apply import Apply
+from learn import Learn
 
 class Rule(object):
   variables = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P']
+  application_mode = False
   def __init__(self, head):
     self.head = head
     self.body = []
@@ -131,7 +134,49 @@ class Rule(object):
     return generalizations
   
 ''''TODO'''
-
+  def _get_cyclic(self, current_variable, last_variable, value, body_index, direction, triples, previous_values, final_results, counter):
+		# print("currentVariable=" + current_variable + " lastVariable=" +  last_variable + " value=" + value + " bodyIndex=" + body_index)
+		if Rule.application_mode and len(final_results) >= Apply.discrimination_bound :
+			final_results.clear()
+		
+		if counter is not None:
+			count = counter.incomming_and_get()
+			if count >= Learn.trial_size or count >= Apply.trial_size:
+        return
+		if not Rule.application_mode and len(final_results) >= Learn.sample_size:
+      return
+		# check if the value has been seen before as grounding of another variable
+		atom = self.body.get(body_index)
+		head_not_tail = atom.left == currentVariable)
+    if  value in previous_values:
+      return		
+		# the current atom is the last
+		if (direction == True and len(self.body) -1 == body_index) or (direction == False and body_index == 0):
+			# get groundings
+			for v in triples.get_entities(atom.relation, value, head_not_tail):
+				if v not in previous_values:
+          final_results.add(v)
+				## System.out.println("FINAL -> atom.getRelation()=" + atom.getRelation() + " value=" + value + " headNotTail=" + headNotTail);
+			return
+		## the current atom is not the last
+		else: 
+			Set<String> results = triples.getEntities(atom.getRelation(), value, headNotTail);
+			// System.out.println("atom.getRelation()=" + atom.getRelation() + " value=" + value + " headNotTail=" + headNotTail);
+			String nextVariable = headNotTail ? atom.getRight() : atom.getLeft();
+			HashSet<String> currentValues = new HashSet<String>();
+			currentValues.addAll(previousValues);
+			currentValues.add(value);
+			int i = 0;
+			for (String nextValue : results) {
+				if (!Rule.APPLICATION_MODE && i >= Learn.SAMPLE_SIZE) break;
+				int updatedBodyIndex = (direction) ? bodyIndex + 1 : bodyIndex - 1;
+				getCyclic(nextVariable, lastVariable, nextValue, updatedBodyIndex, direction, triples, currentValues, finalResults, count);
+				i++;
+			}
+			return;
+		}
+	}
+  
   def ground_body_cyclic(self, first_variable, last_variable, triples, sampling_on) {
 		groundings = SampledPairedResultSet()
 		atom = self.body.get(0);
