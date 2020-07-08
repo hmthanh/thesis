@@ -60,18 +60,24 @@ class TripleSet (object):
 		else:
 			return []
 
-  def get_tail_entities(relation, head):
-		if head in head_relation_to_tail:
-			if relation in head_relation_to_tail.get(head):
-				return head_relation_to_tail.get(head).get(relation)
+  def get_tail_entities(self, relation, head):
+		if head in self.head_relation_to_tail:
+			if relation in self.head_relation_to_tail.get(head):
+				return self.head_relation_to_tail.get(head).get(relation)
 		return set([])
   
-  def get_head_entities(relation, tail):
-		if tail in tail_relation_to_head:
-			if relation in tail_relation_to_head.get(tail):
-				return tail_relation_to_head.get(tail).get(relation)
+  def get_head_entities(self, relation, tail):
+		if tail in self.tail_relation_to_head:
+			if relation in self.tail_relation_to_head.get(tail):
+				return self.tail_relation_to_head.get(tail).get(relation)
 		return set([])
 
+  def is_true(self, head, relation, tail):
+		if tail in self.tail_relation_to_head :
+			if relation in self.tail_relation_to_head.get(tail):
+				return head in self.tail_relation_to_head.get(tail).get(relation)
+		return False
+	
 '''/**
 	* Returns those values for which the relation holds for a given value. If the headNotTail is 
 	* set to true, the value is interpreted as head value and the corresponding tails are returned.
@@ -86,7 +92,7 @@ class TripleSet (object):
 		if head_not_tail:
       return self.get_tail_entities(relation, value)
 		else:
-      return self.getHeadEntities(relation, value)
+      return self.get_head_entities(relation, value)
 		
 
   def __add_triple_to_index(self, triple):

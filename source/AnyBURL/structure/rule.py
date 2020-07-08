@@ -223,6 +223,27 @@ class Rule(object):
 				return variable
 		return None
 
+  def forward_reversed(self, variable, value, body_index, target_variable, target_values={}, triple_set, previous_values={}):
+		if value in previous_values:
+      return
+		if body_index < 0:
+			target_values.add(value)
+		else:
+			current_values = set([])
+			current_values.add(value)
+			atom = self.body.get(body_index)
+			next_var_is_left = False
+			if atom.left != variable:
+        next_var_is_left = True
+			next_variable = atom.get_LR(next_var_is_left)
+			next_values = set([])			
+			if not Rule.application_mode and len(target_variable) >= Learn.sample_size:
+        return
+			next_values = set(triple_set.get_entities(atom.relation, value, !next_var_is_left))
+			for next_value in next_values:
+				forwardReversed(next_variable, next_value, body_index - 1, target_variable, next_values, triple_set, current_values)
+
+
   def compute_values_reversed(self, target_variable, target_values, triple_set):
 		atom_index = self.body.size() - 1
 		last_atom = self.body.get(atom_index)
@@ -237,30 +258,27 @@ class Rule(object):
 			previous_values = set([])
 			previous_values.add(constant)
 			for value in values:
-        '''
-        todo forwardReversed
-        '''
-				forwardReversed(nextVariable, value, atomIndex-1, targetVariable, targetValues, ts, previousValues);
-				if !Rule.APPLICATION_MODE and targetValues.size() >= Learn.SAMPLE_SIZE:
+				self.forward_reversed(next_variable, value, atom_index - 1, target_variable, target_values, triple_set, previous_values)
+				if not Rule.application_mode and len(target_values) >= Learn.sample_size:
           return
 				
-				if Rule.APPLICATION_MODE && targetValues.size() >= Apply.DISCRIMINATION_BOUND:
-					targetValues.clear()
+				if Rule.application_mode and len(target_values) >= Apply.discrimination_bound:
+					target_values.clear()
 					return
-		else :##
+		else :
       '''
         todo else
         '''
-			boolean nextVarIsLeft;
-			if (lastAtom.getLeft().equals(unboundVariable)) nextVarIsLeft = false;
-			else nextVarIsLeft = true;
-			String nextVariable = lastAtom.getLR(nextVarIsLeft);
-			ArrayList<Triple> triples = ts.getTriplesByRelation(lastAtom.getRelation());
-			for (Triple t : triples) {
-				String value = t.getValue(nextVarIsLeft);
-				HashSet<String> previousValues = new HashSet<String>();
-				String previousValue = t.getValue(!nextVarIsLeft);
-				previousValues.add(previousValue);
+			next_var_is_left = False
+			if last_atom.left != unboundVariable:
+        next_var_is_left = True
+			next_variable = last_atom.get_LR(next_var_is_left)
+			triples = triple_set.get_triples_by_relation(last_atom.relation)
+			for triple in triples:
+				value = triple.get_value(next_var_is_left)
+				previous_values = set([])
+				previous_value = triple.get_value(not next_var_is_left)
+				previousValues.add(previousValue)
 				forwardReversed(nextVariable, value, atomIndex-1, targetVariable, targetValues, ts, previousValues);
 				if (!Rule.APPLICATION_MODE && targetValues.size() >= Learn.SAMPLE_SIZE) return;
 				
@@ -297,16 +315,16 @@ class Rule(object):
 			xvalues = set([])
 			computeValuesReversed("X", xvalues, triples)
       ## TODO
-			int predicted = 0, correctlyPredicted = 0;
-			for (String xvalue : xvalues) {
-				predicted++;
-				if (triples.isTrue(xvalue, this.head.getRelation(), this.head.getRight())) correctlyPredicted++;
-			}
-			this.predicted = predicted;
-			this.correctlyPredicted = correctlyPredicted;
-			this.confidence = (double)correctlyPredicted / (double)predicted;
-		}
-		if (this.isYRule()) {
+			predicted, correctly_Predicted = 0,0
+			for xvalue in xvalues:
+				predicted += 1
+				if triples.is_true(xvalue, self.head.relation, self.head.right):
+          correctly_predicted += 1
+			self.predicted = predicted
+			self.correctly_predicted = correctly_predicted
+			self.confidence = predicted / correctly_predicted
+	
+		if self.is_XY_rule():
 			HashSet<String> yvalues = new HashSet<String>();
 			computeValuesReversed("Y", yvalues, triples);
 			int predicted = 0, correctlyPredicted = 0;
