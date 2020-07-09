@@ -28,6 +28,7 @@ class Learn(object):
       useful_rules = all_useful_rules[0]
       p = path_sampler.sample_path(self.rule_size + 2, False)
       if p is not None and p.is_valid():
+        # print(p)
         pr = Rule(p)
         rules = pr.get_generalizations(False)
         for rule in rules:
@@ -43,6 +44,6 @@ class Learn(object):
               useful_rules.add(rule)
             else:
               batch_previously_found_rules += 1
-              ## if (r.isXYRule()) batchPreviouslyFoundCyclicRules++;
-              ## else batchPreviouslyFoundAcyclicRules++;
+              # if (r.isXYRule()) batchPreviouslyFoundCyclicRules++;
+              # else batchPreviouslyFoundAcyclicRules++;
 					
