@@ -1,8 +1,8 @@
-from atom import Atom
+from structure.atom import Atom
 from data.sampled_paired_result_set import SampledPairedResultSet
-from counter import Counter
+from structure.counter import Counter
 from apply import Apply
-from learn import Learn
+from learn_config import ConfigParameters
 
 class Rule(object):
   variables = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P']
@@ -159,10 +159,10 @@ class Rule(object):
     
     if counter is not None:
       count = counter.incomming_and_get()
-      if count >= Learn.trial_size or count >= Apply.trial_size:
+      if count >= ConfigParameters.trial_size or count >= Apply.trial_size:
         return
     
-    if not Rule.application_mode and len(final_results) >= Learn.sample_size:
+    if not Rule.application_mode and len(final_results) >= ConfigParameters.sample_size:
       return
     # check if the value has been seen before as grounding of another variable
     atom = self.body.get(body_index)
@@ -188,7 +188,7 @@ class Rule(object):
       current_values.add(value)
       i = 0
       for next_value in results:
-        if not Rule.application_mode and i >= Learn.sample_size:
+        if not Rule.application_mode and i >= ConfigParameters.sample_size:
           break
         updated_body_index =  body_index - 1
         if direction:
@@ -222,9 +222,9 @@ class Rule(object):
           for last_variable_value in last_variable_groundings:
             groundings.add_key(last_variable_value)
             groundings.add_key(triple_val)
-      if (counter >  Learn.sample_size or groundings.size() > Learn.sample_size) and sampling_on:
+      if (counter >  ConfigParameters.sample_size or groundings.size() > ConfigParameters.sample_size) and sampling_on:
         break
-      if not Rule.application_mode and count.get() >= Learn.trial_size:
+      if not Rule.application_mode and count.get() >= ConfigParameters.trial_size:
         break
     return groundings
 
@@ -251,7 +251,7 @@ class Rule(object):
     
     return None
 
-  def forward_reversed(self, variable, value, body_index, target_variable, target_values={}, triple_set, previous_values={}):
+  def forward_reversed(self, variable, value, body_index, target_variable, target_values={}, triple_set=set([]), previous_values={}):
     if value in previous_values:
       return
     if body_index < 0:
@@ -265,7 +265,7 @@ class Rule(object):
         next_var_is_left = True
       next_variable = atom.get_LR(next_var_is_left)
       next_values = set([])
-      if not Rule.application_mode and len(target_variable) >= Learn.sample_size:
+      if not Rule.application_mode and len(target_variable) >= ConfigParameters.sample_size:
         return
       next_values = set(triple_set.get_entities(atom.relation, value, not next_var_is_left))
       for next_value in next_values:
@@ -287,7 +287,7 @@ class Rule(object):
       
       for value in values:
         self.forward_reversed(next_variable, value, atom_index - 1, target_variable, target_values, triple_set, previous_values)
-        if not Rule.application_mode and len(target_values) >= Learn.sample_size:
+        if not Rule.application_mode and len(target_values) >= ConfigParameters.sample_size:
           return
 
         if Rule.application_mode and len(target_values) >= Apply.discrimination_bound:
@@ -307,7 +307,7 @@ class Rule(object):
         previous_values.add(previous_value)
         self.forwardReversed(next_variable, value, atom_index - 1, target_variable, target_values, triple_set, previous_values)
         
-        if not Rule.application_mode and len(target_values) >= Learn.sample_size:
+        if not Rule.application_mode and len(target_values) >= ConfigParameters.sample_size:
           return
           
         if Rule.application_mode and len(target_values) >= Apply.discrimination_bound:
@@ -321,47 +321,46 @@ class Rule(object):
 			# if self.body.contains():
 			# 	xypairs = groundBodyCyclic("X", "Y", triples)
 			# else:
-			xypairs = ground_body_cyclic('Y', 'X', triples)
+      xypairs = ground_body_cyclic('Y', 'X', triples)
 		  # body groundings		
-			correctly_predicted = 0
-			predicted = 0
-			for key in xypairs.values.keys():
-				for value : xypairs.values.get(key):
-					predicted += 1
-					if triples.is_true(key, self.head.relation, value):
+      correctly_predicted, predicted = 0, 0
+      for key in xypairs.values.keys():
+        for value in xypairs.values.get(key):
+          predicted += 1
+          if triples.is_true(key, self.head.relation, value):
             correctly_predicted += 1
-
-			self.predicted = predicted
-			self.correctly_predicted = correctly_predicted
-			self.confidence = correctly_predicted / predicted
-		if self.is_X_rule():
-			xvalues = set([])
-			self.compute_values_reversed('X', xvalues, triples)
-      ## TODO
-			predicted, correctly_predicted = 0,0
-			for xvalue in xvalues:
-				predicted += 1
-				if triples.is_true(xvalue, self.head.relation, self.head.right):
+      
+      self.predicted = predicted
+      self.correctly_predicted = correctly_predicted
+      self.confidence = correctly_predicted / predicted
+    if self.is_X_rule():
+      xvalues = set([])
+      self.compute_values_reversed('X', xvalues, triples)
+      predicted, correctly_predicted = 0,0
+      for xvalue in xvalues:
+        predicted += 1
+        if triples.is_true(xvalue, self.head.relation, self.head.right):
           correctly_predicted += 1
-			self.predicted = predicted
-			self.correctly_predicted = correctly_predicted
-			self.confidence = predicted / correctly_predicted
-	
-		if self.is_Y_rule():
-			yvalues = set([])
-			self.compute_values_reversed('Y', yvalues, triples)
-			predicted , correctly_predicted = 0,0
-			for yvalue in yvalues:
-				predicted += 1
-				if triples.is_true(self.head.left, self.head.relation, yvalue):
+      self.predicted = predicted
+      self.correctly_predicted = correctly_predicted
+      self.confidence = predicted / correctly_predicted
+    
+    if self.is_Y_rule():
+      yvalues = set([])
+      self.compute_values_reversed('Y', yvalues, triples)
+      predicted , correctly_predicted = 0,0
+      for yvalue in yvalues:
+        predicted += 1
+        if triples.is_true(self.head.left, self.head.relation, yvalue):
           correctly_predicted += 1
-			self.predicted = predicted;
-			self.correctly_predicted = correctly_predicted;
-			self.confidence = correctly_predicted / predicted
+          
+      self.predicted = predicted
+      self.correctly_predicted = correctly_predicted
+      self.confidence = correctly_predicted / predicted
 
   def is_trivial(self):
-		if len(self.body) == 1:
-			if self.head == self.body[0]:
+    if len(self.body) == 1:
+      if self.head == self.body[0]:
         return True
-		return False
+    return False
 	

@@ -68,9 +68,9 @@ class Atom(object):
     return count
 
   def get_LR(self, left_not_right):
-		if (left_not_right):
+    if left_not_right:
       return self.left
-		else:
+    else:
       return self.right
 
   def __str__(self):
