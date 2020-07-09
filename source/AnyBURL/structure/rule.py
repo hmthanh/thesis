@@ -15,7 +15,6 @@ class Rule(object):
 	  self.confidence = 0.0
 	  self.next_free_variable = 0
 	
-  
   def init_from_path(self, path):
     self.body = []
 		if path.markers[0] == '+' :
@@ -150,7 +149,6 @@ class Rule(object):
         generalizations.add(left_free)
 
     return generalizations
-  
 
   def get_cyclic(self, current_variable, last_variable, value, body_index, direction, triples, previous_values, final_results, counter):
 		# print("currentVariable=" + current_variable + " lastVariable=" +  last_variable + " value=" + value + " bodyIndex=" + body_index)
@@ -261,7 +259,6 @@ class Rule(object):
 			for next_value in next_values:
 				forwardReversed(next_variable, next_value, body_index - 1, target_variable, next_values, triple_set, current_values)
 
-
   def compute_values_reversed(self, target_variable, target_values, triple_set):
 		atom_index = self.body.size() - 1
 		last_atom = self.body.get(atom_index)
@@ -346,3 +343,10 @@ class Rule(object):
 			self.predicted = predicted;
 			self.correctly_predicted = correctly_predicted;
 			self.confidence = correctly_predicted / predicted
+
+  def is_trivial(self):
+		if len(self.body) == 1:
+			if self.head == self.body[0]:
+        return True
+		return False
+	
