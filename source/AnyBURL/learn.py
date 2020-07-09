@@ -1,6 +1,7 @@
 from algorithm.path_sampler import PathSampler
 from structure.rule import Rule
 from data.triple_set import TripleSet
+from learn_config import ConfigParameters
 import time
 
 class Learn(object):
@@ -21,7 +22,7 @@ class Learn(object):
     batch_previously_found_rules = 0
     while (True):
       current_time = time.time()
-      if currentTime - batch_start_time > Learn.batch_time:
+      if current_time - batch_start_time > ConfigParameters.batch_time:
         break
       path_counter += 1
       useful_rules = all_useful_rules[0]

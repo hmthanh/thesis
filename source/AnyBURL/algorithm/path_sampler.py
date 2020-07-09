@@ -29,6 +29,7 @@ class PathSampler(object):
       candidate_triples = None
       if random.random() < 0.5:
         candidate_triples = self.triple_set.get_triples_by_head(nodes[index * 2])
+        print(candidate_triples)
         if candidate_triples is None:
           return None
         next_triple = None
@@ -39,12 +40,12 @@ class PathSampler(object):
               cyclic_candidate_triples.append(candidate)
           if len(candidate_triples) == 0:
             return None
-          nextTriple = random.choice(cyclic_candidate_triples)
+          next_triple = random.choice(cyclic_candidate_triples)
         else:
-          nextTriple = random.choice(candidate_triples)
+          next_triple = random.choice(candidate_triples)
 
-        nodes[index*2+1] = nextTriple.relation
-        nodes[index*2+2] = nextTriple.tail
+        nodes[index*2+1] = next_triple.relation
+        nodes[index*2+2] = next_triple.tail
         markers[index] = '+'
       else:
         candidate_triples = self.triple_set.get_triples_by_tail(nodes[index * 2])
