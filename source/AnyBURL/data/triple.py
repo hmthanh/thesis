@@ -7,9 +7,9 @@ class Triple(object):
     self.tail = tail
 
   def get_value(self, head_not_tail):
-		if head_not_tail:
+    if head_not_tail:
       return self.head;
-		else:
+    else:
       return this.tail
 
   def __str__(self):

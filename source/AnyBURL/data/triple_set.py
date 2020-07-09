@@ -50,35 +50,35 @@ class TripleSet (object):
 
   def get_triples_by_tail(self, tail):
     res = self.tail_to_list.get(tail)
-     if res == None:
+    if res == None:
       return []
     return res
   
-  def get_triples_by_relation(self, relation) {
-		if self.relation_to_list.get(relation) :
-			return self.relation_to_list.get(relation);
-		else:
-			return []
+  def get_triples_by_relation(self, relation):
+    if self.relation_to_list.get(relation):
+      return self.relation_to_list.get(relation)
+    else:
+      return []
 
   def get_tail_entities(self, relation, head):
-		if head in self.head_relation_to_tail:
-			if relation in self.head_relation_to_tail.get(head):
-				return self.head_relation_to_tail.get(head).get(relation)
-		return set([])
+    if head in self.head_relation_to_tail:
+      if relation in self.head_relation_to_tail.get(head):
+        return self.head_relation_to_tail.get(head).get(relation)
+    return set([])
   
   def get_head_entities(self, relation, tail):
-		if tail in self.tail_relation_to_head:
-			if relation in self.tail_relation_to_head.get(tail):
-				return self.tail_relation_to_head.get(tail).get(relation)
-		return set([])
+    if tail in self.tail_relation_to_head:
+      if relation in self.tail_relation_to_head.get(tail):
+        return self.tail_relation_to_head.get(tail).get(relation)
+    return set([])
 
   def is_true(self, head, relation, tail):
-		if tail in self.tail_relation_to_head :
-			if relation in self.tail_relation_to_head.get(tail):
-				return head in self.tail_relation_to_head.get(tail).get(relation)
-		return False
+    if tail in self.tail_relation_to_head:
+      if relation in self.tail_relation_to_head.get(tail):
+        return head in self.tail_relation_to_head.get(tail).get(relation)
+    return False
 	
-'''/**
+  '''/**
 	* Returns those values for which the relation holds for a given value. If the headNotTail is 
 	* set to true, the value is interpreted as head value and the corresponding tails are returned.
 	* Otherwise, the corresponding heads are returned.
@@ -88,10 +88,11 @@ class TripleSet (object):
 	* @param headNotTail Whether to interpret the value as head and not as tail (false interprets as tail).
 	* @return The resulting values.
 	*/'''
-	def get_entities(self, relation, value, head_not_tail):
-		if head_not_tail:
+
+  def get_entities(self, relation, value, head_not_tail):
+    if head_not_tail:
       return self.get_tail_entities(relation, value)
-		else:
+    else:
       return self.get_head_entities(relation, value)
 		
 
