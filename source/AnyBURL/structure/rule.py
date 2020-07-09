@@ -36,6 +36,24 @@ class Rule(object):
 		else:
       return False
 
+  def is_X_rule(self):
+		if self.isXYRule():
+      return False
+		else:
+			if not self.head.is_left_constant:
+        return True
+			else:
+        return False
+		
+	def is_Y_rule(self):
+		if self.isXYRule():
+      return False
+    else:
+			if not this.head.is_right_constant:
+        return True
+			else:
+        return False
+
   def __replace_by_variable(self, constant, variable):
 		count = self.head.replace_by_variable(constant, variable)
 		for batom in self.body:
@@ -266,9 +284,6 @@ class Rule(object):
 					target_values.clear()
 					return
 		else :
-      '''
-        todo else
-        '''
 			next_var_is_left = False
 			if last_atom.left != unboundVariable:
         next_var_is_left = True
@@ -278,18 +293,14 @@ class Rule(object):
 				value = triple.get_value(next_var_is_left)
 				previous_values = set([])
 				previous_value = triple.get_value(not next_var_is_left)
-				previousValues.add(previousValue)
-				forwardReversed(nextVariable, value, atomIndex-1, targetVariable, targetValues, ts, previousValues);
-				if (!Rule.APPLICATION_MODE && targetValues.size() >= Learn.SAMPLE_SIZE) return;
+				previous_values.add(previous_value)
+				self.forwardReversed(next_variable, value, atom_index - 1, target_variable, target_values, triple_set, previous_values)
+				if not Rule.application_mode and len(target_values) >= Learn.sample_size:
+          return
 				
-				if (Rule.APPLICATION_MODE && targetValues.size() >= Apply.DISCRIMINATION_BOUND) {
-					targetValues.clear();
-					return;
-				}
-				
-			}
-		}
-	}
+				if Rule.application_mode and len(target_values) >= Apply.discrimination_bound:
+					target_values.clear()
+					return
 
   def compute_scores(self, triples):
     if self.is_XY_rule():
@@ -305,17 +316,17 @@ class Rule(object):
 			for key in xypairs.values.keys():
 				for value : xypairs.values.get(key):
 					predicted += 1
-					if triples.isTrue(key, this.head.getRelation(), value):
+					if triples.is_true(key, self.head.relation, value):
             correctly_predicted += 1
 
 			self.predicted = predicted
 			self.correctly_predicted = correctly_predicted
 			self.confidence = correctly_predicted / predicted
-		if self.is_XY_rule():
+		if self.is_X_rule():
 			xvalues = set([])
-			computeValuesReversed("X", xvalues, triples)
+			self.compute_values_reversed('X', xvalues, triples)
       ## TODO
-			predicted, correctly_Predicted = 0,0
+			predicted, correctly_predicted = 0,0
 			for xvalue in xvalues:
 				predicted += 1
 				if triples.is_true(xvalue, self.head.relation, self.head.right):
@@ -324,15 +335,14 @@ class Rule(object):
 			self.correctly_predicted = correctly_predicted
 			self.confidence = predicted / correctly_predicted
 	
-		if self.is_XY_rule():
-			HashSet<String> yvalues = new HashSet<String>();
-			computeValuesReversed("Y", yvalues, triples);
-			int predicted = 0, correctlyPredicted = 0;
-			for (String yvalue : yvalues) {
-				predicted++;
-				if (triples.isTrue(this.head.getLeft(), this.head.getRelation(), yvalue)) correctlyPredicted++;
-			}
-			this.predicted = predicted;
-			this.correctlyPredicted = correctlyPredicted;
-			this.confidence = (double)correctlyPredicted / (double)predicted;
-		}
+		if self.is_Y_rule():
+			yvalues = set([])
+			self.compute_values_reversed('Y', yvalues, triples)
+			predicted , correctly_predicted = 0,0
+			for yvalue in yvalues:
+				predicted += 1
+				if triples.is_true(self.head.left, self.head.relation, yvalue):
+          correctly_predicted += 1
+			self.predicted = predicted;
+			self.correctly_predicted = correctly_predicted;
+			self.confidence = correctly_predicted / predicted
