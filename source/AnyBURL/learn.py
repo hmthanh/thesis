@@ -29,7 +29,8 @@ class Learn(object):
       p = path_sampler.sample_path(self.rule_size + 2, False)
       if p is not None and p.is_valid():
         # print(p)
-        pr = Rule(p)
+        pr = Rule()
+        pr.init_from_path(p)
         rules = pr.get_generalizations(False)
         for rule in rules:
           if rule.is_trivial():

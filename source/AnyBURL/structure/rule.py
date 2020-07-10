@@ -7,7 +7,7 @@ from learn_config import ConfigParameters
 class Rule(object):
   variables = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P']
   application_mode = False
-  def __init__(self, head):
+  def __init__(self, head=None):
     self.head = head
     self.body = []
     self.predicted = 0
@@ -25,9 +25,9 @@ class Rule(object):
     for i in range(len(path.markers)):
       if path.markers[i] == '+':
         #print("markers size = " + p.markers.length + "   nodes size = " + p.nodes.length + "   i =" +  i)
-        self.body.add(Atom(path.nodes[i*2], path.nodes[i*2+1], path.nodes[i*2+2], True, True))
+        self.body.append(Atom(path.nodes[i*2], path.nodes[i*2+1], path.nodes[i*2+2], True, True))
       else:
-        self.body.add(Atom(p.nodes[i*2+2], p.nodes[i*2+1], p.nodes[i*2], True, True))
+        self.body.append(Atom(path.nodes[i*2+2], path.nodes[i*2+1], path.nodes[i*2], True, True))
   
   def  is_XY_rule(self):
     if not self.head.is_left_constant and not self.head.is_right_constant:
@@ -63,7 +63,7 @@ class Rule(object):
   def __deep_copy(self):
     copy = Rule(self.head.clone())
     for body_literal in self.body:
-      copy.body.add(body_literal.clone())
+      copy.body.append(body_literal.clone())
     copy.next_free_variable = self.next_free_variable
     return copy
 
@@ -71,7 +71,7 @@ class Rule(object):
     left_right_general = self.__deep_copy()
     left_constant = left_right_general.head.left
     xcount = left_right_general.__replace_by_variable(left_constant, 'X')
-    right_constant = lrG.head.right
+    right_constant = left_right_general.head.right
     ycount = left_right_general.__replace_by_variable(right_constant, 'Y')
     if xcount < 2 or ycount < 2:
       left_right_general = None
@@ -114,7 +114,7 @@ class Rule(object):
         c = atom.left
         self.__replace_by_variable(c, Rule.variables[self.next_free_variable])
         self.next_free_variable += 1
-      if atom.right_c:
+      if atom.is_right_constant:
         c = atom.right
         self.__replace_by_variable(c, Rule.variables[self.next_free_variable]);
         self.next_free_variable += 1
@@ -321,18 +321,20 @@ class Rule(object):
 			# if self.body.contains():
 			# 	xypairs = groundBodyCyclic("X", "Y", triples)
 			# else:
-      xypairs = ground_body_cyclic('Y', 'X', triples)
-		  # body groundings		
-      correctly_predicted, predicted = 0, 0
-      for key in xypairs.values.keys():
-        for value in xypairs.values.get(key):
-          predicted += 1
-          if triples.is_true(key, self.head.relation, value):
-            correctly_predicted += 1
+  def compute_scores(self, triples):
+    xypairs = self.ground_body_cyclic('Y', 'X', triples)
+    # body groundings		
+    correctly_predicted, predicted = 0, 0
+    for key in xypairs.values.keys():
+      for value in xypairs.values.get(key):
+        predicted += 1
+        if triples.is_true(key, self.head.relation, value):
+          correctly_predicted += 1
       
       self.predicted = predicted
       self.correctly_predicted = correctly_predicted
       self.confidence = correctly_predicted / predicted
+    
     if self.is_X_rule():
       xvalues = set([])
       self.compute_values_reversed('X', xvalues, triples)
