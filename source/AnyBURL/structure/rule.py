@@ -175,7 +175,6 @@ class Rule(object):
       for v in triples.get_entities(atom.relation, value, head_not_tail):
         if v not in previous_values:
           final_results.add(v)
-        # print('FINAL -> atom.getRelation()=' + atom.relation + ' value=' + value + ' headNotTail=' + str(head_not_tail))
       return
     ## the current atom is not the last
     else: 
@@ -202,6 +201,7 @@ class Rule(object):
     atom = self.body[0]
     head_not_tail = atom.left == first_variable
     rtriples = triples.get_triples_by_relation(atom.relation)
+
     counter = 0
     count = Counter()
     for triple in rtriples:
@@ -212,7 +212,6 @@ class Rule(object):
       self._get_cyclic(first_variable, last_variable, triple_val, 0, True, triples, set([]), last_variable_groundings, count)
 
       # Learn.showElapsedMoreThan(500, "call to getCyclic")
-      
       if len(last_variable_groundings) > 0:
         if first_variable == 'X':
           groundings.add_key(triple_val)
@@ -318,21 +317,21 @@ class Rule(object):
     if self.is_XY_rule():
 			## X is given in first body atom
       xypairs = None
-			# if self.body.contains():
-			# 	xypairs = groundBodyCyclic("X", "Y", triples)
-			# else:
-      xypairs = self.ground_body_cyclic('Y', 'X', triples)
-      # body groundings		
-      correctly_predicted, predicted = 0, 0
+      if 'X' in self.body:
+        xypairs = groundBodyCyclic('X', 'Y', triples)
+      else:
+        xypairs = self.ground_body_cyclic('Y', 'X', triples)
+      # body groundings
+      correctly_predicted, predicted = 0, 1
       for key in xypairs.values.keys():
         for value in xypairs.values.get(key):
           predicted += 1
           if triples.is_true(key, self.head.relation, value):
             correctly_predicted += 1
         
-        self.predicted = predicted
-        self.correctly_predicted = correctly_predicted
-        self.confidence = correctly_predicted / predicted
+      self.predicted = predicted
+      self.correctly_predicted = correctly_predicted
+      self.confidence = correctly_predicted / predicted
       
       if self.is_X_rule():
         xvalues = set([])
