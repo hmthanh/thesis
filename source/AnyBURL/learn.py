@@ -28,18 +28,21 @@ class Learn(object):
       path_counter += 1
       useful_rules = all_useful_rules[0]
       p = path_sampler.sample_path(self.rule_size + 2, False)
-      # print('sample_path')
+      # print('sample_path {}'.format(p))
       if p is not None and p.is_valid():
         # print(p)
         pr = Rule()
         pr.init_from_path(p)
         rules = pr.get_generalizations(False)
-        rt = rules.pop()
-        print('get_generalizations {}'.format(rt.body[0]))
+        print('get_generalizations {}'.format('\t'.join([r.head.__str__() for r in rules])))
+        return
+        # rt = rules.pop()
+        # print('get_generalizations {}'.format(rt.head))
         for rule in rules:
           if rule.is_trivial():
             continue
           batch_rules += 1
+          print('get_generalizations rule {}'.format(rule.head))
           if rule not in useful_rules:
             rule.compute_scores(self.triple_set)
             if rule.confidence >= ConfigParameters.threshold_confidence and  rule.correctly_predicted >= ConfigParameters.threshold_correct_predictions:

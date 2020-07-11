@@ -74,7 +74,7 @@ class Atom(object):
       return self.right
 
   def __str__(self):
-    return '{} ({}, {})'.format(self.relation, self.left, self.right)
+    return '{} ({}, {}): ({} + {})'.format(self.relation, self.left, self.right, self.is_left_constant, self.is_right_constant)
 
   def __repr__(self):
     return ((self.left, self.relation, self.right)(self.is_left_constant, self.is_right_constant))

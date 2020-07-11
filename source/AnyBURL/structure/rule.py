@@ -48,7 +48,7 @@ class Rule(object):
     if self.is_XY_rule():
       return False
     else:
-      if not this.head.is_right_constant:
+      if not self.head.is_right_constant:
         return True
       else:
         return False
@@ -56,7 +56,7 @@ class Rule(object):
   def __replace_by_variable(self, constant, variable):
     count = self.head.replace_by_variable(constant, variable)
     for batom in self.body:
-      bcount = batom.replace_by_variable(constant, variable);
+      bcount = batom.replace_by_variable(constant, variable)
       count += bcount		
     return count
 	
@@ -132,23 +132,28 @@ class Rule(object):
     left = self.__get_left_generalization()
     if left is not None:
       left_free = left.__deep_copy()
+      print('__get_left_generalization rule {}->{}\n\n'.format(left.head, left_right is not None))
       if left_right is None:
         left_free.__replace_all_constants_by_variables()
       left.__replace_nearly_all_constants_by_variables()
+      print('__get_left_generalization rule {}->{}'.format(left.head, left_right is not None))
       generalizations.add(left)
+      print('__get_left_generalization rule {}->{}'.format(left.head, left_right is not None))
       if left_right is None:
         generalizations.add(left_free)
     
     right = self.__get_right_generalization()
-    if right is not None:
+    if right is not None:      
       right_free = right.__deep_copy()
+      print('__get_right_generalization rule {}->{}\n\n'.format(right.head, left_right is not None))
       if left_right is None:
         right_free.__replace_all_constants_by_variables()
       right.__replace_nearly_all_constants_by_variables()
+      print('__get_right_generalization rule {}->{}'.format(right.head, left_right is not None))
       generalizations.add(right)
-      
+      print('__get_right_generalization rule {}->{}'.format(right.head, left_right is not None))
       if left_right is None:
-        generalizations.add(left_free)
+        generalizations.add(right_free)
     
     return generalizations
 
@@ -315,6 +320,7 @@ class Rule(object):
 
   def compute_scores(self, triples):
     if self.is_XY_rule():
+      print('is_XY_rule')
 			## X is given in first body atom
       xypairs = None
       if 'X' in self.body:
@@ -335,6 +341,7 @@ class Rule(object):
       self.confidence = correctly_predicted / predicted
       # print('predicted={}, correctly_predicted={}, confidence={}'.format(predicted, correctly_predicted, self.confidence))
     if self.is_X_rule():
+      print('self.is_X_rule()')
       xvalues = set([])
       self.compute_values_reversed('X', xvalues, triples)
       predicted, correctly_predicted = 0,0
@@ -347,6 +354,7 @@ class Rule(object):
       self.confidence = predicted / correctly_predicted
     
     if self.is_Y_rule():
+      print('self.is_Y_rule()')
       yvalues = set([])
       self.compute_values_reversed('Y', yvalues, triples)
       predicted , correctly_predicted = 0,0
