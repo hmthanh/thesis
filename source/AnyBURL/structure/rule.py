@@ -152,7 +152,7 @@ class Rule(object):
     
     return generalizations
 
-  def get_cyclic(self, current_variable, last_variable, value, body_index, direction, triples, previous_values, final_results, counter):
+  def _get_cyclic(self, current_variable, last_variable, value, body_index, direction, triples, previous_values, final_results, counter):
 		# print("currentVariable=" + current_variable + " lastVariable=" +  last_variable + " value=" + value + " bodyIndex=" + body_index)
     if Rule.application_mode and len(final_results) >= Apply.discrimination_bound :
       final_results.clear()
@@ -209,7 +209,7 @@ class Rule(object):
       last_variable_groundings = set([])
       ## Learn.takeTime()
       triple_val = triple.get_value(head_not_tail)
-      self._get_cyclic(first_variable, last_variable, triple_val, 0, true, triples, set([]), last_variable_groundings, count)
+      self._get_cyclic(first_variable, last_variable, triple_val, 0, True, triples, set([]), last_variable_groundings, count)
 
       # Learn.showElapsedMoreThan(500, "call to getCyclic")
       
@@ -321,44 +321,43 @@ class Rule(object):
 			# if self.body.contains():
 			# 	xypairs = groundBodyCyclic("X", "Y", triples)
 			# else:
-  def compute_scores(self, triples):
-    xypairs = self.ground_body_cyclic('Y', 'X', triples)
-    # body groundings		
-    correctly_predicted, predicted = 0, 0
-    for key in xypairs.values.keys():
-      for value in xypairs.values.get(key):
-        predicted += 1
-        if triples.is_true(key, self.head.relation, value):
-          correctly_predicted += 1
+      xypairs = self.ground_body_cyclic('Y', 'X', triples)
+      # body groundings		
+      correctly_predicted, predicted = 0, 0
+      for key in xypairs.values.keys():
+        for value in xypairs.values.get(key):
+          predicted += 1
+          if triples.is_true(key, self.head.relation, value):
+            correctly_predicted += 1
+        
+        self.predicted = predicted
+        self.correctly_predicted = correctly_predicted
+        self.confidence = correctly_predicted / predicted
       
-      self.predicted = predicted
-      self.correctly_predicted = correctly_predicted
-      self.confidence = correctly_predicted / predicted
-    
-    if self.is_X_rule():
-      xvalues = set([])
-      self.compute_values_reversed('X', xvalues, triples)
-      predicted, correctly_predicted = 0,0
-      for xvalue in xvalues:
-        predicted += 1
-        if triples.is_true(xvalue, self.head.relation, self.head.right):
-          correctly_predicted += 1
-      self.predicted = predicted
-      self.correctly_predicted = correctly_predicted
-      self.confidence = predicted / correctly_predicted
-    
-    if self.is_Y_rule():
-      yvalues = set([])
-      self.compute_values_reversed('Y', yvalues, triples)
-      predicted , correctly_predicted = 0,0
-      for yvalue in yvalues:
-        predicted += 1
-        if triples.is_true(self.head.left, self.head.relation, yvalue):
-          correctly_predicted += 1
-          
-      self.predicted = predicted
-      self.correctly_predicted = correctly_predicted
-      self.confidence = correctly_predicted / predicted
+      if self.is_X_rule():
+        xvalues = set([])
+        self.compute_values_reversed('X', xvalues, triples)
+        predicted, correctly_predicted = 0,0
+        for xvalue in xvalues:
+          predicted += 1
+          if triples.is_true(xvalue, self.head.relation, self.head.right):
+            correctly_predicted += 1
+        self.predicted = predicted
+        self.correctly_predicted = correctly_predicted
+        self.confidence = predicted / correctly_predicted
+      
+      if self.is_Y_rule():
+        yvalues = set([])
+        self.compute_values_reversed('Y', yvalues, triples)
+        predicted , correctly_predicted = 0,0
+        for yvalue in yvalues:
+          predicted += 1
+          if triples.is_true(self.head.left, self.head.relation, yvalue):
+            correctly_predicted += 1
+            
+        self.predicted = predicted
+        self.correctly_predicted = correctly_predicted
+        self.confidence = correctly_predicted / predicted
 
   def is_trivial(self):
     if len(self.body) == 1:
