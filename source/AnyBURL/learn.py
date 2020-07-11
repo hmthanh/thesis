@@ -22,7 +22,7 @@ class Learn(object):
     batch_previously_found_rules = 0
     while (True):
       current_time = time.time()
-      print('current_time={} - batch_start_time {} > ConfigParameters.batch_time {}'.format(current_time, batch_start_time, ConfigParameters.batch_time), current_time - batch_start_time > ConfigParameters.batch_time)
+      # print('current_time={} - batch_start_time {} > ConfigParameters.batch_time {}'.format(current_time, batch_start_time, ConfigParameters.batch_time), current_time - batch_start_time > ConfigParameters.batch_time)
       if current_time - batch_start_time > ConfigParameters.batch_time:
         break
       path_counter += 1
@@ -48,4 +48,5 @@ class Learn(object):
               batch_previously_found_rules += 1
               # if (r.isXYRule()) batchPreviouslyFoundCyclicRules++;
               # else batchPreviouslyFoundAcyclicRules++;
+    print('================== done learning ====================, {}'.format(batch_previously_found_rules))
 					
