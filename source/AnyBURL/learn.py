@@ -38,7 +38,7 @@ class Learn(object):
           batch_rules += 1
           if rule not in useful_rules:
             rule.compute_scores(self.triple_set)
-            if rule.gconfidence >= threshold_confidence and  rule.correctly_predicted >= threshold_correct_predictions:
+            if rule.confidence >= ConfigParameters.threshold_confidence and  rule.correctly_predicted >= ConfigParameters.threshold_correct_predictions:
               batch_previously_found_rules += 1
 							# if (r.isXYRule()) batchNewUsefulCyclicRules++;
 							# else batchNewUsefulAcyclicRules++;
