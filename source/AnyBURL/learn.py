@@ -48,5 +48,7 @@ class Learn(object):
               batch_previously_found_rules += 1
               # if (r.isXYRule()) batchPreviouslyFoundCyclicRules++;
               # else batchPreviouslyFoundAcyclicRules++;
-    print('================== done learning ====================, {}'.format(batch_previously_found_rules))
+    print('================== done learning ====================, {} len useful_rules = {}'.format(batch_previously_found_rules, len(useful_rules)))
+    for rule in useful_rules:
+      print(rule)
 					

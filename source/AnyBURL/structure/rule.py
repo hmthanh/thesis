@@ -220,7 +220,7 @@ class Rule(object):
         else:
           for last_variable_value in last_variable_groundings:
             groundings.add_key(last_variable_value)
-            groundings.add_key(triple_val)
+            groundings.add_value(triple_val)
       if (counter >  ConfigParameters.sample_size or groundings.size() > ConfigParameters.sample_size) and sampling_on:
         break
       if not Rule.application_mode and count.get() >= ConfigParameters.trial_size:
@@ -323,6 +323,7 @@ class Rule(object):
         xypairs = self.ground_body_cyclic('Y', 'X', triples)
       # body groundings
       correctly_predicted, predicted = 0, 1
+      # print('value={}'.format(xypairs.values))
       for key in xypairs.values.keys():
         for value in xypairs.values.get(key):
           predicted += 1
@@ -332,31 +333,31 @@ class Rule(object):
       self.predicted = predicted
       self.correctly_predicted = correctly_predicted
       self.confidence = correctly_predicted / predicted
-      
-      if self.is_X_rule():
-        xvalues = set([])
-        self.compute_values_reversed('X', xvalues, triples)
-        predicted, correctly_predicted = 0,0
-        for xvalue in xvalues:
-          predicted += 1
-          if triples.is_true(xvalue, self.head.relation, self.head.right):
-            correctly_predicted += 1
-        self.predicted = predicted
-        self.correctly_predicted = correctly_predicted
-        self.confidence = predicted / correctly_predicted
-      
-      if self.is_Y_rule():
-        yvalues = set([])
-        self.compute_values_reversed('Y', yvalues, triples)
-        predicted , correctly_predicted = 0,0
-        for yvalue in yvalues:
-          predicted += 1
-          if triples.is_true(self.head.left, self.head.relation, yvalue):
-            correctly_predicted += 1
-            
-        self.predicted = predicted
-        self.correctly_predicted = correctly_predicted
-        self.confidence = correctly_predicted / predicted
+      # print('predicted={}, correctly_predicted={}, confidence={}'.format(predicted, correctly_predicted, self.confidence))
+    if self.is_X_rule():
+      xvalues = set([])
+      self.compute_values_reversed('X', xvalues, triples)
+      predicted, correctly_predicted = 0,0
+      for xvalue in xvalues:
+        predicted += 1
+        if triples.is_true(xvalue, self.head.relation, self.head.right):
+          correctly_predicted += 1
+      self.predicted = predicted
+      self.correctly_predicted = correctly_predicted
+      self.confidence = predicted / correctly_predicted
+    
+    if self.is_Y_rule():
+      yvalues = set([])
+      self.compute_values_reversed('Y', yvalues, triples)
+      predicted , correctly_predicted = 0,0
+      for yvalue in yvalues:
+        predicted += 1
+        if triples.is_true(self.head.left, self.head.relation, yvalue):
+          correctly_predicted += 1
+          
+      self.predicted = predicted
+      self.correctly_predicted = correctly_predicted
+      self.confidence = correctly_predicted / predicted
 
   def is_trivial(self):
     if len(self.body) == 1:
