@@ -76,8 +76,8 @@ class TripleSet (object):
     
     if tail in self.tail_relation_to_head:
       if relation in self.tail_relation_to_head.get(tail):
-        if head in self.tail_relation_to_head.get(tail).get(relation):
-          print(head, self.tail_relation_to_head.get(tail).get(relation))
+        # if head in self.tail_relation_to_head.get(tail).get(relation):
+        #   print(head, self.tail_relation_to_head.get(tail).get(relation))
         return head in self.tail_relation_to_head.get(tail).get(relation)
     return False
 	
