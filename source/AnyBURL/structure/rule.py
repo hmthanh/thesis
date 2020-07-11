@@ -197,7 +197,7 @@ class Rule(object):
         i += 1
       return
 	
-  def ground_body_cyclic(self, first_variable, last_variable, triples, sampling_on):
+  def ground_body_cyclic(self, first_variable, last_variable, triples, sampling_on=True):
     groundings = SampledPairedResultSet()
     atom = self.body[0]
     head_not_tail = atom.left == first_variable

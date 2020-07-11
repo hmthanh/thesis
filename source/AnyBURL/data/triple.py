@@ -8,9 +8,9 @@ class Triple(object):
 
   def get_value(self, head_not_tail):
     if head_not_tail:
-      return self.head;
+      return self.head
     else:
-      return this.tail
+      return self.tail
 
   def __str__(self):
     return '{0} {1} {2}'.format(self.head, self.relation, self.tail)
