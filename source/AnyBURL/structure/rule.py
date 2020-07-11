@@ -36,7 +36,7 @@ class Rule(object):
       return False
 
   def is_X_rule(self):
-    if self.isXYRule():
+    if self.is_XY_rule():
       return False
     else:
       if not self.head.is_left_constant:
@@ -45,7 +45,7 @@ class Rule(object):
         return False
 		
   def is_Y_rule(self):
-    if self.isXYRule():
+    if self.is_XY_rule():
       return False
     else:
       if not this.head.is_right_constant:
@@ -165,8 +165,8 @@ class Rule(object):
     if not Rule.application_mode and len(final_results) >= ConfigParameters.sample_size:
       return
     # check if the value has been seen before as grounding of another variable
-    atom = self.body.get(body_index)
-    head_not_tail = atom.left == currentVariable
+    atom = self.body[body_index]
+    head_not_tail = atom.left == current_variable
     if  value in previous_values:
       return		
     # the current atom is the last
@@ -175,12 +175,12 @@ class Rule(object):
       for v in triples.get_entities(atom.relation, value, head_not_tail):
         if v not in previous_values:
           final_results.add(v)
-        print('FINAL -> atom.getRelation()=' + atom.relation + ' value=' + value + ' headNotTail=' + head_not_tail)
+        print('FINAL -> atom.getRelation()=' + atom.relation + ' value=' + value + ' headNotTail=' + str(head_not_tail))
       return
     ## the current atom is not the last
     else: 
       results = triples.get_entities(atom.relation, value, head_not_tail)
-      print("atom.getRelation()=" + atom.relation + " value=" + value + " headNotTail=" + head_not_tail);
+      print("atom.getRelation()=" + atom.relation + " value=" + value + " headNotTail=" + str(head_not_tail))
       next_variable = atom.left
       if head_not_tail:
         next_variable = atom.right
@@ -214,7 +214,7 @@ class Rule(object):
       # Learn.showElapsedMoreThan(500, "call to getCyclic")
       
       if len(last_variable_groundings) > 0:
-        if firstVariable.equals('X'):
+        if first_variable == 'X':
           groundings.add_key(triple_val)
           for last_variable_value in last_variable_groundings:
             groundings.add_value(last_variable_value) 

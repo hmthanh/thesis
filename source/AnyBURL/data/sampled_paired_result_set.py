@@ -16,3 +16,6 @@ class SampledPairedResultSet(object):
   def add_value(self, value):
     self.values.get(self.currentKey).add(value)
     self.value_counter += 1
+  
+  def size(self):
+    return self.value_counter
