@@ -22,7 +22,7 @@ class Rule(object):
     else:
       self.head = Atom(path.nodes[2], path.nodes[1], path.nodes[0], True, True)
     
-    for i in range(len(path.markers)):
+    for i in range(1, len(path.markers)):
       if path.markers[i] == '+':
         #print("markers size = " + p.markers.length + "   nodes size = " + p.nodes.length + "   i =" +  i)
         self.body.append(Atom(path.nodes[i*2], path.nodes[i*2+1], path.nodes[i*2+2], True, True))
@@ -74,7 +74,7 @@ class Rule(object):
     right_constant = left_right_general.head.right
     ycount = left_right_general.__replace_by_variable(right_constant, 'Y')
     if xcount < 2 or ycount < 2:
-      left_right_general = None
+      return None
     return left_right_general
 
   def __replace_all_constants_by_variables(self):
@@ -132,13 +132,14 @@ class Rule(object):
     left = self.__get_left_generalization()
     if left is not None:
       left_free = left.__deep_copy()
-      print('__get_left_generalization rule {}->{}\n\n'.format(left.head, left_right is not None))
+      print('__get_left_generalization rule {}->{} body {}'.format(left.head, left_right is not None, len(left.body)))
+      print('__get_left_generalization rule {}\n {} \n\n'.format(left.body[0], left.body[1]))
       if left_right is None:
         left_free.__replace_all_constants_by_variables()
       left.__replace_nearly_all_constants_by_variables()
       print('__get_left_generalization rule {}->{}'.format(left.head, left_right is not None))
       generalizations.add(left)
-      print('__get_left_generalization rule {}->{}'.format(left.head, left_right is not None))
+      print('__get_left_generalization rule {}->{}\n\n\n\n'.format(left.head, left_right is not None))
       if left_right is None:
         generalizations.add(left_free)
     
