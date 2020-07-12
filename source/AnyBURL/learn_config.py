@@ -21,4 +21,4 @@ class ConfigParameters(object):
   '''/**
 	 * The threshold for the confidences.
 	 */'''
-  threshold_confidence = 0.05
+  threshold_confidence = 0.25

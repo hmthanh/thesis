@@ -132,27 +132,27 @@ class Rule(object):
     left = self.__get_left_generalization()
     if left is not None:
       left_free = left.__deep_copy()
-      print('__get_left_generalization rule {}->{} body {}'.format(left.head, left_right is not None, len(left.body)))
-      print('__get_left_generalization rule {}\n {} \n\n'.format(left.body[0], left.body[1]))
+      # print('__get_left_generalization rule {}->{} body {}'.format(left.head, left_right is not None, len(left.body)))
+      # print('__get_left_generalization rule {}\n {} \n\n'.format(left.body[0], left.body[1]))
       if left_right is None:
         left_free.__replace_all_constants_by_variables()
       left.__replace_nearly_all_constants_by_variables()
-      print('__get_left_generalization rule {}->{}'.format(left.head, left_right is not None))
+      # print('__get_left_generalization rule {}->{}'.format(left.head, left_right is not None))
       generalizations.add(left)
-      print('__get_left_generalization rule {}->{}\n\n\n\n'.format(left.head, left_right is not None))
+      # print('__get_left_generalization rule {}->{}\n\n\n\n'.format(left.head, left_right is not None))
       if left_right is None:
         generalizations.add(left_free)
     
     right = self.__get_right_generalization()
     if right is not None:      
       right_free = right.__deep_copy()
-      print('__get_right_generalization rule {}->{}\n\n'.format(right.head, left_right is not None))
+      # print('__get_right_generalization rule {}->{}\n\n'.format(right.head, left_right is not None))
       if left_right is None:
         right_free.__replace_all_constants_by_variables()
       right.__replace_nearly_all_constants_by_variables()
-      print('__get_right_generalization rule {}->{}'.format(right.head, left_right is not None))
+      # print('__get_right_generalization rule {}->{}'.format(right.head, left_right is not None))
       generalizations.add(right)
-      print('__get_right_generalization rule {}->{}'.format(right.head, left_right is not None))
+      # print('__get_right_generalization rule {}->{}'.format(right.head, left_right is not None))
       if left_right is None:
         generalizations.add(right_free)
     
@@ -234,7 +234,7 @@ class Rule(object):
     return groundings
 
   def get_unbound_variable(self):
-    if self.body.get(len(self.body) - 1).is_left_constant or self.body.get(len(self.body) - 1-1).is_right_constant:
+    if self.body[len(self.body) - 1].is_left_constant or self.body[len(self.body) - 1-1].is_right_constant:
       return None
     counter = {}
     for atom in self.body:
@@ -250,7 +250,7 @@ class Rule(object):
         else:
           counter[atom.right] = 1
           
-    for key, value in counter:
+    for key, value in counter.items():
       if value == 1:
         return key
     
@@ -277,8 +277,8 @@ class Rule(object):
         forwardReversed(next_variable, next_value, body_index - 1, target_variable, next_values, triple_set, current_values)
 
   def compute_values_reversed(self, target_variable, target_values, triple_set):
-    atom_index = self.body.size() - 1
-    last_atom = self.body.get(atom_index)
+    atom_index = len(self.body) - 1
+    last_atom = self.body[atom_index]
     unbound_variable = self.get_unbound_variable()
     if unbound_variable is None:
       next_var_is_left = False
@@ -300,7 +300,7 @@ class Rule(object):
           return
     else :
       next_var_is_left = False
-      if last_atom.left != unboundVariable:
+      if last_atom.left != unbound_variable:
         next_var_is_left = True
       next_variable = last_atom.get_LR(next_var_is_left)
       triples = triple_set.get_triples_by_relation(last_atom.relation)
@@ -310,7 +310,7 @@ class Rule(object):
         previous_values = set([])
         previous_value = triple.get_value(not next_var_is_left)
         previous_values.add(previous_value)
-        self.forwardReversed(next_variable, value, atom_index - 1, target_variable, target_values, triple_set, previous_values)
+        self.forward_reversed(next_variable, value, atom_index - 1, target_variable, target_values, triple_set, previous_values)
         
         if not Rule.application_mode and len(target_values) >= ConfigParameters.sample_size:
           return
@@ -321,7 +321,6 @@ class Rule(object):
 
   def compute_scores(self, triples):
     if self.is_XY_rule():
-      print('is_XY_rule')
 			## X is given in first body atom
       xypairs = None
       if 'X' in self.body:
@@ -342,23 +341,21 @@ class Rule(object):
       self.confidence = correctly_predicted / predicted
       # print('predicted={}, correctly_predicted={}, confidence={}'.format(predicted, correctly_predicted, self.confidence))
     if self.is_X_rule():
-      print('self.is_X_rule()')
       xvalues = set([])
       self.compute_values_reversed('X', xvalues, triples)
-      predicted, correctly_predicted = 0,0
+      predicted, correctly_predicted = 0,1
       for xvalue in xvalues:
         predicted += 1
         if triples.is_true(xvalue, self.head.relation, self.head.right):
           correctly_predicted += 1
       self.predicted = predicted
       self.correctly_predicted = correctly_predicted
-      self.confidence = predicted / correctly_predicted
+      self.confidence = correctly_predicted/predicted
     
     if self.is_Y_rule():
-      print('self.is_Y_rule()')
       yvalues = set([])
       self.compute_values_reversed('Y', yvalues, triples)
-      predicted , correctly_predicted = 0,0
+      predicted , correctly_predicted = 0,1
       for yvalue in yvalues:
         predicted += 1
         if triples.is_true(self.head.left, self.head.relation, yvalue):

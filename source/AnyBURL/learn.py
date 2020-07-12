@@ -22,39 +22,32 @@ class Learn(object):
     batch_previously_found_rules = 0
     while (True):
       current_time = time.time()
-      # print('current_time={} - batch_start_time {} > ConfigParameters.batch_time {}'.format(current_time, batch_start_time, ConfigParameters.batch_time), current_time - batch_start_time > ConfigParameters.batch_time)
       if current_time - batch_start_time > ConfigParameters.batch_time:
         break
       path_counter += 1
       useful_rules = all_useful_rules[0]
       p = path_sampler.sample_path(self.rule_size + 2, False)
-      # print('sample_path {}'.format(p))
+      batch_new_useful_rules = 0
       if p is not None and p.is_valid():
-        # print(p)
         pr = Rule()
         pr.init_from_path(p)
         rules = pr.get_generalizations(False)
-        print('get_generalizations {}'.format('\t'.join([r.head.__str__() for r in rules])))
-        return
-        # rt = rules.pop()
-        # print('get_generalizations {}'.format(rt.head))
         for rule in rules:
           if rule.is_trivial():
             continue
           batch_rules += 1
-          print('get_generalizations rule {}'.format(rule.head))
+          # print('get_generalizations rule {}'.format(rule.head))
           if rule not in useful_rules:
             rule.compute_scores(self.triple_set)
             if rule.confidence >= ConfigParameters.threshold_confidence and  rule.correctly_predicted >= ConfigParameters.threshold_correct_predictions:
-              batch_previously_found_rules += 1
-							# if (r.isXYRule()) batchNewUsefulCyclicRules++;
-							# else batchNewUsefulAcyclicRules++;
+              batch_new_useful_rules += 1
               useful_rules.add(rule)
-            else:
-              batch_previously_found_rules += 1
-              # if (r.isXYRule()) batchPreviouslyFoundCyclicRules++;
-              # else batchPreviouslyFoundAcyclicRules++;
-    print('================== done learning ====================, {} len useful_rules = {}'.format(batch_previously_found_rules, len(all_useful_rules)))
+          else:
+            batch_previously_found_rules += 1
+    print('================== done learning ====================, {} len useful_rules = {}'.format(batch_rules, len(all_useful_rules[0])))
+    i = 0
     for rule in useful_rules:
-      print(rule)
+      if i % 100 == 0:
+        print(rule.confidence)
+      i += 1
 					
