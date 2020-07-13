@@ -93,7 +93,7 @@ class SpGraphAttentionLayer(nn.Module):
             size=(out_features, 2 * in_features + nrela_dim)))
         nn.init.xavier_normal_(self.a.data, gain=1.414)
         self.a_2 = nn.Parameter(torch.zeros(size=(1, out_features)))
-        nn.init.xavier_normal_(self.a_2.data, gain=1.414)
+        nn.init.xavi    er_normal_(self.a_2.data, gain=1.414)
 
         self.dropout = nn.Dropout(dropout)
         self.leakyrelu = nn.LeakyReLU(self.alpha)
