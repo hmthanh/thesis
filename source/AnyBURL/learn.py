@@ -60,7 +60,7 @@ class Learn(object):
             else:
               batch_previously_found_rules += 1
       
-      current_coverage = batch_new_useful_rules / (batch_new_useful_rules + batch_previously_found_rules)
+      current_coverage = batch_previously_found_rules / (batch_new_useful_rules + batch_previously_found_rules)
       print('>>> ~~~~~~~~~~~~~~~~~~current_coverage~~~~~~~~~~~~~~~~~~~~~~~~~~ ', current_coverage)
       if current_coverage > ConfigParameters.saturation: #and batch_previously_found_rules > 1
         self.rule_size += 1
@@ -81,7 +81,7 @@ class Learn(object):
       print('================== done learning ====================, len useful_rules = {}'.format(len(rule_set)))
       i = 0
       for rule in useful_rules:
-        if i % 100 == 0:
+        if i % 500 == 0:
           print(rule.confidence)
         i += 1
 					

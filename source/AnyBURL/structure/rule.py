@@ -40,12 +40,12 @@ class Rule(object):
         return False
       
       if atom1.get_LR(left_not_right) in variables_this_to_other:
-        that_varible = variables_this_to_other.get(atom1.getLR(leftNotRight));
-        if not atom2.getLR(left_not_right) == that_varible:
+        that_varible = variables_this_to_other.get(atom1.get_LR(left_not_right))
+        if not atom2.get_LR(left_not_right) == that_varible:
           return False
       
       if atom2.get_LR(left_not_right) in variables_this_to_other:
-        this_varible = variables_this_to_other.get(atom2.getLR(left_not_right))
+        this_varible = variables_this_to_other.get(atom2.get_LR(left_not_right))
         if not atom1.get_LR(left_not_right) == this_varible:
           return False
       
