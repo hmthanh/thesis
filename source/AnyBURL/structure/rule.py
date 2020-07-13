@@ -14,6 +14,61 @@ class Rule(object):
     self.correctly_predicted = 0
     self.confidence = 0.0
     self.next_free_variable = 0
+
+  def _checkValuesAndVariables(HashMap<String, String> variablesThis2That, HashMap<String, String> variablesThat2This, Atom atom1, Atom atom2, boolean leftNotRight) {
+		if (atom1.isLRC(leftNotRight) && atom2.isLRC(leftNotRight)) {
+			if (!atom1.getLR(leftNotRight).equals(atom2.getLR(leftNotRight))) {
+				// different constants in same position
+				return false;
+			}
+		}
+		if (atom1.isLRC(leftNotRight) != atom2.isLRC(leftNotRight)) {
+			// one varaible and one constants do not fit
+			return false;
+		}
+		if (!atom1.isLRC(leftNotRight) && !atom2.isLRC(leftNotRight)) {
+			// special cases X must be at same poistion as X, Y at same as Y
+			if (atom1.getLR(leftNotRight).equals("X") && !atom2.getLR(leftNotRight).equals("X")) return false;
+			if (atom2.getLR(leftNotRight).equals("X") && !atom1.getLR(leftNotRight).equals("X")) return false;
+			
+			if (atom1.getLR(leftNotRight).equals("Y") && !atom2.getLR(leftNotRight).equals("Y")) return false;
+			if (atom2.getLR(leftNotRight).equals("Y") && !atom1.getLR(leftNotRight).equals("Y")) return false;
+			
+			if (variablesThis2That.containsKey(atom1.getLR(leftNotRight))) {
+				String thatV = variablesThis2That.get(atom1.getLR(leftNotRight));
+				if (!atom2.getLR(leftNotRight).equals(thatV)) return false;
+			}
+			if (variablesThat2This.containsKey(atom2.getLR(leftNotRight))) {
+				String thisV = variablesThat2This.get(atom2.getLR(leftNotRight));
+				if (!atom1.getLR(leftNotRight).equals(thisV)) return false;
+			}
+			if (!variablesThis2That.containsKey(atom1.getLR(leftNotRight))) {
+				variablesThis2That.put(atom1.getLR(leftNotRight), atom2.getLR(leftNotRight));
+				variablesThat2This.put(atom2.getLR(leftNotRight), atom1.getLR(leftNotRight));
+			}
+		}
+		return true
+	}
+
+  def __eq__(self, other):
+    if isinstance(other, self.__class__):
+      if self.head = other.head:
+				if len(self.body) == len(other.body):
+					variables_this_to_other = {}
+					variables_other_to_this = {}
+					for  i in range(len(self.body)): 
+					  atom1 = self.body[i]
+						atom2 = other.body[i]
+						if not atom1.relation == atom2.relation:
+							return False
+						else:
+							if not self.checkValuesAndVariables(variablesThis2That, variablesThat2This, atom1, atom2, true):
+                return False
+							if not self.checkValuesAndVariables(variablesThis2That, variablesThat2This, atom1, atom2, false):
+                return False
+					return True
+			
+		return False
 	
   def init_from_path(self, path):
     self.body = []
@@ -343,19 +398,19 @@ class Rule(object):
     if self.is_X_rule():
       xvalues = set([])
       self.compute_values_reversed('X', xvalues, triples)
-      predicted, correctly_predicted = 0,1
+      predicted, correctly_predicted = 1,1
       for xvalue in xvalues:
         predicted += 1
         if triples.is_true(xvalue, self.head.relation, self.head.right):
           correctly_predicted += 1
       self.predicted = predicted
       self.correctly_predicted = correctly_predicted
-      self.confidence = correctly_predicted/predicted
+      self.confidence = correctly_predicted / predicted
     
     if self.is_Y_rule():
       yvalues = set([])
       self.compute_values_reversed('Y', yvalues, triples)
-      predicted , correctly_predicted = 0,1
+      predicted , correctly_predicted = 1,1
       for yvalue in yvalues:
         predicted += 1
         if triples.is_true(self.head.left, self.head.relation, yvalue):

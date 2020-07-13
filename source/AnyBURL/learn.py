@@ -32,7 +32,7 @@ class Learn(object):
 
       batch_previously_found_rules = 0
       batch_rules = 0
-      batch_new_useful_rules = 0
+      batch_new_useful_rules = 1
       self.rule_size = self.rule_size_acyclic
       if self.mine_cyclic_not_acyclic:
         self.rule_size = self.rule_size_cyclic
