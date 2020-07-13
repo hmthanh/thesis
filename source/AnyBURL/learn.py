@@ -61,7 +61,7 @@ class Learn(object):
               batch_previously_found_rules += 1
       
       current_coverage = batch_new_useful_rules / (batch_new_useful_rules + batch_previously_found_rules)
-      print('>>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ', current_coverage)
+      print('>>> ~~~~~~~~~~~~~~~~~~current_coverage~~~~~~~~~~~~~~~~~~~~~~~~~~ ', current_coverage)
       if current_coverage > ConfigParameters.saturation: #and batch_previously_found_rules > 1
         self.rule_size += 1
         if self.mine_cyclic_not_acyclic:

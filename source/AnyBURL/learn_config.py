@@ -21,7 +21,7 @@ class ConfigParameters(object):
   '''/**
 	 * The threshold for the confidences.
 	 */'''
-  threshold_confidence = 0.1
+  threshold_confidence = 0.05
   '''/**
 	 * The saturation required to move to the next rule length. Saturation is defined as the fraction of 
 	 * useful rules that have been sampled in a previous batch compared to all useful rules that have

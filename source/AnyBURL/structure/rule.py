@@ -14,61 +14,76 @@ class Rule(object):
     self.correctly_predicted = 0
     self.confidence = 0.0
     self.next_free_variable = 0
+    self.hashcode = None
 
-  def _checkValuesAndVariables(HashMap<String, String> variablesThis2That, HashMap<String, String> variablesThat2This, Atom atom1, Atom atom2, boolean leftNotRight) {
-		if (atom1.isLRC(leftNotRight) && atom2.isLRC(leftNotRight)) {
-			if (!atom1.getLR(leftNotRight).equals(atom2.getLR(leftNotRight))) {
-				// different constants in same position
-				return false;
-			}
-		}
-		if (atom1.isLRC(leftNotRight) != atom2.isLRC(leftNotRight)) {
-			// one varaible and one constants do not fit
-			return false;
-		}
-		if (!atom1.isLRC(leftNotRight) && !atom2.isLRC(leftNotRight)) {
-			// special cases X must be at same poistion as X, Y at same as Y
-			if (atom1.getLR(leftNotRight).equals("X") && !atom2.getLR(leftNotRight).equals("X")) return false;
-			if (atom2.getLR(leftNotRight).equals("X") && !atom1.getLR(leftNotRight).equals("X")) return false;
-			
-			if (atom1.getLR(leftNotRight).equals("Y") && !atom2.getLR(leftNotRight).equals("Y")) return false;
-			if (atom2.getLR(leftNotRight).equals("Y") && !atom1.getLR(leftNotRight).equals("Y")) return false;
-			
-			if (variablesThis2That.containsKey(atom1.getLR(leftNotRight))) {
-				String thatV = variablesThis2That.get(atom1.getLR(leftNotRight));
-				if (!atom2.getLR(leftNotRight).equals(thatV)) return false;
-			}
-			if (variablesThat2This.containsKey(atom2.getLR(leftNotRight))) {
-				String thisV = variablesThat2This.get(atom2.getLR(leftNotRight));
-				if (!atom1.getLR(leftNotRight).equals(thisV)) return false;
-			}
-			if (!variablesThis2That.containsKey(atom1.getLR(leftNotRight))) {
-				variablesThis2That.put(atom1.getLR(leftNotRight), atom2.getLR(leftNotRight));
-				variablesThat2This.put(atom2.getLR(leftNotRight), atom1.getLR(leftNotRight));
-			}
-		}
-		return true
-	}
+  def _check_values_and_variables(self, variables_this_to_other, variables_other_to_this, atom1, atom2, left_not_right):
+
+    if atom1.is_LRC(left_not_right) and atom2.is_LRC(left_not_right):
+      if not atom1.get_LR(left_not_right) == atom2.get_LR(left_not_right):
+				# different constants in same position
+        return False
+    
+    if atom1.is_LRC(left_not_right) != atom2.is_LRC(left_not_right):
+			# one varaible and one constants do not fit
+      return False
+      
+    if not atom1.is_LRC(left_not_right) and not atom2.is_LRC(left_not_right):
+			# special cases X must be at same poistion as X, Y at same as Y
+      if atom1.get_LR(left_not_right) == 'X' and not atom2.get_LR(left_not_right) == 'X':
+        return False
+      if atom2.get_LR(left_not_right) == 'X' and not atom1.get_LR(left_not_right) == 'X':
+        return False
+      
+      if atom1.get_LR(left_not_right) == 'Y' and not atom2.get_LR(left_not_right) == 'Y':
+        return False
+      if atom2.get_LR(left_not_right) == 'Y' and not atom1.get_LR(left_not_right) == 'Y':
+        return False
+      
+      if atom1.get_LR(left_not_right) in variables_this_to_other:
+        that_varible = variables_this_to_other.get(atom1.getLR(leftNotRight));
+        if not atom2.getLR(left_not_right) == that_varible:
+          return False
+      
+      if atom2.get_LR(left_not_right) in variables_this_to_other:
+        this_varible = variables_this_to_other.get(atom2.getLR(left_not_right))
+        if not atom1.get_LR(left_not_right) == this_varible:
+          return False
+      
+      if not atom1.get_LR(left_not_right) in variables_this_to_other:
+        variables_this_to_other[atom1.get_LR(left_not_right)] = atom2.get_LR(left_not_right)
+        variables_other_to_this[atom2.get_LR(left_not_right)] = atom1.get_LR(left_not_right)
+		
+    return True
 
   def __eq__(self, other):
     if isinstance(other, self.__class__):
-      if self.head = other.head:
-				if len(self.body) == len(other.body):
-					variables_this_to_other = {}
-					variables_other_to_this = {}
-					for  i in range(len(self.body)): 
-					  atom1 = self.body[i]
-						atom2 = other.body[i]
-						if not atom1.relation == atom2.relation:
-							return False
-						else:
-							if not self.checkValuesAndVariables(variablesThis2That, variablesThat2This, atom1, atom2, true):
+      if self.head == other.head:
+        if len(self.body) == len(other.body):
+          variables_this_to_other = {}
+          variables_other_to_this = {}
+          for i in range(len(self.body)): 
+            atom1 = self.body[i]
+            atom2 = other.body[i]
+            if not atom1.relation == atom2.relation:
+              return False
+            else:
+              if not self._check_values_and_variables(variables_this_to_other, variables_other_to_this, atom1, atom2, True):
                 return False
-							if not self.checkValuesAndVariables(variablesThis2That, variablesThat2This, atom1, atom2, false):
+              if not self._check_values_and_variables(variables_this_to_other, variables_other_to_this, atom1, atom2, False):
                 return False
-					return True
-			
-		return False
+        return True
+    
+    return False
+
+  def __ne__(self, other):
+    return not self.__eq__(other)
+  
+  def __hash__(self):
+    if self.hashcode is None:
+      string_repr = str(self.head)
+      body = ''.join([b.relation for b in self.body])
+      self.hashcode = hash(string_repr + body)
+    return self.hashcode
 	
   def init_from_path(self, path):
     self.body = []
