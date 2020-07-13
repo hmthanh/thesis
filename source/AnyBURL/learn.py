@@ -26,7 +26,7 @@ class Learn(object):
     while True:
       useful_rules = all_useful_rules[self.rule_size]
       this_time = time.time()
-      elapsed_seconds = (this_time - start_time) // 1000
+      elapsed_seconds = (this_time - start_time)
       if elapsed_seconds > 700:
         break
 
@@ -60,19 +60,20 @@ class Learn(object):
             else:
               batch_previously_found_rules += 1
       
-      current_coverage = batch_previously_found_rules / (batch_new_useful_rules + batch_previously_found_rules)
-      if current_coverage > ConfigParameters.saturation and batch_previously_found_rules > 1:
+      current_coverage = batch_new_useful_rules / (batch_new_useful_rules + batch_previously_found_rules)
+      print('>>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ', current_coverage)
+      if current_coverage > ConfigParameters.saturation: #and batch_previously_found_rules > 1
         self.rule_size += 1
         if self.mine_cyclic_not_acyclic:
-          self.rule_size_cyclic = rule_size
+          self.rule_size_cyclic = self.rule_size
         else:
-          self.rule_size_acyclic = rule_size
+          self.rule_size_acyclic = self.rule_size
         print('>>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ')
-        print('>>> INCREASING RULE SIZE OF ' + type + ' RULE TO ' + (self.rule_size + 1))
+        print('>>> INCREASING RULE SIZE OF rule_size_cyclic RULE TO ', (self.rule_size + 1))
         print(">>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        print('increasing rule size of ' + type + ' rules to ' + (self.rule_size + 1) + ' after ' + (start_time -  time.time() // 1000) + 's')
-        allUsefulRules.append(set([]))
-      self.mine_cyclic_not_acyclic = self.self.mine_cyclic_not_acyclic
+        print('increasing rule size of rule_size_acyclic rules to ', (self.rule_size + 1) , ' after ' , (start_time -  time.time() // 1000) , 's')
+        all_useful_rules.append(set([]))
+      self.mine_cyclic_not_acyclic = self.mine_cyclic_not_acyclic
       if self.mine_cyclic_not_acyclic and self.rule_size_cyclic + 1 > ConfigParameters.max_length_cylic:
         self.mine_cyclic_not_acyclic = False
 

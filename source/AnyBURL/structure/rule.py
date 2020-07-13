@@ -264,7 +264,7 @@ class Rule(object):
     else:
       current_values = set([])
       current_values.add(value)
-      atom = self.body.get(body_index)
+      atom = self.body[body_index]
       next_var_is_left = False
       if atom.left != variable:
         next_var_is_left = True
@@ -274,7 +274,7 @@ class Rule(object):
         return
       next_values = set(triple_set.get_entities(atom.relation, value, not next_var_is_left))
       for next_value in next_values:
-        forwardReversed(next_variable, next_value, body_index - 1, target_variable, next_values, triple_set, current_values)
+        self.forward_reversed(next_variable, next_value, body_index - 1, target_variable, next_values, triple_set, current_values)
 
   def compute_values_reversed(self, target_variable, target_values, triple_set):
     atom_index = len(self.body) - 1
