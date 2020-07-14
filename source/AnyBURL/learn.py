@@ -43,11 +43,11 @@ class Learn(object):
           break
         path_counter += 1
         
-        p = path_sampler.sample_path(self.rule_size + 2, False)
+        p = path_sampler.sample_path(self.rule_size + 2, self.mine_cyclic_not_acyclic)
         if p is not None and p.is_valid():
           pr = Rule()
           pr.init_from_path(p)
-          rules = pr.get_generalizations(False)
+          rules = pr.get_generalizations(self.mine_cyclic_not_acyclic)
           for rule in rules:
             if rule.is_trivial():
               continue
