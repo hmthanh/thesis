@@ -80,7 +80,7 @@ class Learn(object):
     for rule_set in  all_useful_rules:
       print('================== done learning ====================, len useful_rules = {}'.format(len(rule_set)))
       i = 0
-      for rule in useful_rules:
+      for rule in rule_set:
         if i % 500 == 0:
           print(rule.confidence)
         i += 1

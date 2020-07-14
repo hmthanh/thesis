@@ -12,7 +12,7 @@ class ConfigParameters(object):
 	 * The time that is reserved for one batch in milliseconds. Each second batch is 
 	 * used for mining cyclic/acyclic rules. 
 	 */'''
-  batch_time = 500
+  batch_time = 5
   '''/**
 	 * The threshold for the number of correctly prediction within the given training set.
 	 */'''
