@@ -14,6 +14,76 @@ class Rule(object):
     self.correctly_predicted = 0
     self.confidence = 0.0
     self.next_free_variable = 0
+    self.hashcode = None
+
+  def _check_values_and_variables(self, variables_this_to_other, variables_other_to_this, atom1, atom2, left_not_right):
+
+    if atom1.is_LRC(left_not_right) and atom2.is_LRC(left_not_right):
+      if not atom1.get_LR(left_not_right) == atom2.get_LR(left_not_right):
+				# different constants in same position
+        return False
+    
+    if atom1.is_LRC(left_not_right) != atom2.is_LRC(left_not_right):
+			# one varaible and one constants do not fit
+      return False
+      
+    if not atom1.is_LRC(left_not_right) and not atom2.is_LRC(left_not_right):
+			# special cases X must be at same poistion as X, Y at same as Y
+      if atom1.get_LR(left_not_right) == 'X' and not atom2.get_LR(left_not_right) == 'X':
+        return False
+      if atom2.get_LR(left_not_right) == 'X' and not atom1.get_LR(left_not_right) == 'X':
+        return False
+      
+      if atom1.get_LR(left_not_right) == 'Y' and not atom2.get_LR(left_not_right) == 'Y':
+        return False
+      if atom2.get_LR(left_not_right) == 'Y' and not atom1.get_LR(left_not_right) == 'Y':
+        return False
+      
+      if atom1.get_LR(left_not_right) in variables_this_to_other:
+        that_varible = variables_this_to_other.get(atom1.get_LR(left_not_right))
+        if not atom2.get_LR(left_not_right) == that_varible:
+          return False
+      
+      if atom2.get_LR(left_not_right) in variables_this_to_other:
+        this_varible = variables_this_to_other.get(atom2.get_LR(left_not_right))
+        if not atom1.get_LR(left_not_right) == this_varible:
+          return False
+      
+      if not atom1.get_LR(left_not_right) in variables_this_to_other:
+        variables_this_to_other[atom1.get_LR(left_not_right)] = atom2.get_LR(left_not_right)
+        variables_other_to_this[atom2.get_LR(left_not_right)] = atom1.get_LR(left_not_right)
+		
+    return True
+
+  def __eq__(self, other):
+    if isinstance(other, self.__class__):
+      if self.head == other.head:
+        if len(self.body) == len(other.body):
+          variables_this_to_other = {}
+          variables_other_to_this = {}
+          for i in range(len(self.body)): 
+            atom1 = self.body[i]
+            atom2 = other.body[i]
+            if not atom1.relation == atom2.relation:
+              return False
+            else:
+              if not self._check_values_and_variables(variables_this_to_other, variables_other_to_this, atom1, atom2, True):
+                return False
+              if not self._check_values_and_variables(variables_this_to_other, variables_other_to_this, atom1, atom2, False):
+                return False
+        return True
+    
+    return False
+
+  def __ne__(self, other):
+    return not self.__eq__(other)
+  
+  def __hash__(self):
+    if self.hashcode is None:
+      string_repr = str(self.head)
+      body = ''.join([b.relation for b in self.body])
+      self.hashcode = hash(string_repr + body)
+    return self.hashcode
 	
   def init_from_path(self, path):
     self.body = []
@@ -264,7 +334,7 @@ class Rule(object):
     else:
       current_values = set([])
       current_values.add(value)
-      atom = self.body.get(body_index)
+      atom = self.body[body_index]
       next_var_is_left = False
       if atom.left != variable:
         next_var_is_left = True
@@ -274,7 +344,7 @@ class Rule(object):
         return
       next_values = set(triple_set.get_entities(atom.relation, value, not next_var_is_left))
       for next_value in next_values:
-        forwardReversed(next_variable, next_value, body_index - 1, target_variable, next_values, triple_set, current_values)
+        self.forward_reversed(next_variable, next_value, body_index - 1, target_variable, next_values, triple_set, current_values)
 
   def compute_values_reversed(self, target_variable, target_values, triple_set):
     atom_index = len(self.body) - 1
@@ -343,19 +413,19 @@ class Rule(object):
     if self.is_X_rule():
       xvalues = set([])
       self.compute_values_reversed('X', xvalues, triples)
-      predicted, correctly_predicted = 0,1
+      predicted, correctly_predicted = 1,1
       for xvalue in xvalues:
         predicted += 1
         if triples.is_true(xvalue, self.head.relation, self.head.right):
           correctly_predicted += 1
       self.predicted = predicted
       self.correctly_predicted = correctly_predicted
-      self.confidence = correctly_predicted/predicted
+      self.confidence = correctly_predicted / predicted
     
     if self.is_Y_rule():
       yvalues = set([])
       self.compute_values_reversed('Y', yvalues, triples)
-      predicted , correctly_predicted = 0,1
+      predicted , correctly_predicted = 1,1
       for yvalue in yvalues:
         predicted += 1
         if triples.is_true(self.head.left, self.head.relation, yvalue):
