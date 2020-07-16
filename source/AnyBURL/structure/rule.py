@@ -232,6 +232,7 @@ class Rule(object):
 		# print("currentVariable=" + current_variable + " lastVariable=" +  last_variable + " value=" + value + " bodyIndex=" + body_index)
     if Rule.application_mode and len(final_results) >= Apply.discrimination_bound :
       final_results.clear()
+      return
     
     if counter is not None:
       count = counter.incomming_and_get()
@@ -304,7 +305,7 @@ class Rule(object):
     return groundings
 
   def get_unbound_variable(self):
-    if self.body[len(self.body) - 1].is_left_constant or self.body[len(self.body) - 1-1].is_right_constant:
+    if self.body[len(self.body) - 1].is_left_constant or self.body[len(self.body) - 1].is_right_constant:
       return None
     counter = {}
     for atom in self.body:
@@ -332,19 +333,21 @@ class Rule(object):
     if body_index < 0:
       target_values.add(value)
     else:
-      current_values = set([])
-      current_values.add(value)
+      current_values = set([value])
       atom = self.body[body_index]
       next_var_is_left = False
       if atom.left != variable:
         next_var_is_left = True
       next_variable = atom.get_LR(next_var_is_left)
       next_values = set([])
-      if not Rule.application_mode and len(target_variable) >= ConfigParameters.sample_size:
+      if not Rule.application_mode and len(target_values) >= ConfigParameters.sample_size:
         return
-      next_values = set(triple_set.get_entities(atom.relation, value, not next_var_is_left))
+      # next_values.add()
+      values_relation = triple_set.get_entities(atom.relation, value, not next_var_is_left)
+      for v in values_relation:
+        next_values.add(v)
       for next_value in next_values:
-        self.forward_reversed(next_variable, next_value, body_index - 1, target_variable, next_values, triple_set, current_values)
+        self.forward_reversed(next_variable, next_value, body_index - 1, target_variable, target_values, triple_set, current_values)
 
   def compute_values_reversed(self, target_variable, target_values, triple_set):
     atom_index = len(self.body) - 1
@@ -394,11 +397,11 @@ class Rule(object):
 			## X is given in first body atom
       xypairs = None
       if 'X' in self.body:
-        xypairs = groundBodyCyclic('X', 'Y', triples)
+        xypairs = self.ground_body_cyclic('X', 'Y', triples)
       else:
         xypairs = self.ground_body_cyclic('Y', 'X', triples)
       # body groundings
-      correctly_predicted, predicted = 0, 1
+      correctly_predicted, predicted = 0, 0
       # print('value={}'.format(xypairs.values))
       for key in xypairs.values.keys():
         for value in xypairs.values.get(key):
@@ -413,11 +416,14 @@ class Rule(object):
     if self.is_X_rule():
       xvalues = set([])
       self.compute_values_reversed('X', xvalues, triples)
-      predicted, correctly_predicted = 1,1
+      predicted, correctly_predicted = 0,0
       for xvalue in xvalues:
         predicted += 1
         if triples.is_true(xvalue, self.head.relation, self.head.right):
           correctly_predicted += 1
+      
+      if predicted == 0:
+        print('compute_values_reversed', xvalues)
       self.predicted = predicted
       self.correctly_predicted = correctly_predicted
       self.confidence = correctly_predicted / predicted
@@ -425,12 +431,14 @@ class Rule(object):
     if self.is_Y_rule():
       yvalues = set([])
       self.compute_values_reversed('Y', yvalues, triples)
-      predicted , correctly_predicted = 1,1
+     
+      predicted , correctly_predicted = 0,0
       for yvalue in yvalues:
         predicted += 1
         if triples.is_true(self.head.left, self.head.relation, yvalue):
           correctly_predicted += 1
-          
+      if predicted == 0:
+        print('compute_values_reversed', yvalues)    
       self.predicted = predicted
       self.correctly_predicted = correctly_predicted
       self.confidence = correctly_predicted / predicted

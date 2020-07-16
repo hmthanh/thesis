@@ -10,7 +10,7 @@ class Learn(object):
     self.triple_set = TripleSet()
     self.triple_set.read_triples(train_path)
     self.rule_size = 0
-    self.mine_cyclic_not_acyclic = False
+    self.mine_cyclic_not_acyclic = False #True #False
     self.rule_size_cyclic = 0
     self.rule_size_acyclic = 0
 
@@ -22,12 +22,13 @@ class Learn(object):
     all_useful_rules = []
     all_useful_rules.append(set([]))
     start_time = time.time()
+    batch_counter = 0
 
     while True:
       useful_rules = all_useful_rules[self.rule_size]
       this_time = time.time()
       elapsed_seconds = (this_time - start_time)
-      if elapsed_seconds > 700:
+      if elapsed_seconds > 500:
         break
 
       batch_previously_found_rules = 0
@@ -54,13 +55,20 @@ class Learn(object):
             batch_rules += 1
             if rule not in useful_rules:
               rule.compute_scores(self.triple_set)
+              # print('>>> rule.correctly_predicted ', rule.correctly_predicted, rule.confidence)
               if rule.confidence >= ConfigParameters.threshold_confidence and  rule.correctly_predicted >= ConfigParameters.threshold_correct_predictions:
                 batch_new_useful_rules += 1
                 useful_rules.add(rule)
             else:
               batch_previously_found_rules += 1
-      
+      batch_counter += 1
+      type_rule = 'CYCLIC' 
+      if self.mine_cyclic_not_acyclic:
+        type_rule = 'ACYCLIC'
+      print('>>> ****** Batch [{} {}] batchCounter: {} (sampled {} pathes) *****'.format(type_rule, self.rule_size + 1, batch_counter, path_counter))   
+			
       current_coverage = batch_previously_found_rules / (batch_new_useful_rules + batch_previously_found_rules)
+      print('>>> fraction of previously seen rules within useful rules in this batch: {}  NEW={} PREV={} ALL={}'.format(current_coverage, batch_new_useful_rules, batch_previously_found_rules, batch_rules))
       print('>>> ~~~~~~~~~~~~~~~~~~current_coverage~~~~~~~~~~~~~~~~~~~~~~~~~~ ', current_coverage)
       if current_coverage > ConfigParameters.saturation: #and batch_previously_found_rules > 1
         self.rule_size += 1
@@ -81,7 +89,7 @@ class Learn(object):
       print('================== done learning ====================, len useful_rules = {}'.format(len(rule_set)))
       i = 0
       for rule in rule_set:
-        if i % 500 == 0:
+        if i % 100 == 0:
           print(rule.confidence)
         i += 1
 					

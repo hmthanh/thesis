@@ -11,19 +11,17 @@ class Path(object):
     xconst = self.nodes[0]
     yconst = self.nodes[2]
     visited_entities = set([])
-    
-    if len(self.nodes) > 6:
-      for i in range(4, len(self.nodes) - 2, 2):
-        if self.nodes[i] == xconst:
-          return False
-        if self.nodes[i] == yconst:
-          return False
+
+    for i in range(4, len(self.nodes) - 2, 2):
+      if self.nodes[i] == xconst:
+        return False
+      if self.nodes[i] == yconst:
+        return False
           
-    if len(self.nodes) > 2:
-      for i in range(2, len(self.nodes), 2):
-        if self.nodes[i] in visited_entities:
-          return False
-        visited_entities.add(self.nodes[i])
+    for i in range(2, len(self.nodes), 2):
+      if self.nodes[i] in visited_entities:
+        return False
+      visited_entities.add(self.nodes[i])
 
     return True
 
