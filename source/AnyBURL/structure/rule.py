@@ -78,6 +78,10 @@ class Rule(object):
   def __ne__(self, other):
     return not self.__eq__(other)
   
+  def __str__(self):
+    body = ','.join([str(atom) for atom in self.body])
+    return '{}\t{}\t{}\t{} <= {}'.format(self.predicted, self.correctly_predicted, self.confidence, self.head, body)
+  
   def __hash__(self):
     if self.hashcode is None:
       string_repr = str(self.head)

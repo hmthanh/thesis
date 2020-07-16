@@ -74,10 +74,10 @@ class Atom(object):
       return self.right
 
   def __str__(self):
-    return '{} ({}, {}): ({} + {})'.format(self.relation, self.left, self.right, self.is_left_constant, self.is_right_constant)
+    return '{}({}, {})'.format(self.relation, self.left, self.right.strip('\n'))
 
-  def __repr__(self):
-    return (self.left, self.relation, self.right, self.is_left_constant, self.is_right_constant)
+  # def __repr__(self):
+  #   return (self.left, self.relation, self.right, self.is_left_constant, self.is_right_constant)
 
   def __eq__(self, other):
     if isinstance(other, self.__class__):
