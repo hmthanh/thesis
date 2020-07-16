@@ -65,12 +65,11 @@ class Learn(object):
       type_rule = 'CYCLIC' 
       if self.mine_cyclic_not_acyclic:
         type_rule = 'ACYCLIC'
-      print('>>> ****** Batch [{} {}] batchCounter: {} (sampled {} pathes) *****'.format(type_rule, self.rule_size + 1, batch_counter, path_counter))   
+      # print('>>> ****** Batch [{} {}] batchCounter: {} (sampled {} pathes) *****'.format(type_rule, self.rule_size + 1, batch_counter, path_counter))   
 			
       current_coverage = batch_previously_found_rules / (batch_new_useful_rules + batch_previously_found_rules)
-      print('>>> fraction of previously seen rules within useful rules in this batch: {}  NEW={} PREV={} ALL={}'.format(current_coverage, batch_new_useful_rules, batch_previously_found_rules, batch_rules))
-      print('>>> ~~~~~~~~~~~~~~~~~~current_coverage~~~~~~~~~~~~~~~~~~~~~~~~~~ ', current_coverage)
-      if current_coverage > ConfigParameters.saturation: #and batch_previously_found_rules > 1
+      print('>>> fraction of previously seen rules within useful rules in this batch: {}  NEW={} PREV={} batch rules={}'.format(current_coverage, batch_new_useful_rules, batch_previously_found_rules, batch_rules))
+      if current_coverage > ConfigParameters.saturation and batch_previously_found_rules > 1:
         self.rule_size += 1
         if self.mine_cyclic_not_acyclic:
           self.rule_size_cyclic = self.rule_size
@@ -81,7 +80,7 @@ class Learn(object):
         print(">>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         print('increasing rule size of rule_size_acyclic rules to ', (self.rule_size + 1) , ' after ' , (start_time -  time.time() // 1000) , 's')
         all_useful_rules.append(set([]))
-      self.mine_cyclic_not_acyclic = self.mine_cyclic_not_acyclic
+      self.mine_cyclic_not_acyclic = not self.mine_cyclic_not_acyclic
       if self.mine_cyclic_not_acyclic and self.rule_size_cyclic + 1 > ConfigParameters.max_length_cylic:
         self.mine_cyclic_not_acyclic = False
 

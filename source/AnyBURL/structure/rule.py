@@ -144,7 +144,7 @@ class Rule(object):
     right_constant = left_right_general.head.right
     ycount = left_right_general.__replace_by_variable(right_constant, 'Y')
     if xcount < 2 or ycount < 2:
-      return None
+      left_right_general = None
     return left_right_general
 
   def __replace_all_constants_by_variables(self):
@@ -202,27 +202,20 @@ class Rule(object):
     left = self.__get_left_generalization()
     if left is not None:
       left_free = left.__deep_copy()
-      # print('__get_left_generalization rule {}->{} body {}'.format(left.head, left_right is not None, len(left.body)))
-      # print('__get_left_generalization rule {}\n {} \n\n'.format(left.body[0], left.body[1]))
       if left_right is None:
         left_free.__replace_all_constants_by_variables()
       left.__replace_nearly_all_constants_by_variables()
-      # print('__get_left_generalization rule {}->{}'.format(left.head, left_right is not None))
       generalizations.add(left)
-      # print('__get_left_generalization rule {}->{}\n\n\n\n'.format(left.head, left_right is not None))
       if left_right is None:
         generalizations.add(left_free)
     
     right = self.__get_right_generalization()
     if right is not None:      
       right_free = right.__deep_copy()
-      # print('__get_right_generalization rule {}->{}\n\n'.format(right.head, left_right is not None))
       if left_right is None:
         right_free.__replace_all_constants_by_variables()
       right.__replace_nearly_all_constants_by_variables()
-      # print('__get_right_generalization rule {}->{}'.format(right.head, left_right is not None))
       generalizations.add(right)
-      # print('__get_right_generalization rule {}->{}'.format(right.head, left_right is not None))
       if left_right is None:
         generalizations.add(right_free)
     
@@ -316,7 +309,7 @@ class Rule(object):
           counter[atom.left] = 1
       
       if not atom.right == 'X' and not atom.right == 'X':
-        if atom.left in counter:
+        if atom.right in counter:
           counter[atom.right] = 2
         else:
           counter[atom.right] = 1
