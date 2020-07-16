@@ -1,6 +1,4 @@
-from data.triple_set import TripleSet
+from rule_io.rule_reader import RuleReader
 
-data = TripleSet()
-data.read_triples('../../datasets/FB15k-237/test.txt')
-
-print('\n'.join([str(item) for item in data.triples[0:10]]))
+data = RuleReader()
+data.read()

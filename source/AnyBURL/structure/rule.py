@@ -103,6 +103,11 @@ class Rule(object):
       else:
         self.body.append(Atom(path.nodes[i*2+2], path.nodes[i*2+1], path.nodes[i*2], True, True))
   
+  def init_measure(self, predicted, correctly_predicted, confidence):
+    self.predicted = predicted
+    self.correctly_predicted = correctly_predicted
+    self.confidence = confidence
+
   def  is_XY_rule(self):
     if not self.head.is_left_constant and not self.head.is_right_constant:
       return True

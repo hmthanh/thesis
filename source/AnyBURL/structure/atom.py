@@ -9,13 +9,13 @@ class Atom(object):
     self.hashcode = None
 
   def from_atom_representation(self, string_atom=''):
-    t1 = string_atom.split('\\c')
+    t1 = string_atom.split('(')
     t2 = t1[1].split(',')
     relation = t1[0]
     left = t2[0]
-    right = t2[1][0, len(t2[1])-1]
+    right = t2[1][0 : len(t2[1]) - 1]
     if right[-1] == ')':
-      right = right[0, len(right) - 1]
+      right = right[0 : len(right) - 1]
     self.relation = relation
     self.left = left
     self.right = right
