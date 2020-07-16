@@ -5,14 +5,6 @@ from learn_config import ConfigParameters
 import time
 import _thread
 
-def store_rules(all_rule):
-  f = open('output/output-10.txt', 'w+')
-  for rules in all_rule:
-    for rule in rules:
-      f.write('{}\n'.format(rule))
-  f.close()
-
-
 class Learn(object):
 
   def __init__(self, train_path='../../datasets/FB15k-237/test.txt'):
@@ -21,9 +13,11 @@ class Learn(object):
     self.mine_cyclic_not_acyclic = False #True #False
     self.rule_size_cyclic = 0
     self.rule_size_acyclic = 0
+    self.snapshots_at = [20, 100, 200]
+    self.snapshots_index = 0
 
   def train(self):
-    print('* read {} triples'.format(len(self.triple_set.triples)))
+    # print('* read {} triples'.format(len(self.triple_set.triples)))
     path_counter = 0
     path_sampler = PathSampler(self.triple_set)
 
@@ -36,14 +30,14 @@ class Learn(object):
       rule_size = self.rule_size_acyclic
       if self.mine_cyclic_not_acyclic:
         rule_size = self.rule_size_cyclic
-      print('rule_size: ', rule_size)
       useful_rules = all_useful_rules[rule_size]
       this_time = time.time()
       elapsed_seconds = (this_time - start_time)
-      if elapsed_seconds > 40:
-        print('start output\n\n')
-        store_rules(all_useful_rules)
-        break
+      if elapsed_seconds > self.snapshots_at[self.snapshots_index]:
+        self.store_rules(all_useful_rules, self.snapshots_at[self.snapshots_index])
+        self.snapshots_index += 1
+        if self.snapshots_index == len(self.snapshots_at):
+          break
 
       batch_previously_found_rules = 0
       batch_rules = 0
@@ -95,12 +89,18 @@ class Learn(object):
       if self.mine_cyclic_not_acyclic and self.rule_size_cyclic + 1 > ConfigParameters.max_length_cylic:
         self.mine_cyclic_not_acyclic = False
 
-    for rule_set in  all_useful_rules:
-      print('================== done learning ====================, len useful_rules = {}'.format(len(rule_set)))
-      i = 0
-      for rule in rule_set:
-        if i % 100 == 0:
-          print(rule.confidence)
-        i += 1
+    # for rule_set in  all_useful_rules:
+    #   print('================== done learning ====================, len useful_rules = {}'.format(len(rule_set)))
+    #   i = 0
+    #   for rule in rule_set:
+    #     if i % 100 == 0:
+    #       print(rule.confidence)
+    #     i += 1
 
-
+  def store_rules(self, all_rule, index):
+    file_name = 'output/output-{}.txt'.format(index)
+    f = open(file_name, 'w+')
+    for rules in all_rule:
+      for rule in rules:
+        f.write('{}\n'.format(rule))
+    f.close()
