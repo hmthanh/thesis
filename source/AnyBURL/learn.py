@@ -34,9 +34,9 @@ class Learn(object):
       batch_previously_found_rules = 0
       batch_rules = 0
       batch_new_useful_rules = 1
-      self.rule_size = self.rule_size_acyclic
+      rule_size = self.rule_size_acyclic
       if self.mine_cyclic_not_acyclic:
-        self.rule_size = self.rule_size_cyclic
+        rule_size = self.rule_size_cyclic
       batch_start_time = time.time()
       while True:
         current_time = time.time()
@@ -44,7 +44,7 @@ class Learn(object):
           break
         path_counter += 1
         
-        p = path_sampler.sample_path(self.rule_size + 2, self.mine_cyclic_not_acyclic)
+        p = path_sampler.sample_path(rule_size + 2, self.mine_cyclic_not_acyclic)
         if p is not None and p.is_valid():
           pr = Rule()
           pr.init_from_path(p)
@@ -65,16 +65,17 @@ class Learn(object):
       type_rule = 'CYCLIC' 
       if self.mine_cyclic_not_acyclic:
         type_rule = 'ACYCLIC'
-      # print('>>> ****** Batch [{} {}] batchCounter: {} (sampled {} pathes) *****'.format(type_rule, self.rule_size + 1, batch_counter, path_counter))   
+      print('>>> ****** Batch [{} {}] batchCounter: {} (sampled {} pathes) *****'.format(type_rule,  rule_size + 1, batch_counter, path_counter))   
 			
       current_coverage = batch_previously_found_rules / (batch_new_useful_rules + batch_previously_found_rules)
       print('>>> fraction of previously seen rules within useful rules in this batch: {}  NEW={} PREV={} batch rules={}'.format(current_coverage, batch_new_useful_rules, batch_previously_found_rules, batch_rules))
       if current_coverage > ConfigParameters.saturation and batch_previously_found_rules > 1:
-        self.rule_size += 1
         if self.mine_cyclic_not_acyclic:
-          self.rule_size_cyclic = self.rule_size
+          self.mine_cyclic_not_acyclic += 1
+          self.rule_size = self.mine_cyclic_not_acyclic
         else:
-          self.rule_size_acyclic = self.rule_size
+          self.rule_size_acyclic += 1
+          self.rule_size = self.rule_size_acyclic
         print('>>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ')
         print('>>> INCREASING RULE SIZE OF rule_size_cyclic RULE TO ', (self.rule_size + 1))
         print(">>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")

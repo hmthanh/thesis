@@ -27,7 +27,7 @@ class ConfigParameters(object):
 	 * useful rules that have been sampled in a previous batch compared to all useful rules that have
 	 * been sampled within that batch. If the saturation is above the value, longer rules are sampled.
 	 */'''
-  saturation = 0.75
+  saturation = 0.675
   '''/**
 	 * The maximal number of body atoms in cyclic rules (inclusive this number). If this number is exceeded all computation time
 	 * is used for acyclic rules only from that time on.
