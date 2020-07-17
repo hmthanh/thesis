@@ -43,7 +43,7 @@ class ScoreTree(object):
     return tree.closed
 
   def get_as_linked_map(self, linked_map={}):
-    self.__get_as_linked_map_imp(linked_list, 0, 0)
+    self.__get_as_linked_map_imp(linked_map, 0, 0)
   
   def __get_as_linked_map_imp(self, linked_map, ps, level):
     if len(self.children) > 0:
@@ -57,7 +57,7 @@ class ScoreTree(object):
     if not self.root:
       ps_updated = ps + (ScoreTree.epsilon ** (level - 1)) * self.score
       for values in self.stored_values:
-        linked_list[values] = ps_updated
+        linked_map[values] = ps_updated
 
   def __add_child(self, score, values, child_index):
     child = ScoreTree()
