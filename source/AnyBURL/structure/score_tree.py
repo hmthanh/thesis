@@ -20,7 +20,7 @@ class ScoreTree(object):
     self.stored_values = set([])
     for v in values:
       self.stored_values.add(v)
-    if len(self.stored_values) < 1:
+    if len(self.stored_values) <= 1:
       self.closed = True
     self.num_of_values = len(values)
     self.root = False
@@ -32,8 +32,15 @@ class ScoreTree(object):
     if self.root and len(self.children) > 0:
       i = self.children[len(self.children) - 1].index
       if i >= ScoreTree.lower_bound and i <= ScoreTree.upper_bound:
-        return self.__is_first_unique()
+        return self.is_first_unique()
     return False
+  
+  def is_first_unique(self):
+    tree = self
+    while len(tree.children) > 0:
+      tree = tree.children[0]
+
+    return tree.closed
 
   def get_as_linked_map(self, linked_map={}):
     self.__get_as_linked_map_imp(linked_list, 0, 0)
@@ -62,7 +69,7 @@ class ScoreTree(object):
   def __add_values_imp(self, score, values, counter):
     # go deep first
     for child in self.children:
-      self.__add_values_imp(score, values, 0)
+      child.__add_values_imp(score, values, 0)
     # compare with stored values
     touched = set([])
     untouched = set([])
@@ -81,7 +88,7 @@ class ScoreTree(object):
         self.index = child_index
         self.num_of_values -= len(untouched)
       else:
-        self.num_of_values = untouched
+        self.stored_values = untouched
         self.__add_child(score, touched, child_index)
 
     # special case of adding new value, which happens only if the maximal number of values is not yet exceeded
@@ -98,20 +105,38 @@ class ScoreTree(object):
           break
       self.closed = child_closed
 
-  def __is_first_unique():
-    tree = self
-    while len(tree.children) > 0:
-      tree = tree.children[0]
-
-    return tree.closed
-
   def __to_string(self, indent):
     rep = ''
     closing_sign = 'X' if self.closed else ''
     stored_values = ' '.join([s for s in self.stored_values]) if self.stored_values is not None else ' '
-    # child = ''.join([c.__to_string('\t') for c in self.children]) if self.children is not None else ' '
-    rep += '{}{} {} [{}]({}) -> {{ {} }}'.format(indent, closing_sign, self.score, self.index, self.num_of_values, stored_values)
+    child = ''.join([c.__to_string(indent + '    ') for c in self.children if c is not None]) if self.children is not None else ' '
+    rep += '{}{} {} [{}]({}) -> {{ {} }}\n{}'.format(indent, closing_sign, self.score, self.index, self.num_of_values, stored_values, child)
+    # for child in self.children:
+    #   rep += child.__to_string(indent + '\t')
     return rep
 
   def __str__(self):
     return self.__to_string('')
+
+## unit test
+
+if __name__ == '__main__':
+  tree = ScoreTree()
+  s1 = set(['a', 'b', 'c', 'd', 'd1', 'd2'])
+  tree.add_values(0.9, s1)
+  print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+  print(tree)
+  print('precise enough',tree.fine())
+  print('first unique',tree.is_first_unique())
+
+
+  s11=set(['aaa', 'bbb'])
+  tree.add_values(0.8999, s11)
+  print(len(tree.children))
+  print(tree)
+  print('precise enough',tree.fine())
+  print('first unique',tree.is_first_unique())
+  print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+  print(tree)
+  print('precise enough',tree.fine())
+  print('first unique',tree.is_first_unique())
