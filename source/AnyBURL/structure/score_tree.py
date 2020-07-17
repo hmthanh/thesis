@@ -74,12 +74,9 @@ class ScoreTree(object):
     touched = set([])
     untouched = set([])
     if not self.root:
-      for stored_value in self.stored_values:
-        if stored_value in values:
-          touched.add(stored_value)
-          values.remove(stored_value)
-        else:
-          untouched.add(stored_value)
+      touched = self.stored_values & values
+      untouched = self.stored_values - values
+      values -= touched
     # standard split
     if len(touched) > 0 and len(self.stored_values) > 1 and len(touched) < len(self.stored_values):
       child_index = self.index - len(untouched)

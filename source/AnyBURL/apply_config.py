@@ -1,4 +1,4 @@
-class Apply(object):
+class ApplyConfig(object):
   '''**
 	 * Returns only results for head or tail computation if the results set has less elements than this bound.
 	 * The idea is that any results set which has more elements is anyhow not useful for a top-k ranking. 
@@ -11,3 +11,7 @@ class Apply(object):
 	* Number of maximal attempts to create body grounding. Every partial body grounding is counted.
 	*'''
   trial_size = 100000
+  '''/**
+	 * The number of negative examples for which we assume that they exist, however, we have not seen them. Rules with high coverage are favored the higher the chosen number. 
+	*/'''
+  unseen_nagative_example = 100	

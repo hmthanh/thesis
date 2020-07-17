@@ -81,6 +81,11 @@ class TripleSet (object):
         return head in self.tail_relation_to_head.get(tail).get(relation)
     return False
 	
+  def add_triple_set(self, triple_set):
+    for triple in triple_set.triples:
+      self.triples.append(triple)
+      self.__add_triple_to_index(triple)
+
   '''/**
 	* Returns those values for which the relation holds for a given value. If the headNotTail is 
 	* set to true, the value is interpreted as head value and the corresponding tails are returned.

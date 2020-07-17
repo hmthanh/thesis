@@ -1,7 +1,7 @@
 from structure.atom import Atom
 from data.sampled_paired_result_set import SampledPairedResultSet
 from structure.counter import Counter
-from apply import Apply
+from apply_config import ApplyConfig
 from learn_config import ConfigParameters
 
 class Rule(object):
@@ -232,13 +232,13 @@ class Rule(object):
 
   def _get_cyclic(self, current_variable, last_variable, value, body_index, direction, triples, previous_values, final_results, counter):
 		# print("currentVariable=" + current_variable + " lastVariable=" +  last_variable + " value=" + value + " bodyIndex=" + body_index)
-    if Rule.application_mode and len(final_results) >= Apply.discrimination_bound :
+    if Rule.application_mode and len(final_results) >= ApplyConfig.discrimination_bound :
       final_results.clear()
       return
     
     if counter is not None:
       count = counter.incomming_and_get()
-      if count >= ConfigParameters.trial_size or count >= Apply.trial_size:
+      if count >= ConfigParameters.trial_size or count >= ApplyConfig.trial_size:
         return
     
     if not Rule.application_mode and len(final_results) >= ConfigParameters.sample_size:
@@ -370,7 +370,7 @@ class Rule(object):
         if not Rule.application_mode and len(target_values) >= ConfigParameters.sample_size:
           return
 
-        if Rule.application_mode and len(target_values) >= Apply.discrimination_bound:
+        if Rule.application_mode and len(target_values) >= ApplyConfig.discrimination_bound:
           target_values.clear()
           return
     else :
@@ -390,7 +390,7 @@ class Rule(object):
         if not Rule.application_mode and len(target_values) >= ConfigParameters.sample_size:
           return
           
-        if Rule.application_mode and len(target_values) >= Apply.discrimination_bound:
+        if Rule.application_mode and len(target_values) >= ApplyConfig.discrimination_bound:
           target_values.clear()
           return
 
@@ -451,3 +451,109 @@ class Rule(object):
         return True
     return False
 	
+  def get_target_relation(self):
+    return self.head.relation
+  
+  '''/**
+	*  Returns the tail results of applying this rule to a given head value.
+	* 
+	* @param head The given head value.
+	* @param ts The triple set used for computing the results.
+	* @return An empty set, a set with one value (the constant of the rule) or the set of all body instantiations.
+	*/'''
+
+  def compute_tail_results(self, head, triple_set):
+    result_set = set([])
+    if self.is_X_rule():
+      pass
+    elif self.is_X_rule():
+      pass
+    else:
+      pass
+    return result_set
+
+  '''/**
+	*  Returns the head results of applying this rule to a given tail value.
+	* 
+	* @param tail The given tail value.
+	* @param ts The triple set used for computing the results.
+	* @return An empty set, a set with one value (the constant of the rule) or the set of all body instantiations.
+	*/'''
+
+  def compute_head_results(self, tail, triple_set):
+    result_set = set([])
+    if self.is_X_rule():
+      pass
+    elif self.is_X_rule():
+      pass
+    else:
+      pass
+    return result_set
+
+  def __is_body_true_acyclic(self, variable, value, body_index, triples):
+    atom = self.body[body_index]
+    head_not_tail = atom == variable
+    # the current atom is the last
+    if len(self.body) - 1 == body_index:
+      constant = atom.is_right_constant if head_not_tail else atom.is_left_constant
+      # get groundings, fixed by a constant
+      if constant:
+        constant_value = atom.get_LR(not head_not_tail)
+        if head_not_tail:
+          triples.is_true(value, atom.relation, constant_value)
+        else:
+          triples.is_true(constant_value, atom.relation, value)
+      # existential quantification
+      else:
+        results = triples.get_entities(atom.relation, value, head_not_tail)
+        if len(results) > 0:
+          return True
+
+      return False
+    # the current atom is not the last
+    else: 
+      results  = triples.get_entities(atom.relation, value, head_not_tail)
+      next_variable = atom.get_LR(not head_not_tail)
+      for next_val in results:
+        if self.__is_body_true_acyclic(next_variable, next_val, body_index + 1, triples):
+          return True
+
+      return False
+
+  def __get_cyclic(self, current_variable, last_variable, value, body_index, direction, triple_set, previous_values, final_results, counter):
+    
+    if Rule.application_mode and len(final_results) >= ApplyConfig.discrimination_bound:
+      final_results.clear()
+    
+    if counter is not None:
+      count = counter.incomming_and_get()
+      if count >= ConfigParameters.trial_size or count >= ApplyConfig.trial_size:
+        return
+    if Rule.application_mode and len(final_results) >= ConfigParameters.sample_size:
+      return
+    # check if the value has been seen before as grounding of another variable
+    atom = self.body[body_index]
+    head_not_tail = atom == current_variable
+    if value in previous_values:
+      return
+    results = triples.get_entities(atom.relation, value, head_not_tail)
+    if (direction == True and len(self.body) - 1 == body_index) or (direction == False and body_index == 0):
+      for value in results:
+        if value not in previous_values:
+          final_results.add(value)
+      return
+    # the current atom is not the last
+    else:
+      next_variable = atom.get_LR(not head_not_tail)
+      current_values = set(previous_values)
+      current_values.add(value)
+      i = 0
+      for next_value in results:
+        if not Rule.application_mode and i >= ConfigParameters.sample_size:
+          break
+        updated_body_index = body_index + 1 if direction else body_index - 1
+        self.__get_cyclic(next_variable, last_variable, next_value, updated_body_index, direction, triple_set, current_values, final_results, counter)
+        i += 1
+
+      return
+    

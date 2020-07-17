@@ -32,7 +32,7 @@ class Learn(object):
         rule_size = self.rule_size_cyclic
       useful_rules = all_useful_rules[rule_size]
       this_time = time.time()
-      elapsed_seconds = (this_time - start_time)
+      elapsed_seconds = int(this_time - start_time)
       if elapsed_seconds > self.snapshots_at[self.snapshots_index]:
         self.store_rules(all_useful_rules, self.snapshots_at[self.snapshots_index])
         self.snapshots_index += 1
@@ -83,7 +83,7 @@ class Learn(object):
         print('>>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ')
         print('>>> INCREASING RULE SIZE OF rule_size_cyclic RULE TO ', (rule_size))
         print(">>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        print('increasing rule size of rule_size_acyclic rules to ', (rule_size) , ' after ' , (start_time -  time.time() // 1000) , 's')
+        print('increasing rule size of rule_size_acyclic rules to ', (rule_size) , ' after ' , (int(start_time -  time.time()) // 1000) , 's')
         all_useful_rules.append(set([]))
       self.mine_cyclic_not_acyclic = not self.mine_cyclic_not_acyclic
       if self.mine_cyclic_not_acyclic and self.rule_size_cyclic + 1 > ConfigParameters.max_length_cylic:
