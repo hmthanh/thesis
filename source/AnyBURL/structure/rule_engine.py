@@ -38,19 +38,36 @@ class RuleEngine(object):
       relation = triple.relation
       head = triple.head
       tail = triple.tail
-      tail_question, head_question = {}. {}
-      tail_question[relation] = head
-      head_question[relation] = tail
+      tail_question, head_question = (relation, head), (relation, tail)
       k_tail_tree = ScoreTree()
       k_head_tree = ScoreTree()
 
       if relation in relation_to_rules:
         relevant_rules = relation_to_rules.get(relation)
-        if relevant_rules not in tail_candidate_cache:
-          pass
-        if relevant_rules not in head_candidate_cache:
-          pass
-    pass
+
+        if tail_question not in tail_candidate_cache:
+          for rule in relevant_rules:
+            if not k_tail_tree.fine():
+              tail_candidates = rule.compute_tail_results(head, training_set)
+              f_tail_candidates = self.__get_filtered_entities(filter_set, test_set, triple, tail_candidates, True)
+              k_tail_tree.add_values(rule.get_applied_confidence(), f_tail_candidates)
+            else:
+              break
+
+        if head_question not in head_candidate_cache:
+          for rule in relevant_rules:
+            if not k_head_tree.fine():
+              head_candidates = rule.compute_head_results(tail, training_set)
+              f_head_candidates = self.__get_filtered_entities(filter_set, test_set, triple, head_candidates, False)
+              k_head_tree.add_values(rule.get_applied_confidence(), f_tail_candidates)
+            else:
+              break
+      
+      k_tail_candidates,k_head_candidates = {}, {}
+      k_tail_tree.get_as_linked_map(k_tail_candidates)
+      k_head_tree.get_as_linked_map(k_head_candidates)
+
+      
 
   def create_ordered_rule_index(self, rules):
     relation_to_rules = {}
@@ -62,6 +79,22 @@ class RuleEngine(object):
       relation_to_rules[relation].append(rule)
     
     for value in relation_to_rules.values():
-      value.sort(key=lambda v: v.correctly_predicted / v.predicted + ApplyConfig.unseen_nagative_example)
+      value.sort(key=lambda v: v.correctly_predicted / (v.predicted + ApplyConfig.unseen_nagative_example))
     
     return relation_to_rules
+  
+  def __get_filtered_entities(self, filter_set, test_set, triple, candidate_entities, tail_not_head):
+    filtered_entities = set()
+    for entity in candidate_entities:
+      if not tail_not_head:
+        if not filter_set.is_true(entity, triple.relation, triple.tail):
+          filtered_entities.add(entity)
+        if test_set.is_true(entity, triple.relation, triple.tail):
+          if entity == triple.head:
+            filtered_entities.add(entity)
+      else:
+        if not filter_set.is_true(triple.head, triple.relation, entity):
+          filtered_entities.add(entity)
+        if test_set.is_true(triple.head, triple.relation, entity):
+          if entity == triple.tail:
+            filtered_entities.add(entity)

@@ -465,11 +465,26 @@ class Rule(object):
   def compute_tail_results(self, head, triple_set):
     result_set = set([])
     if self.is_X_rule():
-      pass
+      if self.__is_body_true_acyclic('X', head, 0, triple_set):
+        result_set.add(self.head.right)
+        return result_set
     elif self.is_X_rule():
-      pass
+      if self.head.left == head:
+        self.compute_values_reversed('Y', result_set, triple_set)
+        return result_set
     else:
-      pass
+      if len(self.body) > 3:
+        return result_set
+      results = set()
+      count = Counter()
+      # curr , last
+      if self.body[0].contains('X'):
+        self._get_cyclic('X', 'Y', head, 0, True, triple_set, set(), results, count)
+      else:
+        self._get_cyclic('X', 'Y', head, len(self.body) - 1, False, triple_set, set(), results, count)
+
+      return results
+
     return result_set
 
   '''/**
@@ -556,4 +571,6 @@ class Rule(object):
         i += 1
 
       return
-    
+
+  def get_applied_confidence(self):
+    prob = self.correctly_predicted / (self.predicted + ApplyConfig.unseen_nagative_example)
