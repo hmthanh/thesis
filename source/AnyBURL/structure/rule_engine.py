@@ -2,6 +2,8 @@ from apply_config import ApplyConfig
 from data.triple_set import TripleSet
 from score_tree import ScoreTree
 import time
+import heapq
+import sys
 
 class RuleEngine(object):
   combination_rule_id = 1
@@ -67,7 +69,11 @@ class RuleEngine(object):
       k_tail_tree.get_as_linked_map(k_tail_candidates)
       k_head_tree.get_as_linked_map(k_head_candidates)
 
-      
+      top_k_tail_candidates = self.__sort_by_value(k_tail_candidates, k)
+      top_k_head_candidates = self.__sort_by_value(k_head_candidates, k)
+
+      self.__write_top_k_candidates()
+
 
   def create_ordered_rule_index(self, rules):
     relation_to_rules = {}
@@ -98,3 +104,38 @@ class RuleEngine(object):
         if test_set.is_true(triple.head, triple.relation, entity):
           if entity == triple.tail:
             filtered_entities.add(entity)
+
+  # to do: implement heap
+  def __sort_by_value(self, candidates, k):
+    heap = []
+    for key, val in candidates.items():
+      priority = -1 * val
+      entry = (priority, (key, val))
+      if len(heap) < k:
+        heapq.heappush(heap, entry)
+      else:
+        is_push = False
+        min_priority = min(heap)
+        max_priority = max(heap)
+        if priority < min_priority:
+          heapq.heappush(heap, entry)
+          is_push = True
+        elif priority < max_priority:
+          heapq.heappush(heap, entry)
+          is_push = True
+        # delete element out of top k
+        if is_push:
+          for index, (p, (key, val)) in enumerate(heap):
+            if p ==  max(heap):
+              del heap[index]
+              break
+          heapq.heapify(heap)
+    sort_heap = sorted(heap, key=lambda item: item[0], reverse=True)
+    res = {}
+    for index, (p, (key, val)) in enumerate(sort_heap):
+      res[key] = val
+    return res
+
+  def __write_top_k_candidates(self, output=sys.stdout):
+    print('hello ', output)
+        
