@@ -573,4 +573,9 @@ class Rule(object):
       return
 
   def get_applied_confidence(self):
-    prob = self.correctly_predicted / (self.predicted + ApplyConfig.unseen_nagative_example)
+    return self.correctly_predicted / (self.predicted + ApplyConfig.unseen_nagative_example)
+  
+  def application_mode(self):
+    Rule.application_mode = True
+  
+  
