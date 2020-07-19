@@ -117,23 +117,23 @@ class ScoreTree(object):
 
 ## unit test
 
-if __name__ == '__main__':
-  tree = ScoreTree()
-  s1 = set(['a', 'b', 'c', 'd', 'd1', 'd2'])
-  tree.add_values(0.9, s1)
-  print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-  print(tree)
-  print('precise enough',tree.fine())
-  print('first unique',tree.is_first_unique())
+# if __name__ == '__main__':
+#   tree = ScoreTree()
+#   s1 = set(['a', 'b', 'c', 'd', 'd1', 'd2'])
+#   tree.add_values(0.9, s1)
+#   print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+#   print(tree)
+#   print('precise enough',tree.fine())
+#   print('first unique',tree.is_first_unique())
 
 
-  s11=set(['aaa', 'bbb'])
-  tree.add_values(0.8999, s11)
-  print(len(tree.children))
-  print(tree)
-  print('precise enough',tree.fine())
-  print('first unique',tree.is_first_unique())
-  print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-  print(tree)
-  print('precise enough',tree.fine())
-  print('first unique',tree.is_first_unique())
+#   s11=set(['aaa', 'bbb'])
+#   tree.add_values(0.8999, s11)
+#   print(len(tree.children))
+#   print(tree)
+#   print('precise enough',tree.fine())
+#   print('first unique',tree.is_first_unique())
+#   print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+#   print(tree)
+#   print('precise enough',tree.fine())
+#   print('first unique',tree.is_first_unique())
