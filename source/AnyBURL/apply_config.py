@@ -36,10 +36,6 @@ class ApplyConfig(object):
 	 */'''
   path_valid = ''
   '''/**
-	 * Path to the rule file.
-	 */'''
-  path_rules = ''
-  '''/**
 	 * The top-k results that are after filtering kept in the results. 
 	 */'''
   top_k_output = 10

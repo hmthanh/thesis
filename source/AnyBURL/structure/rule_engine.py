@@ -1,6 +1,6 @@
 from apply_config import ApplyConfig
 from data.triple_set import TripleSet
-from score_tree import ScoreTree
+from structure.score_tree import ScoreTree
 import time
 import heapq
 import sys
