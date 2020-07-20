@@ -16,22 +16,21 @@ class TripleSet (object):
     self.frequent_relations = set([])
 
   def read_triples(self, filepath):
-    with open(filepath) as f:
-      lines = f.readlines()
-    lineCounter = 0
-    for line in lines:
-      lineCounter += 1
-      if lineCounter % 1000000 == 0:
-        print('>>> parsed {0} lines'.format(lineCounter))
-      token = line.split('\t')
+    with open(filepath) as files:
+      lineCounter = 0
+      for line in files:
+        lineCounter += 1
+        if lineCounter % 1000000 == 0:
+          print('>>> parsed {0} lines'.format(lineCounter))
+        token = line.split('\t')
 
-      if len(token) < 3:
-        token = line.split(' ')
+        if len(token) < 3:
+          token = line.split(' ')
 
-      if len(token) == 3:
-        triple = Triple(token[0], token[1], token[2])
-        self.triples.append(triple)
-    self.__index_triples()
+        if len(token) == 3:
+          triple = Triple(token[0], token[1], token[2])
+          self.triples.append(triple)
+      self.__index_triples()
 
   def __index_triples(self):
     counter = 0

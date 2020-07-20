@@ -18,8 +18,8 @@ class Atom(object):
     if right[-1] == ')':
       right = right[0 : len(right) - 1]
     self.relation = relation
-    self.left = left
-    self.right = right
+    self.left = left.strip()
+    self.right = right.strip()
     self.is_left_constant = len(self.left) != 1
     self.is_right_constant = len(self.right) != 1
 

@@ -58,12 +58,6 @@ class RuleEngine(object):
               tail_candidates = rule.compute_tail_results(head, training_set)
               f_tail_candidates = self.__get_filtered_entities(filter_set, test_set, triple, tail_candidates, True)
               k_tail_tree.add_values(rule.get_applied_confidence(), f_tail_candidates)
-              if i < 100:
-                print('tail_candidates = {}=============='.format(tail_candidates), file=f_log)
-                print('f_tail_candidates = {}=============='.format(f_tail_candidates), file=f_log)
-                print(k_tail_tree, file=f_log)
-             
-              # print(k_tail_tree, file=f_log)
             else:
               break
 
@@ -74,9 +68,6 @@ class RuleEngine(object):
               f_head_candidates = self.__get_filtered_entities(filter_set, test_set, triple, head_candidates, False)
               k_head_tree.add_values(rule.get_applied_confidence(), f_tail_candidates)
               if i < 100:
-                print('head_candidates = {}=============='.format(head_candidates), file=f_log)
-                print('f_head_candidates = {}=============='.format(f_head_candidates), file=f_log)
-                print(k_head_tree, file=f_log)
             else:
               break
         i += 1
@@ -148,11 +139,11 @@ class RuleEngine(object):
     print('Heads: ', file=output)
     for key, val in k_tail_candidates.items():
       if triple.head == key or not test_set.is_true(key, triple.relation, triple.tail):
-        print('{}\t{}'.format(key, val), end='\t', file=output)
+        print('{}\t{}'.format(key.strip(), val), end='\t', file=output)
     print('\n', file=output)
     print('tails: ', file=output)
     for key, val in top_k_head_candidates.items():
       if triple.tail == key or not test_set.is_true(triple.head, triple.relation, key):
-        print('{}\t{}\t'.format(key, val), file=output)
+        print('{}\t{}\t'.format(key.strip(), val),  end='\t', file=output)
     print('\n', file=output)
     output.flush()
