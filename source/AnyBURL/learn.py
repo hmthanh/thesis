@@ -13,7 +13,7 @@ class Learn(object):
     self.mine_cyclic_not_acyclic = False #True #False
     self.rule_size_cyclic = 0
     self.rule_size_acyclic = 0
-    self.snapshots_at = [20, 100, 200]
+    self.snapshots_at = [200, 5000, 20000]
     self.snapshots_index = 0
 
   def train(self):

@@ -13,7 +13,7 @@ class Apply(object):
     self.path_training = path_training
     self.path_test = path_test
     self.path_valid = path_valid
-    self.path_rules_used = 'output/output-200.txt'
+    self.path_rules_used = path_rules
   
   def prediction(self):
     training_set, test_set, valid_set = TripleSet(), TripleSet(), TripleSet()

@@ -32,6 +32,7 @@ class RuleEngine(object):
     ScoreTree.lower_bound = k
     ScoreTree.upper_bound = ScoreTree.lower_bound
     ScoreTree.epsilon = RuleEngine.epsilon
+    f = open('test.txt', 'a')
     for triple in test_set.triples:
       if counter % 50 == 0:
         print('* (# {} ) trying to guess the tail/head of {}'.format(counter, triple))
@@ -75,8 +76,11 @@ class RuleEngine(object):
       top_k_tail_candidates = self.__sort_by_value(k_tail_candidates, k)
       top_k_head_candidates = self.__sort_by_value(k_head_candidates, k)
 
-      self.__write_top_k_candidates(triple, test_set, k_tail_candidates, top_k_head_candidates)
-
+      
+      self.__write_top_k_candidates(triple, test_set, k_tail_candidates, top_k_head_candidates, f)
+    
+    
+    f.close()
 
   def create_ordered_rule_index(self, rules):
     relation_to_rules = {}
@@ -130,8 +134,9 @@ class RuleEngine(object):
           is_push = True
         # delete element out of top k
         if is_push:
+          (max_pri, (k, v)) = max(heap)
           for index, (p, (key, val)) in enumerate(heap):
-            if p ==  max(heap):
+            if p ==  max_pri:
               del heap[index]
               break
           heapq.heapify(heap)
@@ -153,4 +158,4 @@ class RuleEngine(object):
       if triple.tail == key or not test_set.is_true(triple.head, triple.relation, key):
         print('{}\t{}\t'.format(key, val), file=output)
     print('\n', file=output)
-        
+    output.flush()
