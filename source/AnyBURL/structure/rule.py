@@ -5,8 +5,10 @@ from apply_config import ApplyConfig
 from learn_config import ConfigParameters
 
 class Rule(object):
+
   variables = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P']
   application_mode = False
+  
   def __init__(self, head=None):
     self.head = head
     self.body = []

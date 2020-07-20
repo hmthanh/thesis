@@ -6,8 +6,10 @@ import heapq
 import sys
 
 class RuleEngine(object):
+
   combination_rule_id = 1
   epsilon = 1e-4
+
   def __init__(self):
     pass
 
@@ -46,12 +48,13 @@ class RuleEngine(object):
 
       if relation in relation_to_rules:
         relevant_rules = relation_to_rules.get(relation)
-
+        # print('* ( {} ) trying to guess the tail/head of {}'.format(relevant_rules[0], relation))
         if tail_question not in tail_candidate_cache:
           for rule in relevant_rules:
             if not k_tail_tree.fine():
               tail_candidates = rule.compute_tail_results(head, training_set)
               f_tail_candidates = self.__get_filtered_entities(filter_set, test_set, triple, tail_candidates, True)
+              # print('f_tail_candidates = {}=============='.format(f_tail_candidates))
               k_tail_tree.add_values(rule.get_applied_confidence(), f_tail_candidates)
             else:
               break
@@ -72,7 +75,7 @@ class RuleEngine(object):
       top_k_tail_candidates = self.__sort_by_value(k_tail_candidates, k)
       top_k_head_candidates = self.__sort_by_value(k_head_candidates, k)
 
-      self.__write_top_k_candidates()
+      self.__write_top_k_candidates(triple, test_set, k_tail_candidates, top_k_head_candidates)
 
 
   def create_ordered_rule_index(self, rules):
@@ -104,6 +107,8 @@ class RuleEngine(object):
         if test_set.is_true(triple.head, triple.relation, entity):
           if entity == triple.tail:
             filtered_entities.add(entity)
+    
+    return filtered_entities
 
   # to do: implement heap
   def __sort_by_value(self, candidates, k):
@@ -115,12 +120,12 @@ class RuleEngine(object):
         heapq.heappush(heap, entry)
       else:
         is_push = False
-        min_priority = min(heap)
-        max_priority = max(heap)
-        if priority < min_priority:
+        min_p, v = min(heap)
+        max_p, v = max(heap)
+        if priority < min_p:
           heapq.heappush(heap, entry)
           is_push = True
-        elif priority < max_priority:
+        elif priority < max_p:
           heapq.heappush(heap, entry)
           is_push = True
         # delete element out of top k
@@ -136,6 +141,16 @@ class RuleEngine(object):
       res[key] = val
     return res
 
-  def __write_top_k_candidates(self, output=sys.stdout):
-    print('hello ', output)
+  def __write_top_k_candidates(self, triple, test_set, k_tail_candidates, top_k_head_candidates, output=sys.stdout):
+    print('{}'.format(triple), file=output)
+    print('Heads: ', file=output)
+    for key, val in k_tail_candidates.items():
+      if triple.head == key or not test_set.is_true(key, triple.relation, triple.tail):
+        print('{}\t{}'.format(key, val), end='\t', file=output)
+    print('\n', file=output)
+    print('tails: ', file=output)
+    for key, val in top_k_head_candidates.items():
+      if triple.tail == key or not test_set.is_true(triple.head, triple.relation, key):
+        print('{}\t{}\t'.format(key, val), file=output)
+    print('\n', file=output)
         
