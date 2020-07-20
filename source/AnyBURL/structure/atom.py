@@ -10,6 +10,7 @@ class Atom(object):
 
   def from_atom_representation(self, string_atom=''):
     t1 = string_atom.split('(')
+    # print(t1)
     t2 = t1[1].split(',')
     relation = t1[0]
     left = t2[0]
@@ -74,7 +75,7 @@ class Atom(object):
       return self.right
 
   def __str__(self):
-    return '{}({}, {})'.format(self.relation, self.left, self.right.strip('\n'))
+    return '{}({},{})'.format(self.relation, self.left, self.right.strip('\n'))
 
   # def __repr__(self):
   #   return (self.left, self.relation, self.right, self.is_left_constant, self.is_right_constant)

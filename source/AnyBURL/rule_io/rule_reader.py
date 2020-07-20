@@ -10,7 +10,9 @@ class RuleReader(object):
     token = str_rule.split('\t')
     rule = Rule()
     rule.init_measure(int(token[0]), int(token[1]), float(token[2]))
+    # print(token[3])
     atoms = token[3].split(' ')
+    # print(atoms)
     head = Atom()
     head.from_atom_representation(atoms[0])
     rule.head = head

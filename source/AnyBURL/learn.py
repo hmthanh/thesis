@@ -32,11 +32,12 @@ class Learn(object):
         rule_size = self.rule_size_cyclic
       useful_rules = all_useful_rules[rule_size]
       this_time = time.time()
-      elapsed_seconds = int(this_time - start_time)
+      elapsed_seconds = this_time - start_time
       if elapsed_seconds > self.snapshots_at[self.snapshots_index]:
         self.store_rules(all_useful_rules, self.snapshots_at[self.snapshots_index])
         self.snapshots_index += 1
         if self.snapshots_index == len(self.snapshots_at):
+          print('snapshots_index: {}'.format(self.snapshots_index))
           break
 
       batch_previously_found_rules = 0
