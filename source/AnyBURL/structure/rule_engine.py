@@ -77,7 +77,7 @@ class RuleEngine(object):
       top_k_head_candidates = self.__sort_by_value(k_head_candidates, k)
 
       
-      self.__write_top_k_candidates(triple, test_set, k_tail_candidates, top_k_head_candidates, f)
+      self.__write_top_k_candidates(triple, test_set, top_k_tail_candidates, top_k_head_candidates, f)
     
     
     f.close()
@@ -117,33 +117,18 @@ class RuleEngine(object):
   # to do: implement heap
   def __sort_by_value(self, candidates, k):
     heap = []
+    
     for key, val in candidates.items():
       priority = -1 * val
       entry = (priority, (key, val))
-      if len(heap) < k:
-        heapq.heappush(heap, entry)
-      else:
-        is_push = False
-        min_p, v = min(heap)
-        max_p, v = max(heap)
-        if priority < min_p:
-          heapq.heappush(heap, entry)
-          is_push = True
-        elif priority < max_p:
-          heapq.heappush(heap, entry)
-          is_push = True
-        # delete element out of top k
-        if is_push:
-          (max_pri, (k, v)) = max(heap)
-          for index, (p, (key, val)) in enumerate(heap):
-            if p ==  max_pri:
-              del heap[index]
-              break
-          heapq.heapify(heap)
-    sort_heap = sorted(heap, key=lambda item: item[0], reverse=True)
+      heapq.heappush(heap, entry)
+      
     res = {}
-    for index, (p, (key, val)) in enumerate(sort_heap):
+    i = 0
+    while i < k and len(heap):
+      (_, (key, val)) = heapq.heappop(heap)
       res[key] = val
+      i += 1
     return res
 
   def __write_top_k_candidates(self, triple, test_set, k_tail_candidates, top_k_head_candidates, output=sys.stdout):

@@ -499,12 +499,24 @@ class Rule(object):
 
   def compute_head_results(self, tail, triple_set):
     result_set = set([])
-    if self.is_X_rule():
-      pass
+    if self.is_Y_rule():
+      if self.__is_body_true_acyclic('Y', tail, 0, triple_set):
+        result_set.add(self.head.left)
+        return result_set
     elif self.is_X_rule():
-      pass
-    else:
-      pass
+      if self.head.right == tail:
+        self.compute_values_reversed('X', result_set, triple_set)
+        return result_set
+    elif self.is_XY_rule():
+      if len(self.body) > 3:
+        return result_set
+      results = set()
+      count = Counter()
+      if self.body[0].contains('Y'):
+        self._get_cyclic('Y', 'X', tail, 0, True, triple_set,  set(), results, count)
+      else:
+        self._get_cyclic('X', 'Y', tail, len(self.body) - 1, False, triple_set, set(), results, count)
+      return results
     return result_set
 
   def __is_body_true_acyclic(self, variable, value, body_index, triples):
