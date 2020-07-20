@@ -470,7 +470,7 @@ class Rule(object):
       if self.__is_body_true_acyclic('X', head, 0, triple_set):
         result_set.add(self.head.right)
         return result_set
-    elif self.is_X_rule():
+    elif self.is_Y_rule():
       if self.head.left == head:
         self.compute_values_reversed('Y', result_set, triple_set)
         return result_set
@@ -515,13 +515,13 @@ class Rule(object):
       if self.body[0].contains('Y'):
         self._get_cyclic('Y', 'X', tail, 0, True, triple_set,  set(), results, count)
       else:
-        self._get_cyclic('X', 'Y', tail, len(self.body) - 1, False, triple_set, set(), results, count)
+        self._get_cyclic('Y', 'X', tail, len(self.body) - 1, False, triple_set, set(), results, count)
       return results
     return result_set
 
   def __is_body_true_acyclic(self, variable, value, body_index, triples):
     atom = self.body[body_index]
-    head_not_tail = atom == variable
+    head_not_tail = atom.left == variable
     # the current atom is the last
     if len(self.body) - 1 == body_index:
       constant = atom.is_right_constant if head_not_tail else atom.is_left_constant
@@ -529,9 +529,9 @@ class Rule(object):
       if constant:
         constant_value = atom.get_LR(not head_not_tail)
         if head_not_tail:
-          triples.is_true(value, atom.relation, constant_value)
+          return triples.is_true(value, atom.relation, constant_value)
         else:
-          triples.is_true(constant_value, atom.relation, value)
+          return triples.is_true(constant_value, atom.relation, value)
       # existential quantification
       else:
         results = triples.get_entities(atom.relation, value, head_not_tail)

@@ -33,6 +33,8 @@ class RuleEngine(object):
     ScoreTree.upper_bound = ScoreTree.lower_bound
     ScoreTree.epsilon = RuleEngine.epsilon
     f = open('test.txt', 'a')
+    f_log = open('log.txt', 'w+')
+    i = 0
     for triple in test_set.triples:
       if counter % 50 == 0:
         print('* (# {} ) trying to guess the tail/head of {}'.format(counter, triple))
@@ -55,8 +57,13 @@ class RuleEngine(object):
             if not k_tail_tree.fine():
               tail_candidates = rule.compute_tail_results(head, training_set)
               f_tail_candidates = self.__get_filtered_entities(filter_set, test_set, triple, tail_candidates, True)
-              # print('f_tail_candidates = {}=============='.format(f_tail_candidates))
               k_tail_tree.add_values(rule.get_applied_confidence(), f_tail_candidates)
+              if i < 100:
+                print('tail_candidates = {}=============='.format(tail_candidates), file=f_log)
+                print('f_tail_candidates = {}=============='.format(f_tail_candidates), file=f_log)
+                print(k_tail_tree, file=f_log)
+             
+              # print(k_tail_tree, file=f_log)
             else:
               break
 
@@ -66,13 +73,18 @@ class RuleEngine(object):
               head_candidates = rule.compute_head_results(tail, training_set)
               f_head_candidates = self.__get_filtered_entities(filter_set, test_set, triple, head_candidates, False)
               k_head_tree.add_values(rule.get_applied_confidence(), f_tail_candidates)
+              if i < 100:
+                print('head_candidates = {}=============='.format(head_candidates), file=f_log)
+                print('f_head_candidates = {}=============='.format(f_head_candidates), file=f_log)
+                print(k_head_tree, file=f_log)
             else:
               break
+        i += 1
       
       k_tail_candidates,k_head_candidates = {}, {}
       k_tail_tree.get_as_linked_map(k_tail_candidates)
       k_head_tree.get_as_linked_map(k_head_candidates)
-
+      # print(k_tail_candidates, k_head_candidates)
       top_k_tail_candidates = self.__sort_by_value(k_tail_candidates, k)
       top_k_head_candidates = self.__sort_by_value(k_head_candidates, k)
 

@@ -2,6 +2,7 @@ from data.triple_set import TripleSet
 from rule_io.rule_reader import RuleReader
 from structure.rule_engine import RuleEngine
 from apply_config import ApplyConfig
+from structure.rule import Rule
 
 class Apply(object):
   
@@ -16,6 +17,7 @@ class Apply(object):
     self.path_rules_used = path_rules
   
   def prediction(self):
+    Rule.application_mode = True
     training_set, test_set, valid_set = TripleSet(), TripleSet(), TripleSet()
 
     training_set.read_triples(self.path_training)

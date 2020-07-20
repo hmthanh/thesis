@@ -14,7 +14,7 @@ class ApplyConfig(object):
   '''/**
 	 * The number of negative examples for which we assume that they exist, however, we have not seen them. Rules with high coverage are favored the higher the chosen number. 
 	*/'''
-  unseen_nagative_example = 100	
+  unseen_nagative_example = 5	
   '''/**
 	 * Defines the prediction type which also influences the usage of the other parameters. 
 	 * Possible values are currently aRx and xRy.
