@@ -1,6 +1,9 @@
-
+from completion_result import CompletionResult
 
 class ResultSet(object):
+
+  apply_threshold = False
+  threshold = 0.0
 
   def __init__(self, name, file_path='', contains_confidences=False, k=10):
     self.results = {}
@@ -8,3 +11,51 @@ class ResultSet(object):
     self.file_path = file_path
     self.contains_confidences = contains_confidences
     self.k = k
+    self.results = {}
+    self.__init_from_file(file_path)
+
+  def __init_from_file(self, file_path):
+    reader = open(file_path)
+    triple_line = reader.readline().strip('\n')
+    while triple_line != None:
+      if len(triple_line) < 3:
+        continue
+      completion_result = CompletionResult(triple_line)
+      head_line = reader.readline()
+      tail_line = reader.readline()
+
+      if head_line.find('Tails:') != -1:
+        head_line, tail_line = tail_line, head_line
+      
+      if not apply_threshold:
+        completion_result.add_head_results(self.__get_results_from_line(head_line[:7], k))
+        completion_result.add_tail_results(self.__get_results_from_line(head_line[:7], k))
+      else:
+        completion_result.add_head_results(self.__get_thresholded_results_from_line(head_line[:7], k))
+        completion_result.add_tail_results(self.__get_thresholded_results_from_line(head_line[:7], k))
+      
+      self.results[triple_line.split('\t')[0]] = completion_result
+
+      triple_line = reader.readline().strip('\n')
+  
+  def __get_results_from_line(self, rline):
+    if not self.contains_confidences:
+      return rline.split('\t')
+    else:
+      token = rline.split('\t')
+      tokenx = []
+      for i in range(0, len(token)/2):
+        tokenx.append(token[i * 2])
+      return tokenx
+
+  def get_head_candidates(self, triple):
+    if triple in self.results:
+      return self.results.get(triple).head_results
+    else:
+      return None
+  
+   def get_tail_candidates(self, triple):
+    if triple in self.results:
+      return self.results.get(triple).tail_results
+    else:
+      return None

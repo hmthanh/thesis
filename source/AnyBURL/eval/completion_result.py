@@ -2,8 +2,8 @@
 
 class CompletionResult(object):
 
-  def __init__(self):
-    self.triple = None
+  def __init__(self, triple):
+    self.triple = triple
     self.head_results = []
     self.tail_results = []
   
