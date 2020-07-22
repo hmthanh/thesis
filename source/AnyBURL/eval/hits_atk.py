@@ -50,3 +50,37 @@ class HitsAtK(object):
       self.head_ranks.append(-1)
     
     return found_at
+
+  def evaluate_tail(self, candidates, triple):
+    found_at = -1
+    self.counter_tail += 1
+    if len(candidates) > 0:
+      self.counter_tail_covered += 1
+    filter_count += 1
+    rank = 0
+    while rank < len(candidates) and rank < self.atk_max:
+      candidate = candidates[rank]
+      if candidate == triple.tail:
+        for index in range(rank, self.atk_max):
+          self.hits_adn_tail[index] += 1
+          self.hits_adn_tail_filtered[index - filter_count] += 1
+        found_at = rank + 1
+        break
+      else:
+        for filter in self.filter_sets:
+          if filter.is_true(triple.head, filter.relation, candidate):
+            filter_count += 1
+      
+      rank += 1
+
+    counter = 0
+    ranked = False
+    for candidate in candidates:
+      counter += 1
+      if candidate == triple.tail:
+        self.tail_ranks.append(counter)
+        ranked = True
+        break
+    if not ranked:
+      self.tail_ranks.append(-1)
+    return found_at

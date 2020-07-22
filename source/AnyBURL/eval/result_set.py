@@ -5,7 +5,7 @@ class ResultSet(object):
   apply_threshold = False
   threshold = 0.0
 
-  def __init__(self, name, file_path='', contains_confidences=False, k=10):
+  def __init__(self, name='', file_path='', contains_confidences=False, k=10):
     self.results = {}
     self.name = name
     self.file_path = file_path
@@ -71,7 +71,7 @@ class ResultSet(object):
     else:
       return None
   
-   def get_tail_candidates(self, triple):
+  def get_tail_candidates(self, triple):
     if triple in self.results:
       return self.results.get(triple).tail_results
     else:
