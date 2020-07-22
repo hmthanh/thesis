@@ -48,6 +48,23 @@ class ResultSet(object):
         tokenx.append(token[i * 2])
       return tokenx
 
+  def __get_thresholded_results_from_line(self, rline):
+    if not self.containsConfidences:
+      return rline.split('\t')
+    else:
+      t, cs = '', ''
+      token = rline.split('\t')
+      tokenx = []
+      for i in range(0, len(token)/2):
+        t = token[i * 2]
+        cs = float(token[i * 2 + 1])
+        if c > self.threshold:
+          tokenx.append(t)
+        else:
+          break
+      
+      return tokenx
+
   def get_head_candidates(self, triple):
     if triple in self.results:
       return self.results.get(triple).head_results
