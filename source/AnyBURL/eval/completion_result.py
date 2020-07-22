@@ -19,15 +19,15 @@ class CompletionResult(object):
     else:
       self.add_results(tails, self.tail_results)
   
-  def add_results(self, candidates, results, k):
-    for candidate in candidates:
-      if candidate != '':
-        results.append(candidate)
-        k -= 1
-        if k == 0:
-          return
-
-  def add_results(self, candidates, results):
-    for candidate in candidates:
-      if candidate != '':
-        results.append(candidate)
+  def add_results(self, candidates, results, k=None):
+    if k != None:
+      for candidate in candidates:
+        if candidate != '':
+          results.append(candidate)
+          k -= 1
+          if k == 0:
+            return
+    else:
+      for candidate in candidates:
+        if candidate != '':
+          results.append(candidate)

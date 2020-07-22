@@ -5,14 +5,14 @@ class HitsAtK(object):
   
   def __init__(self):
     self.filter_sets = []
-    self.hits_adn_tail = []
-    self.hits_adn_tail_filtered = []
+    self.hits_adn_tail = [1 for i in range(10)]
+    self.hits_adn_tail_filtered = [1 for i in range(10)]
     self.counter_tail = 0
     self.counter_tail_covered = 0
     self.head_ranks = []
     self.tail_ranks = []
-    self.hits_adn_head = []
-    self.hits_adn_head_filtered = []
+    self.hits_adn_head = [1 for i in range(10)]
+    self.hits_adn_head_filtered = [1 for i in range(10)]
     self.counter_head = 0
     self.counter_head_covered = 0
   
@@ -56,7 +56,7 @@ class HitsAtK(object):
     self.counter_tail += 1
     if len(candidates) > 0:
       self.counter_tail_covered += 1
-    filter_count += 1
+    filter_count = 0
     rank = 0
     while rank < len(candidates) and rank < self.atk_max:
       candidate = candidates[rank]

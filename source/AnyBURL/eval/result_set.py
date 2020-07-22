@@ -17,26 +17,30 @@ class ResultSet(object):
   def __init_from_file(self, file_path):
     reader = open(file_path)
     triple_line = reader.readline().strip('\n')
-    while triple_line != None:
+    i = 0
+    while triple_line != None and len(triple_line) > 0:
+      # if i % 1000:
+      #   print('read line {} = {}'.format(i, triple_line))
       if len(triple_line) < 3:
         continue
       completion_result = CompletionResult(triple_line)
-      head_line = reader.readline()
-      tail_line = reader.readline()
+      head_line = reader.readline().strip('\n')
+      tail_line = reader.readline().strip('\n')
 
       if head_line.find('Tails:') != -1:
         head_line, tail_line = tail_line, head_line
       
       if not ResultSet.apply_threshold:
-        completion_result.add_head_results(self.__get_results_from_line(head_line[:7], self.k))
-        completion_result.add_tail_results(self.__get_results_from_line(head_line[:7], self.k))
+        completion_result.add_head_results(self.__get_results_from_line(head_line[:7]), self.k)
+        completion_result.add_tail_results(self.__get_results_from_line(head_line[:7]), self.k)
       else:
-        completion_result.add_head_results(self.__get_thresholded_results_from_line(head_line[:7], self.k))
-        completion_result.add_tail_results(self.__get_thresholded_results_from_line(head_line[:7], self.k))
+        completion_result.add_head_results(self.__get_thresholded_results_from_line(head_line[:7]), self.k)
+        completion_result.add_tail_results(self.__get_thresholded_results_from_line(head_line[:7]), self.k)
       
       self.results[triple_line.split('\t')[0]] = completion_result
 
       triple_line = reader.readline().strip('\n')
+      i += 1
   
   def __get_results_from_line(self, rline):
     if not self.contains_confidences:
@@ -69,10 +73,10 @@ class ResultSet(object):
     if triple in self.results:
       return self.results.get(triple).head_results
     else:
-      return None
+      return []
   
   def get_tail_candidates(self, triple):
     if triple in self.results:
       return self.results.get(triple).tail_results
     else:
-      return None
+      return []
