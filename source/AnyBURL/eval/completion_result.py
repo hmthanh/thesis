@@ -27,7 +27,7 @@ class CompletionResult(object):
         if k == 0:
           return
 
-   def add_results(self, candidates, results):
+  def add_results(self, candidates, results):
     for candidate in candidates:
       if candidate != '':
         results.append(candidate)

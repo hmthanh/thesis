@@ -1,4 +1,4 @@
-from completion_result import CompletionResult
+from eval.completion_result import CompletionResult
 
 class ResultSet(object):
 
@@ -27,12 +27,12 @@ class ResultSet(object):
       if head_line.find('Tails:') != -1:
         head_line, tail_line = tail_line, head_line
       
-      if not apply_threshold:
-        completion_result.add_head_results(self.__get_results_from_line(head_line[:7], k))
-        completion_result.add_tail_results(self.__get_results_from_line(head_line[:7], k))
+      if not ResultSet.apply_threshold:
+        completion_result.add_head_results(self.__get_results_from_line(head_line[:7], self.k))
+        completion_result.add_tail_results(self.__get_results_from_line(head_line[:7], self.k))
       else:
-        completion_result.add_head_results(self.__get_thresholded_results_from_line(head_line[:7], k))
-        completion_result.add_tail_results(self.__get_thresholded_results_from_line(head_line[:7], k))
+        completion_result.add_head_results(self.__get_thresholded_results_from_line(head_line[:7], self.k))
+        completion_result.add_tail_results(self.__get_thresholded_results_from_line(head_line[:7], self.k))
       
       self.results[triple_line.split('\t')[0]] = completion_result
 
