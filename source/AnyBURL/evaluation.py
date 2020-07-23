@@ -11,20 +11,15 @@ class Evaluation(object):
   
   def eval(self):
     training_set, validation_set, test_set = TripleSet(), TripleSet(), TripleSet()
-    print('training_set')
     training_set.read_triples(self.config['path_training'])
-    print('validation_set')
     validation_set.read_triples(self.config['path_valid'])
-    print('test_set')
     test_set.read_triples(self.config['path_test'])
-    print('read result_set')
     result_set = ResultSet(self.config['path_prediction'], self.config['path_prediction'])
-    print('result_set {}'.format(len(result_set.results)))
+    # print('result_set {}'.format(len(result_set.results)))
     hitsAtK = HitsAtK()
     hitsAtK.filter_sets.append(training_set)
     hitsAtK.filter_sets.append(validation_set)
     hitsAtK.filter_sets.append(test_set)
-    print('__compute_scores {}'.format(len(test_set.triples)))
     self.__compute_scores(result_set, test_set, hitsAtK)
     print('hits@1   hits@3    hits@10')
     h1 = hitsAtK.hits_adn_head_filtered[0] + hitsAtK.hits_adn_tail_filtered[0] / hitsAtK.counter_head + hitsAtK.counter_tail
