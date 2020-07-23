@@ -22,9 +22,9 @@ class Evaluation(object):
     hitsAtK.filter_sets.append(test_set)
     self.__compute_scores(result_set, test_set, hitsAtK)
     print('hits@1   hits@3    hits@10')
-    h1 = hitsAtK.hits_adn_head_filtered[0] + hitsAtK.hits_adn_tail_filtered[0] / hitsAtK.counter_head + hitsAtK.counter_tail
-    h3 = hitsAtK.hits_adn_head_filtered[2] + hitsAtK.hits_adn_tail_filtered[2] / hitsAtK.counter_head + hitsAtK.counter_tail
-    h10 = hitsAtK.hits_adn_head_filtered[9] + hitsAtK.hits_adn_tail_filtered[9] / hitsAtK.counter_head + hitsAtK.counter_tail
+    h1 = (hitsAtK.hits_adn_head_filtered[0] + hitsAtK.hits_adn_tail_filtered[0]) / (hitsAtK.counter_head + hitsAtK.counter_tail)
+    h3 = (hitsAtK.hits_adn_head_filtered[2] + hitsAtK.hits_adn_tail_filtered[2]) / (hitsAtK.counter_head + hitsAtK.counter_tail)
+    h10 = (hitsAtK.hits_adn_head_filtered[9] + hitsAtK.hits_adn_tail_filtered[9]) / (hitsAtK.counter_head + hitsAtK.counter_tail)
     print('{}\t{}\t{}'.format(h1, h3, h10))
   
   def __compute_scores(self, result_set, gold, hitsAtK):

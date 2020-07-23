@@ -1,4 +1,4 @@
-path_training: ../../datasets/WN18RR/train.txt
-path_valid: ../../datasets/WN18RR/valid.txt
-path_test: ../../datasets/WN18RR/test.txt
-path_prediction: ./test.txt
+path_training: ../../datasets/WN18/wordnet-mlj12-train.txt
+path_valid: ../../datasets/WN18/wordnet-mlj12-valid.txt
+path_test: ../../datasets/WN18/wordnet-mlj12-test.txt
+path_prediction: output/alpha-100
