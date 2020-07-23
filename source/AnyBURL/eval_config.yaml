@@ -1,4 +1,4 @@
-path_training: ../../datasets/FB15k-237/train.txt
-path_valid: ../../datasets/FB15k-237/valid.txt
-path_test: ../../datasets/FB15k-237/test.txt
-path_prediction: output/alpha-100
+path_training: ../../datasets/WN18RR/train.txt
+path_valid: ../../datasets/WN18RR/valid.txt
+path_test: ../../datasets/WN18RR/test.txt
+path_prediction: ./test.txt

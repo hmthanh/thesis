@@ -67,7 +67,7 @@ class RuleEngine(object):
               head_candidates = rule.compute_head_results(tail, training_set)
               f_head_candidates = self.__get_filtered_entities(filter_set, test_set, triple, head_candidates, False)
               k_head_tree.add_values(rule.get_applied_confidence(), f_tail_candidates)
-              if i < 100:
+              # if i < 100:
             else:
               break
         i += 1
