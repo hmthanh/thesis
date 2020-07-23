@@ -39,7 +39,7 @@ class RuleEngine(object):
       if counter % 50 == 0:
         print('* (# {} ) trying to guess the tail/head of {}'.format(counter, triple))
         current_time = time.time()
-        print('Elapsed (s) = {}'.format(int(current_time - start_time) // 1000))
+        print('Elapsed (s) = {}'.format(int(current_time - start_time) / 1000))
         # 8 seconds per 1000 triples
       counter += 1
       relation = triple.relation
