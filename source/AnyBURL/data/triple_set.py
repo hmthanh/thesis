@@ -16,9 +16,10 @@ class TripleSet (object):
     self.frequent_relations = set([])
 
   def read_triples(self, filepath):
-    with open(filepath) as files:
+    with open(filepath, encoding='utf-8') as files:
       lineCounter = 0
       for line in files:
+        line = line.strip()
         lineCounter += 1
         if lineCounter % 1000000 == 0:
           print('>>> parsed {0} lines'.format(lineCounter))

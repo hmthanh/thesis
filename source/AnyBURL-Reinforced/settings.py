@@ -6,8 +6,8 @@ class Settings(object):
     '''*
     * Do not change this. For APPLY its required that this is set to false, for LEARNING both is okay
     *'''
-    self.REWRITE_REFLEXIV = False
-    self.REWRITE_REFLEXIV_TOKEN = 'me_myself_i'
+    self.rewrite_reflexiv = False
+    self.rewrite_reflexiv_token = 'me_myself_i'
     self.BEAM_NOT_DFS = True
     self.BEAM_TYPE_EDIS = True
     '''
