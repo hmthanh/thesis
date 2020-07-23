@@ -264,15 +264,13 @@ class Rule(object):
       next_variable = atom.left
       if head_not_tail:
         next_variable = atom.right
-      current_values = previous_values.copy()
+      current_values = set(previous_values)
       current_values.add(value)
       i = 0
       for next_value in results:
         if not Rule.application_mode and i >= ConfigParameters.sample_size:
           break
-        updated_body_index =  body_index - 1
-        if direction:
-          updated_body_index = body_index + 1
+        updated_body_index =  body_index + 1 if direction else body_index - 1
         self._get_cyclic(next_variable, last_variable, next_value, updated_body_index, direction, triples, current_values, final_results, counter)
         i += 1
       return
@@ -407,8 +405,8 @@ class Rule(object):
       # body groundings
       correctly_predicted, predicted = 0, 0
       # print('value={}'.format(xypairs.values))
-      for key in xypairs.values.keys():
-        for value in xypairs.values.get(key):
+      for key, values in xypairs.values.items():
+        for value in values:
           predicted += 1
           if triples.is_true(key, self.head.relation, value):
             correctly_predicted += 1
