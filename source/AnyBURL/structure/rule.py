@@ -8,7 +8,7 @@ class Rule(object):
 
   variables = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P']
   application_mode = False
-  
+
   def __init__(self, head=None):
     self.head = head
     self.body = []
@@ -24,37 +24,37 @@ class Rule(object):
       if not atom1.get_LR(left_not_right) == atom2.get_LR(left_not_right):
 				# different constants in same position
         return False
-    
+
     if atom1.is_LRC(left_not_right) != atom2.is_LRC(left_not_right):
 			# one varaible and one constants do not fit
       return False
-      
+
     if not atom1.is_LRC(left_not_right) and not atom2.is_LRC(left_not_right):
 			# special cases X must be at same poistion as X, Y at same as Y
       if atom1.get_LR(left_not_right) == 'X' and not atom2.get_LR(left_not_right) == 'X':
         return False
       if atom2.get_LR(left_not_right) == 'X' and not atom1.get_LR(left_not_right) == 'X':
         return False
-      
+
       if atom1.get_LR(left_not_right) == 'Y' and not atom2.get_LR(left_not_right) == 'Y':
         return False
       if atom2.get_LR(left_not_right) == 'Y' and not atom1.get_LR(left_not_right) == 'Y':
         return False
-      
+
       if atom1.get_LR(left_not_right) in variables_this_to_other:
         that_varible = variables_this_to_other.get(atom1.get_LR(left_not_right))
         if not atom2.get_LR(left_not_right) == that_varible:
           return False
-      
+
       if atom2.get_LR(left_not_right) in variables_this_to_other:
         this_varible = variables_this_to_other.get(atom2.get_LR(left_not_right))
         if not atom1.get_LR(left_not_right) == this_varible:
           return False
-      
+
       if not atom1.get_LR(left_not_right) in variables_this_to_other:
         variables_this_to_other[atom1.get_LR(left_not_right)] = atom2.get_LR(left_not_right)
         variables_other_to_this[atom2.get_LR(left_not_right)] = atom1.get_LR(left_not_right)
-		
+
     return True
 
   def __eq__(self, other):
@@ -63,7 +63,7 @@ class Rule(object):
         if len(self.body) == len(other.body):
           variables_this_to_other = {}
           variables_other_to_this = {}
-          for i in range(len(self.body)): 
+          for i in range(len(self.body)):
             atom1 = self.body[i]
             atom2 = other.body[i]
             if not atom1.relation == atom2.relation:
@@ -74,37 +74,37 @@ class Rule(object):
               if not self._check_values_and_variables(variables_this_to_other, variables_other_to_this, atom1, atom2, False):
                 return False
         return True
-    
+
     return False
 
   def __ne__(self, other):
     return not self.__eq__(other)
-  
+
   def __str__(self):
     body = ','.join([str(atom) for atom in self.body])
     return '{}\t{}\t{}\t{} <= {}'.format(self.predicted, self.correctly_predicted, self.confidence, self.head, body)
-  
+
   def __hash__(self):
     if self.hashcode is None:
       string_repr = str(self.head)
       body = ''.join([b.relation for b in self.body])
       self.hashcode = hash(string_repr + body)
     return self.hashcode
-	
+
   def init_from_path(self, path):
     self.body = []
     if path.markers[0] == '+' :
       self.head = Atom(path.nodes[0], path.nodes[1], path.nodes[2], True, True)
     else:
       self.head = Atom(path.nodes[2], path.nodes[1], path.nodes[0], True, True)
-    
+
     for i in range(1, len(path.markers)):
       if path.markers[i] == '+':
         #print("markers size = " + p.markers.length + "   nodes size = " + p.nodes.length + "   i =" +  i)
-        self.body.append(Atom(path.nodes[i*2], path.nodes[i*2+1], path.nodes[i*2+2], True, True))
+        self.body.append(Atom(path.nodes[i * 2], path.nodes[i * 2 + 1], path.nodes[i * 2 + 2], True, True))
       else:
-        self.body.append(Atom(path.nodes[i*2+2], path.nodes[i*2+1], path.nodes[i*2], True, True))
-  
+        self.body.append(Atom(path.nodes[i * 2 + 2], path.nodes[i * 2 + 1], path.nodes[i * 2], True, True))
+
   def init_measure(self, predicted, correctly_predicted, confidence):
     self.predicted = predicted
     self.correctly_predicted = correctly_predicted
@@ -124,7 +124,7 @@ class Rule(object):
         return True
       else:
         return False
-		
+
   def is_Y_rule(self):
     if self.is_XY_rule():
       return False
@@ -138,9 +138,9 @@ class Rule(object):
     count = self.head.replace_by_variable(constant, variable)
     for batom in self.body:
       bcount = batom.replace_by_variable(constant, variable)
-      count += bcount		
+      count += bcount
     return count
-	
+
   def __deep_copy(self):
     copy = Rule(self.head.clone())
     for body_literal in self.body:
@@ -173,10 +173,10 @@ class Rule(object):
     left_generalization = self.__deep_copy()
     left_constant = left_generalization.head.left
     x_count = left_generalization.__replace_by_variable(left_constant, 'X')
-    if x_count < 2: 
+    if x_count < 2:
       left_generalization = None
     return left_generalization
-	
+
   def __get_right_generalization(self):
     right_generalization = self.__deep_copy()
     right_constant = right_generalization.head.right
@@ -206,7 +206,7 @@ class Rule(object):
     if left_right is not None:
       left_right.__replace_all_constants_by_variables()
       generalizations.add(left_right)
-    
+
     if only_XY:
       return generalizations
     ## acyclic rule
@@ -219,9 +219,9 @@ class Rule(object):
       generalizations.add(left)
       if left_right is None:
         generalizations.add(left_free)
-    
+
     right = self.__get_right_generalization()
-    if right is not None:      
+    if right is not None:
       right_free = right.__deep_copy()
       if left_right is None:
         right_free.__replace_all_constants_by_variables()
@@ -229,7 +229,7 @@ class Rule(object):
       generalizations.add(right)
       if left_right is None:
         generalizations.add(right_free)
-    
+
     return generalizations
 
   def _get_cyclic(self, current_variable, last_variable, value, body_index, direction, triples, previous_values, final_results, counter):
@@ -237,19 +237,19 @@ class Rule(object):
     if Rule.application_mode and len(final_results) >= ApplyConfig.discrimination_bound :
       final_results.clear()
       return
-    
+
     if counter is not None:
       count = counter.incomming_and_get()
       if count >= ConfigParameters.trial_size or count >= ApplyConfig.trial_size:
         return
-    
+
     if not Rule.application_mode and len(final_results) >= ConfigParameters.sample_size:
       return
     # check if the value has been seen before as grounding of another variable
     atom = self.body[body_index]
     head_not_tail = atom.left == current_variable
     if  value in previous_values:
-      return		
+      return
     # the current atom is the last
     if (direction == True and len(self.body) -1 == body_index) or (direction == False and body_index == 0):
       # get groundings
@@ -258,7 +258,7 @@ class Rule(object):
           final_results.add(v)
       return
     ## the current atom is not the last
-    else: 
+    else:
       results = triples.get_entities(atom.relation, value, head_not_tail)
       # print("atom.getRelation()=" + atom.relation + " value=" + value + " headNotTail=" + str(head_not_tail))
       next_variable = atom.left
@@ -274,7 +274,7 @@ class Rule(object):
         self._get_cyclic(next_variable, last_variable, next_value, updated_body_index, direction, triples, current_values, final_results, counter)
         i += 1
       return
-	
+
   def ground_body_cyclic(self, first_variable, last_variable, triples, sampling_on=True):
     groundings = SampledPairedResultSet()
     atom = self.body[0]
@@ -295,7 +295,7 @@ class Rule(object):
         if first_variable == 'X':
           groundings.add_key(triple_val)
           for last_variable_value in last_variable_groundings:
-            groundings.add_value(last_variable_value) 
+            groundings.add_value(last_variable_value)
         else:
           for last_variable_value in last_variable_groundings:
             groundings.add_key(last_variable_value)
@@ -316,17 +316,17 @@ class Rule(object):
           counter[atom.left] = 2
         else:
           counter[atom.left] = 1
-      
+
       if not atom.right == 'X' and not atom.right == 'X':
         if atom.right in counter:
           counter[atom.right] = 2
         else:
           counter[atom.right] = 1
-          
+
     for key, value in counter.items():
       if value == 1:
         return key
-    
+
     return None
 
   def forward_reversed(self, variable, value, body_index, target_variable, target_values={}, triple_set=set([]), previous_values={}):
@@ -364,7 +364,7 @@ class Rule(object):
       values = triple_set.get_entities(last_atom.relation, constant, not next_var_is_left)
       previous_values = set([])
       previous_values.add(constant)
-      
+
       for value in values:
         self.forward_reversed(next_variable, value, atom_index - 1, target_variable, target_values, triple_set, previous_values)
         if not Rule.application_mode and len(target_values) >= ConfigParameters.sample_size:
@@ -379,17 +379,17 @@ class Rule(object):
         next_var_is_left = True
       next_variable = last_atom.get_LR(next_var_is_left)
       triples = triple_set.get_triples_by_relation(last_atom.relation)
-      
+
       for triple in triples:
         value = triple.get_value(next_var_is_left)
         previous_values = set([])
         previous_value = triple.get_value(not next_var_is_left)
         previous_values.add(previous_value)
         self.forward_reversed(next_variable, value, atom_index - 1, target_variable, target_values, triple_set, previous_values)
-        
+
         if not Rule.application_mode and len(target_values) >= ConfigParameters.sample_size:
           return
-          
+
         if Rule.application_mode and len(target_values) >= ApplyConfig.discrimination_bound:
           target_values.clear()
           return
@@ -398,7 +398,12 @@ class Rule(object):
     if self.is_XY_rule():
 			## X is given in first body atom
       xypairs = None
-      if 'X' in self.body:
+      is_zX = False
+      for atom in self.body:
+        if atom.left == 'X' or atom.right == 'X':
+          is_zX = True
+          break
+      if is_zX:
         xypairs = self.ground_body_cyclic('X', 'Y', triples)
       else:
         xypairs = self.ground_body_cyclic('Y', 'X', triples)
@@ -410,7 +415,7 @@ class Rule(object):
           predicted += 1
           if triples.is_true(key, self.head.relation, value):
             correctly_predicted += 1
-        
+
       self.predicted = predicted
       self.correctly_predicted = correctly_predicted
       self.confidence = correctly_predicted / predicted
@@ -423,24 +428,24 @@ class Rule(object):
         predicted += 1
         if triples.is_true(xvalue, self.head.relation, self.head.right):
           correctly_predicted += 1
-      
+
       if predicted == 0:
         print('compute_values_reversed', xvalues)
       self.predicted = predicted
       self.correctly_predicted = correctly_predicted
       self.confidence = correctly_predicted / predicted
-    
+
     if self.is_Y_rule():
       yvalues = set([])
       self.compute_values_reversed('Y', yvalues, triples)
-     
+
       predicted , correctly_predicted = 0,0
       for yvalue in yvalues:
         predicted += 1
         if triples.is_true(self.head.left, self.head.relation, yvalue):
           correctly_predicted += 1
       if predicted == 0:
-        print('compute_values_reversed', yvalues)    
+        print('compute_values_reversed', yvalues)
       self.predicted = predicted
       self.correctly_predicted = correctly_predicted
       self.confidence = correctly_predicted / predicted
@@ -450,13 +455,13 @@ class Rule(object):
       if self.head == self.body[0]:
         return True
     return False
-	
+
   def get_target_relation(self):
     return self.head.relation
-  
+
   '''/**
 	*  Returns the tail results of applying this rule to a given head value.
-	* 
+	*
 	* @param head The given head value.
 	* @param ts The triple set used for computing the results.
 	* @return An empty set, a set with one value (the constant of the rule) or the set of all body instantiations.
@@ -489,7 +494,7 @@ class Rule(object):
 
   '''/**
 	*  Returns the head results of applying this rule to a given tail value.
-	* 
+	*
 	* @param tail The given tail value.
 	* @param ts The triple set used for computing the results.
 	* @return An empty set, a set with one value (the constant of the rule) or the set of all body instantiations.
@@ -538,7 +543,7 @@ class Rule(object):
 
       return False
     # the current atom is not the last
-    else: 
+    else:
       results  = triples.get_entities(atom.relation, value, head_not_tail)
       next_variable = atom.get_LR(not head_not_tail)
       for next_val in results:
@@ -548,10 +553,10 @@ class Rule(object):
       return False
 
   def __get_cyclic(self, current_variable, last_variable, value, body_index, direction, triple_set, previous_values, final_results, counter):
-    
+
     if Rule.application_mode and len(final_results) >= ApplyConfig.discrimination_bound:
       final_results.clear()
-    
+
     if counter is not None:
       count = counter.incomming_and_get()
       if count >= ConfigParameters.trial_size or count >= ApplyConfig.trial_size:
@@ -586,7 +591,7 @@ class Rule(object):
 
   def get_applied_confidence(self):
     return self.correctly_predicted / (self.predicted + ApplyConfig.unseen_nagative_example)
-  
+
   def set_application_mode(self):
     Rule.application_mode = True
-  
+
