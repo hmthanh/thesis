@@ -6,7 +6,8 @@ from logger import Logger
 from utilities import current_milli_time
 from config.config_yaml import Config
 import time
-import _thread
+import copy
+import threading
 
 
 class Learning(object):
@@ -40,9 +41,18 @@ class Learning(object):
       snapshots_at = self.cfg['snapshots_at']
       if elapsed_seconds > snapshots_at[snapshot_index]:
         snapshot_index += 1
+        total_rule = 0
+        for _rules in all_useful_rules:
+          total_rule += len(_rules)
+        snapshot_file = 'learning_rules/rule_{}.txt'.format(total_rule)
+        self.log.info('snapshot_rules: {} in file {}'.format(total_rule, snapshot_file))
+        snapshot_rules = copy.deepcopy(all_useful_rules)
+        thread_snapshot = threading.Thread(target=self.process_snapshot_rule, args=(snapshot_rules, snapshot_file, ))
+        thread_snapshot.start()
         print('CREATED SNAPSHOT {} after {} seconds'.format(snapshot_index, elapsed_seconds))
         if snapshot_index == len(snapshots_at):
           print('*************************done learning*********************************')
+          thread_snapshot.join()
           return 0
       # batch learnig
       batch_start_time = current_milli_time()
@@ -96,3 +106,9 @@ class Learning(object):
       mine_cyclic_not_acyclic = not mine_cyclic_not_acyclic
       if mine_cyclic_not_acyclic and rule_size_cyclic + 1 > self.cfg['max_length_cylic']:
         mine_cyclic_not_acyclic = False
+
+  def process_snapshot_rule(self, rules, file):
+    with open(file, 'w') as output_stream:
+      for set_rule in rules:
+        for rule in set_rule:
+          print(rule, file=output_stream)

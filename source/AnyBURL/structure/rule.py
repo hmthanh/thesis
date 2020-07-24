@@ -387,15 +387,15 @@ class Rule(object):
     if self.is_XY_rule():
 			## X is given in first body atom
       xypairs = None
-      # is_zX = False
-      # for atom in self.body:
-      #   if atom.left == 'X' or atom.right == 'X':
-      #     is_zX = True
-      #     break
-      # if is_zX:
-      #   xypairs = self.ground_body_cyclic('X', 'Y', triples)
-      # else:
-      xypairs = self.ground_body_cyclic('Y', 'X', triples)
+      is_zX = False
+      for atom in self.body:
+        if atom.left == 'X' or atom.right == 'X':
+          is_zX = True
+          break
+      if is_zX:
+        xypairs = self.ground_body_cyclic('X', 'Y', triples)
+      else:
+        xypairs = self.ground_body_cyclic('Y', 'X', triples)
       correctly_predicted, predicted = 0, 0
       for key, values in xypairs.values.items():
         for value in values:
@@ -405,7 +405,7 @@ class Rule(object):
 
       self.predicted = predicted
       self.correctly_predicted = correctly_predicted
-      self.confidence = correctly_predicted / predicted
+      self.confidence = correctly_predicted / predicted if predicted != 0 else 0
       # print('predicted={}, correctly_predicted={}, confidence={}'.format(predicted, correctly_predicted, self.confidence))
     if self.is_X_rule():
       xvalues = set([])

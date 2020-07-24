@@ -104,3 +104,22 @@
 04:40:48,175 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
 04:40:48,175 Learning INFO time elapsed: 2411 ms
 04:40:50,196 Learning INFO increasing rule size of CYCLIC rules to 2  after 2 s
+06:12:07,178 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+06:12:07,178 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+06:12:07,178 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+06:12:07,178 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+06:12:11,34 Learning INFO ****************************start new section*************************************
+06:12:11,35 Learning INFO initialize learning 1595632331035
+06:12:14,565 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+06:12:14,566 Learning INFO time elapsed: 2553 ms
+06:12:16,568 Learning INFO increasing rule size of CYCLIC rules to 2  after 2 s
+06:32:42,867 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+06:32:42,867 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+06:32:42,867 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+06:32:42,867 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+06:32:44,300 Learning INFO ****************************start new section*************************************
+06:32:44,300 Learning INFO initialize learning 1595633564300
+06:32:48,65 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+06:32:48,65 Learning INFO time elapsed: 2983 ms
+06:32:50,86 Learning INFO increasing rule size of CYCLIC rules to 2  after 2 s
+06:32:59,703 Learning INFO snapshot_rules: 556 in file learning_rules/rule_556.txt
