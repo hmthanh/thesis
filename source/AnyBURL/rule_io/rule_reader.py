@@ -5,7 +5,7 @@ class RuleReader(object):
 
   def __init__(self, path='output/test.txt'):
     self.path = path
-  
+
   def __parsing(self, str_rule):
     token = str_rule.split('\t')
     rule = Rule()

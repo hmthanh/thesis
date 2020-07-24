@@ -29,7 +29,7 @@ class Evaluation(object):
 
   def __compute_scores(self, result_set, gold, hitsAtK):
     for triple in gold.triples:
-      cand1 = result_set.get_head_candidates(triple)
+      cand1 = result_set.get_head_candidates(str(triple))
       hitsAtK.evaluate_head(cand1, triple)
-      cand2 = result_set.get_tail_candidates(triple)
+      cand2 = result_set.get_tail_candidates((triple))
       hitsAtK.evaluate_tail(cand2, triple)

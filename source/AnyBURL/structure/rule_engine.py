@@ -32,7 +32,7 @@ class RuleEngine(object):
     ScoreTree.lower_bound = k
     ScoreTree.upper_bound = ScoreTree.lower_bound
     ScoreTree.epsilon = RuleEngine.epsilon
-    f = open('test.txt', 'a')
+    f = open('output/predict', 'a')
     f_log = open('log.txt', 'w+')
     i = 0
     for triple in test_set.triples:
@@ -71,7 +71,7 @@ class RuleEngine(object):
             else:
               break
         i += 1
-      
+
       k_tail_candidates,k_head_candidates = {}, {}
       k_tail_tree.get_as_linked_map(k_tail_candidates)
       k_head_tree.get_as_linked_map(k_head_candidates)
@@ -79,10 +79,9 @@ class RuleEngine(object):
       top_k_tail_candidates = self.__sort_by_value(k_tail_candidates, k)
       top_k_head_candidates = self.__sort_by_value(k_head_candidates, k)
 
-      
+
       self.__write_top_k_candidates(triple, test_set, top_k_tail_candidates, top_k_head_candidates, f)
-    
-    
+
     f.close()
 
   def create_ordered_rule_index(self, rules):
@@ -93,12 +92,12 @@ class RuleEngine(object):
       if relation not in relation_to_rules:
         relation_to_rules[relation] = []
       relation_to_rules[relation].append(rule)
-    
+
     for value in relation_to_rules.values():
       value.sort(key=lambda v: v.correctly_predicted / (v.predicted + ApplyConfig.unseen_nagative_example))
-    
+
     return relation_to_rules
-  
+
   def __get_filtered_entities(self, filter_set, test_set, triple, candidate_entities, tail_not_head):
     filtered_entities = set()
     for entity in candidate_entities:
@@ -114,18 +113,18 @@ class RuleEngine(object):
         if test_set.is_true(triple.head, triple.relation, entity):
           if entity == triple.tail:
             filtered_entities.add(entity)
-    
+
     return filtered_entities
 
   # to do: implement heap
   def __sort_by_value(self, candidates, k):
     heap = []
-    
+
     for key, val in candidates.items():
       priority = -1 * val
       entry = (priority, (key, val))
       heapq.heappush(heap, entry)
-      
+
     res = {}
     i = 0
     while i < k and len(heap):
@@ -136,14 +135,14 @@ class RuleEngine(object):
 
   def __write_top_k_candidates(self, triple, test_set, k_tail_candidates, top_k_head_candidates, output=sys.stdout):
     print('{}'.format(triple), file=output)
-    print('Heads: ', file=output)
+    print('Heads: ', end='', file=output)
     for key, val in k_tail_candidates.items():
       if triple.head == key or not test_set.is_true(key, triple.relation, triple.tail):
-        print('{}\t{}'.format(key.strip(), val), end='\t', file=output)
-    print('\n', file=output)
-    print('tails: ', file=output)
+        print('{}\t{}'.format(key, val), end='\t',file=output)
+    # print('\n', file=output)
+    print('\nTails: ', end='', file=output)
     for key, val in top_k_head_candidates.items():
       if triple.tail == key or not test_set.is_true(triple.head, triple.relation, key):
-        print('{}\t{}\t'.format(key.strip(), val),  end='\t', file=output)
-    print('\n', file=output)
+        print('{}\t{}\t'.format(key, val), end='\t',file=output)
+    print('\n',end='', file=output)
     output.flush()

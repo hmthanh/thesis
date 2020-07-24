@@ -30,13 +30,13 @@ class ResultSet(object):
         head_line, tail_line = tail_line, head_line
 
       if not ResultSet.apply_threshold:
-        completion_result.add_head_results(self.__get_results_from_line(head_line[:7]), self.k)
-        completion_result.add_tail_results(self.__get_results_from_line(head_line[:7]), self.k)
+        completion_result.add_head_results(self.__get_results_from_line(head_line[7:]), self.k)
+        completion_result.add_tail_results(self.__get_results_from_line(tail_line[7:]), self.k)
       else:
-        completion_result.add_head_results(self.__get_thresholded_results_from_line(head_line[:7]), self.k)
-        completion_result.add_tail_results(self.__get_thresholded_results_from_line(head_line[:7]), self.k)
+        completion_result.add_head_results(self.__get_thresholded_results_from_line(head_line[7:]), self.k)
+        completion_result.add_tail_results(self.__get_thresholded_results_from_line(tail_line[7:]), self.k)
 
-      self.results[triple_line.split('\t')[0]] = completion_result
+      self.results[triple_line] = completion_result
 
       triple_line = reader.readline().strip('\n')
       i += 1

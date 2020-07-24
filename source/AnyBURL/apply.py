@@ -5,7 +5,7 @@ from apply_config import ApplyConfig
 from structure.rule import Rule
 
 class Apply(object):
-  
+
   def __init__(self, path_rules, path_training, path_test, path_valid):
     '''/**
 	 * Path to the rule file.
@@ -15,7 +15,7 @@ class Apply(object):
     self.path_test = path_test
     self.path_valid = path_valid
     self.path_rules_used = path_rules
-  
+
   def prediction(self):
     Rule.application_mode = True
     training_set, test_set, valid_set = TripleSet(), TripleSet(), TripleSet()

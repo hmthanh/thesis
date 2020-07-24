@@ -1,21 +1,21 @@
 
 class HitsAtK(object):
-  
+
   atk_max = 100
-  
+
   def __init__(self):
     self.filter_sets = []
-    self.hits_adn_tail = [1 for i in range(10)]
-    self.hits_adn_tail_filtered = [1 for i in range(10)]
+    self.hits_adn_tail = [1 for i in range(100)]
+    self.hits_adn_tail_filtered = [1 for i in range(100)]
     self.counter_tail = 0
     self.counter_tail_covered = 0
     self.head_ranks = []
     self.tail_ranks = []
-    self.hits_adn_head = [1 for i in range(10)]
-    self.hits_adn_head_filtered = [1 for i in range(10)]
+    self.hits_adn_head = [1 for i in range(100)]
+    self.hits_adn_head_filtered = [1 for i in range(100)]
     self.counter_head = 0
     self.counter_head_covered = 0
-  
+
   def evaluate_head(self, candidates, triple):
     found_at = -1
     self.counter_head += 1
@@ -37,7 +37,7 @@ class HitsAtK(object):
             filter_count += 1
             break
       rank += 1
-    
+
     counter = 0
     ranked = False
     for candidate in candidates:
@@ -48,7 +48,7 @@ class HitsAtK(object):
         break
     if not ranked:
       self.head_ranks.append(-1)
-    
+
     return found_at
 
   def evaluate_tail(self, candidates, triple):
@@ -70,7 +70,7 @@ class HitsAtK(object):
         for filter in self.filter_sets:
           if filter.is_true(triple.head, filter.relation, candidate):
             filter_count += 1
-      
+
       rank += 1
 
     counter = 0

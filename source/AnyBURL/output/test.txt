@@ -1,7 +1,0 @@
-514	8	0.01556420233463035	/film/film/story_by(X,Y) <= /film/actor/film./film/performance/film(Y,X)
-235	14	0.059574468085106386	/award/award_category/nominees./award/award_nomination/nominated_for(X,/m/0b4lkx) <= /award/award_winning_work/awards_won./award/award_honor/award(A,X)
-7	5	0.7142857142857143	/award/award_category/nominees./award/award_nomination/nominated_for(X,/m/02ll45) <= /award/award_winning_work/awards_won./award/award_honor/award(/m/0bx0l,X)
-235	15	0.06382978723404255	/award/award_category/nominees./award/award_nomination/nominated_for(X,/m/02ll45) <= /award/award_winning_work/awards_won./award/award_honor/award(A,X)
-19	2	0.10526315789473684	/music/genre/artists(X,/m/03k3b) <= /music/genre/artists(X,/m/01gx5f)
-314	6	0.01910828025477707	/music/genre/artists(X,/m/03k3b) <= /music/genre/artists(X,A)
-403	9	0.022332506203473945	/award/award_category/nominees./award/award_nomination/nominated_for(X,/m/04nl83) <= /award/award_nominee/award_nominations./award/award_nomination/award(A,X)
