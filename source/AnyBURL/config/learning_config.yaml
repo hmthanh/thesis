@@ -1,9 +1,12 @@
 path_training: ../../datasets/WN18/train.txt
 path_output: ../../datasets/WN18/valid.txt
 snapshots_at:
-  - 200
-  - 500
-  - 1000
+  - 10
+  - 50
+  - 100
+#   - 200
+#   - 500
+#   - 1000
 saturation: 0.99
 sample_size: 500
 batch_time: 1000

@@ -71,3 +71,24 @@
 02:55:15,301 parso.python.diff DEBUG -> code[replace] old[4:4] new[4:4]
 02:55:15,301 parso.python.diff DEBUG parse_part from 4 to 4 (to 3 in part parser)
 02:55:15,301 parso.python.diff DEBUG diff parser end
+02:57:58,460 parso.python.diff DEBUG diff parser start
+02:57:58,460 parso.python.diff DEBUG line_lengths old: 4; new: 1
+02:57:58,460 parso.python.diff DEBUG -> code[replace] old[1:4] new[1:1]
+02:57:58,461 parso.python.diff DEBUG parse_part from 1 to 1 (to 0 in part parser)
+02:57:58,462 parso.python.diff DEBUG diff parser end
+02:57:58,464 parso.python.diff DEBUG diff parser start
+02:57:58,464 parso.python.diff DEBUG line_lengths old: 16; new: 16
+02:57:58,464 parso.python.diff DEBUG -> code[equal] old[1:7] new[1:7]
+02:57:58,464 parso.python.diff DEBUG copy old[1:15] new[1:6]
+02:57:58,464 parso.python.diff DEBUG parse_part from 7 to 7 (to 7 in part parser)
+02:57:58,465 parso.python.diff DEBUG -> code[replace] old[8:8] new[8:8]
+02:57:58,466 parso.python.diff DEBUG parse_part from 8 to 11 (to 12 in part parser)
+02:57:58,466 parso.python.diff DEBUG -> code[equal] old[9:12] new[9:12]
+02:57:58,467 parso.python.diff DEBUG parse_part from 12 to 16 (to 15 in part parser)
+02:57:58,467 parso.python.diff DEBUG -> code[replace] old[13:13] new[13:13]
+02:57:58,467 parso.python.diff DEBUG -> code[equal] old[14:16] new[14:16]
+02:57:58,467 parso.python.diff DEBUG diff parser end
+02:58:00,883 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+02:58:00,883 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+02:58:00,883 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+02:58:00,883 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.

@@ -252,9 +252,7 @@ class Rule(object):
     else:
       results = triples.get_entities(atom.relation, value, head_not_tail)
       # print("atom.getRelation()=" + atom.relation + " value=" + value + " headNotTail=" + str(head_not_tail))
-      next_variable = atom.left
-      if head_not_tail:
-        next_variable = atom.right
+      next_variable = atom.right if head_not_tail else atom.left
       current_values = set(previous_values)
       current_values.add(value)
       i = 0
@@ -389,18 +387,16 @@ class Rule(object):
     if self.is_XY_rule():
 			## X is given in first body atom
       xypairs = None
-      is_zX = False
-      for atom in self.body:
-        if atom.left == 'X' or atom.right == 'X':
-          is_zX = True
-          break
-      if is_zX:
-        xypairs = self.ground_body_cyclic('X', 'Y', triples)
-      else:
-        xypairs = self.ground_body_cyclic('Y', 'X', triples)
-      # body groundings
-      correctly_predicted, predicted = 0, 1
-      # print('value={}'.format(xypairs.values))
+      # is_zX = False
+      # for atom in self.body:
+      #   if atom.left == 'X' or atom.right == 'X':
+      #     is_zX = True
+      #     break
+      # if is_zX:
+      #   xypairs = self.ground_body_cyclic('X', 'Y', triples)
+      # else:
+      xypairs = self.ground_body_cyclic('Y', 'X', triples)
+      correctly_predicted, predicted = 0, 0
       for key, values in xypairs.values.items():
         for value in values:
           predicted += 1

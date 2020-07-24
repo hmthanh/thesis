@@ -17,7 +17,7 @@ class Path(object):
         return False
       if self.nodes[i] == yconst:
         return False
-          
+
     for i in range(2, len(self.nodes), 2):
       if self.nodes[i] in visited_entities:
         return False
@@ -27,9 +27,9 @@ class Path(object):
 
   def __marked_node_to_string(self, index):
     if index % 2 == 1:
-      return self.markers[(index - 1) // 2] + self.nodes[index]	
+      return self.markers[(index - 1) // 2] + self.nodes[index]
     else:
       return self.nodes[index]
-  
+
   def __str__(self):
     return '->'.join([self.__marked_node_to_string(i) for i in range(len(self.nodes))])

@@ -7,7 +7,7 @@ class PathSampler(object):
   ''' This class is responsible for sampling grounded pathes.'''
   def __init__(self, triple_set):
     self.triple_set = triple_set
-  
+
   def sample_path(self, steps, cyclic=False):
     triple = random.choice(self.triple_set.triples)
     nodes, markers = [None] * (1 + steps * 2), [None] * steps
