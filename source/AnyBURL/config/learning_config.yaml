@@ -1,0 +1,13 @@
+path_training: ../../datasets/WN18/train.txt
+path_output: ../../datasets/WN18/valid.txt
+snapshots_at:
+  - 200
+  - 500
+  - 1000
+saturation: 0.99
+sample_size: 500
+batch_time: 1000
+threshold_correct_predictions: 2
+threshold_confidence: 0.00001
+max_length_cylic: 3
+max_length_acylic: 2

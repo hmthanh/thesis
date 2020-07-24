@@ -1,0 +1,4 @@
+path_training: ../../datasets/WN18/train.txt
+path_valid: ../../datasets/WN18/valid.txt
+path_test: ../../datasets/WN18/test.txt
+path_prediction: output/predict

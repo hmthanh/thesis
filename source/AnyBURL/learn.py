@@ -84,7 +84,7 @@ class Learn(object):
         print('>>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ')
         print('>>> INCREASING RULE SIZE OF rule_size_cyclic RULE TO ', (rule_size))
         print(">>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        print('increasing rule size of rule_size_acyclic rules to ', (rule_size) , ' after ' , (int(start_time -  time.time()) // 1000) , 's')
+        print('increasing rule size of rule_size_acyclic rules to ', (rule_size) , ' after ' , (int(start_time -  time.time()) / 1000) , 's')
         all_useful_rules.append(set([]))
       self.mine_cyclic_not_acyclic = not self.mine_cyclic_not_acyclic
       if self.mine_cyclic_not_acyclic and self.rule_size_cyclic + 1 > ConfigParameters.max_length_cylic:

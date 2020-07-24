@@ -135,3 +135,4 @@ playground
 .ipynb_checkpoints/
 
 textbook/*
+log_debug/*
