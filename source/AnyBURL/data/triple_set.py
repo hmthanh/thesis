@@ -55,7 +55,7 @@ class TripleSet (object):
     return res
 
   def get_triples_by_relation(self, relation):
-    if self.relation_to_list.get(relation):
+    if relation in self.relation_to_list:
       return self.relation_to_list.get(relation)
     else:
       return []

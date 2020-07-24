@@ -111,28 +111,19 @@ class Rule(object):
     self.confidence = confidence
 
   def  is_XY_rule(self):
-    if not self.head.is_left_constant and not self.head.is_right_constant:
-      return True
-    else:
-      return False
+    return not self.head.is_left_constant and not self.head.is_right_constant
 
   def is_X_rule(self):
     if self.is_XY_rule():
       return False
     else:
-      if not self.head.is_left_constant:
-        return True
-      else:
-        return False
+      return not self.head.is_left_constant
 
   def is_Y_rule(self):
     if self.is_XY_rule():
       return False
     else:
-      if not self.head.is_right_constant:
-        return True
-      else:
-        return False
+      return not self.head.is_right_constant
 
   def __replace_by_variable(self, constant, variable):
     count = self.head.replace_by_variable(constant, variable)
@@ -408,7 +399,7 @@ class Rule(object):
       else:
         xypairs = self.ground_body_cyclic('Y', 'X', triples)
       # body groundings
-      correctly_predicted, predicted = 0, 0
+      correctly_predicted, predicted = 0, 1
       # print('value={}'.format(xypairs.values))
       for key, values in xypairs.values.items():
         for value in values:
@@ -429,8 +420,6 @@ class Rule(object):
         if triples.is_true(xvalue, self.head.relation, self.head.right):
           correctly_predicted += 1
 
-      if predicted == 0:
-        print('compute_values_reversed', xvalues)
       self.predicted = predicted
       self.correctly_predicted = correctly_predicted
       self.confidence = correctly_predicted / predicted

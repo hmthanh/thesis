@@ -43,7 +43,7 @@ class Learn(object):
       batch_previously_found_rules = 0
       batch_rules = 0
       batch_new_useful_rules = 1
-      
+
       batch_start_time = time.time()
       while True:
         current_time = time.time()
@@ -67,11 +67,11 @@ class Learn(object):
             else:
               batch_previously_found_rules += 1
       batch_counter += 1
-      type_rule = 'CYCLIC' 
+      type_rule = 'CYCLIC'
       if self.mine_cyclic_not_acyclic:
         type_rule = 'ACYCLIC'
-      print('>>> ****** Batch [{} {}] batchCounter: {} (sampled {} pathes) *****'.format(type_rule,  rule_size + 1, batch_counter, path_counter))   
-			
+      print('>>> ****** Batch [{} {}] batchCounter: {} (sampled {} pathes) *****'.format(type_rule,  rule_size + 1, batch_counter, path_counter))
+
       current_coverage = batch_previously_found_rules / (batch_new_useful_rules + batch_previously_found_rules)
       print('>>> fraction of previously seen rules within useful rules in this batch: {}  NEW={} PREV={} batch rules={}'.format(current_coverage, batch_new_useful_rules, batch_previously_found_rules, batch_rules))
       if current_coverage > ConfigParameters.saturation and batch_previously_found_rules > 1:
