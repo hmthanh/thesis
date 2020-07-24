@@ -22,9 +22,9 @@ class Learning(object):
     index_start_time = current_milli_time()
     triple_set = TripleSet()
     triple_set.read_triples(self.cfg['path_training'])
+    self.log.info('training with config {}'.format(self.cfg))
     path_sampler = PathSampler(triple_set)
     path_counter, batch_counter = 0, 0
-    batch_previously_found_rules, batch_new_useful_rules, batch_rules = 0, 0, 0
     mine_cyclic_not_acyclic = False
     all_useful_rules = [set()]
     snapshot_index, rule_size_cyclic, rule_size_acyclic = 0, 0, 0
@@ -34,6 +34,7 @@ class Learning(object):
 
     start_time = current_milli_time()
     while True:
+      batch_previously_found_rules, batch_new_useful_rules, batch_rules = 0, 0, 0
       rule_size = rule_size_cyclic if mine_cyclic_not_acyclic else rule_size_acyclic
       useful_rules = all_useful_rules[rule_size]
       elapsed_seconds = (current_milli_time() - start_time) // 1000
@@ -44,12 +45,12 @@ class Learning(object):
         total_rule = 0
         for _rules in all_useful_rules:
           total_rule += len(_rules)
-        snapshot_file = 'learning_rules/rule_{}.txt'.format(total_rule)
+        snapshot_file = 'learning_rules/rule_{}.txt'.format(snapshots_at[snapshot_index])
         self.log.info('snapshot_rules: {} in file {}'.format(total_rule, snapshot_file))
         snapshot_rules = copy.deepcopy(all_useful_rules)
         thread_snapshot = threading.Thread(target=self.process_snapshot_rule, args=(snapshot_rules, snapshot_file, ))
         thread_snapshot.start()
-        print('CREATED SNAPSHOT {} after {} seconds'.format(snapshot_index, elapsed_seconds))
+        print('created snapshot {} after {} seconds'.format(snapshot_index, elapsed_seconds))
         if snapshot_index == len(snapshots_at):
           print('*************************done learning*********************************')
           thread_snapshot.join()
@@ -79,10 +80,10 @@ class Learning(object):
 
       batch_counter += 1
       str_type = 'CYCLIC' if mine_cyclic_not_acyclic else 'ACYCLIC'
-      print('>>> ****** Batch [{} {}] {} (sampled {} pathes) *****'.format(str_type, rule_size + 1, batch_counter, path_counter))
+      print('=====> batch [{} {}] {} (sampled {} pathes) *****'.format(str_type, rule_size + 1, batch_counter, path_counter))
       current_coverage = batch_previously_found_rules / (batch_new_useful_rules + batch_previously_found_rules)
-      print('>>> fraction of previously seen rules within useful rules in this batch: {} NEW = {} PREV = {} ALL = {}'.format(current_coverage,batch_new_useful_rules, batch_previously_found_rules, batch_rules))
-      print('>>> stored rules: {}'.format(len(useful_rules)))
+      print('=====> fraction of previously seen rules within useful rules in this batch: {} num of new rule = {} num of previously rule = {} num of all batch rules = {}'.format(current_coverage,batch_new_useful_rules, batch_previously_found_rules, batch_rules))
+      print('=====> stored rules: {}'.format(len(useful_rules)))
       if mine_cyclic_not_acyclic:
         last_cyclic_coverage = current_coverage
       else:
@@ -94,14 +95,10 @@ class Learning(object):
           rule_size_cyclic = rule_size
         if not mine_cyclic_not_acyclic:
           rule_size_acyclic = rule_size
-        print('>>> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ')
-        print('>>> INCREASING RULE SIZE OF {} RULE TO {}'.format(str_type, rule_size + 1))
+        print('=========================================================')
+        print('=====> increasing rule size of {} rule to {}'.format(str_type, rule_size + 1))
         self.log.info('increasing rule size of {} rules to {}  after {} s'.format(str_type, rule_size + 1, (current_milli_time() - start_time)//1000))
         all_useful_rules.append(set())
-
-      batch_new_useful_rules = 0
-      batch_rules = 0
-      batch_previously_found_rules = 0
 
       mine_cyclic_not_acyclic = not mine_cyclic_not_acyclic
       if mine_cyclic_not_acyclic and rule_size_cyclic + 1 > self.cfg['max_length_cylic']:
