@@ -423,7 +423,7 @@ class Rule(object):
     if self.is_X_rule():
       xvalues = set([])
       self.compute_values_reversed('X', xvalues, triples)
-      predicted, correctly_predicted = 0,0
+      predicted, correctly_predicted = 0, 0
       for xvalue in xvalues:
         predicted += 1
         if triples.is_true(xvalue, self.head.relation, self.head.right):
@@ -439,7 +439,7 @@ class Rule(object):
       yvalues = set([])
       self.compute_values_reversed('Y', yvalues, triples)
 
-      predicted , correctly_predicted = 0,0
+      predicted , correctly_predicted = 0, 0
       for yvalue in yvalues:
         predicted += 1
         if triples.is_true(self.head.left, self.head.relation, yvalue):
