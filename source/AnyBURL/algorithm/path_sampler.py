@@ -13,7 +13,7 @@ class PathSampler(object):
     nodes, markers = [None] * (1 + steps * 2), [None] * steps
     if triple.head == triple.tail:
       return None
-    if random.uniform(0.0, 1.0) < 0.5:
+    if random.random() < 0.5:
       markers[0] = '+'
       nodes[0] = triple.head
       nodes[1] = triple.relation
@@ -27,7 +27,7 @@ class PathSampler(object):
     index = 1
     while index < steps:
       candidate_triples = None
-      if random.uniform(0.0, 1.0) < 0.5:
+      if random.random() < 0.5:
         candidate_triples = self.triple_set.get_triples_by_head(nodes[index * 2])
         if len(candidate_triples) == 0:
           return None

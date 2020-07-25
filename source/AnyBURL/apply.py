@@ -7,9 +7,6 @@ from structure.rule import Rule
 class Apply(object):
 
   def __init__(self, path_rules, path_training, path_test, path_valid):
-    '''/**
-	 * Path to the rule file.
-	 */'''
     self.path_rules = path_rules
     self.path_training = path_training
     self.path_test = path_test

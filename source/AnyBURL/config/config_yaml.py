@@ -14,3 +14,7 @@ class Config(object):
     with open('config/learning_config.yaml') as stream:
     # use safe_load instead load
       return yaml.safe_load(stream)
+  def load_predict_config():
+    with open('config/predict_config.yaml') as stream:
+    # use safe_load instead load
+      return yaml.safe_load(stream)

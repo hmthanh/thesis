@@ -36,3 +36,16 @@
 06:57:23,611 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
 06:57:23,611 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
 06:57:23,612 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+08:02:24,938 Learning INFO ****************************start new section*************************************
+08:02:24,938 Learning INFO initialize learning 1595638944938
+08:02:28,464 Learning INFO training with config {'path_training': '../../datasets/WN18/train.txt', 'path_output': '../../datasets/WN18/valid.txt', 'snapshots_at': [10, 50, 100], 'saturation': 0.99, 'sample_size': 500, 'batch_time': 1000, 'threshold_correct_predictions': 2, 'threshold_confidence': 1e-05, 'max_length_cylic': 3, 'max_length_acylic': 2}
+08:02:28,464 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+08:02:28,464 Learning INFO time elapsed: 2337 ms
+08:02:30,596 Learning INFO increasing rule size of CYCLIC rules to 2  after 2 s
+08:02:39,844 Learning INFO snapshot_rules: 709 in file learning_rules/rule_10.txt
+08:03:20,625 Learning INFO snapshot_rules: 2973 in file learning_rules/rule_50.txt
+08:04:09,571 Learning INFO snapshot_rules: 5434 in file learning_rules/rule_100.txt
+08:22:26,314 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+08:22:26,314 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+08:22:26,314 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+08:22:26,315 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
