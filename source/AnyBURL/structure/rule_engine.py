@@ -5,7 +5,8 @@ from structure.score_tree import ScoreTree
 from utilities import current_milli_time
 import time
 import heapq
-import sys
+import threading
+import os
 
 class RuleEngine(object):
 
@@ -13,6 +14,8 @@ class RuleEngine(object):
   epsilon = 1e-4
 
   def __init__(self, output_path, unseen_nagative_example):
+    if os.path.exists(output_path):
+      os.remove(output_path)
     self.output_path = output_path
     self.unseen_nagative_example = unseen_nagative_example
     self.log = Logger.get_log_cate('rule_engine.txt', 'RuleEngine')
@@ -38,14 +41,12 @@ class RuleEngine(object):
     ScoreTree.lower_bound = k
     ScoreTree.upper_bound = ScoreTree.lower_bound
     ScoreTree.epsilon = RuleEngine.epsilon
-    i = 0
+
     for triple in test_set.triples:
-      if counter % 50 == 0:
+      if counter % 100 == 0:
         print('* (# {} ) trying to guess the tail/head of {}'.format(counter, triple))
         current_time = current_milli_time()
         print('Elapsed (s) = {}'.format((current_time - start_time) // 1000))
-        # 8 seconds per 1000 triples
-      counter += 1
       relation = triple.relation
       head = triple.head
       tail = triple.tail
@@ -55,7 +56,6 @@ class RuleEngine(object):
 
       if relation in relation_to_rules:
         relevant_rules = relation_to_rules.get(relation)
-        # print('* ( {} ) trying to guess the tail/head of {}'.format(relevant_rules[0], relation))
 
         for rule in relevant_rules:
           if not k_tail_tree.fine():
@@ -71,20 +71,20 @@ class RuleEngine(object):
             head_candidates = rule.compute_head_results(tail, training_set)
             f_head_candidates = self.__get_filtered_entities(filter_set, test_set, triple, head_candidates, False)
             k_head_tree.add_values(rule.get_applied_confidence(), f_head_candidates)
-            # if i < 100:
           else:
             break
-        i += 1
 
       k_tail_candidates,k_head_candidates = {}, {}
       k_tail_tree.get_as_linked_map(k_tail_candidates)
       k_head_tree.get_as_linked_map(k_head_candidates)
-      # print(k_tail_candidates, k_head_candidates)
       top_k_tail_candidates = self.__sort_by_value(k_tail_candidates, k)
       top_k_head_candidates = self.__sort_by_value(k_head_candidates, k)
-      self.log.info('* write top_k_tail_candidates output {}'.format(top_k_tail_candidates))
-      self.log.info('* write top_k_head_candidates output {}'.format(top_k_head_candidates))
-
+      if counter % 500 == 0:
+        self.log.info('* write top {} candidates \nHeads:{}\nTails{}\n'.format(k, top_k_tail_candidates, top_k_head_candidates))
+      counter += 1
+      writer = threading.Thread(target=self.__process_write_top_k_candidates, args=(triple, test_set, top_k_tail_candidates, top_k_head_candidates, ))
+      writer.start()
+    writer.join()
     print('* done with rule application')
 
       # self.__write_top_k_candidates(triple, test_set, top_k_tail_candidates, top_k_head_candidates, f)
@@ -138,16 +138,16 @@ class RuleEngine(object):
     res.sort(key=lambda item: item[1], reverse=True)
     return res[:k]
 
-  def __write_top_k_candidates(self, triple, test_set, k_tail_candidates, top_k_head_candidates, output=sys.stdout):
-    print('{}'.format(triple), file=output)
-    print('Heads: ', end='', file=output)
-    for key, val in k_tail_candidates.items():
-      if triple.head == key or not test_set.is_true(key, triple.relation, triple.tail):
-        print('{}\t{}'.format(key, val), end='\t',file=output)
-    # print('\n', file=output)
-    print('\nTails: ', end='', file=output)
-    for key, val in top_k_head_candidates.items():
-      if triple.tail == key or not test_set.is_true(triple.head, triple.relation, key):
-        print('{}\t{}\t'.format(key, val), end='\t',file=output)
-    print('\n',end='', file=output)
-    output.flush()
+  def __process_write_top_k_candidates(self, triple, test_set, k_tail_candidates, top_k_head_candidates):
+    with open(self.output_path, 'a') as output_stream:
+      print('{}'.format(triple), file=output_stream)
+      print('Heads: ', end='', file=output_stream)
+      for (key, val) in k_tail_candidates:
+        if triple.head == key or not test_set.is_true(key, triple.relation, triple.tail):
+          print('{}\t{}'.format(key, val), end='\t',file=output_stream)
+      # print('\n', file=output)
+      print('\nTails: ', end='', file=output_stream)
+      for (key, val) in top_k_head_candidates:
+        if triple.tail == key or not test_set.is_true(triple.head, triple.relation, key):
+          print('{}\t{}\t'.format(key, val), end='\t',file=output_stream)
+      print('\n',end='', file=output_stream)

@@ -34,7 +34,7 @@ class ScoreTree(object):
       if i >= ScoreTree.lower_bound and i <= ScoreTree.upper_bound:
         return self.is_first_unique()
     return False
-  
+
   def is_first_unique(self):
     tree = self
     while len(tree.children) > 0:
@@ -44,7 +44,7 @@ class ScoreTree(object):
 
   def get_as_linked_map(self, linked_map={}):
     self.__get_as_linked_map_imp(linked_map, 0, 0)
-  
+
   def __get_as_linked_map_imp(self, linked_map, ps, level):
     if len(self.children) > 0:
       for child in self.children:
@@ -65,7 +65,7 @@ class ScoreTree(object):
     child.index = child_index
     self.children.append(child)
     return child
-  
+
   def __add_values_imp(self, score, values, counter):
     # go deep first
     for child in self.children:
@@ -92,7 +92,7 @@ class ScoreTree(object):
     if self.root and len(values) > 0 and self.num_of_values < ScoreTree.lower_bound:
       self.__add_child(score, values, self.num_of_values + len(values))
       self.num_of_values += len(values)
-    
+
     # try to set on closed if only 1 or less values are stored in this and in its children
     if self.stored_values == None or len(self.stored_values) <= 1:
       child_closed = True
