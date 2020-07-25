@@ -1,6 +1,7 @@
 from structure.atom import Atom
 from data.sampled_paired_result_set import SampledPairedResultSet
 from structure.counter import Counter
+from config.config_yaml import Config
 
 class Rule(object):
 

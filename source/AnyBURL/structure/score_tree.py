@@ -1,3 +1,4 @@
+import copy
 
 class ScoreTree(object):
 
@@ -36,7 +37,7 @@ class ScoreTree(object):
     return False
 
   def is_first_unique(self):
-    tree = self
+    tree = copy.deepcopy(self)
     while len(tree.children) > 0:
       tree = tree.children[0]
 
@@ -44,6 +45,15 @@ class ScoreTree(object):
 
   def get_as_linked_map(self, linked_map={}):
     self.__get_as_linked_map_imp(linked_map, 0, 0)
+
+  def set_lower_bound(lower):
+    ScoreTree.lower_bound = lower
+
+  def set_upper_bound(upper):
+    ScoreTree.upper_bound = upper
+
+  def set_epsilon(eps):
+    ScoreTree.epsilon = eps
 
   def __get_as_linked_map_imp(self, linked_map, ps, level):
     if len(self.children) > 0:

@@ -1,4 +1,4 @@
-from apply_config import ApplyConfig
+# from apply_config import ApplyConfig
 from data.triple_set import TripleSet
 from logger import Logger
 from structure.score_tree import ScoreTree
@@ -38,9 +38,9 @@ class RuleEngine(object):
     # start iterating over the test cases
     counter ,current_time, start_time = 0, 0, current_milli_time()
 
-    ScoreTree.lower_bound = k
-    ScoreTree.upper_bound = ScoreTree.lower_bound
-    ScoreTree.epsilon = RuleEngine.epsilon
+    ScoreTree.set_lower_bound(k)
+    ScoreTree.set_upper_bound(ScoreTree.lower_bound)
+    ScoreTree.set_epsilon(0.0001)
 
     for triple in test_set.triples:
       if counter % 100 == 0:
