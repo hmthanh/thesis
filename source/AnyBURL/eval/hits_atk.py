@@ -68,7 +68,7 @@ class HitsAtK(object):
         break
       else:
         for filter in self.filter_sets:
-          if filter.is_true(triple.head, filter.relation, candidate):
+          if filter.is_true(triple.head, triple.relation, candidate):
             filter_count += 1
 
       rank += 1

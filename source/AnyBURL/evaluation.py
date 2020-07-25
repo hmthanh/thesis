@@ -32,5 +32,5 @@ class Evaluation(object):
     for triple in gold.triples:
       cand1 = result_set.get_head_candidates(str(triple))
       hitsAtK.evaluate_head(cand1, triple)
-      cand2 = result_set.get_tail_candidates((triple))
+      cand2 = result_set.get_tail_candidates(str(triple))
       hitsAtK.evaluate_tail(cand2, triple)
