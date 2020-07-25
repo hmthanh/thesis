@@ -41,11 +41,11 @@ class Learning(object):
       ## snapshots rule affter t seconds white learning
       snapshots_at = self.cfg['snapshots_at']
       if elapsed_seconds > snapshots_at[snapshot_index]:
-        snapshot_index += 1
         total_rule = 0
         for _rules in all_useful_rules:
           total_rule += len(_rules)
         snapshot_file = 'learning_rules/rule_{}.txt'.format(snapshots_at[snapshot_index])
+        snapshot_index += 1
         self.log.info('snapshot_rules: {} in file {}'.format(total_rule, snapshot_file))
         snapshot_rules = copy.deepcopy(all_useful_rules)
         thread_snapshot = threading.Thread(target=self.process_snapshot_rule, args=(snapshot_rules, snapshot_file, ))
