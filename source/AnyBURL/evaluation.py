@@ -6,8 +6,7 @@ from eval.hits_atk import HitsAtK
 class Evaluation(object):
 
   def __init__(self):
-    cfg = Config()
-    self.config = cfg.load_eval_config()
+    self.config = Config.load_eval_config()
     self.training_set, self.validation_set, self.test_set = TripleSet(), TripleSet(), TripleSet()
     self.training_set.read_triples(self.config['path_training'])
     self.validation_set.read_triples(self.config['path_valid'])

@@ -1212,3 +1212,7 @@ Heads:[('00701040', 0.001990049751243781), ('00065070', 0.001990049751243781), (
 Tails[('00652346', 0.001990049751243781), ('00240184', 0.001990049751243781), ('00368592', 0.001990049751243781), ('07121361', 0.001990049751243781), ('01031256', 0.001990049751243781), ('07395104', 0.001990049751243781), ('14286549', 0.001990049751243781), ('13894434', 0.001990049751243781), ('01186810', 0.001990049751243781), ('01632411', 0.001990049751243781)]
 
 11:10:10,108 Predict INFO finished in 61 s.
+11:18:11,251 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+11:18:11,252 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+11:18:11,254 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+11:18:11,254 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.

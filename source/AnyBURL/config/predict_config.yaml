@@ -5,7 +5,6 @@ path_rules:
 path_training: ../../datasets/WN18/train.txt
 path_valid: ../../datasets/WN18/valid.txt
 path_test: ../../datasets/WN18/test.txt
-path_prediction: prediction/predict.text
 unseen_nagative_examples: 5
 top_k_output: 10
 threshold_confidence_predictions: 2
