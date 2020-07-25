@@ -1,8 +1,6 @@
 from structure.atom import Atom
 from data.sampled_paired_result_set import SampledPairedResultSet
 from structure.counter import Counter
-from apply_config import ApplyConfig
-from learn_config import ConfigParameters
 
 class Rule(object):
 
@@ -10,6 +8,8 @@ class Rule(object):
   application_mode = False
 
   def __init__(self, head=None):
+    self.cfg = Config.load_learning_config()
+    self.cfg_predict = Config.load_predict_config()
     self.head = head
     self.body = []
     self.predicted = 0
@@ -225,16 +225,16 @@ class Rule(object):
 
   def _get_cyclic(self, current_variable, last_variable, value, body_index, direction, triples, previous_values, final_results, counter):
 		# print("currentVariable=" + current_variable + " lastVariable=" +  last_variable + " value=" + value + " bodyIndex=" + body_index)
-    if Rule.application_mode and len(final_results) >= ApplyConfig.discrimination_bound :
+    if Rule.application_mode and len(final_results) >= self.cfg['discrimination_bound']:
       final_results.clear()
       return
 
     if counter is not None:
       count = counter.incomming_and_get()
-      if count >= ConfigParameters.trial_size or count >= ApplyConfig.trial_size:
+      if count >= self.cfg['trial_size']:
         return
 
-    if not Rule.application_mode and len(final_results) >= ConfigParameters.sample_size:
+    if not Rule.application_mode and len(final_results) >= self.cfg['sample_size']:
       return
     # check if the value has been seen before as grounding of another variable
     atom = self.body[body_index]
@@ -257,7 +257,7 @@ class Rule(object):
       current_values.add(value)
       i = 0
       for next_value in results:
-        if not Rule.application_mode and i >= ConfigParameters.sample_size:
+        if not Rule.application_mode and i >= self.cfg['sample_size']:
           break
         updated_body_index =  body_index + 1 if direction else body_index - 1
         self._get_cyclic(next_variable, last_variable, next_value, updated_body_index, direction, triples, current_values, final_results, counter)
@@ -275,11 +275,8 @@ class Rule(object):
     for triple in rtriples:
       counter += 1
       last_variable_groundings = set([])
-      ## Learn.takeTime()
       triple_val = triple.get_value(head_not_tail)
       self._get_cyclic(first_variable, last_variable, triple_val, 0, True, triples, set([]), last_variable_groundings, count)
-
-      # Learn.showElapsedMoreThan(500, "call to getCyclic")
       if len(last_variable_groundings) > 0:
         if first_variable == 'X':
           groundings.add_key(triple_val)
@@ -289,9 +286,9 @@ class Rule(object):
           for last_variable_value in last_variable_groundings:
             groundings.add_key(last_variable_value)
             groundings.add_value(triple_val)
-      if (counter >  ConfigParameters.sample_size or groundings.size() > ConfigParameters.sample_size) and sampling_on:
+      if (counter >  self.cfg['sample_size'] or groundings.size() > self.cfg['sample_size']) and sampling_on:
         break
-      if not Rule.application_mode and count.get() >= ConfigParameters.trial_size:
+      if not Rule.application_mode and count.get() >= self.cfg['trial_size']:
         break
     return groundings
 
@@ -331,7 +328,7 @@ class Rule(object):
         next_var_is_left = True
       next_variable = atom.get_LR(next_var_is_left)
       next_values = set([])
-      if not Rule.application_mode and len(target_values) >= ConfigParameters.sample_size:
+      if not Rule.application_mode and len(target_values) >= self.cfg['sample_size']:
         return
       # next_values.add()
       values_relation = triple_set.get_entities(atom.relation, value, not next_var_is_left)
@@ -356,10 +353,10 @@ class Rule(object):
 
       for value in values:
         self.forward_reversed(next_variable, value, atom_index - 1, target_variable, target_values, triple_set, previous_values)
-        if not Rule.application_mode and len(target_values) >= ConfigParameters.sample_size:
+        if not Rule.application_mode and len(target_values) >= self.cfg['sample_size']:
           return
 
-        if Rule.application_mode and len(target_values) >= ApplyConfig.discrimination_bound:
+        if Rule.application_mode and len(target_values) >=  self.cfg['discrimination_bound']:
           target_values.clear()
           return
     else :
@@ -376,10 +373,10 @@ class Rule(object):
         previous_values.add(previous_value)
         self.forward_reversed(next_variable, value, atom_index - 1, target_variable, target_values, triple_set, previous_values)
 
-        if not Rule.application_mode and len(target_values) >= ConfigParameters.sample_size:
+        if not Rule.application_mode and len(target_values) >= self.cfg['sample_size']:
           return
 
-        if Rule.application_mode and len(target_values) >= ApplyConfig.discrimination_bound:
+        if Rule.application_mode and len(target_values) >= self.cfg['discrimination_bound']:
           target_values.clear()
           return
 
@@ -539,14 +536,14 @@ class Rule(object):
 
   def __get_cyclic(self, current_variable, last_variable, value, body_index, direction, triple_set, previous_values, final_results, counter):
 
-    if Rule.application_mode and len(final_results) >= ApplyConfig.discrimination_bound:
+    if Rule.application_mode and len(final_results) >=  self.cfg['discrimination_bound']:
       final_results.clear()
 
     if counter is not None:
       count = counter.incomming_and_get()
-      if count >= ConfigParameters.trial_size or count >= ApplyConfig.trial_size:
+      if count >=  self.cfg['trial_size']:
         return
-    if Rule.application_mode and len(final_results) >= ConfigParameters.sample_size:
+    if Rule.application_mode and len(final_results) >= self.cfg['sample_size']:
       return
     # check if the value has been seen before as grounding of another variable
     atom = self.body[body_index]
@@ -566,7 +563,7 @@ class Rule(object):
       current_values.add(value)
       i = 0
       for next_value in results:
-        if not Rule.application_mode and i >= ConfigParameters.sample_size:
+        if not Rule.application_mode and i >= self.cfg['sample_size']:
           break
         updated_body_index = body_index + 1 if direction else body_index - 1
         self.__get_cyclic(next_variable, last_variable, next_value, updated_body_index, direction, triple_set, current_values, final_results, counter)
@@ -575,7 +572,7 @@ class Rule(object):
       return
 
   def get_applied_confidence(self):
-    return self.correctly_predicted / (self.predicted + ApplyConfig.unseen_nagative_example)
+    return self.correctly_predicted / (self.predicted + self.cfg_predict['unseen_nagative_example'])
 
   def set_application_mode():
     Rule.application_mode = True

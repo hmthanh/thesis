@@ -2,10 +2,12 @@ from config.config_yaml import Config
 from data.triple_set import TripleSet
 from eval.result_set import ResultSet
 from eval.hits_atk import HitsAtK
+from structure.rule import Rule
 
 class Evaluation(object):
 
   def __init__(self):
+    Rule.set_application_mode()
     self.config = Config.load_eval_config()
     self.training_set, self.validation_set, self.test_set = TripleSet(), TripleSet(), TripleSet()
     self.training_set.read_triples(self.config['path_training'])

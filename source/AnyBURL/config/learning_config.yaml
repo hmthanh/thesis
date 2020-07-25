@@ -14,3 +14,5 @@ threshold_correct_predictions: 2
 threshold_confidence: 0.00001
 max_length_cylic: 3
 max_length_acylic: 2
+discrimination_bound: 1000
+trial_size: 100000
