@@ -16,22 +16,22 @@ class TripleSet (object):
     self.frequent_relations = set([])
 
   def read_triples(self, filepath):
-    with open(filepath) as f:
-      lines = f.readlines()
-    lineCounter = 0
-    for line in lines:
-      lineCounter += 1
-      if lineCounter % 1000000 == 0:
-        print('>>> parsed {0} lines'.format(lineCounter))
-      token = line.split('\t')
+    with open(filepath, encoding='utf-8') as files:
+      lineCounter = 0
+      for line in files:
+        line = line.strip()
+        lineCounter += 1
+        if lineCounter % 1000000 == 0:
+          print('>>> parsed {0} lines'.format(lineCounter))
+        token = line.split('\t')
 
-      if len(token) < 3:
-        token = line.split(' ')
+        if len(token) < 3:
+          token = line.split(' ')
 
-      if len(token) == 3:
-        triple = Triple(token[0], token[1], token[2])
-        self.triples.append(triple)
-    self.__index_triples()
+        if len(token) == 3:
+          triple = Triple(token[0], token[1], token[2])
+          self.triples.append(triple)
+      self.__index_triples()
 
   def __index_triples(self):
     counter = 0
@@ -53,9 +53,9 @@ class TripleSet (object):
     if res == None:
       return []
     return res
-  
+
   def get_triples_by_relation(self, relation):
-    if self.relation_to_list.get(relation):
+    if relation in self.relation_to_list:
       return self.relation_to_list.get(relation)
     else:
       return []
@@ -65,7 +65,7 @@ class TripleSet (object):
       if relation in self.head_relation_to_tail.get(head):
         return self.head_relation_to_tail.get(head).get(relation)
     return set([])
-  
+
   def get_head_entities(self, relation, tail):
     if tail in self.tail_relation_to_head:
       if relation in self.tail_relation_to_head.get(tail):
@@ -73,19 +73,24 @@ class TripleSet (object):
     return set([])
 
   def is_true(self, head, relation, tail):
-    
+
     if tail in self.tail_relation_to_head:
       if relation in self.tail_relation_to_head.get(tail):
         # if head in self.tail_relation_to_head.get(tail).get(relation):
         #   print(head, self.tail_relation_to_head.get(tail).get(relation))
         return head in self.tail_relation_to_head.get(tail).get(relation)
     return False
-	
+
+  def add_triple_set(self, triple_set):
+    for triple in triple_set.triples:
+      self.triples.append(triple)
+      self.__add_triple_to_index(triple)
+
   '''/**
-	* Returns those values for which the relation holds for a given value. If the headNotTail is 
+	* Returns those values for which the relation holds for a given value. If the headNotTail is
 	* set to true, the value is interpreted as head value and the corresponding tails are returned.
 	* Otherwise, the corresponding heads are returned.
-	*  
+	*
 	* @param relation The specified relation.
 	* @param value The value interpreted as given head or tail.
 	* @param headNotTail Whether to interpret the value as head and not as tail (false interprets as tail).
@@ -97,7 +102,7 @@ class TripleSet (object):
       return self.get_tail_entities(relation, value)
     else:
       return self.get_head_entities(relation, value)
-		
+
 
   def __add_triple_to_index(self, triple):
     head = triple.head

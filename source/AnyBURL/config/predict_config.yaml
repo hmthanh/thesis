@@ -1,0 +1,12 @@
+path_rules:
+  # - learning_rules/rule_10.txt
+  # - learning_rules/rule_50.txt
+  # - learning_rules/rule_100.txt
+  - learning_rules/alpha-100
+path_training: ../../datasets/WN18/train.txt
+path_valid: ../../datasets/WN18/valid.txt
+path_test: ../../datasets/WN18/test.txt
+unseen_nagative_examples: 5
+top_k_output: 10
+threshold_confidence_predictions: 2
+threshold_confidence: 0.00001

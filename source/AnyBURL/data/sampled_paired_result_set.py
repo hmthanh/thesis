@@ -5,17 +5,17 @@ class SampledPairedResultSet(object):
     self.sampling = False
     self.value_counter = 0
     self.current_key = ''
-  
+
   def add_key(self, key):
     self.current_key = key
     if key in self.values:
       return
     else:
       self.values[key] = set([])
-  
+
   def add_value(self, value):
     self.values.get(self.current_key).add(value)
     self.value_counter += 1
-  
+
   def size(self):
-    return self.value_counter
+    return len(self.values)

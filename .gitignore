@@ -133,3 +133,6 @@ playground
 
 # Jupyter file
 .ipynb_checkpoints/
+
+textbook/*
+log_debug/*

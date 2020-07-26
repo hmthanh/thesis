@@ -9,16 +9,17 @@ class Atom(object):
     self.hashcode = None
 
   def from_atom_representation(self, string_atom=''):
-    t1 = string_atom.split('\\c')
+    t1 = string_atom.split('(')
+    # print(t1)
     t2 = t1[1].split(',')
     relation = t1[0]
     left = t2[0]
-    right = t2[1][0, len(t2[1])-1]
+    right = t2[1][0 : len(t2[1]) - 1]
     if right[-1] == ')':
-      right = right[0, len(right) - 1]
+      right = right[0 : len(right) - 1]
     self.relation = relation
-    self.left = left
-    self.right = right
+    self.left = left.strip()
+    self.right = right.strip()
     self.is_left_constant = len(self.left) != 1
     self.is_right_constant = len(self.right) != 1
 
@@ -74,10 +75,10 @@ class Atom(object):
       return self.right
 
   def __str__(self):
-    return '{} ({}, {}): ({} + {})'.format(self.relation, self.left, self.right, self.is_left_constant, self.is_right_constant)
+    return '{}({},{})'.format(self.relation, self.left, self.right.strip('\n'))
 
-  def __repr__(self):
-    return (self.left, self.relation, self.right, self.is_left_constant, self.is_right_constant)
+  # def __repr__(self):
+  #   return (self.left, self.relation, self.right, self.is_left_constant, self.is_right_constant)
 
   def __eq__(self, other):
     if isinstance(other, self.__class__):

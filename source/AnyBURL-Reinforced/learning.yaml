@@ -1,0 +1,7 @@
+PATH_TRAINING:  ../../datasets/WN18/train.txt
+PATH_OUTPUT:    rules
+SNAPSHOTS_AT: 
+  - 10
+  - 50
+  - 100
+WORKER_THREADS:  7

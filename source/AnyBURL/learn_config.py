@@ -9,10 +9,10 @@ class ConfigParameters(object):
 	*/'''
   sample_size = 1000
   '''/**
-	 * The time that is reserved for one batch in milliseconds. Each second batch is 
-	 * used for mining cyclic/acyclic rules. 
+	 * The time that is reserved for one batch in milliseconds. Each second batch is
+	 * used for mining cyclic/acyclic rules.
 	 */'''
-  batch_time = 5
+  batch_time = 10
   '''/**
 	 * The threshold for the number of correctly prediction within the given training set.
 	 */'''
@@ -23,14 +23,14 @@ class ConfigParameters(object):
 	 */'''
   threshold_confidence = 0.05
   '''/**
-	 * The saturation required to move to the next rule length. Saturation is defined as the fraction of 
+	 * The saturation required to move to the next rule length. Saturation is defined as the fraction of
 	 * useful rules that have been sampled in a previous batch compared to all useful rules that have
 	 * been sampled within that batch. If the saturation is above the value, longer rules are sampled.
 	 */'''
-  saturation = 0.75
+  saturation = 0.675
   '''/**
 	 * The maximal number of body atoms in cyclic rules (inclusive this number). If this number is exceeded all computation time
 	 * is used for acyclic rules only from that time on.
-	 * 
+	 *
 	 */'''
   max_length_cylic = 2
