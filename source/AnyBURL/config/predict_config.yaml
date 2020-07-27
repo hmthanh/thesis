@@ -2,7 +2,8 @@ path_rules:
   # - learning_rules/rule_10.txt
   # - learning_rules/rule_50.txt
   # - learning_rules/rule_100.txt
-  - learning_rules/alpha-100
+  # - learning_rules/alpha-100
+  - learning_rules/alpha-50
 path_training: ../../datasets/WN18/train.txt
 path_valid: ../../datasets/WN18/valid.txt
 path_test: ../../datasets/WN18/test.txt

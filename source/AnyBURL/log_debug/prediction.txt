@@ -68,3 +68,78 @@ Tails[('07157273', 0.12673267326732673), ('06717170', 0.061386138613861385), ('0
 01:49:20,804 Predict INFO initialize learning 1595875760805
 01:49:35,375 Predict INFO rules learning: learning_rules/alpha-100
 01:49:35,375 Predict INFO output learning: predictions/alpha-100
+01:55:01,325 RuleEngine INFO ****************************start new section*************************************
+01:55:01,325 RuleEngine INFO initialize rule engine 1595876101326
+01:55:04,765 RuleEngine INFO * write top 10 candidates 
+Heads:[('03753826', 0.04256698459280998), ('02678528', 0.04256698459280998), ('02696384', 0.04256698459280998), ('02765247', 0.04256698459280998), ('02830596', 0.04255985815602837), ('14777441', 0.0425531914893617), ('14777188', 0.0425531914893617), ('14777104', 0.0425531914893617), ('14777939', 0.0425531914893617), ('14777523', 0.0425531914893617)]
+Tails[('07157273', 0.12673267326732673), ('06717170', 0.061386138613861385), ('06851742', 0.053388090349075976), ('06718862', 0.023762376237623763), ('07073447', 0.02178217821782178), ('08860123', 0.02178217821782178), ('06284225', 0.02159827213822894), ('06845599', 0.005940594059405941), ('07075172', 0.0039603960396039604)]
+
+01:56:24,231 RuleEngine INFO * write top 10 candidates 
+Heads:[('02166460', 0.0038350041835309347), ('01637166', 0.0038350032818915904), ('00704388', 0.0038314176245210726), ('00723056', 0.003762984527626867), ('00607780', 0.003762984527626867), ('00739082', 0.003762984527626867), ('00629738', 0.003762984527626867), ('00608808', 0.003762984153611119), ('00739340', 0.0037593984962406013), ('00703512', 0.0037593984962406013)]
+Tails[('13103136', 0.0039603960396039604), ('13134947', 0.0039603960396039604), ('03122748', 0.0039603960396039604), ('00575741', 0.0039603960396039604), ('01182709', 0.0039603960396039604), ('01850315', 0.0039603960396039604), ('00654625', 0.003898635477582846), ('00740053', 0.003898635477582846), ('00657260', 0.003898635477582846), ('00739662', 0.0037593984962406013)]
+
+01:57:48,914 RuleEngine INFO * write top 10 candidates 
+Heads:[('01494310', 0.0032073211875843456), ('01435380', 0.0032055242447321655), ('01556921', 0.003205128205128205), ('01953810', 0.003205128205128205), ('00465762', 0.003205128205128205), ('01973759', 0.003205128205128205), ('01453256', 0.003205128205128205), ('02501738', 0.003205128205128205), ('01510827', 0.003205128205128205), ('02089984', 0.003205128205128205)]
+Tails[('06873252', 0.0038022813688212928), ('07274890', 0.0038022813688212928), ('06876144', 0.0038022813688212928), ('07163803', 0.0038022813688212928), ('06877078', 0.0038022813688212928), ('09926088', 0.0032217948717948716), ('06691989', 0.0032217948717948716), ('07274425', 0.003205508433265087), ('06791372', 0.003205128205128205), ('06691684', 0.003205128205128205)]
+
+01:59:01,904 RuleEngine INFO * write top 10 candidates 
+Heads:[('08803382', 0.0039603960396039604), ('10045713', 0.0039603960396039604), ('09945319', 0.0039603960396039604), ('08665504', 0.0039603960396039604), ('10067305', 0.0039603960396039604), ('08392137', 0.0039603960396039604), ('08821885', 0.0039603960396039604), ('09376198', 0.0039603960396039604), ('10323182', 0.0039603960396039604), ('15247518', 0.0039603960396039604)]
+Tails[('08925287', 0.004819277108433735), ('11200276', 0.004819277108433735), ('10940053', 0.004819277108433735), ('08937109', 0.004819277108433735), ('11364570', 0.004819277108433735), ('11376742', 0.004819277108433735), ('11052672', 0.004819277108433735), ('08957993', 0.004819277108433735), ('08974604', 0.004819277108433735), ('08793310', 0.004819277108433735)]
+
+02:27:11,869 Predict INFO ****************************start new section*************************************
+02:27:11,869 Predict INFO initialize learning 1595878031870
+02:27:16,7 Predict INFO rules learning: learning_rules/alpha-100
+02:27:16,8 Predict INFO output learning: predictions/alpha-100
+02:30:26,828 Predict INFO ****************************start new section*************************************
+02:30:26,828 Predict INFO initialize learning 1595878226829
+02:30:31,524 Predict INFO rules learning: learning_rules/alpha-50
+02:30:31,524 Predict INFO output learning: predictions/alpha-50
+02:34:02,120 RuleEngine INFO ****************************start new section*************************************
+02:34:02,121 RuleEngine INFO initialize rule engine 1595878442121
+02:34:06,701 RuleEngine INFO * write top 10 candidates 
+Heads:[]
+Tails[]
+
+02:55:42,750 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+02:55:42,750 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+02:55:42,751 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+02:55:42,752 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+02:55:54,370 Predict INFO rules learning: learning_rules/alpha-50
+02:55:54,370 Predict INFO output learning: predictions/alpha-50
+02:58:46,745 RuleEngine INFO ****************************start new section*************************************
+02:58:46,745 RuleEngine INFO initialize rule engine 1595879926745
+02:59:08,777 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+02:59:08,778 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+02:59:08,778 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+02:59:08,779 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+02:59:14,356 Predict INFO rules learning: learning_rules/alpha-50
+02:59:14,357 Predict INFO output learning: predictions/alpha-50
+03:01:52,491 RuleEngine INFO ****************************start new section*************************************
+03:01:52,491 RuleEngine INFO initialize rule engine 1595880112492
+03:01:55,633 Predict INFO finished in 161 s.
+03:04:41,248 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+03:04:41,248 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+03:04:41,248 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+03:04:41,248 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+03:05:07,656 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+03:05:07,657 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+03:05:07,657 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+03:05:07,657 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+03:05:13,246 Predict INFO rules learning: learning_rules/alpha-50
+03:05:13,248 Predict INFO output learning: predictions/alpha-50
+03:08:21,359 RuleEngine INFO ****************************start new section*************************************
+03:08:21,360 RuleEngine INFO initialize rule engine 1595880501360
+03:08:24,541 Predict INFO finished in 191 s.
+03:17:46,559 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+03:17:46,559 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+03:17:46,559 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+03:17:46,560 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+03:18:16,351 Predict INFO rules learning: learning_rules/alpha-50
+03:18:16,351 Predict INFO output learning: predictions/alpha-50
+03:21:09,239 RuleEngine INFO ****************************start new section*************************************
+03:21:09,239 RuleEngine INFO initialize rule engine 1595881269240
+03:21:12,539 Predict INFO finished in 176 s.
+03:26:33,911 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+03:26:33,912 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+03:26:33,912 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+03:26:33,912 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.

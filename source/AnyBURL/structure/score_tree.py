@@ -32,12 +32,14 @@ class ScoreTree(object):
   def fine(self):
     if self.root and len(self.children) > 0:
       i = self.children[len(self.children) - 1].index
-      if i >= ScoreTree.lower_bound and i <= ScoreTree.upper_bound:
+      if i == ScoreTree.lower_bound:
         return self.is_first_unique()
     return False
 
   def is_first_unique(self):
-    tree = self
+    if len(tree.children) == 0:
+      return self.closed
+    tree = self.children[0]
     while len(tree.children) > 0:
       tree = tree.children[0]
 

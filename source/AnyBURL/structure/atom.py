@@ -87,7 +87,7 @@ class Atom(object):
 
   def __ne__(self, other):
     return not self.__eq__(other)
-  
+
   def __hash__(self):
     if self.hashcode is None:
       self.hashcode = hash(self.__str__())
