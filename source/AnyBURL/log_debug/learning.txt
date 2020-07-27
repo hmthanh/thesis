@@ -206,3 +206,18 @@ Tails[('03497657', 0.001990049751243781), ('00121678', 0.001990049751243781), ('
 22:37:05,679 Learning INFO time elapsed: 2767 ms
 22:37:07,683 Learning INFO increasing rule size of CYCLIC rules to 2  after 2 s
 22:37:17,122 Learning INFO snapshot_rules: 621 in file learning_rules/rule_10.txt
+12:34:48,819 Learning INFO ****************************start new section*************************************
+12:34:48,819 Learning INFO initialize learning 1595828088820
+12:34:51,922 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+12:34:51,923 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+12:34:51,923 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+12:34:51,923 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+12:34:53,617 Learning INFO ****************************start new section*************************************
+12:34:53,617 Learning INFO initialize learning 1595828093617
+12:35:03,940 Learning INFO training with config {'path_training': '../../datasets/WN18/train.txt', 'path_output': '../../datasets/WN18/valid.txt', 'snapshots_at': [10, 50, 100], 'saturation': 0.99, 'sample_size': 500, 'batch_time': 1000, 'threshold_correct_predictions': 2, 'threshold_confidence': 1e-05, 'max_length_cylic': 3, 'max_length_acylic': 2, 'discrimination_bound': 1000, 'trial_size': 100000}
+12:35:03,940 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+12:35:03,940 Learning INFO time elapsed: 2769 ms
+12:35:07,983 Learning INFO increasing rule size of CYCLIC rules to 2  after 4 s
+12:35:15,140 Learning INFO snapshot_rules: 134 in file learning_rules/rule_10.txt
+12:35:55,806 Learning INFO snapshot_rules: 461 in file learning_rules/rule_50.txt
+12:36:45,392 Learning INFO snapshot_rules: 798 in file learning_rules/rule_100.txt
