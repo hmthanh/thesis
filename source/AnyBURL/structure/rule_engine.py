@@ -142,12 +142,12 @@ class RuleEngine(object):
     with open(self.output_path, 'a') as output_stream:
       print('{}'.format(triple), file=output_stream)
       print('Heads: ', end='', file=output_stream)
-      for (key, val) in k_tail_candidates:
+      for (key, val) in top_k_head_candidates:
         if triple.head == key or not test_set.is_true(key, triple.relation, triple.tail):
           print('{}\t{}'.format(key, val), end='\t',file=output_stream)
       # print('\n', file=output)
       print('\nTails: ', end='', file=output_stream)
-      for (key, val) in top_k_head_candidates:
+      for (key, val) in k_tail_candidates:
         if triple.tail == key or not test_set.is_true(triple.head, triple.relation, key):
           print('{}\t{}\t'.format(key, val), end='\t',file=output_stream)
       print('\n',end='', file=output_stream)

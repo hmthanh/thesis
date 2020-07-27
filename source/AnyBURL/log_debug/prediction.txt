@@ -1438,3 +1438,7 @@ Tails[('01259691', 0.0039603960396039604), ('01228877', 0.0039603960396039604), 
 00:31:23,603 Predict INFO initialize learning 1595698283604
 00:31:26,972 Predict INFO rules learning: learning_rules/alpha-100
 00:31:26,972 Predict INFO output learning: prediction/alpha-100
+12:50:52,280 Predict INFO ****************************start new section*************************************
+12:50:52,280 Predict INFO initialize learning 1595829052281
+12:50:57,255 Predict INFO rules learning: learning_rules/alpha-100
+12:50:57,256 Predict INFO output learning: prediction/alpha-100
