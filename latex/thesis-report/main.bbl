@@ -1,0 +1,247 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nty/global//global/global}
+  \entry{2006-NPTV}{book}{}
+    \name{author}{2}{}{%
+      {{hash=BDQ}{%
+         family={Ban},
+         familyi={B\bibinitperiod},
+         given={Diệp\bibnamedelima Quang},
+         giveni={D\bibinitperiod\bibinitdelim Q\bibinitperiod},
+      }}%
+      {{hash=THV}{%
+         family={Thung},
+         familyi={T\bibinitperiod},
+         given={Hoàng\bibnamedelima Van},
+         giveni={H\bibinitperiod\bibinitdelim V\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Nhà xuất bản Giáo dục Việt Nam}%
+    }
+    \keyw{Viet}
+    \strng{namehash}{BDQTHV1}
+    \strng{fullhash}{BDQTHV1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{title}{Ngữ pháp tiếng Việt}
+    \field{year}{2006}
+  \endentry
+
+  \entry{1994-Cavnar}{inproceedings}{}
+    \name{author}{2}{}{%
+      {{hash=CWB}{%
+         family={Cavnar},
+         familyi={C\bibinitperiod},
+         given={William\bibnamedelima B.},
+         giveni={W\bibinitperiod\bibinitdelim B\bibinitperiod},
+      }}%
+      {{hash=TJM}{%
+         family={Trenkle},
+         familyi={T\bibinitperiod},
+         given={John\bibnamedelima M.},
+         giveni={J\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CWBTJM1}
+    \strng{fullhash}{CWBTJM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{booktitle}{In Proceedings of SDAIR-94, 3rd Annual Symposium on
+  Document Analysis and Information Retrieval}
+    \field{pages}{161\bibrangedash 175}
+    \field{title}{N-Gram-Based Text Categorization}
+    \field{year}{1994}
+  \endentry
+
+  \entry{2006-DDien}{book}{}
+    \name{author}{1}{}{%
+      {{hash=ii}{%
+         prefix={Đinh},
+         prefixi={i\bibinitperiod},
+         family={Điền},
+         familyi={i\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Nhà xuất bản Đại học Quốc gia TP.HCM}%
+    }
+    \keyw{Viet}
+    \strng{namehash}{ii1}
+    \strng{fullhash}{ii1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{I}
+    \field{sortinithash}{I}
+    \field{title}{Xử lý ngôn ngữ tự nhiên}
+    \field{year}{2006}
+  \endentry
+
+  \entry{1984-TeX-Knuth}{book}{}
+    \name{author}{1}{}{%
+      {{hash=KDE}{%
+         family={Knuth},
+         familyi={K\bibinitperiod},
+         given={Donald\bibnamedelima E.},
+         giveni={D\bibinitperiod\bibinitdelim E\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Addison-Wesley}%
+    }
+    \strng{namehash}{KDE1}
+    \strng{fullhash}{KDE1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{title}{The {{\TeX}book}}
+    \field{year}{1984}
+  \endentry
+
+  \entry{Figures}{online}{}
+    \name{author}{1}{}{%
+      {{hash=O}{%
+         family={Online},
+         familyi={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{O1}
+    \strng{fullhash}{O1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{O}
+    \field{sortinithash}{O}
+    \field{title}{LaTeX/Floats, Figures and Captions}
+    \verb{url}
+    \verb http://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions
+    \endverb
+    \field{urlday}{06}
+    \field{urlmonth}{06}
+    \field{urlyear}{2015}
+  \endentry
+
+  \entry{Listings}{online}{}
+    \name{author}{1}{}{%
+      {{hash=O}{%
+         family={Online},
+         familyi={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{O1}
+    \strng{fullhash}{O1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{O}
+    \field{sortinithash}{O}
+    \field{title}{LaTeX/Source Code Listings}
+    \verb{url}
+    \verb http://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+    \endverb
+    \field{urlday}{06}
+    \field{urlmonth}{06}
+    \field{urlyear}{2015}
+  \endentry
+
+  \entry{Tables}{online}{}
+    \name{author}{1}{}{%
+      {{hash=O}{%
+         family={Online},
+         familyi={O\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{O1}
+    \strng{fullhash}{O1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{O}
+    \field{sortinithash}{O}
+    \field{title}{LaTeX/Tables}
+    \verb{url}
+    \verb http://en.wikibooks.org/wiki/LaTeX/Tables
+    \endverb
+    \field{urlday}{06}
+    \field{urlmonth}{06}
+    \field{urlyear}{2015}
+  \endentry
+
+  \entry{HDLVThS}{online}{}
+    \name{author}{1}{}{%
+      {{hash=TihKhTnHH}{%
+         prefix={Trường Đại học Khoa\bibnamedelima học},
+         prefixi={T\bibinitperiod\bibinitdelim i\bibinitperiod\bibinitdelim
+  h\bibinitperiod\bibinitdelim K\bibinitperiod\bibinitdelim h\bibinitperiod},
+         family={Tự\bibnamedelima nhiên},
+         familyi={T\bibinitperiod\bibinitdelim n\bibinitperiod},
+         given={ĐHQG-HCM},
+         giveni={H\bibinithyphendelim H\bibinitperiod},
+      }}%
+    }
+    \keyw{Viet}
+    \strng{namehash}{TnHHTihKh1}
+    \strng{fullhash}{TnHHTihKh1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{title}{Quy định và hướng dẫn thực hiện luận văn
+  thạc sĩ}
+    \verb{url}
+    \verb http://www.hcmus.edu.vn/index.php?option=com_content&task=blogcateg
+    \verb ory&id=142&Itemid=506
+    \endverb
+    \field{year}{2011}
+    \field{urlday}{06}
+    \field{urlmonth}{06}
+    \field{urlyear}{2015}
+  \endentry
+
+  \entry{1989-TED}{article}{}
+    \name{author}{2}{}{%
+      {{hash=ZK}{%
+         family={Zhang},
+         familyi={Z\bibinitperiod},
+         given={Kaizhong},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=SD}{%
+         family={Shasha},
+         familyi={S\bibinitperiod},
+         given={Dennis},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{ZKSD1}
+    \strng{fullhash}{ZKSD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Z}
+    \field{sortinithash}{Z}
+    \field{pages}{1245\bibrangedash 1262}
+    \field{title}{{Simple fast algorithms for the editing distance between
+  trees and related problems}}
+    \field{journaltitle}{SIAM Journal on Computing, Volume 18 Issue 6}
+    \field{year}{1989}
+  \endentry
+\enddatalist
+\endinput
