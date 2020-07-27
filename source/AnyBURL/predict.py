@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# author: Minh Tâm Phan
+# source has refer to java source of BURL method: http://web.informatik.uni-mannheim.de/AnyBURL/IJCAI/ijcai19.html
 from logger import Logger
 from utilities import current_milli_time
 from data.triple_set import TripleSet
@@ -25,7 +28,7 @@ class Predict(object):
     for path_rules_used in self.cfg['path_rules']:
       start_time = current_milli_time()
       tmp_path = path_rules_used.split('/')
-      path_output_used = 'prediction/{}'.format(tmp_path[1].replace('rule', 'predict'))
+      path_output_used = 'predictions/{}'.format(tmp_path[1].replace('rule', 'predict'))
       self.log.info('rules learning: {}'.format(path_rules_used))
       self.log.info('output learning: {}'.format(path_output_used))
       rules = RuleReader(path_rules_used).read()

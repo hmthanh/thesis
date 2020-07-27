@@ -16,6 +16,8 @@ class RuleEngine(object):
   def __init__(self, output_path, unseen_nagative_example):
     if os.path.exists(output_path):
       os.remove(output_path)
+    with open(output_path, 'w') as fp:
+      pass
     self.output_path = output_path
     self.unseen_nagative_example = unseen_nagative_example
     self.log = Logger.get_log_cate('rule_engine.txt', 'RuleEngine')
@@ -47,6 +49,7 @@ class RuleEngine(object):
         print('* (# {} ) trying to guess the tail/head of {}'.format(counter, triple))
         current_time = current_milli_time()
         print('Elapsed (s) = {}'.format((current_time - start_time) // 1000))
+        start_time = current_milli_time()
       relation = triple.relation
       head = triple.head
       tail = triple.tail

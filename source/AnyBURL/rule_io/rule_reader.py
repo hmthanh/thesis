@@ -25,7 +25,14 @@ class RuleReader(object):
   def read(self):
     rules = []
     file_reader = open(self.path, 'r')
+    i = 0
     for line in file_reader:
+      line = line.strip()
+      if len(line) == 0:
+        break
+      if i % 1000 == 0:
+        print('step {} parsing line {}'.format(i, line))
       rule = self.__parsing(line)
       rules.append(rule)
+      i += 1
     return rules

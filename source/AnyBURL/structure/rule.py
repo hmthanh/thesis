@@ -573,7 +573,7 @@ class Rule(object):
       return
 
   def get_applied_confidence(self):
-    return self.correctly_predicted / (self.predicted + self.cfg_predict['unseen_nagative_example'])
+    return self.correctly_predicted / (self.predicted + self.cfg_predict['unseen_nagative_examples'])
 
   def set_application_mode():
     Rule.application_mode = True

@@ -37,7 +37,7 @@ class ScoreTree(object):
     return False
 
   def is_first_unique(self):
-    tree = copy.deepcopy(self)
+    tree = self
     while len(tree.children) > 0:
       tree = tree.children[0]
 
