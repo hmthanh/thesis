@@ -1,0 +1,124 @@
+This is BibTeX, Version 0.99d (MiKTeX 2.9.7440 64-bit)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+The style file: biblatex.bst
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+Reallocating 'name_of_file' (item size: 1) to 20 items.
+I couldn't open auxiliary file Appendix/thanks.aux
+---line 28 of file main.aux
+ : \@input{Appendix/thanks.aux
+ :                            }
+I'm skipping whatever remains of this command
+Reallocating 'name_of_file' (item size: 1) to 21 items.
+I couldn't open auxiliary file Appendix/decuong.aux
+---line 30 of file main.aux
+ : \@input{Appendix/decuong.aux
+ :                             }
+I'm skipping whatever remains of this command
+Reallocating 'name_of_file' (item size: 1) to 20 items.
+I couldn't open auxiliary file Appendix/tomtat.aux
+---line 34 of file main.aux
+ : \@input{Appendix/tomtat.aux
+ :                            }
+I'm skipping whatever remains of this command
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+I couldn't open auxiliary file Chapter1/chapter1.aux
+---line 35 of file main.aux
+ : \@input{Chapter1/chapter1.aux
+ :                              }
+I'm skipping whatever remains of this command
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+I couldn't open auxiliary file Chapter2/chapter2.aux
+---line 36 of file main.aux
+ : \@input{Chapter2/chapter2.aux
+ :                              }
+I'm skipping whatever remains of this command
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+I couldn't open auxiliary file Chapter3/chapter3.aux
+---line 37 of file main.aux
+ : \@input{Chapter3/chapter3.aux
+ :                              }
+I'm skipping whatever remains of this command
+Reallocating 'name_of_file' (item size: 1) to 21 items.
+I couldn't open auxiliary file Appendix/publish.aux
+---line 83 of file main.aux
+ : \@input{Appendix/publish.aux
+ :                             }
+I'm skipping whatever remains of this command
+Reallocating 'name_of_file' (item size: 1) to 23 items.
+I couldn't open auxiliary file Appendix/appendix1.aux
+---line 86 of file main.aux
+ : \@input{Appendix/appendix1.aux
+ :                               }
+I'm skipping whatever remains of this command
+Reallocating 'name_of_file' (item size: 1) to 23 items.
+I couldn't open auxiliary file Appendix/appendix2.aux
+---line 87 of file main.aux
+ : \@input{Appendix/appendix2.aux
+ :                               }
+I'm skipping whatever remains of this command
+Reallocating 'glb_str_end' (item size: 4) to 20 items.
+Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
+Reallocating 'global_strs' (item size: 1) to 4000000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Database file #1: main-blx.bib
+Database file #2: References/references.bib
+Warning--I didn't find a database entry for "Algorithm"
+Biblatex version: 3.13
+Reallocating 'wiz_functions' (item size: 4) to 9000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+You've used 10 entries,
+            6365 wiz_defined-function locations,
+            1256 strings with 10318 characters,
+and the built_in function-call counts, 53373 in all, are:
+= -- 3244
+> -- 2020
+< -- 367
++ -- 1754
+- -- 1239
+* -- 3472
+:= -- 5619
+add.period$ -- 0
+call.type$ -- 10
+change.case$ -- 147
+chr.to.int$ -- 138
+cite$ -- 18
+duplicate$ -- 4678
+empty$ -- 4853
+format.name$ -- 496
+if$ -- 10780
+int.to.chr$ -- 0
+int.to.str$ -- 25
+missing$ -- 0
+newline$ -- 243
+num.names$ -- 456
+pop$ -- 3059
+preamble$ -- 1
+purify$ -- 174
+quote$ -- 0
+skip$ -- 1852
+stack$ -- 0
+substring$ -- 5976
+swap$ -- 1274
+text.length$ -- 303
+text.prefix$ -- 9
+top$ -- 1
+type$ -- 328
+warning$ -- 0
+while$ -- 603
+width$ -- 0
+write$ -- 234
+(There were 9 error messages)
