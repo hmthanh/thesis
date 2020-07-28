@@ -1,0 +1,8 @@
+__pycache__/
+wn_test
+screenlog.0
+checkpoints/
+
+venv/
+.ipynb_checkpoints/
+.idea/
