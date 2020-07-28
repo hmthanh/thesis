@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7440 64-bit) (preloaded format=pdflatex 2020.7.26)  27 JUL 2020 12:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7440 64-bit) (preloaded format=pdflatex 2020.7.26)  29 JUL 2020 01:22
 entering extended mode
 **./main.tex
 (main.tex
@@ -1049,6 +1049,8 @@ File: tikzlibrarytopaths.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 ("C:\Program Files\MiKTeX 2.9\tex/generic/pgf/frontendlayer/tikz/libraries\tikz
 librarycalc.code.tex"
 File: tikzlibrarycalc.code.tex 2020/01/08 v3.1.5b (3.1.5b)
+) (mystructuring.sty
+Package: mystructuring 2011/01/12 v0.01 LaTeX package for my own purpose
 )
 \@quotelevel=\count431
 \@quotereset=\count432
@@ -1058,8 +1060,9 @@ File: l3backend-pdfmode.def 2020-05-05 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count433
 \l__pdf_internal_box=\box64
 )
-(main.aux (Appendix/thanks.aux) (Appendix/decuong.aux) (Appendix/tomtat.aux)
-(Chapter1/chapter1.aux) (Chapter2/chapter2.aux) (Chapter3/chapter3.aux)
+(main.aux (Appendix/thanks.aux) (Abstract/abstract.aux)
+(Introduction/introduction.aux) (Overview/overview.aux)
+(Approachs/approachs.aux) (Results/results.aux) (Conclusions/conclusions.aux)
 (Appendix/publish.aux) (Appendix/appendix1.aux
 
 LaTeX Warning: Label `Appendix1' multiply defined.
@@ -1067,26 +1070,26 @@ LaTeX Warning: Label `Appendix1' multiply defined.
 ) (Appendix/appendix2.aux))
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for T5/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for T5/cmr/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 115.
+LaTeX Font Info:    ... okay on input line 115.
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
 
@@ -1104,10 +1107,10 @@ Package biblatex Info: Data encoding 'utf8' specified.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
  (main.bbl)
-Package biblatex Info: Reference section=0 on input line 112.
-Package biblatex Info: Reference segment=0 on input line 112.
+Package biblatex Info: Reference section=0 on input line 115.
+Package biblatex Info: Reference segment=0 on input line 115.
 \AtBeginShipoutBox=\box65
-Package hyperref Info: Link coloring OFF on input line 112.
+Package hyperref Info: Link coloring OFF on input line 115.
 
 ("C:\Program Files\MiKTeX 2.9\tex/latex/hyperref\nameref.sty"
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -1120,9 +1123,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count434
 )
-LaTeX Info: Redefining \ref on input line 112.
-LaTeX Info: Redefining \pageref on input line 112.
-LaTeX Info: Redefining \nameref on input line 112.
+LaTeX Info: Redefining \ref on input line 115.
+LaTeX Info: Redefining \pageref on input line 115.
+LaTeX Info: Redefining \nameref on input line 115.
 
 (main.out) (main.out)
 \@outlinefile=\write5
@@ -1192,290 +1195,105 @@ ABD: EveryShipout initializing macros (Title/title.tex [1
 [1
 
 
-]
-\openout2 = `Appendix/decuong.aux'.
-
-
-No file Appendix/decuong.tex.
-(main.toc [2
-
-
-
-
-])
+] (main.toc)
 \tf@toc=\write6
 \openout6 = `main.toc'.
 
- [3] (main.lof)
+ [2
+
+
+] (main.lof)
 \tf@lof=\write7
 \openout7 = `main.lof'.
 
- [4
+ [3
 
 ] (main.lot)
 \tf@lot=\write8
 \openout8 = `main.lot'.
 
- [5
+ [4
 
 ]
-\openout2 = `Appendix/tomtat.aux'.
+\openout2 = `Abstract/abstract.aux'.
+
+ (Abstract/abstract.tex)
+[5
 
 
-No file Appendix/tomtat.tex.
-\openout2 = `Chapter1/chapter1.aux'.
+]
+\openout2 = `Introduction/introduction.aux'.
 
-(Chapter1/chapter1.tex
+ (Introduction/introduction.tex
 Chương 1.
 )pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.142 \include{Chapter1/chapter1}
-                                  [1
+l.142 \include{Introduction/introduction}
+                                          [1
 
 
 
+
+]pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.145 \IncludeChapter{overview}
+                                [2
+
+]
+\openout2 = `Overview/overview.aux'.
+
+ (Overview/overview.tex
+Chương 2.
+) [3
 
 
 ]
-\openout2 = `Chapter2/chapter2.aux'.
+\openout2 = `Approachs/approachs.aux'.
 
- (Chapter2/chapter2.tex
-Chương 2.
-pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.34 
-      [2
-
-
-
-] [3] [4] [5]) [6]
-\openout2 = `Chapter3/chapter3.aux'.
-
- (Chapter3/chapter3.tex
+ (Approachs/approachs.tex
 Chương 3.
 
 LaTeX Warning: Command \textbackslash invalid in math mode on input line 6.
 
+) [4
 
-Package xcolor Warning: Incompatible color definition on input line 16.
 
 
-Package xcolor Warning: Incompatible color definition on input line 16.
+]
+\openout2 = `Results/results.aux'.
 
+ (Results/results.tex
+Chương 4.
+) [5
 
-Package xcolor Warning: Incompatible color definition on input line 16.
 
 
-Package xcolor Warning: Incompatible color definition on input line 17.
+]
+\openout2 = `Conclusions/conclusions.aux'.
 
-("C:\Program Files\MiKTeX 2.9\tex/latex/listings\lstlang1.sty"
-File: lstlang1.sty 2020/03/24 1.8d listings language file
-)
+ (Conclusions/conclusions.tex
+Chương 5.
 
-Package xcolor Warning: Incompatible color definition on input line 22.
+LaTeX Warning: Command \textbackslash invalid in math mode on input line 7.
 
+) [6
 
-Package xcolor Warning: Incompatible color definition on input line 22.
 
 
-Package xcolor Warning: Incompatible color definition on input line 22.
-
-
-Package xcolor Warning: Incompatible color definition on input line 23.
-
-
-Package xcolor Warning: Incompatible color definition on input line 23.
-
-
-Package xcolor Warning: Incompatible color definition on input line 23.
-
-
-Package xcolor Warning: Incompatible color definition on input line 23.
-
-
-Package xcolor Warning: Incompatible color definition on input line 23.
-
-
-Package xcolor Warning: Incompatible color definition on input line 23.
-
-
-Package xcolor Warning: Incompatible color definition on input line 23.
-
-
-Package xcolor Warning: Incompatible color definition on input line 23.
-
-[7
-
-
-
-] ("C:\Program Files\MiKTeX 2.9\tex/latex/listings\lstlang1.sty"
-File: lstlang1.sty 2020/03/24 1.8d listings language file
-)
-("C:\Program Files\MiKTeX 2.9\tex/latex/listings\lstlang1.sty"
-File: lstlang1.sty 2020/03/24 1.8d listings language file
-)
-("C:\Program Files\MiKTeX 2.9\tex/latex/listings\lstmisc.sty"
-File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
-)
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 28.
-
-
-Package xcolor Warning: Incompatible color definition on input line 28.
-
-
-Package xcolor Warning: Incompatible color definition on input line 28.
-
-
-Package xcolor Warning: Incompatible color definition on input line 28.
-
-(SourceCode/hello.cpp
-
-Package xcolor Warning: Incompatible color definition on input line 1.
-
-
-Package xcolor Warning: Incompatible color definition on input line 3.
-
-
-Package xcolor Warning: Incompatible color definition on input line 3.
-
-
-Package xcolor Warning: Incompatible color definition on input line 4.
-
-
-Package xcolor Warning: Incompatible color definition on input line 5.
-
-
-Package xcolor Warning: Incompatible color definition on input line 6.
-
-
-Package xcolor Warning: Incompatible color definition on input line 7.
-
-
-Package xcolor Warning: Incompatible color definition on input line 7.
-
-
-Package xcolor Warning: Incompatible color definition on input line 7.
-
-
-Package xcolor Warning: Incompatible color definition on input line 7.
-
-
-Package xcolor Warning: Incompatible color definition on input line 7.
-
-
-Package xcolor Warning: Incompatible color definition on input line 7.
-
-
-Package xcolor Warning: Incompatible color definition on input line 7.
-
-
-Package xcolor Warning: Incompatible color definition on input line 7.
-
-
-Package xcolor Warning: Incompatible color definition on input line 8.
-
-
-Package xcolor Warning: Incompatible color definition on input line 9.
-
-)
-
-LaTeX Warning: Citation 'Algorithm' on page 8 undefined on input line 30.
-
-
-Package xcolor Warning: Incompatible color definition on input line 32.
-
-
-Package xcolor Warning: Incompatible color definition on input line 32.
-
-
-Package xcolor Warning: Incompatible color definition on input line 32.
-
-
-Package xcolor Warning: Incompatible color definition on input line 33.
-
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 39.
-
-Package xcolor Warning: Incompatible color definition on input line 65.
-
-
-Package xcolor Warning: Incompatible color definition on input line 65.
-
-
-Package xcolor Warning: Incompatible color definition on input line 65.
-
-
-Package xcolor Warning: Incompatible color definition on input line 66.
-
-<images/logo-khtn.png, id=222, 363.9999pt x 285.9483pt>
-File: images/logo-khtn.png Graphic file (type png)
-<use images/logo-khtn.png>
-Package pdftex.def Info: images/logo-khtn.png  used on input line 73.
-(pdftex.def)             Requested size: 170.71652pt x 134.11209pt.
-[8]
-File: images/logo-khtn.png Graphic file (type png)
-<use images/logo-khtn.png>
-Package pdftex.def Info: images/logo-khtn.png  used on input line 80.
-(pdftex.def)             Requested size: 113.81102pt x 89.4066pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 100--100
-[]|\T5/cmr/m/n/14.4 Country
- []
-
-
-Underfull \hbox (badness 2293) in paragraph at lines 100--100
-[]|\T5/cmr/m/n/14.4 ISO AL-PHA
- []
-
-
-Underfull \hbox (badness 2293) in paragraph at lines 100--100
-[]|\T5/cmr/m/n/14.4 ISO AL-PHA
- []
-
-
-Underfull \hbox (badness 3713) in paragraph at lines 100--101
-[]|\T5/cmr/m/n/14.4 ISO nu-meric
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 106--106
-[]|\T5/cmr/m/n/14.4 American
- []
-
-) [9pdfTeX warning (ext4): destination with the same identifier (name{figure.3.
-1}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.146 \include{Chapter3/chapter3}
-                                 pdfTeX warning (ext4): destination with the sa
-me identifier (name{figure.3.2}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.146 \include{Chapter3/chapter3}
-                                  <./images/logo-khtn.png>] [10pdfTeX warning (
-ext4): destination with the same identifier (name{table.3.1}) has been already 
-used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.146 \include{Chapter3/chapter3}
-                                 ]
+]
 \openout2 = `Appendix/publish.aux'.
 
- (Appendix/publish.tex) [11
+ (Appendix/publish.tex) [7
 
 
 
 ]
 LaTeX Font Info:    Trying to load font information for T5+cmtt on input line 1
-56.
+65.
 
 ("C:\Program Files\MiKTeX 2.9\tex/latex/vntex\t5cmtt.fd"
 File: t5cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
@@ -1485,22 +1303,15 @@ Package biblatex Warning: Name format 'last-first' deprecated.
 (biblatex)                Please use 'family-given' instead.
 (biblatex)                Using 'family-given' now.
 
-
-Overfull \hbox (30.81976pt too wide) in paragraph at lines 161--161
-[]\T5/cmr/m/n/14.4 Online. \T5/cmr/m/it/14.4 La-TeX/Floats, Fig-ures and Cap-ti
-ons\T5/cmr/m/n/14.4 . \T5/cmr/m/sc/14.4 url\T5/cmr/m/n/14.4 : []$\T5/cmtt/m/n/1
-4.4 http : / / en . wikibooks .
- []
-
-[12
+[8
 
 
-] [13]
+]
 \openout2 = `Appendix/appendix1.aux'.
 
  (Appendix/appendix1.tex
 Phụ lục A.
-) [14
+) [9
 
 
 ]
@@ -1508,73 +1319,53 @@ Phụ lục A.
 
  (Appendix/appendix2.tex
 Phụ lục B.
-) [15
+) [10
 
 
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 170.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 170.
- (main.aux (Appendix/thanks.aux) (Appendix/decuong.aux)
-(Appendix/tomtat.aux) (Chapter1/chapter1.aux) (Chapter2/chapter2.aux)
-(Chapter3/chapter3.aux) (Appendix/publish.aux) (Appendix/appendix1.aux)
-(Appendix/appendix2.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 170.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 170.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 178.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 178.
+ (main.aux (Appendix/thanks.aux) (Abstract/abstract.aux)
+(Introduction/introduction.aux) (Overview/overview.aux)
+(Approachs/approachs.aux) (Results/results.aux) (Conclusions/conclusions.aux)
+(Appendix/publish.aux) (Appendix/appendix1.aux) (Appendix/appendix2.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 178.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 178.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: B70BDCF5081954E4A339F61F226433A6;3510.
-
-
-LaTeX Warning: There were undefined references.
+(rerunfilecheck)             Checksum: C9DCD335653E082B14D5FBA14C997511;1952.
 
 
 LaTeX Warning: There were multiply-defined labels.
-
-
-Package biblatex Warning: Please (re)run BibTeX on the file(s):
-(biblatex)                main
-(biblatex)                and rerun LaTeX afterwards.
 
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 30146 strings out of 480799
- 539020 string characters out of 2905528
- 1149598 words of memory out of 3000000
- 45533 multiletter control sequences out of 15000+200000
- 550550 words of font info for 49 fonts, out of 3000000 for 9000
+ 29551 strings out of 480799
+ 533109 string characters out of 2905528
+ 977103 words of memory out of 3000000
+ 44980 multiletter control sequences out of 15000+200000
+ 545419 words of font info for 42 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,10n,66p,851b,1318s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exi
-st, replaced by a fixed one
-
- <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/vntex/vnr/dpi720\vntt
-12.pk> <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/vntex/vnr/dpi60
-0\vnr7.pk> <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/vntex/vnr/d
-pi720\vnti12.pk> <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/vntex
-/vnr/dpi864\vncsc10.pk> <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fonts/pk/ljfou
-r/vntex/vnr/dpi600\vnr10.pk> <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fonts/pk/
-ljfour/vntex/vnr/dpi600\vnr6.pk> <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fonts
-/pk/ljfour/jknappen/ec/dpi600\tcrm1440.pk> <C:\Users\Thanh\AppData\Local\MiKTeX
-\2.9\fonts/pk/ljfour/vntex/vnr/dpi1493\vnbx12.pk> <C:\Users\Thanh\AppData\Local
-\MiKTeX\2.9\fonts/pk/ljfour/vntex/vnr/dpi1792\vnbx12.pk> <C:\Users\Thanh\AppDat
-a\Local\MiKTeX\2.9\fonts/pk/ljfour/vntex/vnr/dpi864\vnbx12.pk> <C:\Users\Thanh\
-AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/vntex/vnr/dpi610\vnr17.pk> <C:\Users\T
-hanh\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/vntex/vnr/dpi1037\vnbx12.pk> <C:\
-Users\Thanh\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/vntex/vnr/dpi720\vnbx12.pk
-> <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/vntex/vnr/dpi720\vnr
-12.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C
-:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Progra
-m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9
-/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
-pe1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
-/amsfonts/cm/cmsy10.pfb>
-Output written on main.pdf (22 pages, 866524 bytes).
+ 60i,5n,60p,851b,1234s stack positions out of 5000i,500n,10000p,200000b,50000s
+ <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/vntex/vnr/dpi720\vn
+tt12.pk> <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/vntex/vnr/dpi
+864\vncsc10.pk> <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/vntex/
+vnr/dpi720\vnti12.pk> <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/
+vntex/vnr/dpi1493\vnbx12.pk> <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fonts/pk/
+ljfour/vntex/vnr/dpi1792\vnbx12.pk> <C:\Users\Thanh\AppData\Local\MiKTeX\2.9\fo
+nts/pk/ljfour/vntex/vnr/dpi864\vnbx12.pk> <C:\Users\Thanh\AppData\Local\MiKTeX\
+2.9\fonts/pk/ljfour/vntex/vnr/dpi610\vnr17.pk> <C:\Users\Thanh\AppData\Local\Mi
+KTeX\2.9\fonts/pk/ljfour/vntex/vnr/dpi1037\vnbx12.pk> <C:\Users\Thanh\AppData\L
+ocal\MiKTeX\2.9\fonts/pk/ljfour/vntex/vnr/dpi720\vnbx12.pk> <C:\Users\Thanh\App
+Data\Local\MiKTeX\2.9\fonts/pk/ljfour/vntex/vnr/dpi720\vnr12.pk><C:/Program Fil
+es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTe
+X 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on main.pdf (17 pages, 286470 bytes).
 PDF statistics:
- 1036 PDF objects out of 1200 (max. 8388607)
- 81 named destinations out of 1000 (max. 500000)
- 202 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 769 PDF objects out of 1000 (max. 8388607)
+ 45 named destinations out of 1000 (max. 500000)
+ 133 words of extra memory for PDF output out of 10000 (max. 10000000)
 

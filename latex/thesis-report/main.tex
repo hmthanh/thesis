@@ -27,7 +27,7 @@
 
 % Chèn hình, các hình trong luận văn được để trong thư mục Images/
 \usepackage{graphicx}
-\graphicspath{ {Images/} }
+\graphicspath{ {./images/} }
 
 % Chèn và định dạng mã nguồn
 \usepackage{listings}
@@ -103,11 +103,14 @@
 % ========================================================================================= %
 % CHÚ Ý: Thông tin chung về KLTN - sinh viên điền vào đây để tự động update các trang khác  %
 % ========================================================================================= %
-\newcommand{\tenSV}{Nguyễn~Văn~A~-~Trần~Văn~B} % Dấu ~ là khoảng trắng không được tách (các chữ nối với nhau bằng dấu ~ sẽ nằm cùng 1 dòng
-\newcommand{\mssv}{1234567}
-\newcommand{\tenKL}{Sử~dụng~LaTeX trong Khoá~luận~tốt~nghiệp} % Chú ý dấu ~ trong tên khóa luận
-\newcommand{\tenGVHD}{Tên~Giáo~Viên}
-\newcommand{\tenBM}{Công nghệ tri thức}
+\newcommand{\tenSV}{Hoàng~Minh~Thanh~-~Phan~Minh~Tân} % Dấu ~ là khoảng trắng không được tách (các chữ nối với nhau bằng dấu ~ sẽ nằm cùng 1 dòng
+\newcommand{\mssv}{18424062~-~18424059}
+\newcommand{\tenKL}{Đự~đoán~liên~kết~trong~đồ~thị~phức} % Chú ý dấu ~ trong tên khóa luận
+\newcommand{\tenGVHD}{Th.S~Lê~Ngọc~Thành}
+\newcommand{\tenBM}{Khoa~học~máy~tính}
+
+% Thanh custom package
+\usepackage{mystructuring}
 
 \begin{document}
 
@@ -122,34 +125,40 @@
 \addcontentsline{toc}{chapter}{Lời cảm ơn}
 \include{Appendix/thanks}
 
-\addcontentsline{toc}{chapter}{Đề cương chi tiết}
-\include{Appendix/decuong}
-
 % Mục lục, danh sách hình, danh sách bảng
 \addcontentsline{toc}{chapter}{Mục lục}
 \tableofcontents
 \listoffigures
 \listoftables
 
-\addcontentsline{toc}{chapter}{Tóm tắt}
-\include{Appendix/tomtat}
+\include{Abstract/abstract}
 
 \clearpage
 
 \pagenumbering{arabic} % Đánh số 1, 2, 3, ...
 
 % Các chương nội dung
-\include{Chapter1/chapter1}
+% 1. Giới thiệu
+\include{Introduction/introduction}
 
-\include{Chapter2/chapter2}
+2. Tổng quan (Cơ sở lý thuyết và Các nghiên cứu liên quan)
+\IncludeChapter{overview}
+% \include{Overview/overview}
 
-\include{Chapter3/chapter3}
+% 3. Phương pháp đề xuất
+\include{Approachs/approachs}
+
+% 4. Kết quả thực nghiệm và phân tích
+\include{Results/results}
+
+% 5. Kết luận
+\include{Conclusions/conclusions}
 
 % Công trình của tác giả (nếu không có thì comment 02 dòng dưới)
 \addcontentsline{toc}{chapter}{Danh mục công trình của tác giả}
 \include{Appendix/publish}
 
-% In tài liệu tham khảo
+% In tài liệu tham khảo References
 \addcontentsline{toc}{chapter}{Tài liệu tham khảo}
 \printbibheading[title={Tài liệu tham khảo}]
 
@@ -158,11 +167,10 @@
 \DeclareNameAlias{sortname}{last-first}
 \DeclareNameAlias{default}{last-first}
 
-\printbibliography[heading=subbibliography, title={Tiếng Anh}, notkeyword=Viet, resetnumbers=4] 
+\printbibliography[heading=subbibliography, title={Tiếng Anh}, notkeyword=Viet, resetnumbers=4]
 % ===================================================================== %
 % CHÚ Ý: phải gán lại resetnumbers=số tài liệu tham khảo tiếng Việt + 1 %
 % ===================================================================== %
-
 % Phần phụ lục
 \include{Appendix/appendix1}
 \include{Appendix/appendix2}

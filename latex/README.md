@@ -5,6 +5,16 @@
 
 Reading : https://medium.com/thoughts-philosophy-writing/how-to-use-overleaf-to-write-your-papers-part-i-basic-minimalist-setup-6599268c095f
 
+# Yêu cầu chung :
+- Luận văn được cấu trúc rất rõ ràng và hợp lý. 
+
+- Trình bày súc tích, mạch lạc, dễ hiểu. 
+
+- Nội dung đầy đủ với các luận điểm có căn cứ, dẫn chứng.
+
+- Không có lỗi chính tả
+
+
 ## Các câu hỏi cần trả lời cho báo cáo luận văn :
 o Xác định mục đích, phạm vi (scope) của chủ đề
 => Dự đoán liên kết (Linking Prediction), hoàn thiện đồ thị tri thức (Knowledge Graph Completion)
@@ -19,18 +29,25 @@ o Thông điệp chính là gì?
 trong đó luận văn bao gồm hai thuật toán chính bao gồm Các thuật toán truyền thống (AnyBURL) và Deep Learning (GCGATs)
 
 # Tiêu đề : Dự đoán liên kết trong đồ thị phức
-# Outline :
-o 1. Abstract
-o 2. Giới thiệu (Introduction)
-o 3. Khảo sát hiện trạng/Các công trình liên quan (Liturature Review)
-o 4. Phương pháp đề xuất (Proposed Approach)
-o 5. Kết quả (Results)
-o 6. Kết luận (Conclusions)
-o 7. Tài liệu tham khảo (References)
-o 8. Phụ lục
+
+### Abstract
+
+### 1. Giới thiệu (Introduction) 
+
+### 2. Tổng quan(Overview)
+ 
+### 3. Phương pháp đề xuất (Proposed Approach)
+ 
+### 4. Kết quả thực nghiệm và phân tích (Results)
+ 
+### 5. Kết luận (Conclusions)
+
+### 6. Tài liệu tham khảo (References)
+
+### 7. Phụ lục
 
 
-## 1. Abstract
+## Abstract
 	❖ Tóm tắt rất quan trọng vì là nội dung được đọc nhiều nhất, cho phép người đọc hình dung được báo cáo
 	❖ Cần ngắn gọn, thường từ 100-300 từ (4-10 câu)
 	❖ Nội dung bao gồm
@@ -40,7 +57,7 @@ o 8. Phụ lục
 		o Kết quả: 1-2 câu
 		o Kết luận: 1-2 câu
 
-## 2. Introduction
+## 1. Introduction
 	❖ Là chương mở rộng của tóm tắt
 	❖ Nội dung bao gồm
 		o Ngữ cảnh, vấn đề cần giải quyết là gì?
@@ -59,16 +76,13 @@ o 8. Phụ lục
 		o Bố cục (Outline)
 	❖ Lưu ý, nội dung các chương sau phải khớp với mục tiêu, giải pháp, đóng góp ở chương này
 
-## 3. Liturature Review
+## 2. Liturature Review
 	❖ Độ dài từ 5-15 trang
 	❖ Hướng nghiên cứu: Khảo sát hiện trạng/Các công trình liên quan
 		o Cơ sở lý thuyết (Background)
-		o Các nghiên cứu liên quan (Related work)
-	❖ Hướng ứng dụng: Các hệ thống và công nghệ liên quan
-		o Các hệ thống tương tự
-		o Các công nghệ được áp dụng để giải quyết các bài toán tương tự
+		o Các nghiên cứu liên quan (RelatedWorks)
 
-## 4. Phương pháp đề xuất (Proposed Approach)
+## 3. Phương pháp đề xuất (Proposed Approach)
 	❖ Chương này tập trung trình bày chi tiết những gì bạn
 	làm
 	❖ Mô tả chi tiết phương pháp thực hiện, giải pháp đề xuất,
@@ -87,7 +101,7 @@ o 8. Phụ lục
 		o Độ đo để đánh giá (performance metrics)
 	
 
-## 5. Kết quả (Results)
+## 4. Kết quả (Results)
 	❖ Hướng nghiên cứu: Kết quả
 		o Mô tả chi tiết kết quả và thảo luận
 		o Kết quả phải liên hệ với phương pháp trong chương 3
@@ -112,7 +126,7 @@ o 8. Phụ lục
 		o So sánh kết quả từ nghiên cứu của bạn với nghiên cứu khác
 		o Nếu có Câu hỏi nghiên cứu trong Chương 3 thì mục này lặp lại các câu hỏi nghiên cứu và trả lời
 
-## 6. Kết luận (Conclusions)
+## 5. Kết luận (Conclusions)
 	❖ Mô tả lại mục tiêu
 	❖ Mô tả lại phương pháp
 	❖ Tóm tắt kết quả đạt được
@@ -120,8 +134,9 @@ o 8. Phụ lục
 	❖ Nêu những hạn chế, giới hạn của đề tài
 	❖ Hướng phát triển tiếp theo để khắc phục hạn chế, giới
 	hạn của đề tài
-## 7. Tài liệu tham khảo (References)
-## 8. Phụ lục
+## 6. Tài liệu tham khảo (References)
+
+## 7. Phụ lục
 
 # Lưu ý khi viết báo cáo
 	❖ Tránh đạo văn
