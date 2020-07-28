@@ -37,7 +37,7 @@ class ScoreTree(object):
     return False
 
   def is_first_unique(self):
-    if len(tree.children) == 0:
+    if len(self.children) == 0:
       return self.closed
     tree = self.children[0]
     while len(tree.children) > 0:

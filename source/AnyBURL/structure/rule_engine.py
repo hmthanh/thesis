@@ -59,8 +59,6 @@ class RuleEngine(object):
 
       if relation in relation_to_rules:
         relevant_rules = relation_to_rules.get(relation)
-        print ('\n'.join([s.__str__() for s in relevant_rules]))
-
         for rule in relevant_rules:
           if not k_tail_tree.fine():
             tail_candidates = rule.compute_tail_results(head, training_set)
@@ -68,10 +66,6 @@ class RuleEngine(object):
             k_tail_tree.add_values(rule.get_applied_confidence(), f_tail_candidates)
           else:
             break
-        print('\n\n\n')
-        print('===========================f_tail_candidates=================================',)
-        print ('\n'.join([s.__str__() for s in f_tail_candidates]))
-
         for rule in relevant_rules:
           if not k_head_tree.fine():
             head_candidates = rule.compute_head_results(tail, training_set)
@@ -85,9 +79,6 @@ class RuleEngine(object):
       k_head_tree.get_as_linked_map(k_head_candidates)
       top_k_tail_candidates = self.__sort_by_value(k_tail_candidates, k)
       top_k_head_candidates = self.__sort_by_value(k_head_candidates, k)
-      print('\n\n\n')
-      print('===========================top_k_tail_candidates=================================',)
-      print ('\n'.join([s for s in top_k_tail_candidates]))
       if counter % 500 == 0:
         self.log.info('* write top {} candidates \nHeads:{}\nTails{}\n'.format(k, top_k_tail_candidates, top_k_head_candidates))
       counter += 1
@@ -95,8 +86,6 @@ class RuleEngine(object):
       writer.start()
     writer.join()
     print('* done with rule application')
-
-      # self.__write_top_k_candidates(triple, test_set, top_k_tail_candidates, top_k_head_candidates, f)
 
   def create_ordered_rule_index(self, rules):
     relation_to_rules = {}
@@ -108,7 +97,7 @@ class RuleEngine(object):
       relation_to_rules[relation].append(rule)
 
     for value in relation_to_rules.values():
-      value.sort(key=lambda v: v.correctly_predicted / (v.predicted + self.unseen_nagative_example))
+      value.sort(key=lambda v: v.correctly_predicted / (v.predicted + self.unseen_nagative_example), reverse=True)
 
     return relation_to_rules
 
