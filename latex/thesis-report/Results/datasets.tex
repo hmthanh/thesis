@@ -1,5 +1,51 @@
+
 \section{Tập dữ liệu}
 
-sdfsdf
+Tập dữ liệu bao gồm :
 
+
+\begin{table}[htbp]
+\begin{center}
+\label{tab:datasetdesc}%
+\begin{tabular}{ |c|c c|c c c c| }
+	\hline
+	\multirow{2}{*}{Dataset} & \multirow{2}{*}{ Entities} & \multirow{2}{*}{ Relations} & \multicolumn{4}{c|}{ Edges} \\
+	\cline{4-7}
+	&  &  & Training & Validation & Test& Total \\
+	\hline
+	WN18RR & 40,943 & 11 & 86,835 & 3034 & 3134 & 93,003 \\
+	\hline
+	FB15k-237 & 14,541 & 237 &  272,115 & 17,535 & 20,466 & 310,116 \\
+	\hline
+\end{tabular}
+
+\caption{Mô tả tập dữ liệu}
+\end{center}
+\end{table}
+
+
+\begin{table}[htbp]
+	\begin{center}
+\label{tab:experiment}%
+\begin{tabular}{ m{3cm} c c c c c p{0.05cm} c c c c c}
+	\firsthline
+	& \multicolumn{5}{c}{WN18RR} & \multicolumn{5}{c}{FB15K-237} \\
+	\cline{2-6}
+	\cline{8-12}
+	& & & \multicolumn{3}{c}{Hits@N} & & & & \multicolumn{3}{c}{Hits@N}\\
+	\cline{4-6}
+	\cline{10-12}
+	& MR & MRR & @1 & @3 & @10 & & MR & MRR & @1 & @3 & @10\\
+	\hline
+	TransE & 7000 & 0.444 & 41.2 & 47 & 50.4 & & 7000 & 0.444 & 41.2 & 47 & 50.4 \\
+	ConvKB & 7000 & 0.444 & 41.2 & 47 & 50.4 & & 7000 & 0.444 & 41.2 & 47 & 50.4 \\
+	\hline
+	\multicolumn{6}{l}{Mô hình của chúng tôi}\\
+	AnyBURL & 7000 & \underline{0.444} & 41.2 & 47 & \underline{50.4} & & 7000 & 0.444 & 41.2 & 47 & 50.4 \\
+	CGAT    & 7000 & \textbf{0.444} & 41.2 & \textbf{47} & 50.4 & & 7000 & 0.444 & 41.2 & 47 & 50.4 \\
+	\lasthline
+\end{tabular}
+\caption{Kết quả thực nghiệm trên tập WN18RR và FB15K-237. Kết quả tốt nhất được \textbf{bôi đen} và kết quả tốt thứ hai được \underline{gạch chân}}
+\end{center}
+\end{table}
 
