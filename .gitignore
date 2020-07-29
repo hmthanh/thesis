@@ -1,0 +1,25 @@
+__pycache__/
+wn_test
+screenlog.0
+checkpoints/
+
+# environments
+venv/
+
+# IDE
+.ipynb_checkpoints/
+.idea/
+
+# LaTeX
+*.aux
+*.bbl
+*.blg
+*.fls
+*.lof
+*.lot
+*.out
+*.toc
+*.gz
+
+# Log
+*.log
