@@ -17,25 +17,23 @@
 
 
 
-\title{A template for the \emph{arxiv} style}
+\title{Collaborate Graph Attention Network}
 
 %\date{September 9, 1985}	% Here you can change the date presented in the paper title
 %\date{} 					% Or removing it
 
-\author{ \href{https://orcid.org/0000-0000-0000-0000}{\includegraphics[scale=0.06]{orcid.png}\hspace{1mm}David S.~Hippocampus}\thanks{Use footnote for providing further
-		information about author (webpage, alternative
-		address)---\emph{not} for acknowledging funding agencies.} \\
-	Department of Computer Science\\
-	Cranberry-Lemon University\\
-	Pittsburgh, PA 15213 \\
-	\texttt{hippo@cs.cranberry-lemon.edu} \\
+\author{ \href{http://hmthanh.github.io/}{\hspace{1mm}Minh-Thanh~Hoang}\thanks{Main contribution} \\
+	Faculty of Information Technology\\
+	University of Science\\
+	VNU-HCM, Ho Chi Minh City, Vietnam \\
+	\texttt{hmthanhgm@gmail.com} \\
 	%% examples of more authors
 	\And
-	\href{https://orcid.org/0000-0000-0000-0000}{\includegraphics[scale=0.06]{orcid.png}\hspace{1mm}Elias D.~Striatum} \\
-	Department of Electrical Engineering\\
-	Mount-Sheikh University\\
-	Santa Narimana, Levand \\
-	\texttt{stariate@ee.mount-sheikh.edu} \\
+	\href{https://github.com/MinhTamPhan}{\hspace{1mm}Phan~Minh~Tam} \\
+	Faculty of Information Technology\\
+	University of Science\\
+	VNU-HCM, Ho Chi Minh City, Vietnam \\
+	\texttt{phanminhtam247@gmail.com} \\
 	%% \AND
 	%% Coauthor \\
 	%% Affiliation \\
@@ -66,8 +64,8 @@
 \hypersetup{
 pdftitle={A template for the arxiv style},
 pdfsubject={q-bio.NC, q-bio.QM},
-pdfauthor={David S.~Hippocampus, Elias D.~Striatum},
-pdfkeywords={First keyword, Second keyword, More},
+pdfauthor={Minh-Thanh~Hoang, Phan~Minh~Tam},
+pdfkeywords={knowledge~graph, linking~prediction, attention~mechanism},
 }
 
 \begin{document}
@@ -79,18 +77,30 @@ pdfkeywords={First keyword, Second keyword, More},
 
 
 % keywords can be removed
-\keywords{First keyword \and Second keyword \and More}
+\keywords{Knowled Graph \and Linking Prediction \and Attention Mechanism}
 
 
 \section{Introduction}
+\label{sec:introduction}
 \lipsum[2]
 \lipsum[3]
 
+Survey \cite{rossi2020knowledge}
 
-\section{Headings: first level}
-\label{sec:headings}
+KGBAT \cite{nathani2019learning}
 
-\lipsum[4] See Section \ref{sec:headings}.
+TransE \cite{bordes2013translating}
+
+\section{Related work}
+\label{sec:related_work}
+
+\lipsum[4]
+See Section
+
+\section{Proposed Approach}
+\label{sec:approach}
+
+\lipsum[4]
 
 \subsection{Headings: second level}
 \lipsum[5]
@@ -104,8 +114,8 @@ pdfkeywords={First keyword, Second keyword, More},
 \paragraph{Paragraph}
 \lipsum[7]
 
-\section{Examples of citations, figures, tables, references}
-\label{sec:others}
+\section{Experiments and Results}
+\label{sec:experiments}
 \lipsum[8] \cite{kour2014real,kour2014fast} and see \cite{hadash2018estimate}.
 
 The documentation for \verb+natbib+ may be found at
@@ -167,35 +177,36 @@ See awesome Table~\ref{tab:table}.
 	\item Aliquam dignissim blandit est, in dictum tortor gravida eget. In ac rutrum magna.
 \end{itemize}
 
+\section{Conclusions}
+\lipsum[12]
 
 \bibliographystyle{unsrt}
-%\bibliography{references}  %%% Remove comment to use the external .bib file (using bibtex).
+\bibliography{references}  %%% Remove comment to use the external .bib file (using bibtex).
 %%% and comment out the ``thebibliography'' section.
 
 
 %%% Comment out this section when you \bibliography{references} is enabled.
-\begin{thebibliography}{1}
+% \begin{thebibliography}{1}
+% 	\bibitem{kour2014real}
+% 	George Kour and Raid Saabne.
+% 	\newblock Real-time segmentation of on-line handwritten arabic script.
+% 	\newblock In {\em Frontiers in Handwriting Recognition (ICFHR), 2014 14th
+% 			International Conference on}, pages 417--422. IEEE, 2014.
 
-	\bibitem{kour2014real}
-	George Kour and Raid Saabne.
-	\newblock Real-time segmentation of on-line handwritten arabic script.
-	\newblock In {\em Frontiers in Handwriting Recognition (ICFHR), 2014 14th
-			International Conference on}, pages 417--422. IEEE, 2014.
+% 	\bibitem{kour2014fast}
+% 	George Kour and Raid Saabne.
+% 	\newblock Fast classification of handwritten on-line arabic characters.
+% 	\newblock In {\em Soft Computing and Pattern Recognition (SoCPaR), 2014 6th
+% 			International Conference of}, pages 312--318. IEEE, 2014.
 
-	\bibitem{kour2014fast}
-	George Kour and Raid Saabne.
-	\newblock Fast classification of handwritten on-line arabic characters.
-	\newblock In {\em Soft Computing and Pattern Recognition (SoCPaR), 2014 6th
-			International Conference of}, pages 312--318. IEEE, 2014.
+% 	\bibitem{hadash2018estimate}
+% 	Guy Hadash, Einat Kermany, Boaz Carmeli, Ofer Lavi, George Kour, and Alon
+% 	Jacovi.
+% 	\newblock Estimate and replace: A novel approach to integrating deep neural
+% 	networks with existing applications.
+% 	\newblock {\em arXiv preprint arXiv:1804.09028}, 2018.
 
-	\bibitem{hadash2018estimate}
-	Guy Hadash, Einat Kermany, Boaz Carmeli, Ofer Lavi, George Kour, and Alon
-	Jacovi.
-	\newblock Estimate and replace: A novel approach to integrating deep neural
-	networks with existing applications.
-	\newblock {\em arXiv preprint arXiv:1804.09028}, 2018.
-
-\end{thebibliography}
+% \end{thebibliography}
 
 
 \end{document}
