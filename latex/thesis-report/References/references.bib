@@ -10,6 +10,10 @@
 
 
 % BibTeX Entries
+% ###########################################
+% Knowledge Graph
+% ###########################################
+
 @book{1984-TeX-Knuth,
  author               = {Donald E. Knuth},
  publisher            = {Addison-Wesley},
@@ -17,22 +21,9 @@
  year                 = {1984},
  }
 
-@article{1989-TED,
- author               = {Kaizhong Zhang and Dennis Shasha},
- journal              = {SIAM Journal on Computing, Volume 18 Issue 6},
- pages                = {1245-1262},
- title                = {{Simple fast algorithms for the editing distance between trees and related problems}},
- year                 = {1989},
- }
-
-@inproceedings{1994-Cavnar,
- author               = {William B. Cavnar and John M. Trenkle},
- booktitle            = {In Proceedings of SDAIR-94, 3rd Annual Symposium on Document Analysis and Information Retrieval},
- pages                = {161--175},
- title                = {N-Gram-Based Text Categorization},
- year                 = {1994},
- }
-
+% ###########################################
+% AnyBURL
+% ###########################################
 @book{2006-DDien,
  author               = {Đinh Điền},
  keywords             = {Viet},
@@ -52,7 +43,7 @@
 @online{Figures,
  author               = {Online},
  title                = {LaTeX/Floats, Figures and Captions},
- url                  = {http://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions},
+ url                  = "http://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions",
  urldate              = {2015-06-06},
  }
 
@@ -60,52 +51,39 @@
  author               = {Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM},
  keywords             = {Viet},
  title                = {Quy định và hướng dẫn thực hiện luận văn thạc sĩ},
- url                  = {http://www.hcmus.edu.vn/index.php?option=com_content&task=blogcategory&id=142&Itemid=506},
+ url                  = "http://www.hcmus.edu.vn/index.php?option=com_content&task=blogcategory&id=142&Itemid=506",
  urldate              = {2015-06-06},
  year                 = {2011},
  }
 
-@misc{ampligraph,
- author              = {Luca Costabello and
-                          Sumit Pai and
-                          Chan Le Van and
-                          Rory McGrath and
-                          Nicholas McCarthy and
-                          Pedro Tabacof},
- title               = {{AmpliGraph: a Library for Representation Learning on Knowledge Graphs}},
- month               = mar,
- year                = 2019,
- doi                 = {10.5281/zenodo.2595043},
- url                 = {https://doi.org/10.5281/zenodo.2595043},
-}
-@misc{burl,
- author= {Christian Meilicke and
-          Melisachew Wudage Chekol and
-          Daniel Ruffinelli and
-          Heiner Stuckenschmidt},
- title = {{Anytime Bottom-Up Rule Learning for Knowledge Graph Completion}},
- year  = 2019,
- url   = {http://web.informatik.uni-mannheim.de/AnyBURL/meilicke19anyburl.pdf},
+
+% ###########################################
+% GCAT
+% ###########################################
+% Survey
+@article{rossi2020knowledge,
+  keywords={cgat},
+  title={Knowledge Graph Embedding for Link Prediction: A Comparative Analysis},
+  author={Rossi, Andrea and Firmani, Donatella and Matinata, Antonio and Merialdo, Paolo and Barbosa, Denilson},
+  journal={arXiv preprint arXiv:2002.00819},
+  year={2020}
 }
 
-@online{Listings,
- author               = {Online},
- title                = {LaTeX/Source Code Listings},
- url                  = {http://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings},
- urldate              = {2015-06-06},
- }
+% KGBAT
+@article{nathani2019learning,
+  keywords={cgat},
+  title={Learning attention-based embeddings for relation prediction in knowledge graphs},
+  author={Nathani, Deepak and Chauhan, Jatin and Sharma, Charu and Kaul, Manohar},
+  journal={arXiv preprint arXiv:1906.01195},
+  year={2019}
+}
 
-@online{Tables,
- author               = {Online},
- title                = {LaTeX/Tables},
- url                  = {http://en.wikibooks.org/wiki/LaTeX/Tables},
- urldate              = {2015-06-06},
- }
-
-@misc{URL-DLMF,
- author               = {{National Institute of Standards and Technology}},
- howpublished         = {\url{http://dlmf.nist.gov}},
- month                = {Nov},
- title                = {Digital library of mathematical functions},
- year                 = {2013},
- }
+% TransE
+@inproceedings{bordes2013translating,
+  keywords             = {cgat},
+  title={Translating embeddings for modeling multi-relational data},
+  author={Bordes, Antoine and Usunier, Nicolas and Garcia-Duran, Alberto and Weston, Jason and Yakhnenko, Oksana},
+  booktitle={Advances in neural information processing systems},
+  pages={2787--2795},
+  year={2013}
+}
