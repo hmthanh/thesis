@@ -23,4 +23,5 @@ venv/
 
 # Log
 *.log
-*.sty
+textbook/*
+.vscode/*

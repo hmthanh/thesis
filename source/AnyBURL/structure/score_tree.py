@@ -1,4 +1,6 @@
-import copy
+# -*- coding: utf-8 -*-
+# author: Phan Minh Tâm
+# source has refer to java source of BURL method: http://web.informatik.uni-mannheim.de/AnyBURL/IJCAI/ijcai19.html file ScoreTree.java
 
 class ScoreTree(object):
 
