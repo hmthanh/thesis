@@ -1,7 +1,48 @@
 \section{CGAT}
 
+Ở phần này chúng tôi sẽ giới thiệu tóm lược về mạng đồ thị chú ý (GATs \cite{velivckovic2017graph}) và cải tiến của chúng tôi trên lớp GAT mà chúng tôi gọi là \textit{mạng cộng tác đồ thị chú ý} CGAT, và sau đó chúng tôi áp dụng vào để xây dựng đồ thị theo mô hình KGAT \cite{nathani2019learning} để tối ưu quá trình dự đoán các mối quan hệ. 
 
-KBGAT \cite{nathani2019learning}
+\subsection{Mô hình GAT}
+
+Mạng đồ thị tích chập (GCNs \cite{schlichtkrull2018modeling}) giúp tổng hợp thông tin bằng cách tính trung bình thông tin từ các thực thể lân cận, tuy nhiên cách này sẽ làm cho các thực thể có trọng số ngang bằng nhau không biểu diễn đúng thông tin trong thế giới thực. Để giải quyết vấn đề đó, GATs \cite{velivckovic2017graph} ra đời để đối xử với các node lân cận bằng sự quan trọng của chúng.
+
+Đầu vào của mô hình là vector biểu diễn đặc trưng của từng thực thể (entity) $E = \overrightarrow{e_1} + \overrightarrow{e_2} + ... + \overrightarrow{e_N}$. Và mục tiêu của chúng ta là biến đổi thành một đặc trưng đầu ra mới $E'' = \overrightarrow{e''_1} + \overrightarrow{e''_2} + ... + \overrightarrow{e''_N}$; với $\overrightarrow{e_i}$ và $\overrightarrow{e'_i} \in \mathcal{R}^k$ tương ứng là vector nhúng đầu vào và vector đầu ra của của thực thể $e_i$, N là số lượng của các thực thể (nodes), k là đặc trưng đầu vào.
+
+Mô hình sẽ đi qua hai quá trình biến đổi vector đặc trưng $\overrightarrow{e_i}$ và có thể tóm lược như sau :
+\begin{align}
+\overrightarrow{e_i} \longrightarrow \overrightarrow{e'_i} \longrightarrow \overrightarrow{e''_i}
+\end{align}
+
+Ở quá trình biên đổi đầu tiên, mô hình sẽ tổng hợp thông tin từ các thực thể lân cận và ghép chồng lên nhau để tạo ra vector $\overrightarrow{e'_i}$ sau đó mô hình sẽ dùng vector $\overrightarrow{e'_i}$ để coi là vector nhúng của thực thể cho lớp mới và tiếp tục quá trình tổng hợp từ các thông tin lân cận và tạo ra vector $\overrightarrow{e''_i}$ cuối cùng.
+
+Đầu tiên để tham số hóa quá trình biến đổi tuyến tính, ta cần một trọng số $W \in \mathbb{R}^{N_e \times k}$ ánh xạ vector đầu vào thành một vector mới với miền không gian lớn hơn và một hàm chú ý $a$ chúng ta tùy chọn :
+
+\begin{align}
+\centering
+{e_{ij}}&={a(W \overrightarrow{e_i}, W \overrightarrow{e_i})}
+\end{align}
+
+trong đó $e_{ij}$ là giá trị chú ý của một cạnh $(e_i, e_j)$ trong đồ thị $\mathcal{G}$ hay $e_{ij}$ thể hiện sự quan trọng của đặc trưng cạnh $(e_i, e_j)$ so với thực thể $e_i$. Sau đó, chúng ta áp dụng hàm \textit{softmax} qua tất cả các giá trị nhúng của hàng xóm để tạo ra $\alpha_{ij}$ . Quá trình tổng hợp các sự chú ý được thể hiện ở biểu thức sau : 
+
+\begin{align}
+\centering
+{\overrightarrow{a_{ij}}}&={\sigma\left(\sum_{j\in \mathcal{N}(i)} {\alpha_{ij} \mathbf{W} \overrightarrow{e_j} }\right)}
+\end{align}
+
+Tiếp theo mô hình GAT sẽ đi qua \textit{lớp chú ý đa đỉnh}(multi-head attention) để ổn định quá trình học bằng cách ghép $A$ đỉnh chú ý với nhau :
+
+\begin{align}
+{\overrightarrow{x'_i}}&={\bigparallel_{a=1}^{A}\sigma\left(\sum_{j\in \mathcal{N}(i)}\alpha_{ij}^{a} \mathbf{W}^{a} \overrightarrow{x_{j}} \right)}
+\end{align}
+
+trong đó phép $||$ biểu diễn quá trình ghép chồng lên nhau và $\sigma$ là bất kỳ hàm biến đổi phi tuyến tính nào, $\alpha_{ij}^a$ là hệ số chú ý được chuẩn hóa của cạnh $(e_i, e_j)$ được tính từ lớp thứ $a^{th}$ cơ chế chú ý. Cuối cùng $\overrightarrow{x'_i}$ được coi là vector thực thể nhúng mới và cho vào lớp chú ý đa đỉnh với đầu ra thay vì ghép chồng như trên thì được tính trung bình như công thức sau :
+
+\begin{align}
+{\overrightarrow{x''_i}}&={\sigma\left(\frac{1}{A} \sum_{a=1}^{A}\sum_{j\in \mathcal{N}(i)}\alpha_{ij}^{a} \mathbf{W}^{a} \overrightarrow{x'_{j}} \right)}
+\end{align}
+
+
+ \cite{nathani2019learning}
 
 GAT \cite{velivckovic2017graph}
 
