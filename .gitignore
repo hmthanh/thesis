@@ -23,3 +23,5 @@ venv/
 
 # Log
 *.log
+textbook/*
+.vscode/*

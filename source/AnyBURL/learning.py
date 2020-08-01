@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# author: Phan Minh Tâm
+# source has refer to java source of BURL method: http://web.informatik.uni-mannheim.de/AnyBURL/IJCAI/ijcai19.html file Learn.java
 from algorithm.path_sampler import PathSampler
 from structure.rule import Rule
 from data.triple_set import TripleSet

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# author: Minh Tâm Phan
-# source has refer to java source of BURL method: http://web.informatik.uni-mannheim.de/AnyBURL/IJCAI/ijcai19.html
+# author: Phan Minh Tâm
+# source has refer to java source of BURL method: http://web.informatik.uni-mannheim.de/AnyBURL/IJCAI/ijcai19.html file Apply.java
 from logger import Logger
 from utilities import current_milli_time
 from data.triple_set import TripleSet

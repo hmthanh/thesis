@@ -36,7 +36,6 @@ class RuleEngine(object):
     if len(filter_set.triples) == 0:
       print('WARNING: using empty filter set!')
     # prepare the data structures used a s cache for question that are reoccuring
-    # head_candidate_cache, tail_candidate_cache = {},{}
     # start iterating over the test cases
     counter ,current_time, start_time = 0, 0, current_milli_time()
 
