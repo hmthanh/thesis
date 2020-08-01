@@ -24,25 +24,25 @@ class Settings(object):
     self.RANDOMIZED_DECISIONS_ANNEALING = 5
     '''
     * This number defines if a rule to be redundant if the number of groundings for its last atom is less than this parameter.
-    * It avoid that rules with constants are too specific and thus redundant compared to shorter rules 
+    * It avoid that rules with constants are too specific and thus redundant compared to shorter rules
     *    head(X,c) <= hasGender(X, female)
     *    head(X,c) <= hasGender(X, A), hasGender(berta, A)
     * The second rule will be filtered out, because berta has only 1 gender, which is female.
     '''
     self.AC_MIN_NUM_OF_LAST_ATOM_GROUNDINGS = 5
     '''
-    * PROBABLY OUT 
-    * 
+    * PROBABLY OUT
+    *
     * The specialization confidence interval determines that a rule shall only be accepted as a specialization of a more general rule, if
     * it has a higher confidence and if the probability that its confidence is really higher is at least that chosen value.
     * Possible values are 0.9, 0.99 and 0.99.
-    * 
+    *
     * -1 = turned-off
     '''
     self.SPECIALIZATION_CI = -1
     '''
     * Relevant for reinforced learning, how to compute the scores created by a thread.
-    * 
+    *
     * 1 = correct predictions
     * 2 = correct predictions weighted by confidence
     * 3 = correct predictions weighted by applied confidence
@@ -52,14 +52,14 @@ class Settings(object):
     self.REWARD = 5
     '''
     * Relevant for reinforced learning, how to use the scores created by a thread within the decision.
-    * 
+    *
     * 1 = GREEDY = Epsilon greedy: Focus only on the best.
     * 2 = WEIGHTED = Weighted policy: focus as much as much a a path type, as much as it gave you.
     '''
     self.POLICY = 2
     self.SCORING_REGIME_CONFDIFF = 0.0
     '''
-    * Defines the prediction type which also influences the usage of the other parameters. 
+    * Defines the prediction type which also influences the usage of the other parameters.
     * Possible values are currently aRx and xRy.
     '''
     self.PREDICTION_TYPE = 'aRx'
@@ -112,21 +112,21 @@ class Settings(object):
     self.snapshots_at = [10, 100]
     '''
     * Number of maximal attempts to create body grounding. Every partial body grounding is counted.
-    * 
+    *
     * NO LONGER IN USE (maybe)
     '''
     self.TRIAL_SIZE = 1000000
     '''
     * Returns only results for head or tail computation if the results set has less elements than this bound.
-    * The idea is that any results set which has more elements is anyhow not useful for a top-k ranking. 
+    * The idea is that any results set which has more elements is anyhow not useful for a top-k ranking.
     * Should be set to a value thats higher than the k of the requested top-k (however, the higher the value,
     * the more runtime is required)
-    * 
+    *
     * PROBABLY OUT ... no its in again
     '''
     self.DISCRIMINATION_BOUND = 1000
     '''
-    * The time that is reserved for one batch in milliseconds. 
+    * The time that is reserved for one batch in milliseconds.
     '''
     self.BATCH_TIME = 1000
     '''
@@ -155,7 +155,7 @@ class Settings(object):
     '''
     self.RR_THRESHOLD_CORRECT_PREDICTIONS = 2
     '''
-    *The number of negative examples for which we assume that they exist, however, we have not seen them. Rules with high coverage are favored the higher the chosen number. 
+    *The number of negative examples for which we assume that they exist, however, we have not seen them. Rules with high coverage are favored the higher the chosen number.
     '''
     self.UNSEEN_NEGATIVE_EXAMPLES = 5
     '''
@@ -165,7 +165,7 @@ class Settings(object):
     self.UNSEEN_NEGATIVE_EXAMPLES_REFINE = 5
     '''
     * These number are added rule specific for in the application phase.
-    *                      
+    *
     *                         U   C  AC1 AC2  X
     '''
     self.UNSEEN_NEGATIVE_EXAMPLES_ATYPED = [0, 0, 0, 0, 0]
@@ -225,7 +225,7 @@ class Settings(object):
     '''
     self.BEAM_SAMPLING_MAX_REPETITIONS = 5
     '''
-    * The top-k results that are after filtering kept in the results. 
+    * The top-k results that are after filtering kept in the results.
     '''
     self.TOP_K_OUTPUT = 10
 
@@ -235,11 +235,6 @@ class Settings(object):
 
     self.KEYWORD = {'greedy': 1, 'weighted': 2, 'sup': 1, 'supXcon': 3, 'supXcon/lr': 5, 'supXcon/rl': 5}
 
-  def load_laerning_config(self):
+  def load_learning_config():
     with open('learning.yaml') as stream:
-    # use safe_load instead load
-      conf = yaml.safe_load(stream)
-      self.path_training = conf['PATH_TRAINING']
-      self.path_output = conf['PATH_OUTPUT']
-      self.snapshots_at = conf['SNAPSHOTS_AT']
-      self.worker_threads = conf['WORKER_THREADS']
+      return yaml.safe_load(stream)
