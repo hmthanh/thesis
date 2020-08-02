@@ -1,6 +1,6 @@
 import sys
 from random import random, randint
-from asyncio import Lock
+from threading import RLock
 
 from settings import Settings
 from utilities import current_milli_time
@@ -9,8 +9,8 @@ class Dice(object):
   supported_types = 12
   supported_types_cyclic = 10
   gama = 0.0001
-  cfg = Settings()
   initial_score = sys.float_info.max / (supported_types + 1)
+
   def __init__(self, output_path):
     self.output_path = output_path
     self.timestamps = []
@@ -20,41 +20,49 @@ class Dice(object):
     self.current_freqs = []
     self.relevant_scores = []
     self.relevant_scores_computed = []
+    self.resource_lock = RLock()
+    self.cfg = Settings()
+    self.cfg.load_learning_config()
     # init components
     for i in range(Dice.supported_types):
       self.current_scores.append(Dice.initial_score)
       self.current_freqs.append(1)
+      self.relevant_scores.append(0)
 
-    if cfg.max_length_acyclic == 0:
-      self.current_scores[Dice.supported_types_cyclic] = 0.0f
-      self.current_scores[Dice.supported_types_cyclic + 1] = 0.0f
+    if self.cfg.max_length_acyclic == 0:
+      self.current_scores[self.supported_types_cyclic] = 0.0
+      self.current_scores[self.supported_types_cyclic + 1] = 0.0
 
-    self.current_scores[Dice.supported_types_cyclic + 1] = 0.0 if cfg.max_length_acyclic == 1
+    if self.cfg.max_length_acyclic == 1:
+      self.current_scores[self.supported_types_cyclic + 1] = 0.0
 
-    for j in range(cfg.max_length_acyclic, Dice.supported_types_cyclic):
-      self.current_scores[j] = 0.0f
+    for j in range(self.cfg.max_length_acyclic, self.supported_types_cyclic):
+      self.current_scores[j] = 0.0
 
 
   def ask(self, bath_counter):
     '''
     Throws a dice for the rule types which is weighted according to the scores collected the last time this type was mined.
     '''
-    r = (cfg.randomized_decisions_annealing - bath_counter) / cfg.randomized_decisions_annealing
-    r = cfg.epsilon if r < cfg.epsilon
+    r = (self.cfg.randomized_decisions_annealing - bath_counter) / self.cfg.randomized_decisions_annealing
+    if r < self.cfg.epsilon:
+      r = self.cfg.epsilon
     if random() < r:
       i = 0
       while self.scores[0][i] == 0:
         i = randint(0, Dice.supported_types)
       return i
-    if cfg.policy == 1:
+    if self.cfg.policy == 1:
       score = max(self.relevant_scores)
       self.relevant_scores.index(score)
-    if cfg.policy == 2:
-      raise Exception('before asking the dice you have to compute the relevant scores') if self.relevant_scores_computed
+    if self.cfg.policy == 2:
+      if self.relevant_scores_computed:
+        raise Exception('before asking the dice you have to compute the relevant scores')
       total = sum(self.relevant_scores)
       d = random() * total
       for i in range(self.supported_types):
-        return i if d < self.relevant_scores[i]
+        if d < self.relevant_scores[i]:
+          return i
         d -= self.relevant_scores[i]
 
     return 0
@@ -68,16 +76,19 @@ class Dice(object):
   def reset_scores(self):
     for i in range(self.supported_types):
       if self.current_scores[i] > 0:
-        self.current_scores[i] = 0.0f
+        self.current_scores[i] = 0.0
         self.current_freqs[i] = 0
     self.relevant_scores_computed = False
 
   def add_score(self, index, score):
-    lock = Lock()
-    async with lock:
-      self.current_scores[index] += score
-      self.current_freqs += 1
-      self.current_scores[index] += self.gama if score == 0
+    if self.resource_lock.acquire(False):
+      try:
+        self.current_scores[index] += score
+        self.current_freqs += 1
+        if score == 0:
+          self.current_scores[index] += self.gama
+      finally:
+        self.resource_lock.release()
 
   def save_scores(self):
     self.scores.append([0 for i in range(self.supported_types)])

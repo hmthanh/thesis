@@ -49,5 +49,7 @@ class ScorerReinforced(Thread):
         ## search for cyclic rules
         if self.mine_param_cyclic:
           path = self.sampler.sample_path(self.mine_param_length + 1, True)
+          if path is not None and path.is_valid():
+            learned_rules = RuleFactory.
 
     print(str(self.thread_name) +"  "+ str(self.thread_id))
