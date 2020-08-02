@@ -1,7 +1,9 @@
 import sys
 from random import random, randint
+from asyncio import Lock
 
 from settings import Settings
+from utilities import current_milli_time
 
 class Dice(object):
   supported_types = 12
@@ -58,8 +60,35 @@ class Dice(object):
     return 0
 
   def compute_relevenat_scores(self):
-
+    for i in range(self.supported_types):
+      if self.current_scores[i] > 0:
+        self.relevant_scores[i] = self.current_scores[i] / self.current_freqs[i]
     self.relevant_scores_computed = True
+
+  def reset_scores(self):
+    for i in range(self.supported_types):
+      if self.current_scores[i] > 0:
+        self.current_scores[i] = 0.0f
+        self.current_freqs[i] = 0
+    self.relevant_scores_computed = False
+
+  def add_score(self, index, score):
+    lock = Lock()
+    async with lock:
+      self.current_scores[index] += score
+      self.current_freqs += 1
+      self.current_scores[index] += self.gama if score == 0
+
+  def save_scores(self):
+    self.scores.append([0 for i in range(self.supported_types)])
+    self.freqs.append([0 for i in range(self.supported_types)])
+    self.timestamps.append(current_milli_time())
+    last_scores = self.scores[-1]
+    last_freqs = self.freqs[-1]
+    for i in range(len(self.current_scores)):
+      last_freqs[i] = self.current_freqs[i]
+      last_scores[i] = self.current_scores[i] / max(last_freqs[i], 1)
+
   #####################################
   #####   static method   ############
   def simulate_score(type_score):

@@ -235,6 +235,15 @@ class Settings(object):
 
     self.KEYWORD = {'greedy': 1, 'weighted': 2, 'sup': 1, 'supXcon': 3, 'supXcon/lr': 5, 'supXcon/rl': 5}
 
-  def load_learning_config():
-    with open('learning.yaml') as stream:
-      return yaml.safe_load(stream)
+    self.learning_is_loaded = False
+
+  def load_learning_config(self):
+    if self.learning_is_loaded == False:
+      with open('learning.yaml') as stream:
+        config = yaml.safe_load(stream)
+      self.worker_threads = config['worker_threads']
+      self.snapshots_at = config['snapshots_at']
+      self.path_training = config['path_training']
+      self.path_output = config['path_output']
+      self.max_length_grounded_cyclic = config['max_length_grounded_cyclic']
+      self.learning_is_loaded = True

@@ -9,6 +9,7 @@ from learn_reinforced import LearnReinforced
 
 
 class ScorerReinforced(Thread):
+
   def __init__(self, triples, thread_id=1):
     threading.Thread.__init__(self)
     self.thread_id = thread_id
@@ -18,6 +19,9 @@ class ScorerReinforced(Thread):
     self.mine_param_length = 1
     self.ready = True
     self.only_XY = False
+    self.created_rules = 0
+    self.stored_rules = 0
+    self.produced_score = 0
 
   def set_search_parameters(self, cyclic, length):
     self.mine_param_cyclic = cyclic
@@ -36,5 +40,14 @@ class ScorerReinforced(Thread):
     print('THREAD-{} starts to work with L = {} C = {} '.format(self.thread_id, self.mine_param_length, self.mine_param_cyclic))
     done = False
     while not done:
+      if not LearnReinforced.is_active(self.thread_id, self.stored_rules, self.created_rules, self.produced_score, self.mine_param_cyclic, self.mine_param_length) or not self.ready:
+        self.created_rules = 0
+        self.stored_rules = 0
+        self.produced_score = 0
+        sleep(10 / 1000)
+      else:
+        ## search for cyclic rules
+        if self.mine_param_cyclic:
+          path = self.sampler.sample_path(self.mine_param_length + 1, True)
 
     print(str(self.thread_name) +"  "+ str(self.thread_id))

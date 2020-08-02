@@ -7,7 +7,7 @@ class PathSampler(object):
     self.triple_set = triple_set
     pass
 
-  def sample_path(self, steps, cyclic, chosen_head_triple, rule_to_be_extended):
+  def sample_path(self, steps, cyclic, chosen_head_triple=None, rule_to_be_extended=None):
     nodes, markers = [None] * (1 + steps * 2), [None] * steps
     chosen_triples = triple_set.triples
     triple = choice(chosen_triples) if chosen_head_triple == None else chosen_head_triple
