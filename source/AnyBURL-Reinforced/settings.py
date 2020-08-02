@@ -14,14 +14,14 @@ class Settings(object):
     * Suppresses any rules with constants.
     *'''
     self.CONSTANTS_OFF = False
-    self.EPSILON = 0.1
+    self.epsilon = 0.1
     '''
     **
     * In the first batch the decisions are completely randomized. This random influence becomes less
     * at will be stable at  RANDOMIZED_DECISIONS after this number of batches have been carried out.
     **
     '''
-    self.RANDOMIZED_DECISIONS_ANNEALING = 5
+    self.randomized_decisions_annealing = 5
     '''
     * This number defines if a rule to be redundant if the number of groundings for its last atom is less than this parameter.
     * It avoid that rules with constants are too specific and thus redundant compared to shorter rules
@@ -138,7 +138,7 @@ class Settings(object):
     * The maximal number of body atoms in acyclic rules (inclusive this number). If this number is exceeded all computation time
     * is used for cyclic rules only from that time on.
     '''
-    self.MAX_LENGTH_ACYCLIC = 1
+    self.max_length_acyclic = 1
 
     '''
     * The maximal number of body atoms in partially grounded cyclic rules (inclusive this number). If this number is exceeded than a
