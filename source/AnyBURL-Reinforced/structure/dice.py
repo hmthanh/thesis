@@ -1,5 +1,5 @@
 import sys
-from random import random, randint
+from random import random, randrange
 from threading import RLock
 
 from settings import Settings
@@ -36,7 +36,7 @@ class Dice(object):
     if self.cfg.max_length_acyclic == 1:
       self.current_scores[self.supported_types_cyclic + 1] = 0.0
 
-    for j in range(self.cfg.max_length_acyclic, self.supported_types_cyclic):
+    for j in range(self.cfg.max_length_cyclic, self.supported_types_cyclic):
       self.current_scores[j] = 0.0
 
 
@@ -48,9 +48,9 @@ class Dice(object):
     if r < self.cfg.epsilon:
       r = self.cfg.epsilon
     if random() < r:
-      i = randint(0, Dice.supported_types - 1)
+      i = randrange(Dice.supported_types )
       while self.scores[0][i] == 0:
-        i = randint(0, Dice.supported_types - 1)
+        i = randrange(Dice.supported_types)
       return i
 
     if self.cfg.policy == 1:
@@ -111,7 +111,7 @@ class Dice(object):
       if i == self.supported_types_cyclic:
         res += ' |'
       s = self.relevant_scores[i]
-      res += ' {}'.format(' > 99k' if s > 999999 else s)
+      res += ' {}'.format(' > 99k' if s > 999999 else '{}'.format(int(s)))
     return res
   #####################################
   #####   static method   ############
