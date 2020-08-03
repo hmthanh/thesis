@@ -1,2 +1,4 @@
 
-class Body(object)
+class Body(object):
+  def __init__(self):
+    pass

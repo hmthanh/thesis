@@ -37,7 +37,7 @@ class Atom(object):
           return True
 
         if self.left == other.left:
-          if not other.right_c and self.right_c:
+          if not other.is_right_constant and self.is_right_constant:
             return True
           return False
 

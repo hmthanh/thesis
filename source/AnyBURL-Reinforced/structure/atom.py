@@ -1,4 +1,3 @@
-from copy import deepcopy
 class Atom(object):
 
   def __init__(self, left=None, relation=None, right=None, is_left_constant=True, is_right_constant=True):
@@ -54,19 +53,33 @@ class Atom(object):
         r = Rule.variables[ri + indent]
     return '{}({},{})'.format(self.relation, l, r)
 
-  def moreSpecial(self, atom):
+  def more_special(self, other):
     '''
     Returns true if this is more special than the given atom g.
     '''
-    if self.relation == atom.relation:
-      if self == atom:
-        return True
-      if self.left == atom.left:
-        return True if not atom.is_right_constant and self.is_right_constant else False
-    return False
+    if isinstance(other, self.__class__):
+      if self.relation == other.relation:
+        if self == other:
+          return True
+
+        if self.left == other.left:
+          if not other.is_right_constant and self.is_right_constant:
+            return True
+          return False
+
+        if self.right == other.right:
+          if not other.is_left_constant and self.is_left_constant:
+            return True
+          return False
+
+        if not other.is_left_constant and not other.is_right_constant and self.is_left_constant and self.is_right_constant:
+            return True
+        return False
+    else:
+      return False
 
 
-  def moreSpecial_substituted(self, atom,  v_this, v_that):
+  def more_special_substituted(self, atom,  v_this, v_that):
     '''
     Returns true if this is more special than the given atom g, given that vThis is substituted by vThat.
     '''
