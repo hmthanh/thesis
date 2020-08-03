@@ -157,7 +157,7 @@ class Settings(object):
     '''
     *The number of negative examples for which we assume that they exist, however, we have not seen them. Rules with high coverage are favored the higher the chosen number.
     '''
-    self.UNSEEN_NEGATIVE_EXAMPLES = 5
+    self.unseen_negative_examples = 5
     '''
     * The number of negative examples for which we assume that they exist, however, we have not seen them.
     * This number is for each refinements step, including the refinement of a refined rule.
