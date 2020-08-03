@@ -82,7 +82,7 @@ class Dice(object):
     self.relevant_scores_computed = False
 
   def add_score(self, index, score):
-    if self.resource_lock.acquire(False):
+    if self.resource_lock.acquire():
       try:
         self.current_scores[index] += score
         self.current_freqs[index] += 1
