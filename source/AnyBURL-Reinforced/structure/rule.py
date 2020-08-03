@@ -70,6 +70,58 @@ class Rule(object):
       return False
     return True if not self.head.is_right_constant else False
 
+  def check_negation(self, triple_set, variable, x_value):
+    if self.negation is not None:
+      if self.negation.get_left() == variable:
+        tails = triple_set.get_tail_entities(self.negation.get_relation(), x_value)
+        if self.negation.is_variable_right() and len(tails) > 0:
+          return False
+        elif self.negation.get_right() in tails:
+          return False
+      else:
+        if self.negation.get_right() == variable:
+          heads = triple_set.get_head_entities(self.negation.get_relation(), x_value)
+        if self.negation.is_variable_left() and len(heads) > 0:
+          return False
+        elif self.negation.get_right() in heads:
+          return False
+
+    return True
+
+  ########################################################
+  #                 abstract method                     #
+  #######################################################
+
+  def compute_scores(self, triple_set):
+    pass
+
+  # Returns the tail results of applying this rule to a given head value.
+  def compute_tail_results(self, head, triple_set):
+    '''Returns the tail results of applying this rule to a given head value.'''
+    pass
+
+  def compute_head_results(self, head, triple_set):
+    '''Returns the head results of applying this rule to a given tail value.'''
+    pass
+
+  def is_refinable(self):
+    '''True, if this rule is refineable. False otherwise.'''
+    pass
+
+  def get_random_valid_prediction(self, triple_set):
+    '''Returns a randomly chose triples that is both predicted and valid = true against the given triple set.'''
+    pass
+
+  def is_redundant_AC_rule(self, triples):
+    '''
+    Checks if a rule is a AC1 rule and if yes, if the last condition is for only a small number of entities true.
+	  Such a rule can be (more or less) expressed by few  AC1 rule is one atom shorter.
+    '''
+    pass
+
+  def materialize(self, training_set):
+    pass
+
   def __eq__(self, that):
     if isinstance(that, self.__class__):
       if self.head == that.head and self.body == that.body:
@@ -86,5 +138,3 @@ class Rule(object):
       relation = ''.join([atom.relation for atom in self.body.literals])
       self.hash_code = hash(relation + str(self.negation))
     return self.hash_code
-
-  def check_negation(self):
