@@ -48,15 +48,16 @@ class Dice(object):
     if r < self.cfg.epsilon:
       r = self.cfg.epsilon
     if random() < r:
-      i = 0
+      i = randint(0, Dice.supported_types - 1)
       while self.scores[0][i] == 0:
-        i = randint(0, Dice.supported_types)
+        i = randint(0, Dice.supported_types - 1)
       return i
+
     if self.cfg.policy == 1:
       score = max(self.relevant_scores)
       self.relevant_scores.index(score)
-    if self.cfg.policy == 2:
-      if self.relevant_scores_computed:
+    elif self.cfg.policy == 2:
+      if not self.relevant_scores_computed:
         raise Exception('before asking the dice you have to compute the relevant scores')
       total = sum(self.relevant_scores)
       d = random() * total
@@ -84,7 +85,7 @@ class Dice(object):
     if self.resource_lock.acquire(False):
       try:
         self.current_scores[index] += score
-        self.current_freqs += 1
+        self.current_freqs[index] += 1
         if score == 0:
           self.current_scores[index] += self.gama
       finally:
@@ -100,6 +101,18 @@ class Dice(object):
       last_freqs[i] = self.current_freqs[i]
       last_scores[i] = self.current_scores[i] / max(last_freqs[i], 1)
 
+  def __str__(self):
+    res = ''
+    for i in range(self.supported_types):
+      if i >= self.cfg.max_length_cyclic and i < self.supported_types_cyclic:
+        continue
+      if i - self.supported_types_cyclic >= self.cfg.max_length_acyclic:
+        continue
+      if i == self.supported_types_cyclic:
+        res += ' |'
+      s = self.relevant_scores[i]
+      res += ' {}'.format(' > 99k' if s > 999999 else s)
+    return res
   #####################################
   #####   static method   ############
   def simulate_score(type_score):

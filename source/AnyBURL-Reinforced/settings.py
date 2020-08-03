@@ -56,7 +56,7 @@ class Settings(object):
     * 1 = GREEDY = Epsilon greedy: Focus only on the best.
     * 2 = WEIGHTED = Weighted policy: focus as much as much a a path type, as much as it gave you.
     '''
-    self.POLICY = 2
+    self.policy = 2
     self.SCORING_REGIME_CONFDIFF = 0.0
     '''
     * Defines the prediction type which also influences the usage of the other parameters.
@@ -133,7 +133,7 @@ class Settings(object):
     * The maximal number of body atoms in cyclic rules (inclusive this number). If this number is exceeded all computation time
     * is used for acyclic rules only from that time on.
     '''
-    self.MAX_LENGTH_CYCLIC = 3
+    self.max_length_cyclic = 3
     '''
     * The maximal number of body atoms in acyclic rules (inclusive this number). If this number is exceeded all computation time
     * is used for cyclic rules only from that time on.
