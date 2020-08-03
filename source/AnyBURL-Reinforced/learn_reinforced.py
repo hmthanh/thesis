@@ -11,13 +11,14 @@ class LearnReinforced(object):
   finished = False
   stats = []
   dice = None
-  cfg = Settings()
+
 
   def __init__(self):
     logging.basicConfig(filename='learn.log',level=logging.DEBUG)
     logging.info('======================= start new section ======================')
     logging.info('Started LearnReinforced')
-    cfg.load_learning_config()
+    self.cfg = Settings()
+    self.cfg.load_learning_config()
 
     for i in range(cfg.worker_threads):
       stats.append([0, 0, 0])

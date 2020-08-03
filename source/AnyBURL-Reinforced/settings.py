@@ -49,7 +49,7 @@ class Settings(object):
     * 4 = correct predictions weighted by applied confidence^2
     * 5 = correct predictions weighted by applied confidence divided by (rule length-1)^2
     '''
-    self.REWARD = 5
+    self.reward = 5
     '''
     * Relevant for reinforced learning, how to use the scores created by a thread within the decision.
     *
@@ -149,7 +149,7 @@ class Settings(object):
     '''
     * The threshold for the number of correct prediction created with the refined rule.
     '''
-    self.THRESHOLD_CORRECT_PREDICTIONS = 2
+    self.threshold_correct_prediction = 2
     '''
     * The threshold for the number of correct predictions. Determines which rules are read from a file and which are ignored.
     '''
@@ -178,7 +178,7 @@ class Settings(object):
     '''
     * The threshold for the confidence of the refined rule
     '''
-    self.THRESHOLD_CONFIDENCE = 1e-4
+    self.threshold_confidence = 1e-4
     '''
     * The threshold for the confidence of the rule. Determines which rules are read from a file by the rule reader.
     '''

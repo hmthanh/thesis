@@ -4,4 +4,5 @@ class RuleFactory(object):
     pass
 
   def getGeneralizations(path, only_XY):
+    print('RuleFactory. to do implement getGeneralizations')
     pass

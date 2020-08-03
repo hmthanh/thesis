@@ -12,7 +12,7 @@ class Rule(object):
       Rule.variables[Rule.variables[i]] = i
     self.head = head
     self.body = Body()
-    self.confidence = 0
+    self.confidence = 0.0
     self.correctly_predicted = 0
     self.predicted = 0
     self.negation = None

@@ -2,6 +2,7 @@ from threading import Thread
 from time import sleep
 
 from structure.path import Path
+from structure.rule_factory import RuleFactory
 from algorithm.path_sampler import PathSampler
 from data.triple_set import TripleSet
 from settings import Settings
@@ -22,6 +23,8 @@ class ScorerReinforced(Thread):
     self.created_rules = 0
     self.stored_rules = 0
     self.produced_score = 0
+    self.cfg = Settings()
+    self.cfg.load_learning_config()
 
   def set_search_parameters(self, cyclic, length):
     self.mine_param_cyclic = cyclic
@@ -50,6 +53,57 @@ class ScorerReinforced(Thread):
         if self.mine_param_cyclic:
           path = self.sampler.sample_path(self.mine_param_length + 1, True)
           if path is not None and path.is_valid():
-            learned_rules = RuleFactory.
+            learned_rules = RuleFactory.getGeneralizations(path, self.only_XY)
+            if not LearnReinforced.active:
+              sleep(10 / 1000) # to do config
+            else:
+              for rule in learned_rules:
+                self.created_rules += 1
+                if rule.is_is_trivial():
+                  continue
+                if rule.is_redundant_AC_rule():
+                  continue
+                if LearnReinforced.is_stored(rule):
+                  rule.compute_scores(self.triples)
+                  if rule.confidence >= self.cfg.threshold_confidence and rule.correctly_predicted >= self.cfg.threshold_correct_prediction:
+                    if LearnReinforced.active:
+                      LearnReinforced.store_rule(rule)
+                      self.produced_score += self.get_scoring_gain(rule, rule.correctly_predicted, rule.confidence, rule.get_applied_confidence())
+                      self.stored_rules += 1
 
-    print(str(self.thread_name) +"  "+ str(self.thread_id))
+        if not self.mine_param_cyclic:
+          path = self.sampler.sample_path(self.mine_param_length + 1, False)
+          if path is not None and path.is_valid():
+            learned_rules = RuleFactory.getGeneralizations(path, False)
+            if not LearnReinforced.active:
+              sleep(10 / 1000)
+            else:
+              for rule in learned_rules:
+                self.created_rules += 1
+                if rule.is_trivial():
+                  continue
+                if LearnReinforced.is_stored(rule):
+                  try:
+                    rule.compute_scores(self.triples)
+                  except expression as identifier:
+                    continue
+                  if rule.confidence >= self.cfg.threshold_confidence and rule.correctly_predicted >= self.cfg.threshold_correct_prediction:
+                    if LearnReinforced.active:
+                      LearnReinforced.store_rule(rule)
+                      self.produced_score += self.get_scoring_gain(rule, rule.correctly_predicted, rule.confidence, rule.get_applied_confidence())
+                      self.stored_rules += 1
+
+
+  def get_scoring_gain(self, rule, correctly_predicted, confidence, applied_confidence ):
+    if self.cfg.reward == 1:
+      return correctly_predicted
+    elif self.cfg.reward == 2:
+      return correctly_predicted * confidence
+    elif self.cfg.reward == 3:
+      return correctly_predicted * applied_confidence
+    elif self.cfg.reward == 4:
+      return correctly_predicted * applied_confidence**2
+    elif self.cfg.reward == 5:
+      return correctly_predicted * applied_confidence * (len(rule.bodysize() - 1) ** 2)
+
+    return 0.0
