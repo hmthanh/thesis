@@ -3,6 +3,7 @@ import logging
 from settings import Settings
 from structure.dice import Dice
 from threading import RLock
+from logger import Logger
 
 class LearnReinforced(object):
   available_threads = set()
@@ -20,9 +21,9 @@ class LearnReinforced(object):
 
 
   def __init__(self):
-    logging.basicConfig(filename='learn.log',level=logging.DEBUG)
-    logging.info('======================= start new section ======================')
-    logging.info('Started LearnReinforced')
+    self.logger = Logger.get_log_cate('learning.txt', 'LearnReinforced')
+    self.logger.info('======================= start new section ======================')
+    self.logger.info('Started LearnReinforced')
     self.cfg = Settings()
     self.cfg.load_learning_config()
 
@@ -33,6 +34,7 @@ class LearnReinforced(object):
     for i in range(307):
       rules307[i] = set()
 
+  def train(self):
 
   def are_all_available():
     return True if len(available_threads) == cfg.learning_config['worker_threads'] else False
