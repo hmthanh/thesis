@@ -16,6 +16,7 @@ class LearnReinforced(object):
 	# I somehow like the number 307
   rules307 = {}
   resource_lock = RLock()
+  indexed_XY_rules = {}
 
 
   def __init__(self):
@@ -75,5 +76,7 @@ class LearnReinforced(object):
         LearnReinforced.resource_lock.release()
 
   def index_XY_rule(rule):
-    print('implement index_XY_rule')
-    pass
+    res = '{}'.format(rule.head)
+    res += ''.join([str(atom) for atom in rule.body.literals])
+    if res not in LearnReinforced.indexed_XY_rules:
+      LearnReinforced.indexed_XY_rules[res] = rule
