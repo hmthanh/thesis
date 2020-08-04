@@ -124,7 +124,7 @@ class Settings(object):
     *
     * PROBABLY OUT ... no its in again
     '''
-    self.DISCRIMINATION_BOUND = 1000
+    self.discrimination_bound = 1000
     '''
     * The time that is reserved for one batch in milliseconds.
     '''
