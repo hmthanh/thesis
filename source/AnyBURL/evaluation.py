@@ -9,9 +9,9 @@ from structure.rule import Rule
 
 class Evaluation(object):
 
-  def __init__(self):
+  def __init__(self, datasets='WN18'):
     Rule.set_application_mode()
-    self.config = Config.load_eval_config()
+    self.config = Config.load_eval_config(datasets)
     self.training_set, self.validation_set, self.test_set = TripleSet(), TripleSet(), TripleSet()
     self.training_set.read_triples(self.config['path_training'])
     self.validation_set.read_triples(self.config['path_valid'])
