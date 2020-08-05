@@ -345,3 +345,17 @@ Tails[('02483564', 0.9290617848970252), ('13732295', 0.04623073719283632), ('017
 08:53:04,508 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
 08:53:04,509 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
 08:53:04,509 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+22:11:31,108 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+22:11:31,109 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+22:11:31,109 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+22:11:31,109 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+22:12:17,802 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+22:12:17,802 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+22:12:17,802 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+22:12:17,802 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+22:12:19,277 Learning INFO ****************************start new section*************************************
+22:12:19,277 Learning INFO initialize learning 1596640339277
+22:12:24,352 Learning INFO training with config {'path_training': '../../datasets/WN18/train.txt', 'path_output': '../../datasets/WN18/valid.txt', 'snapshots_at': [100, 500, 1000], 'saturation': 0.99, 'sample_size': 500, 'batch_time': 1000, 'threshold_correct_predictions': 2, 'threshold_confidence': 1e-05, 'max_length_cylic': 3, 'max_length_acylic': 2, 'discrimination_bound': 1000, 'trial_size': 100000, 'dataset': 'WN18'}
+22:12:24,352 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+22:12:24,353 Learning INFO time elapsed: 2549 ms
+22:12:28,450 Learning INFO increasing rule size of CYCLIC rules to 2  after 4 s

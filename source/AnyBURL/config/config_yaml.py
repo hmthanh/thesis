@@ -14,10 +14,21 @@ class Config(object):
     # use safe_load instead load
       return yaml.safe_load(stream)
 
-  def load_learning_config():
+  def load_learning_config(dataset='WN18'):
     with open('config/learning_config.yaml') as stream:
     # use safe_load instead load
-      return yaml.safe_load(stream)
+      config_yaml = yaml.safe_load(stream)
+      if dataset == 'WN18':
+        config_yaml['path_training'] = config_yaml['path_training'][2]
+      elif dataset == 'FB15k':
+        config_yaml['path_training'] = config_yaml['path_training'][0]
+      if dataset == 'FB15k-273':
+        config_yaml['path_training'] = config_yaml['path_training'][1]
+      if dataset == 'WN18RR':
+        config_yaml['path_training'] = config_yaml['path_training'][3]
+      config_yaml['dataset'] = dataset
+      return config_yaml
+
   def load_predict_config():
     with open('config/predict_config.yaml') as stream:
     # use safe_load instead load

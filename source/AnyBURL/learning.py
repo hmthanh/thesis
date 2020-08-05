@@ -34,7 +34,8 @@ class Learning(object):
     last_cyclic_coverage, last_acyclic_coverage = 0.0,0.0
     self.log.info('indexing dataset: {}'.format(self.cfg['path_training']))
     self.log.info('time elapsed: {} ms'.format(current_milli_time() - index_start_time))
-
+    snapshots_at = self.cfg['snapshots_at']
+    dataset = self.cfg['dataset']
     start_time = current_milli_time()
     while True:
       batch_previously_found_rules, batch_new_useful_rules, batch_rules = 0, 0, 0
@@ -42,12 +43,11 @@ class Learning(object):
       useful_rules = all_useful_rules[rule_size]
       elapsed_seconds = (current_milli_time() - start_time) // 1000
       ## snapshots rule affter t seconds white learning
-      snapshots_at = self.cfg['snapshots_at']
       if elapsed_seconds > snapshots_at[snapshot_index]:
         total_rule = 0
         for _rules in all_useful_rules:
           total_rule += len(_rules)
-        snapshot_file = 'learning_rules/rule_{}.txt'.format(snapshots_at[snapshot_index])
+        snapshot_file = 'learning_rules/{}/rule_{}.txt'.format(dataset, snapshots_at[snapshot_index])
         snapshot_index += 1
         self.log.info('snapshot_rules: {} in file {}'.format(total_rule, snapshot_file))
         snapshot_rules = copy.deepcopy(all_useful_rules)

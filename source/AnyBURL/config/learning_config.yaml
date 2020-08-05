@@ -1,4 +1,8 @@
-path_training: ../../datasets/WN18/train.txt
+path_training:
+  - ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+  - ../../datasets/FB15k-237/train.txt
+  - ../../datasets/WN18/train.txt
+  - ../../datasets/WN18RR/train.txt
 path_output: ../../datasets/WN18/valid.txt
 snapshots_at:
   - 100
