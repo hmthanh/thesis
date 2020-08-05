@@ -11,13 +11,14 @@ from config.config_yaml import Config
 import time
 import copy
 import threading
+from os import remove, path
 
 
 class Learning(object):
 
-  def __init__(self):
+  def __init__(self, datasets='WN18'):
     self.log = Logger.get_log_cate('learning.txt', 'Learning')
-    self.cfg = Config.load_learning_config()
+    self.cfg = Config.load_learning_config(datasets)
     self.log.info('****************************start new section*************************************')
     self.log.info('initialize learning {}'.format(current_milli_time()))
 
@@ -108,6 +109,8 @@ class Learning(object):
         mine_cyclic_not_acyclic = False
 
   def process_snapshot_rule(self, rules, file):
+    if path.exists(file):
+      remove(file)
     with open(file, 'w') as output_stream:
       for set_rule in rules:
         for rule in set_rule:

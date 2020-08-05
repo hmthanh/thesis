@@ -2,5 +2,5 @@ path_training: ../../datasets/WN18/train.txt
 path_valid: ../../datasets/WN18/valid.txt
 path_test: ../../datasets/WN18/test.txt
 # path_prediction: predictions/alpha-50
-path_prediction: predictions/predict_1000.txt
+path_prediction: predictions/WN18
 # prediction/predict_100.txt

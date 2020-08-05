@@ -359,3 +359,91 @@ Tails[('02483564', 0.9290617848970252), ('13732295', 0.04623073719283632), ('017
 22:12:24,352 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
 22:12:24,353 Learning INFO time elapsed: 2549 ms
 22:12:28,450 Learning INFO increasing rule size of CYCLIC rules to 2  after 4 s
+22:14:05,609 Learning INFO snapshot_rules: 817 in file learning_rules/WN18/rule_100.txt
+22:14:32,592 Learning INFO increasing rule size of CYCLIC rules to 3  after 128 s
+22:17:55,29 Learning INFO increasing rule size of CYCLIC rules to 4  after 330 s
+22:20:46,45 Learning INFO snapshot_rules: 3339 in file learning_rules/WN18/rule_500.txt
+22:29:05,915 Learning INFO snapshot_rules: 7151 in file learning_rules/WN18/rule_1000.txt
+22:29:38,300 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+22:29:38,300 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+22:29:38,301 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+22:29:38,301 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+22:29:41,291 Learning INFO ****************************start new section*************************************
+22:29:41,291 Learning INFO initialize learning 1596641381291
+22:29:44,669 Learning INFO training with config {'path_training': '../../datasets/WN18/train.txt', 'path_output': '../../datasets/WN18/valid.txt', 'snapshots_at': [100, 500, 1000], 'saturation': 0.99, 'sample_size': 500, 'batch_time': 2500, 'threshold_correct_predictions': 2, 'threshold_confidence': 1e-05, 'max_length_cylic': 3, 'max_length_acylic': 2, 'discrimination_bound': 1000, 'trial_size': 100000, 'dataset': 'WN18'}
+22:29:44,669 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+22:29:44,670 Learning INFO time elapsed: 2727 ms
+22:29:59,728 Learning INFO increasing rule size of CYCLIC rules to 2  after 15 s
+22:31:28,139 Learning INFO snapshot_rules: 769 in file learning_rules/WN18/rule_100.txt
+22:32:28,71 Learning INFO ****************************start new section*************************************
+22:32:28,72 Learning INFO initialize learning 1596641548072
+22:32:31,999 Learning INFO training with config {'path_training': '../../datasets/WN18/train.txt', 'path_output': '../../datasets/WN18/valid.txt', 'snapshots_at': [100, 500, 1000], 'saturation': 0.99, 'sample_size': 500, 'batch_time': 2500, 'threshold_correct_predictions': 2, 'threshold_confidence': 1e-05, 'max_length_cylic': 3, 'max_length_acylic': 2, 'discrimination_bound': 1000, 'trial_size': 100000, 'dataset': 'WN18'}
+22:32:31,999 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+22:32:31,999 Learning INFO time elapsed: 3301 ms
+22:32:42,31 Learning INFO increasing rule size of CYCLIC rules to 2  after 10 s
+22:34:15,184 Learning INFO snapshot_rules: 892 in file learning_rules/WN18/rule_100.txt
+22:37:34,968 Learning INFO increasing rule size of CYCLIC rules to 3  after 302 s
+22:40:53,251 Learning INFO snapshot_rules: 3519 in file learning_rules/WN18/rule_500.txt
+22:48:32,201 Learning INFO increasing rule size of CYCLIC rules to 4  after 960 s
+22:49:14,934 Learning INFO snapshot_rules: 6460 in file learning_rules/WN18/rule_1000.txt
+22:50:18,583 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+22:50:18,583 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+22:50:18,584 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+22:50:18,585 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+22:50:24,985 Learning INFO ****************************start new section*************************************
+22:50:24,985 Learning INFO initialize learning 1596642624985
+22:50:28,456 Learning INFO training with config {'path_training': '../../datasets/WN18/train.txt', 'path_output': '../../datasets/WN18/valid.txt', 'snapshots_at': [200, 500, 1000], 'saturation': 0.99, 'sample_size': 500, 'batch_time': 2000, 'threshold_correct_predictions': 2, 'threshold_confidence': 1e-05, 'max_length_cylic': 3, 'max_length_acylic': 2, 'discrimination_bound': 1000, 'trial_size': 100000, 'dataset': 'WN18'}
+22:50:28,456 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+22:50:28,457 Learning INFO time elapsed: 2757 ms
+22:50:36,499 Learning INFO increasing rule size of CYCLIC rules to 2  after 8 s
+22:53:50,230 Learning INFO snapshot_rules: 1282 in file learning_rules/WN18/rule_200.txt
+22:57:23,925 Learning INFO increasing rule size of CYCLIC rules to 3  after 415 s
+22:58:50,569 Learning INFO snapshot_rules: 3027 in file learning_rules/WN18/rule_500.txt
+23:07:10,928 Learning INFO snapshot_rules: 5846 in file learning_rules/WN18/rule_1000.txt
+23:18:29,644 Predict INFO ****************************start new section*************************************
+23:18:29,644 Predict INFO initialize learning 1596644309644
+23:18:33,161 Predict INFO rules learning: learning_rules/WN18/rule_1000.txt
+23:18:33,161 Predict INFO output learning: predictions/WN18
+23:19:06,681 RuleEngine INFO ****************************start new section*************************************
+23:19:06,681 RuleEngine INFO initialize rule engine 1596644346682
+23:19:09,340 RuleEngine INFO * write top 10 candidates 
+Heads:[('03754979', 0.9272151898734177), ('03910033', 0.5789473684210527), ('02722997', 0.5789473684210527), ('03869389', 0.5789473684210527), ('02830852', 0.5), ('04423288', 0.4), ('02711890', 0.23076923076923078), ('05015117', 0.23076923076923078), ('14714817', 0.23076923076923078), ('02682038', 0.23076923076923078)]
+Tails[('06845599', 0.9272151898734177), ('06718862', 0.023762376237623763)]
+
+23:19:21,841 RuleEngine INFO * write top 10 candidates 
+Heads:[('00726300', 0.9332112332112332), ('05789432', 0.05), ('00874067', 0.05), ('10066732', 0.05), ('00628491', 0.006702974444909929), ('07751004', 0.0039603960396039604)]
+Tails[('00670261', 0.9332112332112332), ('00729642', 0.5909090909090909), ('00727409', 0.5909090909090909), ('00727143', 0.5909090909090909), ('00727991', 0.5909090909090909), ('00729781', 0.5909090909090909), ('00727012', 0.5909090909090909), ('00727573', 0.5909090909090909), ('00726784', 0.5909090909090909), ('00727791', 0.5909090909090909)]
+
+23:19:34,763 RuleEngine INFO * write top 10 candidates 
+Heads:[('01041415', 0.9290617848970252), ('09610660', 0.05405405405405406), ('00043195', 0.0039603960396039604), ('01188725', 0.0039603960396039604), ('00548326', 0.0039603960396039604), ('07007945', 0.0039603960396039604), ('07520612', 0.0039603960396039604)]
+Tails[('10771270', 0.9290617848970252), ('00992041', 0.04623073719283632), ('05068080', 0.0039603960396039604), ('00766234', 0.0039603960396039604), ('01036804', 0.0039603960396039604), ('00795785', 0.0039603960396039604)]
+
+23:19:47,438 RuleEngine INFO * write top 10 candidates 
+Heads:[('08698379', 0.9216867469879518), ('08946042', 0.3333333333333333), ('08524735', 0.18415841584158416), ('09189411', 0.13548387096774195), ('08633957', 0.09108910891089109), ('08574314', 0.03762376237623762), ('09411430', 0.03564356435643564), ('08696931', 0.0297029702970297), ('08700255', 0.02574257425742574), ('09403734', 0.01782178217821782)]
+Tails[('08945821', 0.9216867469879518), ('09189411', 0.3211009174311927), ('10827155', 0.009779951100244499), ('11128394', 0.00963855421686747), ('10840769', 0.007334963325183374), ('10840021', 0.007228915662650603), ('08856037', 0.004889975550122249), ('11302772', 0.004889975550122249), ('11282286', 0.004889975550122249), ('08967868', 0.004889975550122249)]
+
+23:20:02,0 RuleEngine INFO * write top 10 candidates 
+Heads:[('01550429', 0.9332112332112332), ('01525720', 0.775), ('01831712', 0.3333333333333333), ('01471070', 0.0100927885398014), ('08107499', 0.006702974444909929), ('07751004', 0.0039603960396039604)]
+Tails[('01504437', 0.9332112332112332), ('01342529', 0.10297029702970296), ('11585340', 0.05742574257425743), ('11579418', 0.05742574257425743), ('01759182', 0.05742574257425743), ('08103777', 0.055445544554455446), ('01429349', 0.05148514851485148), ('01507175', 0.04554455445544554), ('01862557', 0.04356435643564356), ('01864707', 0.03762376237623762)]
+
+23:20:16,131 RuleEngine INFO * write top 10 candidates 
+Heads:[('01129977', 0.011881188118811881), ('02559180', 0.007920792079207921), ('01170243', 0.0039603960396039604), ('01716227', 0.0039603960396039604), ('00986027', 0.0039603960396039604), ('00605516', 0.0039603960396039604), ('00357023', 0.0025826446280991736)]
+Tails[('01621555', 0.0011283043197936814)]
+
+23:20:27,608 RuleEngine INFO * write top 10 candidates 
+Heads:[('09863238', 0.9527410207939508), ('01088547', 0.04583020285499624), ('02420991', 0.04583020285499624), ('02541138', 0.04583020285499624), ('00126264', 0.02178217821782178), ('00407535', 0.007920792079207921), ('04723816', 0.007920792079207921), ('00007846', 0.007920792079207921), ('02327200', 0.005940594059405941), ('00586262', 0.005940594059405941)]
+Tails[('10745332', 0.9527410207939508), ('10582154', 0.09090909090909091), ('07757132', 0.0039603960396039604), ('01578821', 0.0039603960396039604)]
+
+23:20:37,571 RuleEngine INFO * write top 10 candidates 
+Heads:[('02009015', 0.9332112332112332), ('02026059', 0.631578947368421), ('01858441', 0.42105263157894735), ('01855672', 0.42105263157894735), ('01854047', 0.42105263157894735), ('01838598', 0.3333333333333333), ('01471070', 0.0100927885398014), ('08108972', 0.006702974444909929), ('07751004', 0.0039603960396039604)]
+Tails[('01507175', 0.9332112332112332), ('01342529', 0.10297029702970296), ('11585340', 0.05742574257425743), ('11579418', 0.05742574257425743), ('01759182', 0.05742574257425743), ('08103777', 0.055445544554455446), ('01429349', 0.05148514851485148), ('01504437', 0.04554455445544554), ('01862557', 0.04356435643564356), ('01864707', 0.03762376237623762)]
+
+23:20:48,236 RuleEngine INFO * write top 10 candidates 
+Heads:[('11585340', 0.9527410207939508), ('12701178', 0.3611111111111111), ('01507175', 0.041584158415841586), ('11579418', 0.041584158415841586), ('11556857', 0.03564356435643564), ('11567411', 0.033663366336633666), ('01762525', 0.031683168316831684), ('01342529', 0.0297029702970297), ('12205694', 0.0297029702970297), ('01864707', 0.02574257425742574)]
+Tails[('12701901', 0.9527410207939508), ('12520864', 0.8333333333333334), ('12930778', 0.7142857142857143), ('12212810', 0.35833333333333334), ('11567411', 0.09090909090909091), ('10051337', 0.0039603960396039604), ('07757132', 0.0039603960396039604), ('01578821', 0.0039603960396039604)]
+
+23:20:59,648 RuleEngine INFO * write top 10 candidates 
+Heads:[('13737480', 0.9290617848970252), ('02482820', 0.13043478260869565), ('01864707', 0.05405405405405406), ('01323958', 0.05405405405405406), ('00043195', 0.0039603960396039604), ('07007945', 0.0039603960396039604), ('07520612', 0.0039603960396039604)]
+Tails[('02483564', 0.9290617848970252), ('13732295', 0.04623073719283632), ('05068080', 0.0039603960396039604), ('00766234', 0.0039603960396039604), ('01036804', 0.0039603960396039604), ('00795785', 0.0039603960396039604)]
+
+23:21:12,682 Predict INFO finished in 159 s.

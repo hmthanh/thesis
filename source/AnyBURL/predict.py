@@ -14,6 +14,7 @@ class Predict(object):
   def __init__(self, datasets='WN18'):
     if datasets == 'WN18':
       self.cfg = Config.load_predict_config()
+    self.datasets = datasets
     self.log = Logger.get_log_cate('prediction.txt', 'Predict')
     self.log.info('****************************start new section*************************************')
     self.log.info('initialize learning {}'.format(current_milli_time()))
@@ -28,7 +29,7 @@ class Predict(object):
     for path_rules_used in self.cfg['path_rules']:
       start_time = current_milli_time()
       tmp_path = path_rules_used.split('/')
-      path_output_used = 'predictions/{}'.format(tmp_path[1].replace('rule', 'predict'))
+      path_output_used = 'predictions/{}/{}'.format(self.datasets, tmp_path[2].replace('rule', 'predict'))
       self.log.info('rules learning: {}'.format(path_rules_used))
       self.log.info('output learning: {}'.format(path_output_used))
       rules = RuleReader(path_rules_used).read()

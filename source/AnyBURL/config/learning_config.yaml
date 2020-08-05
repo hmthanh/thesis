@@ -5,7 +5,7 @@ path_training:
   - ../../datasets/WN18RR/train.txt
 path_output: ../../datasets/WN18/valid.txt
 snapshots_at:
-  - 100
+  - 200
   - 500
   - 1000
 #   - 200
@@ -13,7 +13,7 @@ snapshots_at:
 #   - 1000
 saturation: 0.99
 sample_size: 500
-batch_time: 1000
+batch_time: 2000
 threshold_correct_predictions: 2
 threshold_confidence: 0.00001
 max_length_cylic: 3

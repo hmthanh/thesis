@@ -1,7 +1,7 @@
 path_rules:
   # - learning_rules/rule_10.txt
   # - learning_rules/rule_50.txt
-  - learning_rules/rule_1000.txt
+  - learning_rules/WN18/rule_1000.txt
   # - learning_rules/alpha-100
   # - learning_rules/alpha-50
 path_training: ../../datasets/WN18/train.txt
