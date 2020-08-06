@@ -50,6 +50,176 @@ Font chữ dùng trong báo cáo (Times New Roman) với kích cỡ (size) 13-14
 
 %Các bảng biểu trình bày theo chiều ngang khổ giấy thì đầu bảng là lề trái của trang. 
 
+\section{Kết quả thí nghiệm}
+Như đã nói trước đây với mô hình dựa trên luật của chúng tôi hoàn toàn có thể thực hiện trên một laptop với cấu hình thông thường. Trong thí nghiệm của chúng tôi cấu hình máy để thực thi như sau: T480, core i5 8th Gen, ram 16Gb, 4 core 8 thread. Mã nguồn thực thi được viết bằng ngôn ngữ Python phiên bản 3.6 và dùng các hàm hỗ trợ có sẵn trong Python với không một thư viện bên thứ ba nào. Thí nghiệm được thực hiện với bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR. Thông tin chi tiết các bộ dữ liệu này được mô tả ở phần [?].
+
+Bảng ? bên dưới mô tả các kết quả thực nghiệm của chúng tôi với các độ đo \(h@k\) cùng với các kết quả thực nghiệm của các phương pháp khác được đề cập trong khảo săt \cite{rossi2020knowledge}
+
+\begin{table}[ht]
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllllllllllllllll}
+\cline{2-17}
+\multicolumn{1}{l|}{} &
+  \multicolumn{4}{c|}{\textbf{FB15k}} &
+  \multicolumn{4}{c|}{\textbf{FB15-237}} &
+  \multicolumn{4}{c|}{\textbf{WN18}} &
+  \multicolumn{4}{c|}{\textbf{WN18RR}} \\ \cline{2-17} 
+\multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{\textbf{H@1}} &
+  \multicolumn{1}{l|}{\textbf{H@10}} &
+  \multicolumn{1}{l|}{\textbf{MR}} &
+  \multicolumn{1}{l|}{\textbf{MRR}} &
+  \multicolumn{1}{l|}{\textbf{H@1}} &
+  \multicolumn{1}{l|}{\textbf{H@10}} &
+  \multicolumn{1}{l|}{\textbf{MR}} &
+  \multicolumn{1}{l|}{\textbf{MRR}} &
+  \multicolumn{1}{l|}{\textbf{H@1}} &
+  \multicolumn{1}{l|}{\textbf{H@10}} &
+  \multicolumn{1}{l|}{\textbf{MR}} &
+  \multicolumn{1}{l|}{\textbf{MRR}} &
+  \multicolumn{1}{l|}{\textbf{H@1}} &
+  \multicolumn{1}{l|}{\textbf{H@10}} &
+  \multicolumn{1}{l|}{\textbf{MR}} &
+  \multicolumn{1}{l|}{\textbf{MRR}} \\ \hline
+\multicolumn{1}{|l|}{\textbf{ComplEx}} &
+  \multicolumn{1}{l|}{81.56} &
+  \multicolumn{1}{l|}{90.53} &
+  \multicolumn{1}{l|}{34} &
+  \multicolumn{1}{l|}{0.848} &
+  \multicolumn{1}{l|}{94.53} &
+  \multicolumn{1}{l|}{95.50} &
+  \multicolumn{1}{l|}{3623} &
+  \multicolumn{1}{l|}{0.949} &
+  \multicolumn{1}{l|}{25.72} &
+  \multicolumn{1}{l|}{52.97} &
+  \multicolumn{1}{l|}{202} &
+  \multicolumn{1}{l|}{0.349} &
+  \multicolumn{1}{l|}{42.55} &
+  \multicolumn{1}{l|}{52.12} &
+  \multicolumn{1}{l|}{4907} &
+  \multicolumn{1}{l|}{0.458} \\ \hline
+\multicolumn{1}{|l|}{\textbf{TuckER}} &
+  \multicolumn{1}{l|}{72.89} &
+  \multicolumn{1}{l|}{88.88} &
+  \multicolumn{1}{l|}{39} &
+  \multicolumn{1}{l|}{0.788} &
+  \multicolumn{1}{l|}{94.64} &
+  \multicolumn{1}{l|}{95.80} &
+  \multicolumn{1}{l|}{510} &
+  \multicolumn{1}{l|}{0.951} &
+  \multicolumn{1}{l|}{25.90} &
+  \multicolumn{1}{l|}{53.61} &
+  \multicolumn{1}{l|}{162} &
+  \multicolumn{1}{l|}{0.352} &
+  \multicolumn{1}{l|}{42.95} &
+  \multicolumn{1}{l|}{51.40} &
+  \multicolumn{1}{l|}{6239} &
+  \multicolumn{1}{l|}{0.459} \\ \hline
+\multicolumn{1}{|l|}{\textbf{TransE}} &
+  \multicolumn{1}{l|}{49.36} &
+  \multicolumn{1}{l|}{84.73} &
+  \multicolumn{1}{l|}{45} &
+  \multicolumn{1}{l|}{0.628} &
+  \multicolumn{1}{l|}{40.56} &
+  \multicolumn{1}{l|}{94.87} &
+  \multicolumn{1}{l|}{279} &
+  \multicolumn{1}{l|}{0.646} &
+  \multicolumn{1}{l|}{21.72} &
+  \multicolumn{1}{l|}{49.65} &
+  \multicolumn{1}{l|}{209} &
+  \multicolumn{1}{l|}{0.31} &
+  \multicolumn{1}{l|}{2.79} &
+  \multicolumn{1}{l|}{49.65} &
+  \multicolumn{1}{l|}{3936} &
+  \multicolumn{1}{l|}{0.206} \\ \hline
+\multicolumn{1}{|l|}{\textbf{RotatE}} &
+  \multicolumn{1}{l|}{73.93} &
+  \multicolumn{1}{l|}{88.10} &
+  \multicolumn{1}{l|}{42} &
+  \multicolumn{1}{l|}{0.791} &
+  \multicolumn{1}{l|}{94.30} &
+  \multicolumn{1}{l|}{96.02} &
+  \multicolumn{1}{l|}{274} &
+  \multicolumn{1}{l|}{0.949} &
+  \multicolumn{1}{l|}{23.83} &
+  \multicolumn{1}{l|}{53.06} &
+  \multicolumn{1}{l|}{178} &
+  \multicolumn{1}{l|}{0.336} &
+  \multicolumn{1}{l|}{42.60} &
+  \multicolumn{1}{l|}{57.35} &
+  \multicolumn{1}{l|}{3318} &
+  \multicolumn{1}{l|}{0.475} \\ \hline
+\multicolumn{1}{|l|}{\textbf{ConvKB}} &
+  \multicolumn{1}{l|}{11.44} &
+  \multicolumn{1}{l|}{40.83} &
+  \multicolumn{1}{l|}{324} &
+  \multicolumn{1}{l|}{0.211} &
+  \multicolumn{1}{l|}{94.89} &
+  \multicolumn{1}{l|}{52.89} &
+  \multicolumn{1}{l|}{202} &
+  \multicolumn{1}{l|}{0.709} &
+  \multicolumn{1}{l|}{13.98} &
+  \multicolumn{1}{l|}{41.46} &
+  \multicolumn{1}{l|}{309} &
+  \multicolumn{1}{l|}{0.230} &
+  \multicolumn{1}{l|}{5.63} &
+  \multicolumn{1}{l|}{52.50} &
+  \multicolumn{1}{l|}{3429} &
+  \multicolumn{1}{l|}{0.249} \\ \hline
+\multicolumn{1}{|l|}{\textbf{GAT}} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} \\ \hline
+\multicolumn{1}{|l|}{\textbf{BURL}} &
+  \multicolumn{1}{l|}{79.13} &
+  \multicolumn{1}{l|}{82.30} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{20.85} &
+  \multicolumn{1}{l|}{42.40} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{\textbf{93.86}} &
+  \multicolumn{1}{l|}{\textbf{94.07}} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{\textbf{44.22}} &
+  \multicolumn{1}{l|}{54.23} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} \\ \hline
+Rank &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+  
+\end{tabular}}
+\end{table}
+
 
 \section{Bố cục của báo cáo}
 
