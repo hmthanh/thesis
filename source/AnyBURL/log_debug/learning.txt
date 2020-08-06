@@ -776,3 +776,7 @@ Heads:[('13737480', 0.9290617848970252), ('02482820', 0.13043478260869565), ('01
 Tails[('02483564', 0.9290617848970252), ('13732295', 0.04623073719283632), ('00766234', 0.0039603960396039604), ('05069199', 0.0039603960396039604), ('00967625', 0.0039603960396039604)]
 
 13:02:53,865 Predict INFO finished in 147 s.
+16:02:34,841 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+16:02:34,841 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+16:02:34,841 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+16:02:34,841 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
