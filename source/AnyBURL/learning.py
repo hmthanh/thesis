@@ -21,13 +21,13 @@ class Learning(object):
     self.cfg = Config.load_learning_config(datasets)
     self.log.info('****************************start new section*************************************')
     self.log.info('initialize learning {}'.format(current_milli_time()))
+    self.triple_set = TripleSet()
+    self.triple_set.read_triples(self.cfg['path_training'])
 
   def train(self):
     index_start_time = current_milli_time()
-    triple_set = TripleSet()
-    triple_set.read_triples(self.cfg['path_training'])
     self.log.info('training with config {}'.format(self.cfg))
-    path_sampler = PathSampler(triple_set)
+    path_sampler = PathSampler(self.triple_set)
     path_counter, batch_counter = 0, 0
     mine_cyclic_not_acyclic = False
     all_useful_rules = [set()]
@@ -75,7 +75,7 @@ class Learning(object):
               continue
             batch_rules += 1
             if r not in useful_rules:
-              r.compute_scores(triple_set)
+              r.compute_scores(self.triple_set)
             if r.confidence >= self.cfg['threshold_confidence'] and r.correctly_predicted >= self.cfg['threshold_correct_predictions']:
               batch_new_useful_rules += 1
               useful_rules.add(r)
@@ -115,3 +115,6 @@ class Learning(object):
       for set_rule in rules:
         for rule in set_rule:
           print(rule, file=output_stream)
+
+  def train_with_batch(self, batch_triple):
+    pass
