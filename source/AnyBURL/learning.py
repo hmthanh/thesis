@@ -118,3 +118,6 @@ class Learning(object):
 
   def train_with_batch(self, batch_triple):
     pass
+
+  def train_with_edge(self, triple):
+    pass
