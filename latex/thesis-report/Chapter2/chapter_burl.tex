@@ -5,9 +5,11 @@
 
 Hiện nay các bài toán liên quan đến dự đoán liên kết đồ thị tri thức lớn rất được quan tâm có khoảng bốn nhánh nghiên cứu chính như được nhắc đến trong nghiên cứu \cite{ampligraph} một trong số đó là phương pháp dựa trên luật logic. Vói mong muốn được tiếp cận các phương pháp từ đơn giản đến phức tạp nên chúng tôi chọn phương pháp này làm chủ để chính cho các báo cáo và nghiên cứu trong chương này.
 
-Hầu hết các nghiên cứu hiện tại về việc dự đoán liên kết của đồ thị tri thức đều liên quan đến các phương pháp tiếp cận tập trung vào khái niệm nhúng một đồ thị đã cho trong một không gian vectơ có số chiều thấp. Ngược lại với các tiếp cận này là một phương pháp đựa trên luật được nghiên cứu trong \cite{burl}.Thuật toán cốt lõi của nó dựa trên lấy mẫu một luật bất kỳ, sau đó khái quát  thành các quy tắc Horn.\cite{wiki:Horn} Tiếp đó dùng thống kê để tính độ tin cậy của các luật được khái quát. Khi dự đoán một liên kết mới (cạnh mới) của đồ thị chúng ta dự đoán một đỉnh có cạnh nối với một quan hệ cụ thể (label) với đỉnh còn lại hay không.
+\section{Các công trình liên quan}
+Hầu hết các nghiên cứu hiện tại về việc dự đoán liên kết của đồ thị tri thức đều liên quan đến các phương pháp tiếp cận tập trung vào khái niệm nhúng một đồ thị đã cho trong một không gian vectơ có số chiều thấp. Ngược lại với các tiếp cận này là một phương pháp đựa trên luật được nghiên cứu trong \cite{burl}.Thuật toán cốt lõi của nó dựa trên lấy mẫu một luật bất kỳ, sau đó khái quát  thành các quy tắc Horn\cite{wiki:Horn} Tiếp đó dùng thống kê để tính độ tin cậy của các luật được khái quát. Khi dự đoán một liên kết mới (cạnh mới) của đồ thị chúng ta dự đoán một đỉnh có cạnh nối với một quan hệ cụ thể (label) với đỉnh còn lại hay không.Cũng đã có rất nhiều phương pháp được nghiên cứu, đề xuất để học các các luật trong đồ thị chẳng hạn như trong   RuDiK \cite{dettmers2018convolutional}, AMIE\cite{galarraga2015fast}, RuleN\cite{meilicke2018fine}. Trong phương pháp RuDiK học các luật có thể học cả quy tắc positive và negative. Trong khi phương pháp của chúng tôi chỉ học các quy tắc positive. RuDiK tìm ra một bộ quy tắc nhỏ bao gồm phần lớn các ví dụ là đúng và ít sai sót nhất có thể. Điều này khác với mục tiêu của chúng tôi, chúng tôi cố gắng tìm hiểu mọi quy tắc khả thi có thể liên quan đến việc tạo xếp hạng \(k\) ứng viên.
 
-\section{Nội dung}
+Phương pháp của chúng tôi phần lớn dựa vào phương pháp Anytime Bottom-Up Rule Learning for Knowledge Graph Completion \cite{meilicke2019anytime} mà sau đây chúng tôi gọi là \textbf{AnyBURL}. Vấn đề tồn đọng lại ở mô hình này khi có một cạnh mới hay một tri thức mới được thêm vào đồ thị sẽ phải đào tạo lại toàn bộ mô hình.Chúng tôi giải quyết vẫn đề này theo hai chiến lược offline-to-online tức là khi thêm vào đồ thị tập hợp các cạnh thì mới thực hiện lại quá trình đào tạo lại một phần của đồ thị và chiến lược thứ 2 là online-to-online  khi thêm một cạnh mới sẽ thực hiện đào tạo lại ngay một phần có liên quan tới cạnh vừa thêm vào.
+\section{Phương pháp đề xuất}
 Trong phần này chúng tôi mô tả lại cách mô hình hóa lại bài toán theo phương pháp dựa trên luật,thuật toán lấy mẫu luật (đường đẫn) và thuật toán khái quát hóa một luật để lưu trữ trở thành tri thức của mô hình.
 \subsection{Horn rule}
 Trong logic toán học, một công thức nguyên tử - \textbf{atomic formula}\cite{wiki:Atomic} (còn được gọi đơn giản là một nguyên tử-\textbf{atom}) là một công thức không có cấu trúc mệnh đề, nghĩa là một công thức không chứa các liên kết logic (\(\vee, ~ \wedge\)) hoặc tương đương (\(\Leftrightarrow\)) là một công thức không có các mẫu con nghiêm ngặt (tức là atom không thể chia nhỏ ra thành các atom con nữa). Do đó, các nguyên tử là công thức đơn giản nhất để hình thành luật của logic. Các công thức hợp được hình thành bằng cách kết hợp các công thức nguyên tử bằng cách sử dụng các liên kết logic.
@@ -36,9 +38,66 @@ Ngoài ra Quy tắc \(B\) và quy tắc \(U_c\) cũng được gọi là quy t�
 \textit{profession}(X, actor) &  \gets & \textit{acted\_in}(X, A)  & \quad (4)
 \end{matrix}
 \]
-Quy tắc (1) là quy tắc \textbf{B}(quy tắc nhị phân) quy tắc này nói rằng nếu một người (thực thể) \(X\) nói nguôn ngữ \(Y\) nếu người \(X\) sống  ở đất nước \(Y\).Rõ ràng quy tắc này là một quy tắc tổng quát miễn khi nào thực thể \(X\) có cạnh nối với thực thể \(Y\) với nhãn là \textit{lives} thì có thể kết thêm 1 cạnh với nhãn \textit{speaks} giữa \(X\) và \(Y\).
+Quy tắc (1) là quy tắc \textbf{B}(quy tắc nhị phân) quy tắc này nói rằng nếu một người (thực thể) \(X\) nói nguôn ngữ \(Y\) nếu người \(X\) sống  ở đất nước \(Y\).Rõ ràng quy tắc này là một quy tắc khái quát miễn khi nào thực thể \(X\) có cạnh nối với thực thể \(Y\) với nhãn là \textit{lives} thì có thể kết thêm 1 cạnh với nhãn \textit{speaks} giữa \(X\) và \(Y\). Quy tắc (2), (3) điều là quy tắc \(U_c\) ,quy tắc (2) nói rằng người \(X\) sống ở thành phố \(Y\) nếu người \(X\) sống ở quốc gia \(A\) và thành phố \(Y\) nằm trong quốc gia \(A\), quy tắc (3) nói rằng nếu một người \(X\) là nữ nếu họ kết hôn với một người \(A\) và người \(A\) có giới tính nam. Ở quy tắc (3) không tạo thành chu trình trên đồ thị như quy tắc (2) đỉnh (Y) lặp lại  ở \textit{head atom} và đỉnh cuối cùng trong \textit{body atoms}. Quy tắc (4) nói rằng người \(X\) là một điễn viên nếu người \(X\) đóng trong một bộ phim \(A\).
 
-Tất cả các quy tắc được xem xét là xác suất có nghĩa là chúng được chú thích với điểm tin cậy thể hiện xác suất dự đoán một thực tế chính xác với quy tắc này. Tỷ lệ body groundings dẫn đến nối head grounding chính xác (được đo trên dữ liệu huấn luyện) được gọi là độ tin cậy của quy tắc. Điều quan trọng là phải hiểu mối quan hệ giữa ba loại quy tắc. Nó đặc biệt thú vị trong bối cảnh của các quy tắc xác suất. Với mục đích đó, hãy xem xét bộ quy tắc sau (điểm tin cậy giả tưởng được thêm vào dấu ngoặc vuông).
+Tất cả các quy tắc được xem xét sẽ được lọc lại đựa trên điểm được gọi là độ tin cậy của quy tắc là được đo trên tập dữ liệu huấn luyện. Độ tin cậy này được đo bằng tỷ lệ body atoms dẫn đến head atoms chia cho tất cả các đường đãn chứa body atoms.Ví dụ:
+
+\subsection{Thuật toán}
+\subsubsection{thuật toán học}
+\begin{algorithm}
+\caption{Anytime Bottom-up Rule Learning}\label{euclid}
+\begin{algorithmic}[1]
+\Procedure{AnyBURL($\mathbb{G}$, s, sat, Q, ts)}{}
+\State $\textit{n} = \text{2}$
+\State $R = \emptyset$
+\Loop
+\State $R_s = \emptyset$
+\State $start = currentTime()$
+\Repeat
+\State $p = samplePath(\mathbb{G}, n)$
+\State $R_p = generateRules(p)$
+\For {$r \in R_p$}
+\State $score(r, s)$
+\If {$Q(r)$}
+	\State $R_s = R_s \cup \{r\}$
+\EndIf
+\EndFor
+\Until {$currentTime() > start + ts$}
+\State $R^{\prime}_s = R_s \cap R$
+\If {$ \mid R^{\prime} \mid / \mid R \mid > sat$}
+	\State $n = n + 1$
+\EndIf
+\State $R = R_s \cap R$
+\EndLoop
+\Return R
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+\subsubsection{thuật toán học}
+\begin{algorithm}
+\caption{My algorithm}\label{euclid}
+\begin{algorithmic}[1]
+\Procedure{MyProcedure}{}
+\State $\textit{stringlen} \gets \text{length of }\textit{string}$
+\State $i \gets \textit{patlen}$
+\BState \emph{top}:
+\If {$i > \textit{stringlen}$} \Return false
+\EndIf
+\State $j \gets \textit{patlen}$
+\BState \emph{loop}:
+\If {$\textit{string}(i) = \textit{path}(j)$}
+\State $j \gets j-1$.
+\State $i \gets i-1$.
+\State \textbf{goto} \emph{loop}.
+\State \textbf{close};
+\EndIf
+\State $i \gets i+\max(\textit{delta}_1(\textit{string}(i)),\textit{delta}_2(j))$.
+\State \textbf{goto} \emph{top}.
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
 Nội dung báo cáo được phân thành các chương. Số thứ tự của các chương, mục được đánh số bằng hệ thống số Ả-rập, không dùng số La mã. Các mục và tiểu mục được đánh số bằng các nhóm hai hoặc ba chữ số, cách nhau một dấu chấm: số thứ nhất chỉ số chương, chỉ số thứ hai chỉ số mục, số thứ ba chỉ số tiểu mục.
 
