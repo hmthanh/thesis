@@ -10,7 +10,7 @@ Hầu hết các nghiên cứu hiện tại về việc dự đoán liên kết 
 
 Phương pháp của chúng tôi phần lớn dựa vào phương pháp Anytime Bottom-Up Rule Learning for Knowledge Graph Completion \cite{meilicke2019anytime} mà sau đây chúng tôi gọi là \textbf{AnyBURL}. Vấn đề tồn đọng lại ở mô hình này khi có một cạnh mới hay một tri thức mới được thêm vào đồ thị sẽ phải đào tạo lại toàn bộ mô hình.Chúng tôi giải quyết vẫn đề này theo hai chiến lược offline-to-online tức là khi thêm vào đồ thị tập hợp các cạnh thì mới thực hiện lại quá trình đào tạo lại một phần của đồ thị và chiến lược thứ 2 là online-to-online  khi thêm một cạnh mới sẽ thực hiện đào tạo lại ngay một phần có liên quan tới cạnh vừa thêm vào.
 \section{Phương pháp đề xuất}
-Trong phần này chúng tôi mô tả lại cách mô hình hóa lại bài toán theo phương pháp dựa trên luật,thuật toán lấy mẫu luật (đường đẫn) và thuật toán khái quát hóa một luật để lưu trữ trở thành tri thức của mô hình.
+Trong phần này chúng tôi mô tả lại cách mô hình hóa lại bài toán theo phương pháp dựa trên luật AnyBURL,thuật toán lấy mẫu luật (đường đẫn) và thuật toán khái quát hóa một luật để lưu trữ trở thành tri thức của mô hình. Cùng với những cải tiến của chúng tôi trong quá trình đào tạo khi có một tri thức mới được thêm vào đồ thị(thêm cạnh).
 \subsection{Horn rule}
 Trong logic toán học, một công thức nguyên tử - \textbf{atomic formula}\cite{wiki:Atomic} (còn được gọi đơn giản là một nguyên tử-\textbf{atom}) là một công thức không có cấu trúc mệnh đề, nghĩa là một công thức không chứa các liên kết logic (\(\vee, ~ \wedge\)) hoặc tương đương (\(\Leftrightarrow\)) là một công thức không có các mẫu con nghiêm ngặt (tức là atom không thể chia nhỏ ra thành các atom con nữa). Do đó, các nguyên tử là công thức đơn giản nhất để hình thành luật của logic. Các công thức hợp được hình thành bằng cách kết hợp các công thức nguyên tử bằng cách sử dụng các liên kết logic.
 
@@ -43,7 +43,7 @@ Quy tắc (1) là quy tắc \textbf{B}(quy tắc nhị phân) quy tắc này nó
 Tất cả các quy tắc được xem xét sẽ được lọc lại đựa trên điểm được gọi là độ tin cậy của quy tắc là được đo trên tập dữ liệu huấn luyện. Độ tin cậy này được đo bằng tỷ lệ body atoms dẫn đến head atoms chia cho tất cả các đường đãn chứa body atoms.Ví dụ:
 
 \subsection{Thuật toán}
-\subsubsection{thuật toán học}
+\subsubsection{Thuật toán AnyBURL}
 \begin{algorithm}
 \caption{Anytime Bottom-up Rule Learning}\label{euclid}
 \begin{algorithmic}[1]
@@ -75,9 +75,9 @@ Tất cả các quy tắc được xem xét sẽ được lọc lại đựa tr�
 \end{algorithm}
 
 
-\subsubsection{thuật toán học}
+\subsubsection{Thuật toán khái quát hóa}
 \begin{algorithm}
-\caption{My algorithm}\label{euclid}
+\caption{generateRules(p)}\label{euclid}
 \begin{algorithmic}[1]
 \Procedure{MyProcedure}{}
 \State $\textit{stringlen} \gets \text{length of }\textit{string}$
