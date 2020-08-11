@@ -25,9 +25,10 @@ class Learning(object):
     self.triple_set.read_triples(self.cfg['path_training'])
 
   def train(self):
+    triple_set = self.triple_set
     index_start_time = current_milli_time()
     self.log.info('training with config {}'.format(self.cfg))
-    path_sampler = PathSampler(self.triple_set)
+    path_sampler = PathSampler(triple_set)
     path_counter, batch_counter = 0, 0
     mine_cyclic_not_acyclic = False
     all_useful_rules = [set()]
@@ -75,7 +76,7 @@ class Learning(object):
               continue
             batch_rules += 1
             if r not in useful_rules:
-              r.compute_scores(self.triple_set)
+              r.compute_scores(triple_set)
             if r.confidence >= self.cfg['threshold_confidence'] and r.correctly_predicted >= self.cfg['threshold_correct_predictions']:
               batch_new_useful_rules += 1
               useful_rules.add(r)

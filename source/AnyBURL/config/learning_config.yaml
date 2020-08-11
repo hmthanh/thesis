@@ -6,10 +6,7 @@ path_training:
 snapshots_at:
   - 200
   - 500
-  - 1000
-#   - 200
-#   - 500
-#   - 1000
+  - 800
 saturation: 0.99
 sample_size: 500
 batch_time: 2000

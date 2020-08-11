@@ -1,1 +1,0 @@
-java -Xmx6G -cp AnyBURL.jar x.y.z.anyburl.Eval config-eval_FB15-237.properties

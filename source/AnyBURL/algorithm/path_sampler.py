@@ -73,3 +73,6 @@ class PathSampler(object):
       index += 1
 
     return Path(nodes, markers)
+
+  def sample_batch_path(self, steps, cyclic=False):
+    pass
