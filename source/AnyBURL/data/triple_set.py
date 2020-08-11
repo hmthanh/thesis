@@ -151,11 +151,21 @@ class TripleSet (object):
 
   def add_batch_triple(self, triple_set):
     is_connected = False
-    head = triple.head
-    tail = triple.tail
     for triple in triple_set.triples:
+      head = triple.head
+      tail = triple.tail
       if head in self.head_to_list and not is_connected:
         is_connected = True
       self.triples.append(triple)
       self.__add_triple_to_index(triple)
     return (is_connected, triple_set)
+
+  def add_edge_triple(self, triple):
+    is_connected = False
+    head = triple.head
+    tail = triple.tail
+    if head in self.head_to_list and not is_connected:
+      is_connected = True
+    self.triples.append(triple)
+    self.__add_triple_to_index(triple)
+    return (is_connected, triple)

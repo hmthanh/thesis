@@ -20,4 +20,6 @@ path_prediction:
   - predictions/FB15k-237/predict_1000.txt
   - predictions/WN18/predict_1000.txt
   - predictions/WN18RR/predict_1000.txt
+path_eval_predict:
+  - predictions/WN18/predict_valid_1000.txt
 # prediction/predict_100.txt
