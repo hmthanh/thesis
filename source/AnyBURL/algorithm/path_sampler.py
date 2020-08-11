@@ -74,5 +74,19 @@ class PathSampler(object):
 
     return Path(nodes, markers)
 
-  def sample_batch_path(self, steps, cyclic=False):
-    pass
+  def sample_batch_path(self, steps, new_triple, cyclic=False):
+    triple = random.choice(new_triple.triples)
+    nodes, markers = [None] * (1 + steps * 2), [None] * steps
+    if triple.head == triple.tail:
+      return None
+    if random.random() < 0.5:
+      markers[0] = '+'
+      nodes[0] = triple.head
+      nodes[1] = triple.relation
+      nodes[2] = triple.tail
+    else:
+      markers[0] = '-'
+      nodes[2] = triple.head
+      nodes[1] = triple.relation
+      nodes[0] = triple.tail
+    index = 1

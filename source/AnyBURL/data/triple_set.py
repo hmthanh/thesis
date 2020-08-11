@@ -159,4 +159,3 @@ class TripleSet (object):
       self.triples.append(triple)
       self.__add_triple_to_index(triple)
     return (is_connected, triple_set)
-    #self.add_triple_set(triples)
