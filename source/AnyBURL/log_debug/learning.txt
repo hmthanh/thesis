@@ -801,3 +801,46 @@ Tails[('02483564', 0.9290617848970252), ('13732295', 0.04623073719283632), ('007
 16:15:31,74 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
 16:15:31,74 Learning INFO time elapsed: 1 ms
 16:15:43,126 Learning INFO increasing rule size of CYCLIC rules to 2  after 12 s
+18:33:10,865 Learning INFO ****************************start new section*************************************
+18:33:10,865 Learning INFO initialize learning 1597231990866
+18:33:57,707 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+18:33:57,707 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+18:33:57,707 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+18:33:57,707 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+18:34:02,328 Learning INFO ****************************start new section*************************************
+18:34:02,328 Learning INFO initialize learning 1597232042329
+18:34:04,776 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+18:34:04,776 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+18:34:04,776 Learning INFO time elapsed: 1 ms
+18:35:12,386 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+18:35:12,386 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+18:35:12,386 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+18:35:12,386 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+18:35:17,656 Learning INFO ****************************start new section*************************************
+18:35:17,656 Learning INFO initialize learning 1597232117657
+18:35:20,46 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+18:35:20,46 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+18:35:20,46 Learning INFO time elapsed: 0 ms
+18:35:32,103 Learning INFO increasing rule size of CYCLIC rules to 2  after 12 s
+18:41:34,917 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+18:41:34,917 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+18:41:34,917 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+18:41:34,917 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+18:41:39,659 Learning INFO ****************************start new section*************************************
+18:41:39,659 Learning INFO initialize learning 1597232499660
+18:41:42,50 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+18:41:42,51 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+18:41:42,51 Learning INFO time elapsed: 0 ms
+18:41:54,106 Learning INFO increasing rule size of CYCLIC rules to 2  after 12 s
+18:43:23,362 Learning INFO snapshot_rules: 761 in file learning_rules/WN18/rule_extend_800.txt
+18:44:10,44 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+18:44:10,44 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+18:44:10,44 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+18:44:10,44 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+18:44:16,409 Learning INFO ****************************start new section*************************************
+18:44:16,409 Learning INFO initialize learning 1597232656409
+18:44:18,731 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+18:44:18,731 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+18:44:18,731 Learning INFO time elapsed: 1 ms
+18:44:38,885 Learning INFO increasing rule size of CYCLIC rules to 2  after 20 s
+18:45:59,994 Learning INFO snapshot_rules: 733 in file learning_rules/WN18/rule_extend_800.txt

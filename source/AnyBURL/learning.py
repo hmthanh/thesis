@@ -123,7 +123,7 @@ class Learning(object):
       triple_set =  self.triple_set
       path_sampler = PathSampler(triple_set)
       index_start_time = current_milli_time()
-      self.log.info('train_with_batch triple_set: {}, new_triple: {}'.format(len(triple_set), len(new_triple)))
+      self.log.info('train_with_batch triple_set: {}, new_triple: {}'.format(len(triple_set.triples), len(new_triple.triples)))
       path_counter, batch_counter = 0, 0
       mine_cyclic_not_acyclic = False
       all_useful_rules = [set()]
@@ -142,23 +142,22 @@ class Learning(object):
           total_rule = 0
           for _rules in all_useful_rules:
             total_rule += len(_rules)
-          snapshot_file = 'learning_rules/{}/rule_extend_{}.txt'.format(dataset, snapshots_at[snapshot_index])
+          snapshot_file = 'learning_rules/{}/rule_extend_{}.txt'.format(dataset, 800)
           snapshot_index += 1
           self.log.info('snapshot_rules: {} in file {}'.format(total_rule, snapshot_file))
           snapshot_rules = copy.deepcopy(all_useful_rules)
           thread_snapshot = threading.Thread(target=self.process_snapshot_rule, args=(snapshot_rules, snapshot_file, ))
           thread_snapshot.start()
           print('created snapshot {} after {} seconds'.format(snapshot_index, elapsed_seconds))
-          if snapshot_index == len(snapshots_at):
-            print('*************************done learning*********************************')
-            thread_snapshot.join()
-            return 0
+          print('*************************done learning*********************************')
+          thread_snapshot.join()
+          return 0
         batch_start_time = current_milli_time()
         while True:
           if current_milli_time() - batch_start_time > self.cfg['batch_time']:
             break
           path_counter += 1
-          path = path_sampler.sample_batch_path(rule_size + 2, mine_cyclic_not_acyclic, new_triple)
+          path = path_sampler.sample_batch_path(rule_size + 2, new_triple, mine_cyclic_not_acyclic)
           if path != None and path.is_valid():
             rule = Rule()
             rule.init_from_path(path)
