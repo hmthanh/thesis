@@ -14,6 +14,7 @@ path_test:
   - ../../datasets/WN18/test.txt
   - ../../datasets/WN18RR/test.txt
 unseen_nagative_examples: 5
+path_prediction_ext: predictions/WN18/ext_predict_1000.txt
 # path_prediction: predictions/alpha-50
 path_prediction:
   - predictions/FB15k/predict_1000.txt

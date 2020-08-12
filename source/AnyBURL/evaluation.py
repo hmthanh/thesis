@@ -18,8 +18,10 @@ class Evaluation(object):
     self.test_set.read_triples(self.config['path_test'])
     self.result_set = ResultSet(self.config['path_prediction'], self.config['path_prediction'], True, 10)
 
-  def eval(self, is_test_set=True):
+  def eval(self, is_test_set=True, path_extend=False):
     # print('result_set {}'.format(len(result_set.results)))
+    if path_extend:
+      self.result_set = ResultSet(self.config['path_prediction_ext'], self.config['path_prediction_ext'], True, 10)
     if not is_test_set:
       self.result_set = ResultSet(self.config['path_eval_predict'][0], self.config['path_eval_predict'][0], True, 10)
     hitsAtK = HitsAtK()
