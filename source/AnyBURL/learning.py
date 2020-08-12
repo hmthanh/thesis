@@ -201,17 +201,7 @@ class Learning(object):
 
   def train_with_edge(self, triple):
     is_connected, new_triple = self.triple_set.add_edge_triple(batch_triple)
+    triple_set =  self.triple_set
+    path_sampler = PathSampler(triple_set)
     if is_connected:
-      triple_set =  self.triple_set
-      path_sampler = PathSampler(triple_set)
-      index_start_time = current_milli_time()
-      self.log.info('train_with_batch triple_set: {}, new_triple: {}'.format(len(triple_set.triples), len(new_triple.triples)))
-      path_counter, batch_counter = 0, 0
-      mine_cyclic_not_acyclic = False
-      all_useful_rules = [set()]
-      snapshot_index, rule_size_cyclic, rule_size_acyclic = 0, 0, 0
-      last_cyclic_coverage, last_acyclic_coverage = 0.0,0.0
-      self.log.info('indexing dataset: {}'.format(self.cfg['path_training']))
-      self.log.info('time elapsed: {} ms'.format(current_milli_time() - index_start_time))
-      dataset = self.cfg['dataset']
-      start_time = current_milli_time()
+      path = path_sampler.sample_batch_path(rule_size + 2, new_triple, mine_cyclic_not_acyclic)
