@@ -19,7 +19,7 @@ class Predict(object):
     self.log.info('initialize learning {}'.format(current_milli_time()))
     Rule.set_application_mode()
 
-  def prediction(self):
+  def prediction(self, extend=False):
     training_set, test_set, valid_set = TripleSet(), TripleSet(), TripleSet()
     training_set.read_triples(self.cfg['path_training'])
     test_set.read_triples(self.cfg['path_test'])
@@ -33,6 +33,10 @@ class Predict(object):
     self.log.info('rules learning: {}'.format(path_rules_used))
     self.log.info('output learning: {}'.format(path_output_used))
     rules = RuleReader(path_rules_used).read()
+    if extend:
+      rules_exd = RuleReader(self.cfg['path_rules_ext']).read()
+      rules.extend(rules_exd)
+      path_output_used = 'predictions/{}/ext_{}'.format(self.datasets, tmp_path[2].replace('rule', 'predict'))
     rules_size = len(rules)
     print('*** read rules {} rom file {}'.format(rules_size, path_rules_used))
     rule_engine = RuleEngine(path_output_used, self.cfg['unseen_nagative_examples'])
