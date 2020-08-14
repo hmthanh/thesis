@@ -3,7 +3,7 @@
 
 \section{Giới Thiệu}
 
-Hiện nay các bài toán liên quan đến dự đoán liên kết đồ thị tri thức lớn rất được quan tâm có khoảng bốn nhánh nghiên cứu chính như được nhắc đến trong nghiên cứu \cite{ampligraph} một trong số đó là phương pháp dựa trên luật logic. Với mong muốn được tiếp cận các phương pháp từ đơn giản đến phức tạp nên chúng tôi chọn phương pháp này làm chủ để chính cho các báo cáo và nghiên cứu trong chương này.
+Hiện nay các bài toán liên quan đến dự đoán liên kết đồ thị tri thức lớn rất được quan tâm có khoảng bốn nhánh nghiên cứu chính như được nhắc đến trong nghiên cứu \cite{ampligraph} một trong số đó là phương pháp dựa trên luật logic. Với mong muốn được tiếp cận các phương pháp từ đơn giản đến phức tạp nên chúng tôi chọn phương pháp này làm chủ để chính cho các báo cáo và nghiên cứu trong chương này. Với phương pháp này đưa ra một xếp hạng \(k\) ứng viên với một số điểm nhất định biểu thị cho sự chắc chán của dự đoán nó phù hợp với các hệ thống gợi ý(recommender system).
 
 \section{Các công trình liên quan}
 Hầu hết các nghiên cứu hiện tại về việc dự đoán liên kết của đồ thị tri thức đều liên quan đến các phương pháp tiếp cận tập trung vào khái niệm nhúng một đồ thị đã cho trong một không gian vectơ có số chiều thấp. Ngược lại với các tiếp cận này là một phương pháp đựa trên luật được nghiên cứu trong \cite{burl}.Thuật toán cốt lõi của nó dựa trên lấy mẫu một luật bất kỳ, sau đó khái quát  thành các quy tắc Horn\cite{wiki:Horn} Tiếp đó dùng thống kê để tính độ tin cậy của các luật được khái quát. Khi dự đoán một liên kết mới (cạnh mới) của đồ thị chúng ta dự đoán một đỉnh có cạnh nối với một quan hệ cụ thể (label) với đỉnh còn lại hay không.Cũng đã có rất nhiều phương pháp được nghiên cứu, đề xuất để học các các luật trong đồ thị chẳng hạn như trong   RuDiK \cite{dettmers2018convolutional}, AMIE\cite{galarraga2015fast}, RuleN\cite{meilicke2018fine}. Trong phương pháp RuDiK học các luật có thể học cả quy tắc positive và negative. Trong khi phương pháp của chúng tôi chỉ học các quy tắc positive. RuDiK tìm ra một bộ quy tắc nhỏ bao gồm phần lớn các ví dụ là đúng và ít sai sót nhất có thể. Điều này khác với mục tiêu của chúng tôi, chúng tôi cố gắng tìm hiểu mọi quy tắc khả thi có thể sau đó tạo xếp hạng \(k\) ứng viên tiềm năng với một độ tin cậy nhất định đuọc đo trên tập huấn luyện.
@@ -101,7 +101,6 @@ Tất cả các quy tắc được xem xét sẽ được lọc lại đựa tr�
 
 Nội dung báo cáo được phân thành các chương. Số thứ tự của các chương, mục được đánh số bằng hệ thống số Ả-rập, không dùng số La mã. Các mục và tiểu mục được đánh số bằng các nhóm hai hoặc ba chữ số, cách nhau một dấu chấm: số thứ nhất chỉ số chương, chỉ số thứ hai chỉ số mục, số thứ ba chỉ số tiểu mục.
 
-
 %Báo cáo cần dùng LaTEX để viết và trình bày theo mẫu đã được cung cấp.
 
  Báo cáo trình bày sử dụng khổ giấy với việc canh lề như sau: Lề trên 3 cm, lề dưới 2,5 cm, lề trái 3 cm, lề phải 2 cm. Đánh số trang ở giữa bên dưới. Đánh số trang ở giữa bên dưới.
@@ -111,7 +110,18 @@ Font chữ dùng trong báo cáo (Times New Roman) với kích cỡ (size) 13-14
 %Các bảng biểu trình bày theo chiều ngang khổ giấy thì đầu bảng là lề trái của trang.
 
 \section{Kết quả thí nghiệm}
+Trong phần này chúng tôi mô tả lại các bộ dữ liệu mà chúng tôi đùng để thực nghiệm đánh giá phương pháp của chúng tôi cùng với so sánh với các kết quả khác của các công trình nổi bật khác. Cùng với đó chúng tôi cố gắng tìm hiểu các đặc trưng của các bộ dữ liệu tương ứng để cố gắng lý giải thích tại sao mô hình của chúng tôi hoặc các công trình khác có được kết quả tốt trên tập dữ liệu tương ứng đó.
 \subsection{Các tập dữ liệu huấn luyện}
+Trong thí nghiệm của chúng tôi, chúng tôi thực hiện trên bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR.Các bộ dữ liệu này là tập hợp các bộ ba (triple) \(\langle head, relation, tail \rangle\) biểu thị cho thực thể đầu có một mối quan hệ với thực thể cuối.
+
+Bộ dữ liệu FB15k:
+
+Bộ dữ liệu FB15k-237:
+
+Bộ dữ liệu WN18:
+
+Bộ dữ liệu WN18RR:
+
 \subsection{Kết quả thực nghiệm trên}
 Như đã nói trước đây với mô hình dựa trên luật của chúng tôi hoàn toàn có thể thực hiện trên một laptop với cấu hình thông thường. Trong thí nghiệm của chúng tôi cấu hình máy để thực thi như sau: T480, core i5 8th Gen, ram 16Gb, 4 core 8 thread. Mã nguồn thực thi được viết bằng ngôn ngữ Python phiên bản 3.6 và dùng các hàm hỗ trợ có sẵn trong Python với không một thư viện bên thứ ba nào. Thí nghiệm được thực hiện với bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR. Thông tin chi tiết các bộ dữ liệu này được mô tả ở phần [?].
 
