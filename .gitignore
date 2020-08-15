@@ -26,3 +26,4 @@ venv/
 textbook/*
 .vscode/*
 graph_embedding_paper/*
+datasets_/*
