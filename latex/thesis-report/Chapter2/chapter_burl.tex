@@ -18,7 +18,7 @@ Một \textbf{literal}\cite{wiki:Literal} là một công thức nguyên tử (n
 
 Một mệnh đề (clause) là một literal hoặc nối rời của hai hoặc nhiều literal. Ở dạng \textbf{Horn} một mệnh đề có nhiều nhất một positive literal. Lưu ý: Không phải mọi công thức trong logic mệnh đề đều có thể đưa về dạng Horn.Mệnh đề xác định không có literal đôi khi được gọi là mệnh đề đơn vị (unit clause) và một mệnh đề đơn vị không có biến đôi khi được gọi là \textit{facts}\cite{wiki:Horn}.Một công thức nguyên tử được gọi là \textit{ground} hoặc \textit{ground atoms} nếu nó được xây dựng hoàn toàn từ các mệnh đề đơn vị; tất cả các \textit{ground atoms} có thể ghép lại từ một tập hợp hàm và các ký hiệu vị từ nhất định tạo nên cơ sở Herbrand cho các bộ ký hiệu này\cite{wiki:Term}.
 
-\subsection{Định nghĩa đồ thị  tri thức}
+\subsection{Định nghĩa đồ thị  tri thức} \label{kg}
 Một đồ thị tri thức \(\mathbb{G}\) được định nghĩa trên một bộ từ vựng \(\langle \mathbb{C}, \mathbb{R} \rangle\) trong đó \(\mathbb{C}\) là tập hợp các hằng số và \(\mathbb{R}\) là tập hợp các vị từ nhị phân.Khi đó, \(\mathbb{G} = \{r (a, b) \mid r \in \mathbb{R}, a, b \in \mathbb{C}\}\) là tập hợp các \textit{ground atoms} hoặc \textit{facts}. Một vị từ nhị phân được gọi là quan hệ và hằng số (hoặc hằng số được đề cập đến) được gọi là thực thể (entity) tương ứng với một dòng dữ liệu trong tập huấn luyện. Sau đây chúng tôi sử dụng các chữ cái viết thường cho các hằng và chữ in hoa cho các biến cho các thảo luận dưới đây. Vì chúng ta không học các quy tắc Horn tùy ý, và chỉ học đối với loại quy tắc nào có thể được khái quát hóa như được thảo luận dưới đây.
 
 Chúng ta định nghĩa một quy tắc là \(h(c_0, c_n) \gets b_1(c_0, c_1) ,\dots ,b_n(c_{n}, c_{n + 1})\) là một đường dẫn ground atoms có chiều dài \(n\). Trong đó \(h(\dots)\) được gọi là \textit{head atoms} và \( b_1(c_0, c_1) ,\dots ,b_n(c_{n}, c_{n + 1})\) được gọi là \textit{body atoms}. Chúng tôi sẽ phân biệt dưới đây ba loại quy tắc mà chúng tôi gọi là: \textit{quy tắc nhị phân} \((\mathbf{B})\) là quy tắc trong head atoms chứa 2 biến, quy tắc đơn nguyên kết thúc bằng một đỉnh treo  và atom này chỉ chứa biến không chứa hằng số\((\mathbf{U_d})\) và head atoms chỉ chứa 1 biến. Còn quy tắc đơn nguyên kết thúc bằng một atom \((\mathbf{U_c)}\) và head atoms cũng chỉ chứa 1 biến.\((\mathbf{U_c)}\)  có thể là một đỉnh treo tới một hằng số bất kì nếu hằng số này trùng mới hằng số trong head atom thì tạo thành một đường đẫn có chu trình.
@@ -74,33 +74,35 @@ Tất cả các quy tắc được xem xét sẽ được lọc lại đựa tr�
 \end{algorithmic}
 \end{algorithm}
 
-Đầu vào của thuật toán là một đồ thị tri thức \(\mathbb{G}\), \(S\) là tham số cho biết kích thước của một lần lấy mẫu trên dữ liệu đào tạo để tính toán độ tin cậy. \(SAT\) là ... cho biết độ bão hòa của các luật được sinh ra trong 1 lần lặp độ bão hòa này được tính bằng số luật học được ở lần lặp hiện tại so số sô luật  đã học được. nếu nhoe hơn độ bão hòa thì chúng tôi cho rằng vẫn còn tiềm năng để kh
-ai thác các luật với độ dài \(n\). ngược lại chúng tôi răng độ dài của luật sau đó tiếp tục khai thác. \(Q\) là một ngưỡng để xác định xem luật mới được sinh ra có được thêm vào kết quả trả về hay không. Còn \(TS\) cho biết thời gian học của thuật toán.
+Đầu vào của thuật toán \(\mathbb{G}, S, SAT, Q, TS\). Đầu ra là tập hợp \(R\) các luật học được. Trong đó \(\mathbb{G}\) là một đồ thị tri thức được cho từ tập dữ liệu đào tạo. \(S\) là tham số cho biết kích thước của một lần lấy mẫu trên dữ liệu đào tạo để tính toán độ tin cậy. \(SAT\) cho biết độ bão hòa(saturation) của các luật được sinh ra trong 1 lần lặp độ bão hòa này được tính bằng số luật \textbf{mới} học được ở lần lặp hiện tại so số sô luật đã học được. Nếu nhỏ hơn độ bão hòa thì chúng tôi cho rằng vẫn còn tiềm năng để khai thác các luật với độ dài \(n\). ngược lại chúng tôi tăng độ dài của luật sau đó tiếp tục khai thác. \(Q\) là một ngưỡng để xác định xem luật mới được sinh ra có được thêm vào kết quả trả về hay không. Còn \(TS\) cho biết thời gian học của thuật toán. Chúng tôi bắt đầu với \(n\) bằng \(2\) tức là các luật có độ dài đường đẫn bằng 2 vì trong path rule yêu cầu ít nhất 1 literal trong head atom và 1 trong body atoms. Ở phần lấy mẫu 1 luật(\textit{samplePath}) chỉ đơn giản là chúng ta chọn 1 đỉnh bất kì trong đồ thị duyệt qua tất cả các đường đẫn từ đỉnh đó đi qua \(n\) đỉnh khác, sau đó chọn ngẫu nhiên 1 đường đẫn trong số các trường đẫn duyệt được.
 
-\subsubsection{Thuật toán khái quát hóa}
+\subsubsection{Thuật toán tạo 1 luật}
 \begin{algorithm}
-\caption{generateRules(p)}\label{euclid}
+\caption{Generate Rules(p)}\label{euclid}
 \begin{algorithmic}[1]
-\Procedure{MyProcedure}{}
-\State $\textit{stringlen} \gets \text{length of }\textit{string}$
-\State $i \gets \textit{patlen}$
-\BState \emph{top}:
-\If {$i > \textit{stringlen}$} \Return false
+\Procedure{generate\_rules(p)}{}
+\State $\textit{generalizations} = \emptyset$
+\State $is\_binary\_rule = random.choices([true,false])$
+\If {$is\_binary\_rule$}
+	\State $replace\_all\_head\_by\_variables(p)$
+	\State $replace\_all\_tail\_by\_variables(p)$
+	\State $add(generalizations, p)$
+\Else:
+    \State $replace\_all\_head\_by\_variables(p)$
+    \State $add(generalizations, p)$
+    \State $replace\_all\_tail\_by\_variables(p)$
+	\State $add(generalizations, p)$
 \EndIf
-\State $j \gets \textit{patlen}$
-\BState \emph{loop}:
-\If {$\textit{string}(i) = \textit{path}(j)$}
-\State $j \gets j-1$.
-\State $i \gets i-1$.
-\State \textbf{goto} \emph{loop}.
-\State \textbf{close};
-\EndIf
-\State $i \gets i+\max(\textit{delta}_1(\textit{string}(i)),\textit{delta}_2(j))$.
-\State \textbf{goto} \emph{top}.
+\Return $generalizations$
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
 
+Ở thuật toán này chúng tôi thay các hằng số vào các head và tail trong toàn bộ path rule  của luật được lấy mẫu ở bước trước nếu luật cần học là luật nhị phân ngược lại chúng tôi chỉ thay hoặc head hoặc tail rồi thêm vào luật trả về sau đó chúng tôi lấy mẫu trên tập huấn luyện 1 tập hợp các luật sau đó tính toán độ tin cây như được mô tả trong phần \hyperref[kg]{2.3.2}. Để giảm chi phí tính toán chúng tôi chọn cách lấy mẫu trên tập huấn luyện để tính toán. Khi đưa ra dự đoáncác ứng cử viên của 1 luật chúng tôi sẽ tính toán lại bằng cách thêm vào 1 lương biểu diẽn số luật bị sai mà chúng tôi chưa nhìn thấy trong quá trình lấy mẫu để tính toán độ tin cậy. Dối với mô hình của chúng thôi sau khi thử nghiệm tham số trong khoảng \([]5, 10]\) cho kết quả tốt nhất.
+
+\subsubsection{Thuật toán học offline-to-online}
+
+\subsubsection{Thuật toán học online-to-online}
 Nội dung báo cáo được phân thành các chương. Số thứ tự của các chương, mục được đánh số bằng hệ thống số Ả-rập, không dùng số La mã. Các mục và tiểu mục được đánh số bằng các nhóm hai hoặc ba chữ số, cách nhau một dấu chấm: số thứ nhất chỉ số chương, chỉ số thứ hai chỉ số mục, số thứ ba chỉ số tiểu mục.
 
 %Báo cáo cần dùng LaTEX để viết và trình bày theo mẫu đã được cung cấp.
