@@ -74,6 +74,8 @@ Tất cả các quy tắc được xem xét sẽ được lọc lại đựa tr�
 \end{algorithmic}
 \end{algorithm}
 
+Đầu vào của thuật toán là một đồ thị tri thức \(\mathbb{G}\), \(S\) là tham số cho biết kích thước của một lần lấy mẫu trên dữ liệu đào tạo để tính toán độ tin cậy. \(SAT\) là ... cho biết độ bão hòa của các luật được sinh ra trong 1 lần lặp độ bão hòa này được tính bằng số luật học được ở lần lặp hiện tại so số sô luật  đã học được. nếu nhoe hơn độ bão hòa thì chúng tôi cho rằng vẫn còn tiềm năng để kh
+ai thác các luật với độ dài \(n\). ngược lại chúng tôi răng độ dài của luật sau đó tiếp tục khai thác. \(Q\) là một ngưỡng để xác định xem luật mới được sinh ra có được thêm vào kết quả trả về hay không. Còn \(TS\) cho biết thời gian học của thuật toán.
 
 \subsubsection{Thuật toán khái quát hóa}
 \begin{algorithm}
@@ -122,7 +124,9 @@ Bộ dữ liệu WN18: được giới thiệu bởi các tác giả của Trans
 
 Bộ dữ liệu WN18RR: là một tập hợp con của WN18 được xây dựng bởi DeŠmers et al. \cite{dettmers2017convolutional}, cũng là người giải quyết vấn đề rò rỉ thử nghiệm (test leakage)trong WN18. Để giải quyết vấn đề đó, họ xây dựng tập dữ liệu WN18RR thách thức hơn nhiều bằng cách áp dụng một phương pháp tương tự đưược sử dụng cho FB15k-237 \cite{toutanova2015observed}. Training gồm 11 relations, 39610 head entities, và 31881 tail entities, tập test gồm 11 relations, 2958 head entities, và 2619 tail entities, tập vadition gồm 11 relations, 2851 head entities, and 2575 tail entities.
 
-\subsection{Kết quả thực nghiệm trên}
+\subsection{Kết quả thực nghiệm}
+\subsubsection{Các độ đo}
+\subsubsection{Kết quả}
 Như đã nói trước đây với mô hình dựa trên luật của chúng tôi hoàn toàn có thể thực hiện trên một laptop với cấu hình thông thường. Trong thí nghiệm của chúng tôi cấu hình máy để thực thi như sau: T480, core i5 8th Gen, ram 16Gb, 4 core 8 thread. Mã nguồn thực thi được viết bằng ngôn ngữ Python phiên bản 3.6 và dùng các hàm hỗ trợ có sẵn trong Python với không một thư viện bên thứ ba nào. Thí nghiệm được thực hiện với bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR. Thông tin chi tiết các bộ dữ liệu này được mô tả ở phần [?].
 
 Bảng ? bên dưới mô tả các kết quả thực nghiệm của chúng tôi với các độ đo \(h@k\) cùng với các kết quả thực nghiệm của các phương pháp khác được đề cập trong khảo  sát \cite{rossi2020knowledge}
