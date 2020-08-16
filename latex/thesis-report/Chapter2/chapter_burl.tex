@@ -43,7 +43,8 @@ Quy tắc (1) là quy tắc \textbf{B}(quy tắc nhị phân) quy tắc này nó
 Tất cả các quy tắc được xem xét sẽ được lọc lại đựa trên điểm được gọi là độ tin cậy của quy tắc là được đo trên tập dữ liệu huấn luyện. Độ tin cậy này được đo bằng tỷ lệ body atoms dẫn đến head atoms chia cho tất cả các đường đãn chứa body atoms.Ví dụ khi ta có quy tắc sau:
 \(\textit{gen}(X, female) \gets \textit{married}(X, A), \textit{gen}(A, male) \). Khi đó chúng ta thực hiện đếm tất cả các cặp thực thể có quan hệ  \(\textit{married}(X, A), \textit{gen}(A, male) \) được gọi là số đường dẫn chứa body atoms, sau đó thực hiện đếm tất cả các  thực thể thỏa quan hệ \(\textit{gen}(X, female) \gets textit{married}(X, A), \textit{gen}(A, male) \) được gọi là số body atoms dẫn đến head atoms. Sau đó chia số body atoms dẫn đến head atoms cho  đường dẫn chứa body atoms được gọi là độ tin cậy của quy tắc.
 \subsection{Thuật toán}
-\subsubsection{Thuật toán AnyBURL}
+
+\subsubsection{Thuật toán 1 AnyBURL}
 \begin{algorithm}
 \caption{Anytime Bottom-up Rule Learning}\label{euclid}
 \begin{algorithmic}[1]
@@ -76,7 +77,7 @@ Tất cả các quy tắc được xem xét sẽ được lọc lại đựa tr�
 
 Đầu vào của thuật toán \(\mathbb{G}, S, SAT, Q, TS\). Đầu ra là tập hợp \(R\) các luật học được. Trong đó \(\mathbb{G}\) là một đồ thị tri thức được cho từ tập dữ liệu đào tạo. \(S\) là tham số cho biết kích thước của một lần lấy mẫu trên dữ liệu đào tạo để tính toán độ tin cậy. \(SAT\) cho biết độ bão hòa(saturation) của các luật được sinh ra trong 1 lần lặp độ bão hòa này được tính bằng số luật \textbf{mới} học được ở lần lặp hiện tại so số sô luật đã học được. Nếu nhỏ hơn độ bão hòa thì chúng tôi cho rằng vẫn còn tiềm năng để khai thác các luật với độ dài \(n\). ngược lại chúng tôi tăng độ dài của luật sau đó tiếp tục khai thác. \(Q\) là một ngưỡng để xác định xem luật mới được sinh ra có được thêm vào kết quả trả về hay không. Còn \(TS\) cho biết thời gian học của thuật toán. Chúng tôi bắt đầu với \(n\) bằng \(2\) tức là các luật có độ dài đường đẫn bằng 2 vì trong path rule yêu cầu ít nhất 1 literal trong head atom và 1 trong body atoms. Ở phần lấy mẫu 1 luật(\textit{samplePath}) chỉ đơn giản là chúng ta chọn 1 đỉnh bất kì trong đồ thị duyệt qua tất cả các đường đẫn từ đỉnh đó đi qua \(n\) đỉnh khác, sau đó chọn ngẫu nhiên 1 đường đẫn trong số các trường đẫn duyệt được.
 
-\subsubsection{Thuật toán tạo 1 luật}
+\subsubsection{Thuật toán 2 tạo 1 luật}
 \begin{algorithm}
 \caption{Generate Rules(p)}\label{euclid}
 \begin{algorithmic}[1]
@@ -100,9 +101,46 @@ Tất cả các quy tắc được xem xét sẽ được lọc lại đựa tr�
 
 Ở thuật toán này chúng tôi thay các hằng số vào các head và tail trong toàn bộ path rule  của luật được lấy mẫu ở bước trước nếu luật cần học là luật nhị phân ngược lại chúng tôi chỉ thay hoặc head hoặc tail rồi thêm vào luật trả về sau đó chúng tôi lấy mẫu trên tập huấn luyện 1 tập hợp các luật sau đó tính toán độ tin cây như được mô tả trong phần \hyperref[kg]{2.3.2}. Để giảm chi phí tính toán chúng tôi chọn cách lấy mẫu trên tập huấn luyện để tính toán. Khi đưa ra dự đoáncác ứng cử viên của 1 luật chúng tôi sẽ tính toán lại bằng cách thêm vào 1 lương biểu diẽn số luật bị sai mà chúng tôi chưa nhìn thấy trong quá trình lấy mẫu để tính toán độ tin cậy. Dối với mô hình của chúng thôi sau khi thử nghiệm tham số trong khoảng \([]5, 10]\) cho kết quả tốt nhất.
 
-\subsubsection{Thuật toán học offline-to-online}
+\subsubsection{Thuật toán 3 học offline-to-online}
+\begin{algorithm}
+\caption{AnyBURL Learning batch size}\label{euclid}
+\begin{algorithmic}[1]
+\Procedure{AnyBURLbatch($\mathbb{G}$, s, sat, Q, ts, batch\_edge)}{}
+\State $is\_connected = add(\mathbb{G}, batch\_edge)$
+\If {$is\_connected$}
+	\State  $ G^{\prime} = \mathbb{G} \oplus batch\_edge$
+\Else
+    \State  $ G^{\prime} = batch\_edge$
+\EndIf
+\State $\textit{n} = \text{2}$
+\State $R = \emptyset$
+\Loop
+\State $R_s = \emptyset$
+\State $start = currentTime()$
+\Repeat
+\State $p = samplePath(G^{\prime}, n)$
+\State $R_p = generateRules(p)$
+\For {$r \in R_p$}
+\State $score(r, s)$
+\If {$Q(r)$}
+	\State $R_s = R_s \cup \{r\}$
+\EndIf
+\EndFor
+\Until {$currentTime() > start + ts$}
+\State $R^{\prime}_s = R_s \cap R$
+\If {$ \mid R^{\prime} \mid / \mid R \mid > SAT$}
+	\State $n = n + 1$
+\EndIf
+\State $R = R_s \cap R$
+\EndLoop
+\Return R
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
-\subsubsection{Thuật toán học online-to-online}
+Thuật toán này là phần bổ xung của chúng tôi để tránh việc phải đào tạo lại toàn bộ mô hình khi có một lượng tri thức mới được thêm vào đồ thị. Khi thêm vào đồ thị chúng tôi kiểm trả xem phần tri thức mới có kết nối với tri thức cũ hay không (tính liên thông) nếu có chúng tôi thực hiện phép toán \(\oplus\) lấy  tất cả các phần trong \(batch\_edge\) thêm với 1 phần liên thông với những cạnh liên thông với đồ thị với dộ dài là \(5\), Nếu không chúng tôi lấy tất cả các phần trong \(batch\_edge\) sau đó thực hiện lại các bước như thuật toán Anytime Bottom-up Rule Learning.
+
+\subsubsection{Thuật toán 4 học online-to-online}
 Nội dung báo cáo được phân thành các chương. Số thứ tự của các chương, mục được đánh số bằng hệ thống số Ả-rập, không dùng số La mã. Các mục và tiểu mục được đánh số bằng các nhóm hai hoặc ba chữ số, cách nhau một dấu chấm: số thứ nhất chỉ số chương, chỉ số thứ hai chỉ số mục, số thứ ba chỉ số tiểu mục.
 
 %Báo cáo cần dùng LaTEX để viết và trình bày theo mẫu đã được cung cấp.
@@ -124,7 +162,7 @@ Bộ dữ liệu FB15k-237: là một tập hợp con của FB15k được xây 
 
 Bộ dữ liệu WN18: được giới thiệu bởi các tác giả của TransE \cite{bordes2013translating}, được trích xuất từ WordNet\footnote{https://wordnet.princeton.edu/}, một bản thể học ngôn ngữ KG có nghĩa là cung cấp một từ điển/từ đồng nghĩa để hỗ trợ NLP và phân tích văn bản tự động. Trong WordNet, các thực thể tương ứng với các tập hợp (\textit{word senses}) và các quan hệ đại diện cho các kết nối từ vựng của chúng (ví dụ: “hypernym”). Để xây dựng WN18, các tác giả đã sử dụng WordNet làm điểm bắt đầu và sau đó lặp đi lặp lại lọc ra các thực thể và mối quan hệ với quá ít lần được đề cập. Tập dữ liệu được chia ngẫu nhiên thành 3 tập: tập training với 18 relations, 40504 head entities, và 40551 tail entities, tập test gồm 18 relations, 4262 head entities, and 4338 tail entities, tập vadiation gồm 18 relations, 4349 head entities, and 4263 tail entities.
 
-Bộ dữ liệu WN18RR: là một tập hợp con của WN18 được xây dựng bởi DeŠmers et al. \cite{dettmers2017convolutional}, cũng là người giải quyết vấn đề rò rỉ thử nghiệm (test leakage)trong WN18. Để giải quyết vấn đề đó, họ xây dựng tập dữ liệu WN18RR thách thức hơn nhiều bằng cách áp dụng một phương pháp tương tự đưược sử dụng cho FB15k-237 \cite{toutanova2015observed}. Training gồm 11 relations, 39610 head entities, và 31881 tail entities, tập test gồm 11 relations, 2958 head entities, và 2619 tail entities, tập vadition gồm 11 relations, 2851 head entities, and 2575 tail entities.
+Bộ dữ liệu WN18RR: là một tập hợp con của WN18 được xây dựng bởi DeŠmers et al.\cite{dettmers2017convolutional}, cũng là người giải quyết vấn đề rò rỉ thử nghiệm (test leakage)trong WN18. Để giải quyết vấn đề đó, họ xây dựng tập dữ liệu WN18RR thách thức hơn nhiều bằng cách áp dụng một phương pháp tương tự đưược sử dụng cho FB15k-237 \cite{toutanova2015observed}. Training gồm 11 relations, 39610 head entities, và 31881 tail entities, tập test gồm 11 relations, 2958 head entities, và 2619 tail entities, tập vadition gồm 11 relations, 2851 head entities, and 2575 tail entities.
 
 \subsection{Kết quả thực nghiệm}
 \subsubsection{Các độ đo}
@@ -297,7 +335,6 @@ Rank &
 
 \end{tabular}}
 \end{table}
-
 
 \section{Bố cục của báo cáo}
 
