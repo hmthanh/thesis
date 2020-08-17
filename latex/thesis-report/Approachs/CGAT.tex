@@ -4,9 +4,9 @@
 
 \subsection{Mô hình GAT}
 
-Mạng đồ thị tích chập (GCNs \cite{schlichtkrull2018modeling}) giúp tổng hợp thông tin bằng cách tính trung bình thông tin từ các thực thể lân cận, tuy nhiên cách này sẽ làm cho các thực thể có trọng số ngang bằng nhau không biểu diễn đúng thông tin trong thế giới thực. Để giải quyết vấn đề đó, GATs \cite{velivckovic2017graph} ra đời để đối xử với các node lân cận bằng sự quan trọng của chúng.
+Mạng đồ thị tích chập (Graph Convolutional Networks \citetitle{schlichtkrull2018modeling}{GCNs}) giúp tổng hợp thông tin bằng cách tính trung bình thông tin từ các thực thể lân cận, tuy nhiên cách này sẽ làm cho các thực thể có trọng số ngang bằng nhau không biểu diễn đúng thông tin trong thế giới thực. Để giải quyết vấn đề đó, GATs \cite{velivckovic2017graph} ra đời để đối xử với các thực thể lân cận bằng sự quan trọng của chúng.
 
-Đầu vào của mô hình là vector biểu diễn đặc trưng của từng thực thể (entity) $E = \overrightarrow{e_1} + \overrightarrow{e_2} + ... + \overrightarrow{e_N}$. Và mục tiêu của chúng ta là biến đổi thành một đặc trưng đầu ra mới $E'' = \overrightarrow{e''_1} + \overrightarrow{e''_2} + ... + \overrightarrow{e''_N}$; với $\overrightarrow{e_i}$ và $\overrightarrow{e'_i} \in \mathcal{R}^k$ tương ứng là vector nhúng đầu vào và vector đầu ra của của thực thể $e_i$, N là số lượng của các thực thể (nodes), k là đặc trưng đầu vào.
+Đầu vào của mô hình là vector biểu diễn đặc trưng của từng thực thể (entity) $E = \Big\{\overrightarrow{e_1}, \overrightarrow{e_2}, ...,  \overrightarrow{e_N}\Big\}$. Và mục tiêu của chúng ta là biến đổi thành một đặc trưng đầu ra mới $E'' = \Big\{\overrightarrow{e''_1}, \overrightarrow{e''_2}, ...,  \overrightarrow{e''_N}\Big\}$; với $\overrightarrow{e_i}$ và $\overrightarrow{e''_i} \in \mathbb{R}^T$ tương ứng là vector nhúng đầu vào và vector đầu ra của của thực thể $e_i$, N là số lượng của các thực thể, T là số miền nhúng đặc trưng đầu vào.
 
 Mô hình sẽ đi qua hai quá trình biến đổi vector đặc trưng $\overrightarrow{e_i}$ và có thể tóm lược như sau :
 \begin{align}
@@ -15,40 +15,149 @@ Mô hình sẽ đi qua hai quá trình biến đổi vector đặc trưng $\over
 
 Ở quá trình biên đổi đầu tiên, mô hình sẽ tổng hợp thông tin từ các thực thể lân cận và ghép chồng lên nhau để tạo ra vector $\overrightarrow{e'_i}$ sau đó mô hình sẽ dùng vector $\overrightarrow{e'_i}$ để coi là vector nhúng của thực thể cho lớp mới và tiếp tục quá trình tổng hợp từ các thông tin lân cận và tạo ra vector $\overrightarrow{e''_i}$ cuối cùng.
 
-Đầu tiên để tham số hóa quá trình biến đổi tuyến tính, ta cần một trọng số $W \in \mathbb{R}^{N_e \times k}$ ánh xạ vector đầu vào thành một vector mới với miền không gian lớn hơn và một hàm chú ý $a$ chúng ta tùy chọn :
+Đầu tiên để tham số hóa quá trình biến đổi tuyến tính, ta cần một trọng số $W \in \mathbb{R}^{N_e \times T}$ ánh xạ vector đầu vào thành một vector mới với miền không gian lớn hơn và một hàm chú ý $a$ chúng ta tùy chọn :
 
 \begin{align}
 \centering
-{e_{ij}}&={a(W \overrightarrow{e_i}, W \overrightarrow{e_i})}
+{e_{ij}}&={a(W \overrightarrow{e_i}, W \overrightarrow{e_j})}
 \end{align}
 
 trong đó $e_{ij}$ là giá trị chú ý của một cạnh $(e_i, e_j)$ trong đồ thị $\mathcal{G}$ hay $e_{ij}$ thể hiện sự quan trọng của đặc trưng cạnh $(e_i, e_j)$ so với thực thể $e_i$. Sau đó, chúng ta áp dụng hàm \textit{softmax} qua tất cả các giá trị nhúng của hàng xóm để tạo ra $\alpha_{ij}$ . Quá trình tổng hợp các sự chú ý được thể hiện ở biểu thức sau : 
 
 \begin{align}
 \centering
-{\overrightarrow{a_{ij}}}&={\sigma\left(\sum_{j\in \mathcal{N}(i)} {\alpha_{ij} \mathbf{W} \overrightarrow{e_j} }\right)}
+{\overrightarrow{a_{ij}}}&={\sigma\left(\sum_{j\in \mathcal{N}_i} {\alpha_{ij} \mathbf{W} \overrightarrow{e_j} }\right)}
 \end{align}
 
 Tiếp theo mô hình GAT sẽ đi qua \textit{lớp chú ý đa đỉnh}(multi-head attention) để ổn định quá trình học bằng cách ghép $A$ đỉnh chú ý với nhau :
 
 \begin{align}
-{\overrightarrow{x'_i}}&={\bigparallel_{a=1}^{A}\sigma\left(\sum_{j\in \mathcal{N}(i)}\alpha_{ij}^{a} \mathbf{W}^{a} \overrightarrow{x_{j}} \right)}
+{\overrightarrow{x'_i}}&={\bigparallel_{a=1}^{A}\sigma\left(\sum_{j\in \mathcal{N}_i}\alpha_{ij}^{a} \mathbf{W}^{a} \overrightarrow{x_{j}} \right)}
 \end{align}
 
-trong đó phép $||$ biểu diễn quá trình ghép chồng lên nhau và $\sigma$ là bất kỳ hàm biến đổi phi tuyến tính nào, $\alpha_{ij}^a$ là hệ số chú ý được chuẩn hóa của cạnh $(e_i, e_j)$ được tính từ lớp thứ $a^{th}$ cơ chế chú ý. Cuối cùng $\overrightarrow{x'_i}$ được coi là vector thực thể nhúng mới và cho vào lớp chú ý đa đỉnh với đầu ra thay vì ghép chồng như trên thì được tính trung bình như công thức sau :
+trong đó phép $||$ biểu diễn quá trình ghép chồng lên nhau và $\sigma$ là bất kỳ hàm biến đổi phi tuyến tính nào, $\alpha_{ij}^a$ là hệ số chú ý được chuẩn hóa của cạnh $(e_i, e_j)$ được tính từ lớp thứ $a^{th}$	 cơ chế chú ý. Cuối cùng $\overrightarrow{x'_i}$ được coi là vector thực thể nhúng mới và cho vào lớp chú ý đa đỉnh với đầu ra thay vì ghép chồng như trên thì được tính trung bình như công thức sau :
 
 \begin{align}
-{\overrightarrow{x''_i}}&={\sigma\left(\frac{1}{A} \sum_{a=1}^{A}\sum_{j\in \mathcal{N}(i)}\alpha_{ij}^{a} \mathbf{W}^{a} \overrightarrow{x'_{j}} \right)}
+{\overrightarrow{x''_i}}&={\sigma\left(\frac{1}{A} \sum_{a=1}^{A}\sum_{j\in \mathcal{N}_i}\alpha_{ij}^{a} \mathbf{W}^{a} \overrightarrow{x'_{j}} \right)}
 \end{align}
 
+\subsection{Knowledge Base Attention Network (KBAT)}
 
- \cite{nathani2019learning}
+Trong phần này sẽ trình bày về mô hình Knowledge Base Attention (KBAT \cite{nathani2019learning}), là một mô hình cải tiến dựa trên mô hình GAT ở trên bằng cách lấy thêm thông tin của mối quan hệ trên một cạnh. Mục tiêu của mô hình là tạo ra hai ma trận mới biểu thị cho \textbf{ma trận nhúng thực thể} và \textbf{ma trận nhúng quan hệ}. Mô hình sẽ biến đổi từ ma trận thực thể $\mathbf{E} \in \mathbb{R}^{N_e \times T}$ và ma trận quan hệ $\mathbf{R} \in \mathbb{R}^{N_r \times P}$ để tạo thành một ma trận thực thể mới $\mathbf{E'} \in \mathbb{R}^{N_e \times T'}$ và ma trận quan hệ mới $\mathbf{R'} \in \mathbb{R}^{N_r \times P'}$, trong đó với mỗi dòng thứ $i^{\text{th}}$ trong ma trận với trọng số tương ứng biểu thị cho một thực thể $e_i$ hoặc một mối quan hệ $r_i$; $N_e$ hoặc $N_r$ tương ứng là số lượng của tập thực thể và tập quan hệ; trong khi $T$ và $P$ tương ứng là số chiều đầu vào của vector nhúng; thì $T'$ và $P'$ tương ứng là số chiều của vector nhúng đầu ra. Các ma trận trọng số trên được khởi tạo ngẫu nhiên theo phân phối chuẩn hoặc tái huấn luyện(pre-train) bằng mô hình TransE \cite{bordes2013translating} .
 
-GAT \cite{velivckovic2017graph}
+Tuy nhiên một cạnh trong đồ thị được biểu diễn bởi cặp vector $(\overrightarrow{e_\text{head}}, \overrightarrow{e_\text{tail}})$ không biểu thị thông tin một cách đầy đủ. Một tri thức 
+Tuy nhiên một vector $\overrightarrow{e_i}$ hay $\overrightarrow{r_k}$ không thể biểu thị một cách đầy đủ tri thức của một thực thể $e_i$ hay quan hệ $r_k$ trong một đồ thị, vì một tri thức sẽ có thể có mối liên hệ với những tri thức lân cận hay nói cách khác một \textbf{thực thể nhúng} (entity embedding) hay một \textbf{quan hệ nhúng} (relation embedding) sẽ cần thêm thông tin của các vector nhúng của thực thể lân cận và quan hệ lân cận khác để có thể là một đại diện đầy đủ . Chính vì vậy phương pháp \textit{n-hop neighborhood} \cite{lin2018multi} sẽ giúp bổ sung thêm thông tin lân cận của thực thể $e_i$ và quan hệ $r_k$ bằng cách ghép chồng để tạo thành một vector mới theo công thức sau :
+\begin{align}
+{\overrightarrow{h_i} = [\overrightarrow{e_i} \bigparallel_{\text{axis}=1} \overrightarrow{e_{i_{\text{n-hop}}}}]} \hspace{0.5cm};\hspace{1.5cm}&
+{\overrightarrow{g_k} = [\overrightarrow{r_k} \bigparallel_{\text{axis}=1} \overrightarrow{r_{k_{\text{n-hop}}}}]}
+\end{align}
 
-TransE \cite{bordes2013translating}
+Trong đó $\overrightarrow{h_i}$, $\overrightarrow{g_k}$ tương ứng là vector nhúng mới của thực thể $e_i$ và các thực thể lân cận ($e_{i_{\text{n-hop}}}$) hay quan hệ $r_k$ và các quan hệ lân cận ($r_{k_{\text{n-hop}}}$); ký hiệu $\bigparallel_{\text{axis}=1}$ biểu thị cho phép xếp chồng lên nhau. Các vector $\overrightarrow{e_{i_{\text{n-hop}}}}$ và $\overrightarrow{r_{k_{\text{n-hop}}}}$ được tính bằng tổng vector nhúng của các thực thể hoặc các quan hệ lân cận đi qua $n-hop$ độ sâu bắt đầu từ $e_i$ theo công thức sau : 
 
-Attention \cite{vaswani2017attention}
+\begin{align}
+{\overrightarrow{e_{i_{\text{n-hop}}}} = \bigparallel_{d=1}^{\text{n-hop}} \sum_{n \in \mathcal{N}_i} \overrightarrow{e_n^d}} \hspace{0.5cm};\hspace{1.5cm}&
+{\overrightarrow{r_{k_{\text{n-hop}}}} = \bigparallel_{d=1}^{\text{n-hop}} \sum_{m \in \mathcal{N}_k} \overrightarrow{r_m^d}}
+\end{align}
+
+Với mối thực thể $e_n$ hay quan hệ $r_m$ có độ sâu d (depth) bắt đầu từ thực thể $e_i$, ta sẽ tính tổng các vector nhúng và ghép chồng với nhau.
+
+Để biểu thị cho quá trình biến tuyến tính của vector nhúng, ta cho mỗi vector nhúng đi qua một ma trận trọng số : $\overrightarrow{h'_i} = \mathbf{W}_{\text{entity}} \overrightarrow{h_i}$ 
+và $\overrightarrow{g'_i} = \mathbf{W}_{\text{relation}} \overrightarrow{g_i}$. Tuy nhiên để thu được một trọng số mới biểu diễn bộ ba $t^k_{ij} = (e_{\text{head}}, relation, e_{\text{tail}})$ tương ứng với một cạnh trong trong KB. Ta thực hiện quá trình biến đổi tuyến tính đó bằng cách ghép cả thực thể và mối quan hệ với nhau rồi nhân với một ma trận trọng số chung như công thức sau :
+
+\begin{align}
+\overrightarrow{t_{ijk}} = \mathbf{W_1} [\overrightarrow{h_i} || \overrightarrow{h_j} || \overrightarrow{g_k}]
+\end{align}
+
+trong đó $\overrightarrow{t_{ijk}}$ là một vector nhúng biểu diễn cho một bộ ba $t^k_{ij}$. Các vector $\overrightarrow{h_i}$, $\overrightarrow{h_j}$ và $\overrightarrow{g_j}$ tương ứng là vector nhúng của các thực thể $e_i$, $e_j$ và quan hệ $r_k$. $\mathbf{W_1} \in \mathbb{R}^{3 T \times S^\text{batch}}$ . Để áp dụng cơ chế chú ý (attention mechanisms \cite{vaswani2017attention}), ta cần học sự quan trọng của một cạnh $t_{ij}^k$ bởi giá trị của $b_{ij}^k$. Để tham số hóa quá trình biến đổi tuyến tính ta nhân với ma trận trọng số $\mathbb{W}_{2}$ và lấy giá trị chú ý tuyệt đối bằng hàm $LeakyRelu$ theo công thức sau :
+
+\begin{align}
+b_{ijk} = \text{LeakyRelu}\Big( \mathbf{W_2} t_{ijk} \Big)
+\end{align}
+
+Sau đó, với mỗi độ lớn của $b^k_{ij}$ được cho qua hàm \textit{softmax} để tính giá trị thể hiện xác xuất của từng giá trị chú ý $\alpha_{ijk}$ đối với từng bộ ba .
+
+\begin{align}
+{\alpha_{ijk}}&={\text{softmax}_{jk}(b_{ijk})} =\frac{\text{exp}(b_{ijk})}{\sum_{n\in \mathcal{N}_i} \sum_{r\in \mathcal{R}_{in}}\text{exp}(b_{inr})}
+\end{align}
+
+trong đó $\mathcal{N}_i$ là tập hợp những thực thể kế cận của $e_i$; $\mathcal{R}$ tập hợp những quan hệ nối hai thực thể $e_i$ và $e_j$. Để tăng cường đặc trưng cạnh tương ứng với từng xác xuất, ta sẽ nhân giá trị chú ý tương đối $\alpha_{ijk}$ với vector nhúng $\overrightarrow{t_{ijk}}$ đã được biến đổi tuyến tính ban đầu . Mô hình sẽ tạo ra vector thực thể nhúng mới với đã được tổng hợp từ các thực thể lân cận .
+
+\begin{align}
+{\overrightarrow{h'_{i}}}&={\sigma\left(\sum_{j \in \mathcal{N}_i} \sum_{k \in \mathcal{R}_{ij}} \alpha_{ijk} \overrightarrow{t_{ijk}}\right)}
+\end{align}
+
+Tương tự như mạng đồ thị chú ý ở trên, mô hình sẽ đi qua lớp chú ý đa đỉnh để ổn định quá trình học bằng cách ghép A đỉnh chú ý với nhau theo công thức sau :
+
+\begin{align}
+\overrightarrow{h'}_i=\bigparallel_{m=1}^{M} \sigma\left(\sum_{j\in \mathcal{N}(i)}\alpha_{ijk}^{m}t^{m}_{ijk}\right)
+\end{align}
+
+Như quá trình biến đổi tuyến tính của ma trận mối quan hệ ở trên, ma trận $R$ đầu vào sẽ được nhân với một vector nhúng $W$ quan hệ để tạo ra một ma trận mới biểu thể tập hợp các quan hệ nhúng mới :
+
+\begin{align}
+R' = R \mathbf{W^R}; \hspace{2cm} \text{Trong đó : } \mathbf{W^R} \in \mathbb{R}^{P \times P'}
+\end{align}
+
+Trong đó $\mathbf{W^R}$ là ma trận trọng số thể hiện quá trình biến đổi tuyến tính,$P$ và $P'$ lần lượt là số chiều của vector quan hệ nhúng đầu vào và đầu ra. Và trong trường hợp này  $P'$ phải bằng số chiều của vector nhúng thực thể.
+
+Đến đây, ta đã có hai ma trận $H'$ và $R'$ tương ứng là ma trận quan hệ và ma trận thực thể. Mô hình sẽ đi qua lớp cuối chú ý cùng bằng cách tiếp tục đi qua lớp mạng đồ thị chú ý tương tự ở trên nhưng thay vì ghép chồng thì ta thực hiện tính trung bình theo công thức sau :
+
+\begin{align}
+{\overrightarrow{h''_{i}}}&={\sigma\left(\frac{1}{M} \sum_{m=1}^{M} \sum_{j \in \mathcal{N}_i} \sum_{k \in \mathcal{R}_{ij}} \alpha'^m_{ijk} t'^m_{ijk}\right)}
+\end{align}
+
+Tương tự như trên, nhưng $\alpha'^m_{ijk}$ và $t'^m_{ijk}$ tương ứng là các vector được nhúng trên các mối quan hệ và thực thể mới.
+
+Sau quá trình nhúng trên, ta sẽ có một ma trận thực thể $H''$ và quan hệ $R''$ mới đã được tổng hợp thêm một lần nữa. Tuy nhiên ta muốn biểu diễn ma trận thực thể với số chiều mới, ta thực hiện phép biến đổi sau :
+
+
+\begin{align}
+\mathbf{E'} = \mathbf{W}^E \mathbf{E}^t + \mathbf{H''}
+\end{align}
+
+Trước và sau mỗi lớp mạng đồ thị chú ý chúng tôi đề thực hiện chuẩn hóa.
+
+
+Sau quá trình trên chúng ta đã tạo ra được ma trận nhúng thực thể và quan hệ. 
+
+Our model borrows the idea of a translational
+scoring function from (Bordes et al., 2013), which
+learns embeddings such that for a given valid triple $t^k_{ij} = (e_i, r_k, e_j)$, the condition $\vec{h_i}+\vec{g_k} \approx \vec{h_j}$ holds, i.e., $e_j$ is the nearest neighbor of $e_i$ connected via relation $r_k$.
+
+ Specifically, we try to learn entity and relation embeddings to minimize the L1-norm dissimilarity measure given by $d_{t_{ij}} = \big|\big|\vec{h_i}+ \vec{g_k}-\vec{h_j}\big|\big|_1$.
+
+We train our model using hinge-loss which is
+given by the following expression
+
+
+\begin{align}
+{L(\Omega)}&={\sum_{t_{ij} \in S} \sum_{t'_{ij} \in S'} \text{max}\{d_{t'_{ij}} - d_{t_{ij}} + \gamma , 0 \}}
+\end{align}
+
+where $\gamma > 0$ is a margin hyper-parameter, $S$ is the set of valid triples, and $S'$ denotes the set of invalid
+triples, given formally as
+
+\begin{align}
+{S'}&={\underbrace{\{ t^k_{i'j} | e'_i \in \mathcal{E}\setminus e_i\}}_{\text{thay thế thực thể đầu}}\cup \underbrace{\{ t^k_{ij'} | e'_j \in \mathcal{E}\setminus e_j\}}_{\text{thay thế thực thể đuôi}}}
+\end{align}
+
+where $\omega^m$ represents the $m-th$ convolutional filter,
+$Ω$ is a hyper-parameter denoting number of filters
+used, $\ast	$ is a convolution operator, and $\mathbf{W} \in \mathbb{R}^{\Omega k×1}$
+represents a linear transformation matrix used to
+compute the final score of the triple. The model is
+trained using soft-margin loss as
+
+\begin{align}
+\mathcal{L} = \sum_{t^k_{ij} \in \{S \cup S'\}} \text{log}(1 + exp(l_{t^k_{ij}} . f(t^k_{ij}))) + \frac{\lambda}{2} \parallel{\mathbf{W}}\parallel_2^2
+\end{align}
+
+where $l_{t^k_{ij}} = \begin{cases}
+1 &\text{for } t^k_{ij} \in S \\
+-1 &\text{for } t^k_{ij} \in S' \\
+\end{cases}$
+
+Attention 
 
 CAttention \cite{cordonnier2020multi}
 
