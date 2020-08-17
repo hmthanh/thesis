@@ -3,53 +3,383 @@
 
 \section{Giới Thiệu}
 
-Hiện nay các bài toán liên quan đến dự đoán liên kết đồ thị tri thức lớn rất được quan tâm có khoảng bốn nhánh nghiên cứu chính như được nhắc đến trong nghiên cứu \cite{ampligraph} một trong số đó là phương pháp dựa trên luật logic. Vói mong muốn được tiếp cận các phương pháp từ đơn giản đến phức tạp nên chúng tôi chọn phương pháp này làm chủ để chính cho các báo cáo và nghiên cứu trong chương này.
+Hiện nay các bài toán liên quan đến dự đoán liên kết đồ thị tri thức lớn rất được quan tâm có khoảng bốn nhánh nghiên cứu chính như được nhắc đến trong nghiên cứu \cite{ampligraph} một trong số đó là phương pháp dựa trên luật logic. Với mong muốn được tiếp cận các phương pháp từ đơn giản đến phức tạp nên chúng tôi chọn phương pháp này làm chủ để chính cho các báo cáo và nghiên cứu trong chương này. Với phương pháp này đưa ra một xếp hạng \(k\) ứng viên với một số điểm nhất định biểu thị cho sự chắc chán của dự đoán nó phù hợp với các hệ thống gợi ý(recommender system).
 
-Hầu hết các nghiên cứu hiện tại về việc dự đoán liên kết của đồ thị tri thức đều liên quan đến các phương pháp tiếp cận tập trung vào khái niệm nhúng một đồ thị đã cho trong một không gian vectơ có số chiều thấp. Ngược lại với các tiếp cận này là một phương pháp đựa trên luật được nghiên cứu trong \cite{burl}.Thuật toán cốt lõi của nó dựa trên lấy mẫu một luật bất kỳ, sau đó khái quát  thành các quy tắc Horn. Tiếp đó dùng thống kê để tính độ tin cậy của các luật được khái quát. Khi dự đoán một liên kết mới (cạnh mới) của đồ thị chúng ta dự đoán một đỉnh có cạnh nối với một quan hệ cụ thể (label) với đỉnh còn lại hay không.
+\section{Các công trình liên quan}
+Hầu hết các nghiên cứu hiện tại về việc dự đoán liên kết của đồ thị tri thức đều liên quan đến các phương pháp tiếp cận tập trung vào khái niệm nhúng một đồ thị đã cho trong một không gian vectơ có số chiều thấp. Ngược lại với các tiếp cận này là một phương pháp đựa trên luật được nghiên cứu trong \cite{burl}.Thuật toán cốt lõi của nó dựa trên lấy mẫu một luật bất kỳ, sau đó khái quát  thành các quy tắc Horn\cite{wiki:Horn} Tiếp đó dùng thống kê để tính độ tin cậy của các luật được khái quát. Khi dự đoán một liên kết mới (cạnh mới) của đồ thị chúng ta dự đoán một đỉnh có cạnh nối với một quan hệ cụ thể (label) với đỉnh còn lại hay không.Cũng đã có rất nhiều phương pháp được nghiên cứu, đề xuất để học các các luật trong đồ thị chẳng hạn như trong   RuDiK \cite{dettmers2018convolutional}, AMIE\cite{galarraga2015fast}, RuleN\cite{meilicke2018fine}. Trong phương pháp RuDiK học các luật có thể học cả quy tắc positive và negative. Trong khi phương pháp của chúng tôi chỉ học các quy tắc positive. RuDiK tìm ra một bộ quy tắc nhỏ bao gồm phần lớn các ví dụ là đúng và ít sai sót nhất có thể. Điều này khác với mục tiêu của chúng tôi, chúng tôi cố gắng tìm hiểu mọi quy tắc khả thi có thể sau đó tạo xếp hạng \(k\) ứng viên tiềm năng với một độ tin cậy nhất định đuọc đo trên tập huấn luyện.
 
-\section{Nội dung}
-Trong phần này chúng tôi mô tả lại cách mô hình hóa lại bài toán theo phương pháp dựa trên luật, chiến lược đào tạo, cũng như một số kết quả thực nghiệm.
+Phương pháp của chúng tôi phần lớn dựa vào phương pháp Anytime Bottom-Up Rule Learning for Knowledge Graph Completion \cite{meilicke2019anytime} mà sau đây chúng tôi gọi là \textbf{AnyBURL}. Vấn đề tồn đọng lại ở mô hình này khi có một cạnh mới hay một tri thức mới được thêm vào đồ thị sẽ phải đào tạo lại toàn bộ mô hình. Chúng tôi giải quyết vẫn đề này theo hai chiến lược offline-to-online tức là khi thêm vào đồ thị tập hợp các cạnh thì mới thực hiện lại quá trình đào tạo lại một phần của đồ thị và chiến lược thứ 2 là online-to-online  khi thêm một cạnh mới sẽ thực hiện đào tạo lại ngay một phần có liên quan tới cạnh vừa thêm vào.
+\section{Phương pháp đề xuất}
+Trong phần này chúng tôi mô tả lại cách mô hình hóa lại bài toán theo phương pháp dựa trên luật AnyBURL,thuật toán lấy mẫu luật (đường đẫn) và thuật toán khái quát hóa một luật để lưu trữ trở thành tri thức của mô hình. Cùng với những cải tiến của chúng tôi trong quá trình đào tạo khi có một tri thức mới được thêm vào đồ thị(thêm cạnh).
 \subsection{Horn rule}
-Trong logic toán học, một công thức nguyên tử - \textbf{atomic formula}\cite{wiki:Atomic} (còn được gọi đơn giản là một nguyên tử-\textbf{atom}) là một công thức không có cấu trúc mệnh đề, nghĩa là một công thức không chứa các liên kết logic (\(\vee, ~ \wedge\)) hoặc tương đương (\(\Leftrightarrow\)) là một công thức không có các mẫu con nghiêm ngặt. Do đó, các nguyên tử là công thức đơn giản nhất để hình thành luật của logic. Các công thức hợp chất được hình thành bằng cách kết hợp các công thức nguyên tử bằng cách sử dụng các kết nối logic.
+Trong logic toán học, một công thức nguyên tử - \textbf{atomic formula}\cite{wiki:Atomic} (còn được gọi đơn giản là một nguyên tử-\textbf{atom}) là một công thức không có cấu trúc mệnh đề, nghĩa là một công thức không chứa các liên kết logic (\(\vee, ~ \wedge\)) hoặc tương đương (\(\Leftrightarrow\)) là một công thức không có các mẫu con nghiêm ngặt (tức là atom không thể chia nhỏ ra thành các atom con nữa). Do đó, các nguyên tử là công thức đơn giản nhất để hình thành luật của logic. Các công thức hợp được hình thành bằng cách kết hợp các công thức nguyên tử bằng cách sử dụng các liên kết logic.
 
-Một \textbf{literal}\cite{wiki:Literal} là một công thức nguyên tử (nguyên tử) hoặc phủ định của nó. Định nghĩa chủ yếu xuất hiện trong lý thuyết logic cổ điển. \textbf{Literal} có thể được chia thành hai loại: Một \textbf{positive literal} chỉ là một nguyên tử (ví dụ: \(x\)). Một \textbf{negative literal} là phủ định của một nguyên tử (ví dụ: \(\neg x\)). Sự phân chia của \textbf{literal} là \textbf{positive literal} hay \textbf{negative literal} tùy thuộc vào việc nó là \textbf{literal} được định nghĩa. Trong ngữ cảnh của một công thức ở dạng nối rời (\(\vee\)), một \textbf{literal} là thuần túy nếu phần bổ sung theo \textbf{literal} không xuất hiện trong công thức.
+Một \textbf{literal}\cite{wiki:Literal} là một công thức nguyên tử (nguyên tử) hoặc phủ định của nó. Định nghĩa chủ yếu xuất hiện trong lý thuyết logic cổ điển. \textbf{Literal} có thể được chia thành hai loại: Một \textbf{positive literal} chỉ là một nguyên tử (ví dụ: \(x\)). Một \textbf{negative literal} là phủ định của một nguyên tử (ví dụ: \(\neg x\)). Sự phân chia của \textbf{literal} là \textbf{positive literal} hay \textbf{negative literal} tùy thuộc vào việc \textbf{literal} được định nghĩa.
 
 Một mệnh đề (clause) là một literal hoặc nối rời của hai hoặc nhiều literal. Ở dạng \textbf{Horn} một mệnh đề có nhiều nhất một positive literal. Lưu ý: Không phải mọi công thức trong logic mệnh đề đều có thể đưa về dạng Horn.Mệnh đề xác định không có literal đôi khi được gọi là mệnh đề đơn vị (unit clause) và một mệnh đề đơn vị không có biến đôi khi được gọi là \textit{facts}\cite{wiki:Horn}.Một công thức nguyên tử được gọi là \textit{ground} hoặc \textit{ground atoms} nếu nó được xây dựng hoàn toàn từ các mệnh đề đơn vị; tất cả các \textit{ground atoms} có thể ghép lại từ một tập hợp hàm và các ký hiệu vị từ nhất định tạo nên cơ sở Herbrand cho các bộ ký hiệu này\cite{wiki:Term}.
 
-\subsection{Định nghĩa đồ thị logic}
-Một đồ thị tri thức \(\mathbb{G}\) được định nghĩa trên một bộ từ vựng \(\langle \mathbb{C}, \mathbb{R} \rangle\) trong đó \(\mathbb{C}\) là tập hợp các hằng số và \(\mathbb{R}\) là tập hợp các vị từ nhị phân.Khi đó, \(\mathbb{G} = \{r (a, b) \mid r \in \mathbb{R}, a, b \in \mathbb{C}\}\) là tập hợp các \textit{ground atoms} hoặc \textit{facts}. Một vị từ nhị phân được gọi là quan hệ và hằng số (hoặc hằng số được đề cập đến) được gọi là thực thể (entity) tương ứng với một dòng dữ liệu trong tập huấn luyện. Sau đây chúng tôi sử dụng các chữ cái viết thường cho các hằng và chữ in hoa cho các biến cho các thảo luận dưới đây. Vì chúng ta không học các quy tắc Horn tùy ý, và chỉ học đối với loại quy tắc nào có thể được tổng quát hóa như được thảo luận dưới đây.
+\subsection{Định nghĩa đồ thị  tri thức} \label{kg}
+Một đồ thị tri thức \(\mathbb{G}\) được định nghĩa trên một bộ từ vựng \(\langle \mathbb{C}, \mathbb{R} \rangle\) trong đó \(\mathbb{C}\) là tập hợp các hằng số và \(\mathbb{R}\) là tập hợp các vị từ nhị phân.Khi đó, \(\mathbb{G} = \{r (a, b) \mid r \in \mathbb{R}, a, b \in \mathbb{C}\}\) là tập hợp các \textit{ground atoms} hoặc \textit{facts}. Một vị từ nhị phân được gọi là quan hệ và hằng số (hoặc hằng số được đề cập đến) được gọi là thực thể (entity) tương ứng với một dòng dữ liệu trong tập huấn luyện. Sau đây chúng tôi sử dụng các chữ cái viết thường cho các hằng và chữ in hoa cho các biến cho các thảo luận dưới đây. Vì chúng ta không học các quy tắc Horn tùy ý, và chỉ học đối với loại quy tắc nào có thể được khái quát hóa như được thảo luận dưới đây.
 
-Chúng ta định nghĩa một quy tắc là \(h(c_0, c_n) \gets b_1(c_0, c_1) ,\dots ,b_n(c_{n}, c_{n + 1})\) là một đường dẫn ground atoms có chiều dài \(n\). Trong đó \(h(\dots)\) được gọi là \textit{head atoms} và \( b_1(c_0, c_1) ,\dots ,b_n(c_{n}, c_{n + 1})\) được gọi là \textit{body atoms}. Chúng tôi sẽ phân biệt dưới đây ba loại quy tắc mà chúng tôi gọi là: \textit{quy tắc nhị phân} \((\mathbf{B})\) là quy tắc trong head atoms chứa 2 biến, quy tắc đơn nguyên kết thúc bằng một đỉnh treo \((\mathbf{U_d})\) và head atoms chỉ chứa 1 biến còn quy tắc đơn nguyên kết thúc bằng một atom \((\mathbf{U_c)}\) và head atoms cũng chỉ chứa 1 biến.
+Chúng ta định nghĩa một quy tắc là \(h(c_0, c_n) \gets b_1(c_0, c_1) ,\dots ,b_n(c_{n}, c_{n + 1})\) là một đường dẫn ground atoms có chiều dài \(n\). Trong đó \(h(\dots)\) được gọi là \textit{head atoms} và \( b_1(c_0, c_1) ,\dots ,b_n(c_{n}, c_{n + 1})\) được gọi là \textit{body atoms}. Chúng tôi sẽ phân biệt dưới đây ba loại quy tắc mà chúng tôi gọi là: \textit{quy tắc nhị phân} \((\mathbf{B})\) là quy tắc trong head atoms chứa 2 biến, quy tắc đơn nguyên kết thúc bằng một đỉnh treo  và atom này chỉ chứa biến không chứa hằng số\((\mathbf{U_d})\) và head atoms chỉ chứa 1 biến. Còn quy tắc đơn nguyên kết thúc bằng một atom \((\mathbf{U_c)}\) và head atoms cũng chỉ chứa 1 biến.\((\mathbf{U_c)}\)  có thể là một đỉnh treo tới một hằng số bất kì nếu hằng số này trùng mới hằng số trong head atom thì tạo thành một đường đẫn có chu trình.
 
 \[B \hspace{3.7cm} h(A_0,A_n) \gets  \bigwedge^n_{i=1} b_i(A_{i-1}, A_i)\]
 \[U_d \hspace{3.8cm} h(A_0,c) \gets  \bigwedge^n_{i=1} b_i(A_{i-1}, A_i)\]
 \[U_c \hspace{1cm} h(A_0,c) \gets  \bigwedge^{n-1}_{i=1} b_i(A_{i-1}, A_i) \wedge b_n(A_{n-1}, c^{\prime})\]
 
-Chúng tôi gọi các quy tắc của các loại này là quy tắc đường dẫn (path rules), bởi vì các body atoms (phần sau đấu \(\gets\)) tạo thành một đường dẫn. Lưu ý rằng nó cũng bao gồm các biến thể quy tắc với các biến được đảo ngược trong các nguyên tử: được đưa ra trong đồ thị tri thức \(\mathbb{G}\), đường dẫn có độ dài \(n\) là một chuỗi gồm \(n\) bộ ba \(p_i (c_i, c_i + 1)\) với \(p_i (c_i, c_i + 1) \in \mathbb{G}\) hoặc \(p_i (c_i + 1, c_i) \in \mathbb{G}\) với \(0 \geq i \leq n\). Các mẫu quy tắc trừu tượng (abstract rule patterns) được cho ở trên có độ dài \(n\) vì body atoms của chúng có thể được khởi tạo thành một đường dẫn có độ dài \(n\).
+Chúng tôi gọi các quy tắc của các loại này là quy tắc đường đi (path rules), bởi vì các body atoms (phần sau đấu \(\gets\)) tạo thành một đường đi. Lưu ý rằng nó cũng bao gồm các biến thể quy tắc với các biến được đảo ngược trong các nguyên tử: được đưa ra trong đồ thị tri thức \(\mathbb{G}\), đường dẫn có độ dài \(n\) là một chuỗi gồm \(n\) bộ ba \(p_i (c_i, c_i + 1)\) với \(p_i (c_i, c_i + 1) \in \mathbb{G}\) hoặc \(p_i (c_i + 1, c_i) \in \mathbb{G}\) với \(0 \geq i \leq n\). Các mẫu quy tắc trừu tượng (abstract rule patterns) được cho ở trên có độ dài \(n\) vì body atoms của chúng có thể được khởi tạo thành một đường dẫn có độ dài \(n\).
 
 Ngoài ra Quy tắc \(B\) và quy tắc \(U_c\) cũng được gọi là quy tắc kết nối kín. Chúng có thể được học bởi hệ thống khai thác AMIE được mô tả trong \cite{AMIE,galarraga2015fast}. Quy tắc \(U_d\) là quy tắc không đóng hay đường đi không tạo thành chu trình vì \(A_n\) là biến chỉ xuất hiện một lần. Ví dụ:
 \[
 \begin{matrix}
-\textit{hypernym}(X, Y ) & \gets & \textit{hyponym}(Y, X) & \quad (1) \\
-prod(X, Y ) & \gets & prod(X, A),sequel(A, Y )  & \quad  (2) \\
-gen(X, female) & \gets & married(X, A), gen(A, male)  & \quad  (3) \\
-prof(X, actor) &  \gets & actedin(X, A)  & \quad (4)
+\textit{speaks}(X, Y ) & \gets & \textit{lives}(X, Y) & \quad (1) \\
+\textit{lives\_in\_city}(X, Y ) & \gets & \textit{lives}(X, A),\textit{within}(Y, A)  & \quad  (2) \\
+\textit{gen}(X, female) & \gets & \textit{married}(X, A), \textit{gen}(A, male)  & \quad  (3) \\
+\textit{profession}(X, actor) &  \gets & \textit{acted\_in}(X, A)  & \quad (4)
 \end{matrix}
 \]
+Quy tắc (1) là quy tắc \textbf{B}(quy tắc nhị phân) quy tắc này nói rằng nếu một người (thực thể) \(X\) nói nguôn ngữ \(Y\) nếu người \(X\) sống  ở đất nước \(Y\).Rõ ràng quy tắc này là một quy tắc khái quát miễn khi nào thực thể \(X\) có cạnh nối với thực thể \(Y\) với nhãn là \textit{lives} thì có thể kết thêm 1 cạnh với nhãn \textit{speaks} giữa \(X\) và \(Y\). Quy tắc (2), (3) điều là quy tắc \(U_c\) ,quy tắc (2) nói rằng người \(X\) sống ở thành phố \(Y\) nếu người \(X\) sống ở quốc gia \(A\) và thành phố \(Y\) nằm trong quốc gia \(A\), quy tắc (3) nói rằng nếu một người \(X\) là nữ nếu họ kết hôn với một người \(A\) và người \(A\) có giới tính nam. Ở quy tắc (3) không tạo thành chu trình trên đồ thị như quy tắc (2) đỉnh (Y) lặp lại  ở \textit{head atom} và đỉnh cuối cùng trong \textit{body atoms}. Quy tắc (4) là quy tắc \(U_d\) nói rằng người \(X\) là một điễn viên nếu người \(X\) đóng trong một bộ phim \(A\).
 
-Tất cả các quy tắc được xem xét là xác suất có nghĩa là chúng được chú thích với điểm tin cậy thể hiện xác suất dự đoán một thực tế chính xác với quy tắc này. Tỷ lệ body groundings dẫn đến nối head grounding chính xác (được đo trên dữ liệu huấn luyện) được gọi là độ tin cậy của quy tắc. Điều quan trọng là phải hiểu mối quan hệ giữa ba loại quy tắc. Nó đặc biệt thú vị trong bối cảnh của các quy tắc xác suất. Với mục đích đó, hãy xem xét bộ quy tắc sau (điểm tin cậy giả tưởng được thêm vào dấu ngoặc vuông).
+Tất cả các quy tắc được xem xét sẽ được lọc lại đựa trên điểm được gọi là độ tin cậy của quy tắc là được đo trên tập dữ liệu huấn luyện. Độ tin cậy này được đo bằng tỷ lệ body atoms dẫn đến head atoms chia cho tất cả các đường đãn chứa body atoms.Ví dụ khi ta có quy tắc sau:
+\(\textit{gen}(X, female) \gets \textit{married}(X, A), \textit{gen}(A, male) \). Khi đó chúng ta thực hiện đếm tất cả các cặp thực thể có quan hệ  \(\textit{married}(X, A), \textit{gen}(A, male) \) được gọi là số đường dẫn chứa body atoms, sau đó thực hiện đếm tất cả các  thực thể thỏa quan hệ \(\textit{gen}(X, female) \gets \textit{married}(X, A), \textit{gen}(A, male) \) được gọi là số body atoms dẫn đến head atoms. Sau đó chia số body atoms dẫn đến head atoms cho  đường dẫn chứa body atoms được gọi là độ tin cậy của quy tắc.
+\subsection{Thuật toán} \label{algorithm2}
+Trong phần này chúng tôi mô tả lại thuật toán chính của phương pháp AnyBURL nó cũng được mô tả trong \cite{burl} cũng như hai thuật toán mở rộng của chúng tôi để giải quyết vấn đề khi đồ thị được thêm một hoặc một lượng tri thức mới (thêm cạnh). Ngoài ra chúng tôi cũng mô tả sơ lược lại cách khởi tạo một luật cũng như cách thức tính toán độ tin cậy bằng cách lấy mẫu trên tập huấn luyện và vấn đề độ tin cậy khi dự đoán một luật khi tính toán độ tin cậy bằng việc lấy mẫu.
+\subsubsection{Thuật toán 1 AnyBURL}
+\begin{algorithm}
+\caption{Anytime Bottom-up Rule Learning}\label{euclid}
+\begin{algorithmic}[1]
+\Procedure{AnyBURL($\mathbb{G}$, s, sat, Q, ts)}{}
+\State $\textit{n} = \text{2}$
+\State $R = \emptyset$
+\Loop
+\State $R_s = \emptyset$
+\State $start = currentTime()$
+\Repeat
+\State $p = samplePath(\mathbb{G}, n)$
+\State $R_p = generateRules(p)$
+\For {$r \in R_p$}
+\State $score(r, s)$
+\If {$Q(r)$}
+	\State $R_s = R_s \cup \{r\}$
+\EndIf
+\EndFor
+\Until {$currentTime() > start + ts$}
+\State $R^{\prime}_s = R_s \cap R$
+\If {$ \mid R^{\prime} \mid / \mid R \mid > SAT$}
+	\State $n = n + 1$
+\EndIf
+\State $R = R_s \cap R$
+\EndLoop
+\Return R
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
-Nội dung báo cáo được phân thành các chương. Số thứ tự của các chương, mục được đánh số bằng hệ thống số Ả-rập, không dùng số La mã. Các mục và tiểu mục được đánh số bằng các nhóm hai hoặc ba chữ số, cách nhau một dấu chấm: số thứ nhất chỉ số chương, chỉ số thứ hai chỉ số mục, số thứ ba chỉ số tiểu mục.
+Đầu vào của thuật toán \(\mathbb{G}, S, SAT, Q, TS\). Đầu ra là tập hợp \(R\) các luật học được. Trong đó \(\mathbb{G}\) là một đồ thị tri thức được cho từ tập dữ liệu đào tạo. \(S\) là tham số cho biết kích thước của một lần lấy mẫu trên dữ liệu đào tạo để tính toán độ tin cậy. \(SAT\) cho biết độ bão hòa(saturation) của các luật được sinh ra trong 1 lần lặp độ bão hòa này được tính bằng số luật \textbf{mới} học được ở lần lặp hiện tại so số sô luật đã học được. Nếu nhỏ hơn độ bão hòa thì chúng tôi cho rằng vẫn còn tiềm năng để khai thác các luật với độ dài \(n\). ngược lại chúng tôi tăng độ dài của luật sau đó tiếp tục khai thác. \(Q\) là một ngưỡng để xác định xem luật mới được sinh ra có được thêm vào kết quả trả về hay không. Còn \(TS\) cho biết thời gian học của thuật toán. Chúng tôi bắt đầu với \(n\) bằng \(2\) tức là các luật có độ dài đường đẫn bằng 2 vì trong path rule yêu cầu ít nhất 1 literal trong head atom và 1 trong body atoms. Ở phần lấy mẫu 1 luật(\textit{samplePath}) chỉ đơn giản là chúng ta chọn 1 đỉnh bất kì trong đồ thị duyệt qua tất cả các đường đẫn từ đỉnh đó đi qua \(n\) đỉnh khác, sau đó chọn ngẫu nhiên 1 đường đẫn trong số các trường đẫn duyệt được.
 
+\subsubsection{Thuật toán 2 tạo 1 luật}
+\begin{algorithm}
+\caption{Generate Rules(p)}\label{euclid}
+\begin{algorithmic}[1]
+\Procedure{generate\_rules(p)}{}
+\State $\textit{generalizations} = \emptyset$
+\State $is\_binary\_rule = random.choices([true,false])$
+\If {$is\_binary\_rule$}
+	\State $replace\_all\_head\_by\_variables(p)$
+	\State $replace\_all\_tail\_by\_variables(p)$
+	\State $add(generalizations, p)$
+\Else:
+    \State $replace\_all\_head\_by\_variables(p)$
+    \State $add(generalizations, p)$
+    \State $replace\_all\_tail\_by\_variables(p)$
+	\State $add(generalizations, p)$
+\EndIf
+\Return $generalizations$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
-%Báo cáo cần dùng LaTEX để viết và trình bày theo mẫu đã được cung cấp.
+Ở thuật toán này chúng tôi thay các hằng số vào các head và tail trong toàn bộ path rule  của luật được lấy mẫu ở bước trước nếu luật cần học là luật nhị phân ngược lại chúng tôi chỉ thay hoặc head hoặc tail rồi thêm vào luật trả về sau đó chúng tôi lấy mẫu trên tập huấn luyện 1 tập hợp các luật sau đó tính toán độ tin cây như được mô tả trong phần \hyperref[kg]{2.3.2}. Để giảm chi phí tính toán chúng tôi chọn cách lấy mẫu trên tập huấn luyện để tính toán. Khi đưa ra dự đoán các ứng cử viên của một luật chúng tôi sẽ tính toán lại bằng cách thêm vào một lượng biểu diẽn số luật bị sai mà chúng tôi chưa nhìn thấy trong quá trình lấy mẫu để tính toán độ tin cậy. Dối với mô hình của chúng thôi sau khi thử nghiệm tham số trong khoảng \([5, 10]\) cho kết quả tốt nhất.
 
- Báo cáo trình bày sử dụng khổ giấy với việc canh lề như sau: Lề trên 3 cm, lề dưới 2,5 cm, lề trái 3 cm, lề phải 2 cm. Đánh số trang ở giữa bên dưới. Đánh số trang ở giữa bên dưới.
+\subsubsection{Thuật toán 3 học offline-to-online}
+\begin{algorithm}
+\caption{AnyBURL Learning batch size}\label{euclid}
+\begin{algorithmic}[1]
+\Procedure{AnyBURLbatch($\mathbb{G}$, s, sat, Q, ts, batch\_edge)}{}
+\State $is\_connected = add(\mathbb{G}, batch\_edge)$
+\If {$is\_connected$}
+	\State  $ G^{\prime} = \mathbb{G} \oplus batch\_edge$
+\Else
+    \State  $ G^{\prime} = batch\_edge$
+\EndIf
+\State $\textit{n} = \text{2}$
+\State $R = \emptyset$
+\Loop
+\State $R_s = \emptyset$
+\State $start = currentTime()$
+\Repeat
+\State $p = samplePath(G^{\prime}, n)$
+\State $R_p = generateRules(p)$
+\For {$r \in R_p$}
+\State $score(r, s)$
+\If {$Q(r)$}
+	\State $R_s = R_s \cup \{r\}$
+\EndIf
+\EndFor
+\Until {$currentTime() > start + ts$}
+\State $R^{\prime}_s = R_s \cap R$
+\If {$ \mid R^{\prime} \mid / \mid R \mid > SAT$}
+	\State $n = n + 1$
+\EndIf
+\State $R = R_s \cap R$
+\EndLoop
+\Return R
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
-Font chữ dùng trong báo cáo (Times New Roman) với kích cỡ (size) 13-14pt, sử dụng chế độ dãn dòng (line spacing) chế độ 1.5 lines.
+Thuật toán này là phần bổ xung của chúng tôi để tránh việc phải đào tạo lại toàn bộ mô hình khi có một lượng tri thức mới được thêm vào đồ thị. Khi thêm vào đồ thị chúng tôi kiểm trả xem phần tri thức mới có kết nối với tri thức cũ hay không (tính liên thông) nếu có chúng tôi thực hiện phép toán \(\oplus\) lấy  tất cả các phần trong \(batch\_edge\) thêm với 1 phần liên thông với những cạnh liên thông với đồ thị với dộ dài là \(5\), Nếu không chúng tôi lấy tất cả các phần trong \(batch\_edge\) sau đó thực hiện lại các bước như thuật toán Anytime Bottom-up Rule Learning.
 
-%Các bảng biểu trình bày theo chiều ngang khổ giấy thì đầu bảng là lề trái của trang. 
+\subsubsection{Thuật toán 4 học online-to-online}
+\begin{algorithm}
+\caption{AnyBURL Learning batch size}\label{euclid}
+\begin{algorithmic}[1]
+\Procedure{AnyBURLbatch($\mathbb{G}$, s, sat, Q, ts, edge)}{}
+\State $is\_connected = add(\mathbb{G}, edge)$
+\State $R = \emptyset$
+\If {$is\_connected$}
+    \State $\textit{n} = \text{2}$
+    \State $R_s = \emptyset$
+    \Repeat
+        \State $p = samplePath(edge, n)$
+        \State $R_p = generateRules(p)$
+        \For {$r \in R_p$}
+            \State $score(r, s)$
+            \If {$Q(r)$}
+        	    \State $R_s = R_s \cup \{r\}$
+            \EndIf
+        \EndFor
+    \Until {$currentTime() > start + ts$}
+    \State $R^{\prime}_s = R_s \cap R$
+    \If {$ \mid R^{\prime} \mid / \mid R \mid > SAT$}
+    	\State $n = n + 1$
+    \EndIf
+    \State $R = R_s \cap R$
+\State \Return R
+\EndIf
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
+Thuật toán này là một phần bổ xung cho thuật toán 3 ở trên. Sở dĩ chúng tôi gọi là online-to-online là vì khi có một cạnh mới(tri thức mới) được thêm vào đồ thị chúng tôi sẽ thực hiện việc học ngay tức khắc trên các path rule liên quan tới cạnh đó không giống như ở thuật toán 3 khi có đủ 1 lượng tri thức mới được thêm vào.
+
+% Nội dung báo cáo được phân thành các chương. Số thứ tự của các chương, mục được đánh số bằng hệ thống số Ả-rập, không dùng số La mã. Các mục và tiểu mục được đánh số bằng các nhóm hai hoặc ba chữ số, cách nhau một dấu chấm: số thứ nhất chỉ số chương, chỉ số thứ hai chỉ số mục, số thứ ba chỉ số tiểu mục.
+
+% %Báo cáo cần dùng LaTEX để viết và trình bày theo mẫu đã được cung cấp.
+
+%  Báo cáo trình bày sử dụng khổ giấy với việc canh lề như sau: Lề trên 3 cm, lề dưới 2,5 cm, lề trái 3 cm, lề phải 2 cm. Đánh số trang ở giữa bên dưới. Đánh số trang ở giữa bên dưới.
+
+% Font chữ dùng trong báo cáo (Times New Roman) với kích cỡ (size) 13-14pt, sử dụng chế độ dãn dòng (line spacing) chế độ 1.5 lines.
+
+%Các bảng biểu trình bày theo chiều ngang khổ giấy thì đầu bảng là lề trái của trang.
+
+\section{Kết quả thí nghiệm}
+Trong phần này chúng tôi mô tả lại các bộ dữ liệu mà chúng tôi đùng để thực nghiệm đánh giá phương pháp của chúng tôi cùng với so sánh với các kết quả khác của các công trình nổi bật khác. Cùng với đó chúng tôi cố gắng tìm hiểu các đặc trưng của các bộ dữ liệu tương ứng để cố gắng lý giải thích tại sao mô hình của chúng tôi hoặc các công trình khác có được kết quả tốt trên tập dữ liệu tương ứng đó.
+\subsection{Các tập dữ liệu huấn luyện} \label{datasets}
+Trong thí nghiệm của chúng tôi, chúng tôi thực hiện trên bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR.Các bộ dữ liệu này là tập hợp các bộ ba (triple) \(\langle head, relation, tail \rangle\) biểu thị cho thực thể đầu có một mối quan hệ với thực thể cuối.
+
+Bộ dữ liệu FB15k: Bộ dữ liệu này được tạo bởi nhóm nghiên cứu A. Bordes, N. Usunier, A. Garcia-Duran, J. Weston, and O. Yakhnenko \cite{bordes2013translating} bằng cách trích xuất từ bộ dữ liệu Wikilinks database \footnote{https://code.google.com/archive/p/wiki-links/}.Wikilinks database thu thập các siêu liên kết(hyperlinks) đến Wikipedia gồm 40 triệu lượt đề cập trên 3 triệu thực thể, họ trích xuất tất cả các dữ kiện liên quan đến một thực thể nhất định có hơn 100 lần được đề cập đến bởi các tài liệu khác cùng với tất cả các dữ kiện liên quan đến thực thể đó (bao gồm cả những thực thể con được nhắc đến trong tài liệu Wikipedia đó), ngoại trừ những thonng tin như: ngày tháng, danh từ riêng, v.v ... Họ cũng chuyển đổi các đỉnh có bậc \(n\) được biểu diễn thành các nhóm các cạnh nhị phân tức là liệt kê các cạnh và quan hệ của mọi đỉnh. Tập dữ liệu được chia ngẫu nhiên thành 3 tập: tập training với 1345 relations, 14834 head entities và 14903 tail entities, tập test gồm 916 relations, 11886 head entities, và 11285 tail entities, tập vadiation gồm 961 relations, 12297 head entities, và 11825 tail entities.
+
+Bộ dữ liệu FB15k-237: là một tập hợp con của FB15k được xây dựng bởi Toutanova và Chen \cite{toutanova2015observed} lấy cảm hứng từ quan sát rằng FB15k bao gồm dữ liệu thử nghiệm được các mô hình nhìn thấy tại thời điểm đào tạo(test leekage). Trong FB15k, vấn đề này là do sự hiện diện của các quan hệ gần giống nhau hoặc nghịch đảo của nhau.FB15k-237 được xây dựng để trở thành một tập dữ liệu thách thức hơn: các tác giả đã chọn các dữ kiện liên quan đến 401 quan hệ xuất hiện nhiều nhất và loại bỏ tất cả các quan hệ tương đương hoặc nghịch đảo. Họ cũng đảm bảo rằng không có thực thể nào được kết nối trong tập huấn luyện cũng được liên kết trực tiếp trong tập test và validation.Tập training gồm 237 relations, 13781 head entities, và 13379 tail entities, tập test gồm 223 relations, 7652 head entities, và 5804 tail entities, tập vadition gồm 224 relations, 8171 head entities, and 6376 tail entities.
+
+Bộ dữ liệu WN18: được giới thiệu bởi các tác giả của TransE \cite{bordes2013translating}, được trích xuất từ WordNet\footnote{https://wordnet.princeton.edu/}, một bản thể học ngôn ngữ KG có nghĩa là cung cấp một từ điển/từ đồng nghĩa để hỗ trợ NLP và phân tích văn bản tự động. Trong WordNet, các thực thể tương ứng với các tập hợp (\textit{word senses}) và các quan hệ đại diện cho các kết nối từ vựng của chúng (ví dụ: “hypernym”). Để xây dựng WN18, các tác giả đã sử dụng WordNet làm điểm bắt đầu và sau đó lặp đi lặp lại lọc ra các thực thể và mối quan hệ với quá ít lần được đề cập. Tập dữ liệu được chia ngẫu nhiên thành 3 tập: tập training với 18 relations, 40504 head entities, và 40551 tail entities, tập test gồm 18 relations, 4262 head entities, and 4338 tail entities, tập vadiation gồm 18 relations, 4349 head entities, and 4263 tail entities.
+
+Bộ dữ liệu WN18RR: là một tập hợp con của WN18 được xây dựng bởi DeŠmers et al.\cite{dettmers2017convolutional}, cũng là người giải quyết vấn đề rò rỉ thử nghiệm (test leakage)trong WN18. Để giải quyết vấn đề đó, họ xây dựng tập dữ liệu WN18RR thách thức hơn nhiều bằng cách áp dụng một phương pháp tương tự đưược sử dụng cho FB15k-237 \cite{toutanova2015observed}. Training gồm 11 relations, 39610 head entities, và 31881 tail entities, tập test gồm 11 relations, 2958 head entities, và 2619 tail entities, tập vadition gồm 11 relations, 2851 head entities, and 2575 tail entities.
+
+\subsection{Kết quả thực nghiệm}
+Trong phần này chúng tôi mô tả lại các phương pháp đánh giá(độ do), môi trường thực hiện cũng như các tập dữ liệu mà chúng tôi sử dụng để dánh giá phương pháp của mình. Các phương pháp đánh giá(độ do) này cũng phổ biến nó được đánh giá cho hầu hết các mô hình dự đoán liên kết trên đồ thị. Chúng tôi tiến hành so sánh với bốn phương pháp nổi bật khác được báo cáo trong \cite{rossi2020knowledge}.
+\subsubsection{Các độ đo}
+\textit{Mean Rank} (MR). Đây là giá trị trung bình của rank thu được cho một dự đoán chính xác. Càng nhỏ thì mô hình càng chính xác:
+\[MR = \frac{1}{\mid Q \mid} \sum_{q ~\in~ Q} rank(q) \]
+Trong đó \(\mid Q \mid\) là độ lớn của tập hợp các câu hỏi bằng độ lớn của tập test hoặc vadidation nhân 2. Vì khi dự đoán chúng tôi dự đoán cả head và tail cho một dòng tương ứng trong tập dữ liệu thử nghiệm. Ví dụ chún tôi sẽ dự đoán \(\langle ?,~ relation,~ tail \rangle\) và \(\langle head,~ relation,~ ?\rangle\) cho 1 dòng tương ứng. \(q\) thể hiện cho câu hỏi chúng tôi dự đoán và \(rank(q)\) thể hiện cho kết quả đúng của câu hỏi đứng ở vị trí thứ mấy trong xếp hạng của chúng tôi. Rõ ràng độ đo này nằm giữa \([1, \mid \text{số lượng các entity} \mid]\) do có tối da \(n\) cạnh nối 1 đỉnh tới \(n-1\) đỉnh còn lại và thêm cạnh nối tới chính đỉnh nó. Và độ đo này đễ bị ảnh hưởng bởi nhiễu vì có những quan hệ có những thực thể được xếp hạng gần cuối. Để giải quyết vấn đề này nhóm chúng tôi và các nhóm nghiên cứu khác sử dụng thêm độ đo Mean Reciprocal Rank (MMR).
+
+\textit{Mean Reciprocal Rank} (MMR). Đây là xếp hạng đối ứng trung bình, là nghịch đảo của giá trị trung bình của rank thu được cho một dự đoán chính xác ở trên. Và càng lớn thì mô hình càng chính xác. Do độ đo này lấy nghịch đảo của các rank nên tránh dược vấn đề nhiễu của mô hình.
+\[MRR =\frac{1}{\mid Q \mid} \sum_{q~ \in ~Q} \frac{1}{rank(q)}\]
+
+\textit{Hit@K} (H@K). Đó là tỷ lệ các dự đoán đúng mà rank nhỏ hơn hoặc bằng ngưỡng \(K\):
+\[H@K = \frac{\mid {q ~\in ~Q~: rank(q) \leq K} \mid}{\mid Q \mid}\]
+\subsubsection{Kết quả}
+Như đã nói trước đây với mô hình dựa trên luật của chúng tôi hoàn toàn có thể thực hiện trên một laptop với cấu hình thông thường. Trong thí nghiệm của chúng tôi cấu hình máy để thực thi như sau: T480, core i5 8th Gen, ram 16Gb, 4 core 8 thread. Mã nguồn thực thi được viết bằng ngôn ngữ Python phiên bản 3.6 và dùng các hàm hỗ trợ có sẵn trong Python với không một thư viện bên thứ ba nào. Thí nghiệm được thực hiện với bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR. Thông tin chi tiết các bộ dữ liệu này được mô tả ở phần \hyperref[datasets]{các tập dữ liệu huấn luyện}.
+
+Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật toán này sẽ học các luật được sinh ra trong một khoảng thời gian nhất định do người dùng cấu hình. Ở đây chúng tôi chọn cấu hình thời gian là 1000 giây tương đương khoảng 17 phút đào tạo, với độ bão hòa(SAT) \(0.85\), độ tin cậy Q \(0.05\), kích thước mẫu S (\(\frac{1}{10}~ \text{tập huấn luyện}\)). Với cấu hình như vậy mô hình phiên bản python của chúng tối cho kết quả tương đương với phiên bản Java nhóm tác giả với cấu hình tương tự nhưng thời gian training là 100 giây. 
+
+Bảng \hyperref[table1]{2.1} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với các độ đo \(H@K\) cùng với các kết quả thực nghiệm của các phương pháp khác được đề cập trong khảo  sát \cite{rossi2020knowledge}
+
+\begin{table}[ht] \label{table1}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllllllllllllllll}
+\cline{2-17}
+\multicolumn{1}{l|}{} &
+  \multicolumn{4}{c|}{\textbf{FB15k}} &
+  \multicolumn{4}{c|}{\textbf{FB15-237}} &
+  \multicolumn{4}{c|}{\textbf{WN18}} &
+  \multicolumn{4}{c|}{\textbf{WN18RR}} \\ \cline{2-17}
+\multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{\textbf{H@1}} &
+  \multicolumn{1}{l|}{\textbf{H@10}} &
+  \multicolumn{1}{l|}{\textbf{MR}} &
+  \multicolumn{1}{l|}{\textbf{MRR}} &
+  \multicolumn{1}{l|}{\textbf{H@1}} &
+  \multicolumn{1}{l|}{\textbf{H@10}} &
+  \multicolumn{1}{l|}{\textbf{MR}} &
+  \multicolumn{1}{l|}{\textbf{MRR}} &
+  \multicolumn{1}{l|}{\textbf{H@1}} &
+  \multicolumn{1}{l|}{\textbf{H@10}} &
+  \multicolumn{1}{l|}{\textbf{MR}} &
+  \multicolumn{1}{l|}{\textbf{MRR}} &
+  \multicolumn{1}{l|}{\textbf{H@1}} &
+  \multicolumn{1}{l|}{\textbf{H@10}} &
+  \multicolumn{1}{l|}{\textbf{MR}} &
+  \multicolumn{1}{l|}{\textbf{MRR}} \\ \hline
+\multicolumn{1}{|l|}{\textbf{ComplEx}} &
+  \multicolumn{1}{l|}{81.56} &
+  \multicolumn{1}{l|}{90.53} &
+  \multicolumn{1}{l|}{34} &
+  \multicolumn{1}{l|}{0.848} &
+  \multicolumn{1}{l|}{94.53} &
+  \multicolumn{1}{l|}{95.50} &
+  \multicolumn{1}{l|}{3623} &
+  \multicolumn{1}{l|}{0.949} &
+  \multicolumn{1}{l|}{25.72} &
+  \multicolumn{1}{l|}{52.97} &
+  \multicolumn{1}{l|}{202} &
+  \multicolumn{1}{l|}{0.349} &
+  \multicolumn{1}{l|}{42.55} &
+  \multicolumn{1}{l|}{52.12} &
+  \multicolumn{1}{l|}{4907} &
+  \multicolumn{1}{l|}{0.458} \\ \hline
+\multicolumn{1}{|l|}{\textbf{TuckER}} &
+  \multicolumn{1}{l|}{72.89} &
+  \multicolumn{1}{l|}{88.88} &
+  \multicolumn{1}{l|}{39} &
+  \multicolumn{1}{l|}{0.788} &
+  \multicolumn{1}{l|}{94.64} &
+  \multicolumn{1}{l|}{95.80} &
+  \multicolumn{1}{l|}{510} &
+  \multicolumn{1}{l|}{0.951} &
+  \multicolumn{1}{l|}{25.90} &
+  \multicolumn{1}{l|}{53.61} &
+  \multicolumn{1}{l|}{162} &
+  \multicolumn{1}{l|}{0.352} &
+  \multicolumn{1}{l|}{42.95} &
+  \multicolumn{1}{l|}{51.40} &
+  \multicolumn{1}{l|}{6239} &
+  \multicolumn{1}{l|}{0.459} \\ \hline
+\multicolumn{1}{|l|}{\textbf{TransE}} &
+  \multicolumn{1}{l|}{49.36} &
+  \multicolumn{1}{l|}{84.73} &
+  \multicolumn{1}{l|}{45} &
+  \multicolumn{1}{l|}{0.628} &
+  \multicolumn{1}{l|}{40.56} &
+  \multicolumn{1}{l|}{94.87} &
+  \multicolumn{1}{l|}{279} &
+  \multicolumn{1}{l|}{0.646} &
+  \multicolumn{1}{l|}{21.72} &
+  \multicolumn{1}{l|}{49.65} &
+  \multicolumn{1}{l|}{209} &
+  \multicolumn{1}{l|}{0.31} &
+  \multicolumn{1}{l|}{2.79} &
+  \multicolumn{1}{l|}{49.65} &
+  \multicolumn{1}{l|}{3936} &
+  \multicolumn{1}{l|}{0.206} \\ \hline
+\multicolumn{1}{|l|}{\textbf{RotatE}} &
+  \multicolumn{1}{l|}{73.93} &
+  \multicolumn{1}{l|}{88.10} &
+  \multicolumn{1}{l|}{42} &
+  \multicolumn{1}{l|}{0.791} &
+  \multicolumn{1}{l|}{94.30} &
+  \multicolumn{1}{l|}{96.02} &
+  \multicolumn{1}{l|}{274} &
+  \multicolumn{1}{l|}{0.949} &
+  \multicolumn{1}{l|}{23.83} &
+  \multicolumn{1}{l|}{53.06} &
+  \multicolumn{1}{l|}{178} &
+  \multicolumn{1}{l|}{0.336} &
+  \multicolumn{1}{l|}{42.60} &
+  \multicolumn{1}{l|}{57.35} &
+  \multicolumn{1}{l|}{3318} &
+  \multicolumn{1}{l|}{0.475} \\ \hline
+\multicolumn{1}{|l|}{\textbf{ConvKB}} &
+  \multicolumn{1}{l|}{11.44} &
+  \multicolumn{1}{l|}{40.83} &
+  \multicolumn{1}{l|}{324} &
+  \multicolumn{1}{l|}{0.211} &
+  \multicolumn{1}{l|}{94.89} &
+  \multicolumn{1}{l|}{52.89} &
+  \multicolumn{1}{l|}{202} &
+  \multicolumn{1}{l|}{0.709} &
+  \multicolumn{1}{l|}{13.98} &
+  \multicolumn{1}{l|}{41.46} &
+  \multicolumn{1}{l|}{309} &
+  \multicolumn{1}{l|}{0.230} &
+  \multicolumn{1}{l|}{5.63} &
+  \multicolumn{1}{l|}{52.50} &
+  \multicolumn{1}{l|}{3429} &
+  \multicolumn{1}{l|}{0.249} \\ \hline
+\multicolumn{1}{|l|}{\textbf{GAT}} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} \\ \hline
+\multicolumn{1}{|l|}{\textbf{BURL}} &
+  \multicolumn{1}{l|}{79.13} &
+  \multicolumn{1}{l|}{82.30} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{20.85} &
+  \multicolumn{1}{l|}{42.40} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{\textbf{93.86}} &
+  \multicolumn{1}{l|}{\textbf{94.07}} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{\textbf{44.22}} &
+  \multicolumn{1}{l|}{54.23} &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} \\ \hline
+Rank &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+   &
+
+\end{tabular}}
+\caption{Bảng 1}
+\end{table}
 
 \section{Bố cục của báo cáo}
 

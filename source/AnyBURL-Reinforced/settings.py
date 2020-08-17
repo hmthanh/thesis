@@ -14,14 +14,14 @@ class Settings(object):
     * Suppresses any rules with constants.
     *'''
     self.CONSTANTS_OFF = False
-    self.EPSILON = 0.1
+    self.epsilon = 0.1
     '''
     **
     * In the first batch the decisions are completely randomized. This random influence becomes less
     * at will be stable at  RANDOMIZED_DECISIONS after this number of batches have been carried out.
     **
     '''
-    self.RANDOMIZED_DECISIONS_ANNEALING = 5
+    self.randomized_decisions_annealing = 5
     '''
     * This number defines if a rule to be redundant if the number of groundings for its last atom is less than this parameter.
     * It avoid that rules with constants are too specific and thus redundant compared to shorter rules
@@ -49,14 +49,14 @@ class Settings(object):
     * 4 = correct predictions weighted by applied confidence^2
     * 5 = correct predictions weighted by applied confidence divided by (rule length-1)^2
     '''
-    self.REWARD = 5
+    self.reward = 5
     '''
     * Relevant for reinforced learning, how to use the scores created by a thread within the decision.
     *
     * 1 = GREEDY = Epsilon greedy: Focus only on the best.
     * 2 = WEIGHTED = Weighted policy: focus as much as much a a path type, as much as it gave you.
     '''
-    self.POLICY = 2
+    self.policy = 2
     self.SCORING_REGIME_CONFDIFF = 0.0
     '''
     * Defines the prediction type which also influences the usage of the other parameters.
@@ -124,7 +124,7 @@ class Settings(object):
     *
     * PROBABLY OUT ... no its in again
     '''
-    self.DISCRIMINATION_BOUND = 1000
+    self.discrimination_bound = 1000
     '''
     * The time that is reserved for one batch in milliseconds.
     '''
@@ -133,12 +133,12 @@ class Settings(object):
     * The maximal number of body atoms in cyclic rules (inclusive this number). If this number is exceeded all computation time
     * is used for acyclic rules only from that time on.
     '''
-    self.MAX_LENGTH_CYCLIC = 3
+    self.max_length_cyclic = 3
     '''
     * The maximal number of body atoms in acyclic rules (inclusive this number). If this number is exceeded all computation time
     * is used for cyclic rules only from that time on.
     '''
-    self.MAX_LENGTH_ACYCLIC = 1
+    self.max_length_acyclic = 1
 
     '''
     * The maximal number of body atoms in partially grounded cyclic rules (inclusive this number). If this number is exceeded than a
@@ -149,7 +149,7 @@ class Settings(object):
     '''
     * The threshold for the number of correct prediction created with the refined rule.
     '''
-    self.THRESHOLD_CORRECT_PREDICTIONS = 2
+    self.threshold_correct_prediction = 2
     '''
     * The threshold for the number of correct predictions. Determines which rules are read from a file and which are ignored.
     '''
@@ -157,7 +157,7 @@ class Settings(object):
     '''
     *The number of negative examples for which we assume that they exist, however, we have not seen them. Rules with high coverage are favored the higher the chosen number.
     '''
-    self.UNSEEN_NEGATIVE_EXAMPLES = 5
+    self.unseen_negative_examples = 5
     '''
     * The number of negative examples for which we assume that they exist, however, we have not seen them.
     * This number is for each refinements step, including the refinement of a refined rule.
@@ -178,7 +178,7 @@ class Settings(object):
     '''
     * The threshold for the confidence of the refined rule
     '''
-    self.THRESHOLD_CONFIDENCE = 1e-4
+    self.threshold_confidence = 1e-4
     '''
     * The threshold for the confidence of the rule. Determines which rules are read from a file by the rule reader.
     '''
@@ -235,6 +235,15 @@ class Settings(object):
 
     self.KEYWORD = {'greedy': 1, 'weighted': 2, 'sup': 1, 'supXcon': 3, 'supXcon/lr': 5, 'supXcon/rl': 5}
 
-  def load_learning_config():
-    with open('learning.yaml') as stream:
-      return yaml.safe_load(stream)
+    self.learning_is_loaded = False
+
+  def load_learning_config(self):
+    if self.learning_is_loaded == False:
+      with open('learning.yaml') as stream:
+        config = yaml.safe_load(stream)
+      self.worker_threads = config['worker_threads']
+      self.snapshots_at = config['snapshots_at']
+      self.path_training = config['path_training']
+      self.path_output = config['path_output']
+      self.max_length_grounded_cyclic = config['max_length_grounded_cyclic']
+      self.learning_is_loaded = True

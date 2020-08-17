@@ -1,15 +1,15 @@
-path_training: ../../datasets/WN18/train.txt
-path_output: ../../datasets/WN18/valid.txt
+path_training:
+  - ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+  - ../../datasets/FB15k-237/train.txt
+  - ../../datasets/WN18/train.txt
+  - ../../datasets/WN18RR/train.txt
 snapshots_at:
-  - 100
+  - 200
   - 500
-  - 1000
-#   - 200
-#   - 500
-#   - 1000
+  - 800
 saturation: 0.99
 sample_size: 500
-batch_time: 1000
+batch_time: 2000
 threshold_correct_predictions: 2
 threshold_confidence: 0.00001
 max_length_cylic: 3

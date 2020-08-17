@@ -1,7 +1,8 @@
-PATH_TRAINING:  ../../datasets/WN18/train.txt
-PATH_OUTPUT:    rules
-SNAPSHOTS_AT:
+path_training:  ../../datasets/WN18/train.txt
+path_output:    rules
+snapshots_at:
   - 10
   - 50
   - 100
-WORKER_THREADS:  7
+worker_threads:  7
+max_length_grounded_cyclic: 1

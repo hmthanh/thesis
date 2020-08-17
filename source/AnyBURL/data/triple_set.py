@@ -147,3 +147,25 @@ class TripleSet (object):
     if tail not in self.head_tail_to_relation.get(head):
       self.head_tail_to_relation.get(head)[tail] = set([])
     self.head_tail_to_relation.get(head).get(tail).add(relation)
+
+
+  def add_batch_triple(self, triple_set):
+    is_connected = False
+    for triple in triple_set.triples:
+      head = triple.head
+      tail = triple.tail
+      if head in self.head_to_list and not is_connected:
+        is_connected = True
+      self.triples.append(triple)
+      self.__add_triple_to_index(triple)
+    return (is_connected, triple_set)
+
+  def add_edge_triple(self, triple):
+    is_connected = False
+    head = triple.head
+    tail = triple.tail
+    if head in self.head_to_list and not is_connected:
+      is_connected = True
+    self.triples.append(triple)
+    self.__add_triple_to_index(triple)
+    return (is_connected, triple)
