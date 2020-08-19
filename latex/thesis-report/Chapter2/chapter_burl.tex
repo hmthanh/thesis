@@ -38,12 +38,12 @@ Ngoài ra Quy tắc \(B\) và quy tắc \(U_c\) cũng được gọi là quy t�
 \textit{profession}(X, actor) &  \gets & \textit{acted\_in}(X, A)  & \quad (4)
 \end{matrix}
 \]
-Quy tắc (1) là quy tắc \textbf{B}(quy tắc nhị phân) quy tắc này nói rằng nếu một người (thực thể) \(X\) nói nguôn ngữ \(Y\) nếu người \(X\) sống  ở đất nước \(Y\).Rõ ràng quy tắc này là một quy tắc khái quát miễn khi nào thực thể \(X\) có cạnh nối với thực thể \(Y\) với nhãn là \textit{lives} thì có thể kết thêm 1 cạnh với nhãn \textit{speaks} giữa \(X\) và \(Y\). Quy tắc (2), (3) điều là quy tắc \(U_c\) ,quy tắc (2) nói rằng người \(X\) sống ở thành phố \(Y\) nếu người \(X\) sống ở quốc gia \(A\) và thành phố \(Y\) nằm trong quốc gia \(A\), quy tắc (3) nói rằng nếu một người \(X\) là nữ nếu họ kết hôn với một người \(A\) và người \(A\) có giới tính nam. Ở quy tắc (3) không tạo thành chu trình trên đồ thị như quy tắc (2) đỉnh (Y) lặp lại  ở \textit{head atom} và đỉnh cuối cùng trong \textit{body atoms}. Quy tắc (4) nói rằng người \(X\) là một điễn viên nếu người \(X\) đóng trong một bộ phim \(A\).
+Quy tắc (1) là quy tắc \textbf{B}(quy tắc nhị phân) quy tắc này nói rằng nếu một người (thực thể) \(X\) nói nguôn ngữ \(Y\) nếu người \(X\) sống  ở đất nước \(Y\).Rõ ràng quy tắc này là một quy tắc khái quát miễn khi nào thực thể \(X\) có cạnh nối với thực thể \(Y\) với nhãn là \textit{lives} thì có thể kết thêm 1 cạnh với nhãn \textit{speaks} giữa \(X\) và \(Y\). Quy tắc (2), (3) điều là quy tắc \(U_c\) ,quy tắc (2) nói rằng người \(X\) sống ở thành phố \(Y\) nếu người \(X\) sống ở quốc gia \(A\) và thành phố \(Y\) nằm trong quốc gia \(A\), quy tắc (3) nói rằng nếu một người \(X\) là nữ nếu họ kết hôn với một người \(A\) và người \(A\) có giới tính nam. Ở quy tắc (3) không tạo thành chu trình trên đồ thị như quy tắc (2) đỉnh (Y) lặp lại  ở \textit{head atom} và đỉnh cuối cùng trong \textit{body atoms}. Quy tắc (4) là quy tắc \(U_d\) nói rằng người \(X\) là một điễn viên nếu người \(X\) đóng trong một bộ phim \(A\).
 
 Tất cả các quy tắc được xem xét sẽ được lọc lại đựa trên điểm được gọi là độ tin cậy của quy tắc là được đo trên tập dữ liệu huấn luyện. Độ tin cậy này được đo bằng tỷ lệ body atoms dẫn đến head atoms chia cho tất cả các đường đãn chứa body atoms.Ví dụ khi ta có quy tắc sau:
-\(\textit{gen}(X, female) \gets \textit{married}(X, A), \textit{gen}(A, male) \). Khi đó chúng ta thực hiện đếm tất cả các cặp thực thể có quan hệ  \(\textit{married}(X, A), \textit{gen}(A, male) \) được gọi là số đường dẫn chứa body atoms, sau đó thực hiện đếm tất cả các  thực thể thỏa quan hệ \(\textit{gen}(X, female) \gets textit{married}(X, A), \textit{gen}(A, male) \) được gọi là số body atoms dẫn đến head atoms. Sau đó chia số body atoms dẫn đến head atoms cho  đường dẫn chứa body atoms được gọi là độ tin cậy của quy tắc.
-\subsection{Thuật toán}
-
+\(\textit{gen}(X, female) \gets \textit{married}(X, A), \textit{gen}(A, male) \). Khi đó chúng ta thực hiện đếm tất cả các cặp thực thể có quan hệ  \(\textit{married}(X, A), \textit{gen}(A, male) \) được gọi là số đường dẫn chứa body atoms, sau đó thực hiện đếm tất cả các  thực thể thỏa quan hệ \(\textit{gen}(X, female) \gets \textit{married}(X, A), \textit{gen}(A, male) \) được gọi là số body atoms dẫn đến head atoms. Sau đó chia số body atoms dẫn đến head atoms cho  đường dẫn chứa body atoms được gọi là độ tin cậy của quy tắc.
+\subsection{Thuật toán} \label{algorithm2}
+Trong phần này chúng tôi mô tả lại thuật toán chính của phương pháp AnyBURL nó cũng được mô tả trong \cite{burl} cũng như hai thuật toán mở rộng của chúng tôi để giải quyết vấn đề khi đồ thị được thêm một hoặc một lượng tri thức mới (thêm cạnh). Ngoài ra chúng tôi cũng mô tả sơ lược lại cách khởi tạo một luật cũng như cách thức tính toán độ tin cậy bằng cách lấy mẫu trên tập huấn luyện và vấn đề độ tin cậy khi dự đoán một luật khi tính toán độ tin cậy bằng việc lấy mẫu.
 \subsubsection{Thuật toán 1 AnyBURL}
 \begin{algorithm}
 \caption{Anytime Bottom-up Rule Learning}\label{euclid}
@@ -99,7 +99,7 @@ Tất cả các quy tắc được xem xét sẽ được lọc lại đựa tr�
 \end{algorithmic}
 \end{algorithm}
 
-Ở thuật toán này chúng tôi thay các hằng số vào các head và tail trong toàn bộ path rule  của luật được lấy mẫu ở bước trước nếu luật cần học là luật nhị phân ngược lại chúng tôi chỉ thay hoặc head hoặc tail rồi thêm vào luật trả về sau đó chúng tôi lấy mẫu trên tập huấn luyện 1 tập hợp các luật sau đó tính toán độ tin cây như được mô tả trong phần \hyperref[kg]{2.3.2}. Để giảm chi phí tính toán chúng tôi chọn cách lấy mẫu trên tập huấn luyện để tính toán. Khi đưa ra dự đoáncác ứng cử viên của 1 luật chúng tôi sẽ tính toán lại bằng cách thêm vào 1 lương biểu diẽn số luật bị sai mà chúng tôi chưa nhìn thấy trong quá trình lấy mẫu để tính toán độ tin cậy. Dối với mô hình của chúng thôi sau khi thử nghiệm tham số trong khoảng \([]5, 10]\) cho kết quả tốt nhất.
+Ở thuật toán này chúng tôi thay các hằng số vào các head và tail trong toàn bộ path rule  của luật được lấy mẫu ở bước trước nếu luật cần học là luật nhị phân ngược lại chúng tôi chỉ thay hoặc head hoặc tail rồi thêm vào luật trả về sau đó chúng tôi lấy mẫu trên tập huấn luyện 1 tập hợp các luật sau đó tính toán độ tin cây như được mô tả trong phần \hyperref[kg]{2.3.2}. Để giảm chi phí tính toán chúng tôi chọn cách lấy mẫu trên tập huấn luyện để tính toán. Khi đưa ra dự đoán các ứng cử viên của một luật chúng tôi sẽ tính toán lại bằng cách thêm vào một lượng biểu diẽn số luật bị sai mà chúng tôi chưa nhìn thấy trong quá trình lấy mẫu để tính toán độ tin cậy. Dối với mô hình của chúng thôi sau khi thử nghiệm tham số trong khoảng \([5, 10]\) cho kết quả tốt nhất.
 
 \subsubsection{Thuật toán 3 học offline-to-online}
 \begin{algorithm}
@@ -141,19 +141,51 @@ Tất cả các quy tắc được xem xét sẽ được lọc lại đựa tr�
 Thuật toán này là phần bổ xung của chúng tôi để tránh việc phải đào tạo lại toàn bộ mô hình khi có một lượng tri thức mới được thêm vào đồ thị. Khi thêm vào đồ thị chúng tôi kiểm trả xem phần tri thức mới có kết nối với tri thức cũ hay không (tính liên thông) nếu có chúng tôi thực hiện phép toán \(\oplus\) lấy  tất cả các phần trong \(batch\_edge\) thêm với 1 phần liên thông với những cạnh liên thông với đồ thị với dộ dài là \(5\), Nếu không chúng tôi lấy tất cả các phần trong \(batch\_edge\) sau đó thực hiện lại các bước như thuật toán Anytime Bottom-up Rule Learning.
 
 \subsubsection{Thuật toán 4 học online-to-online}
-Nội dung báo cáo được phân thành các chương. Số thứ tự của các chương, mục được đánh số bằng hệ thống số Ả-rập, không dùng số La mã. Các mục và tiểu mục được đánh số bằng các nhóm hai hoặc ba chữ số, cách nhau một dấu chấm: số thứ nhất chỉ số chương, chỉ số thứ hai chỉ số mục, số thứ ba chỉ số tiểu mục.
+\begin{algorithm}
+\caption{AnyBURL Learning batch size}\label{euclid}
+\begin{algorithmic}[1]
+\Procedure{AnyBURLbatch($\mathbb{G}$, s, sat, Q, ts, edge)}{}
+\State $is\_connected = add(\mathbb{G}, edge)$
+\State $R = \emptyset$
+\If {$is\_connected$}
+    \State $\textit{n} = \text{2}$
+    \State $R_s = \emptyset$
+    \Repeat
+        \State $p = samplePath(edge, n)$
+        \State $R_p = generateRules(p)$
+        \For {$r \in R_p$}
+            \State $score(r, s)$
+            \If {$Q(r)$}
+        	    \State $R_s = R_s \cup \{r\}$
+            \EndIf
+        \EndFor
+    \Until {$currentTime() > start + ts$}
+    \State $R^{\prime}_s = R_s \cap R$
+    \If {$ \mid R^{\prime} \mid / \mid R \mid > SAT$}
+    	\State $n = n + 1$
+    \EndIf
+    \State $R = R_s \cap R$
+\State \Return R
+\EndIf
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
-%Báo cáo cần dùng LaTEX để viết và trình bày theo mẫu đã được cung cấp.
+Thuật toán này là một phần bổ xung cho thuật toán 3 ở trên. Sở dĩ chúng tôi gọi là online-to-online là vì khi có một cạnh mới(tri thức mới) được thêm vào đồ thị chúng tôi sẽ thực hiện việc học ngay tức khắc trên các path rule liên quan tới cạnh đó không giống như ở thuật toán 3 khi có đủ 1 lượng tri thức mới được thêm vào.
 
- Báo cáo trình bày sử dụng khổ giấy với việc canh lề như sau: Lề trên 3 cm, lề dưới 2,5 cm, lề trái 3 cm, lề phải 2 cm. Đánh số trang ở giữa bên dưới. Đánh số trang ở giữa bên dưới.
+% Nội dung báo cáo được phân thành các chương. Số thứ tự của các chương, mục được đánh số bằng hệ thống số Ả-rập, không dùng số La mã. Các mục và tiểu mục được đánh số bằng các nhóm hai hoặc ba chữ số, cách nhau một dấu chấm: số thứ nhất chỉ số chương, chỉ số thứ hai chỉ số mục, số thứ ba chỉ số tiểu mục.
 
-Font chữ dùng trong báo cáo (Times New Roman) với kích cỡ (size) 13-14pt, sử dụng chế độ dãn dòng (line spacing) chế độ 1.5 lines.
+% %Báo cáo cần dùng LaTEX để viết và trình bày theo mẫu đã được cung cấp.
+
+%  Báo cáo trình bày sử dụng khổ giấy với việc canh lề như sau: Lề trên 3 cm, lề dưới 2,5 cm, lề trái 3 cm, lề phải 2 cm. Đánh số trang ở giữa bên dưới. Đánh số trang ở giữa bên dưới.
+
+% Font chữ dùng trong báo cáo (Times New Roman) với kích cỡ (size) 13-14pt, sử dụng chế độ dãn dòng (line spacing) chế độ 1.5 lines.
 
 %Các bảng biểu trình bày theo chiều ngang khổ giấy thì đầu bảng là lề trái của trang.
 
 \section{Kết quả thí nghiệm}
-Trong phần này chúng tôi mô tả lại các bộ dữ liệu mà chúng tôi đùng để thực nghiệm đánh giá phương pháp của chúng tôi cùng với so sánh với các kết quả khác của các công trình nổi bật khác. Cùng với đó chúng tôi cố gắng tìm hiểu các đặc trưng của các bộ dữ liệu tương ứng để cố gắng lý giải thích tại sao mô hình của chúng tôi hoặc các công trình khác có được kết quả tốt trên tập dữ liệu tương ứng đó.
-\subsection{Các tập dữ liệu huấn luyện}
+Trong phần này chúng tôi mô tả lại các bộ dữ liệu mà chúng tôi đùng để thực nghiệm đánh giá phương pháp của chúng tôi cùng với so sánh với các kết quả khác của các công trình nổi bật khác được báo cáo trong \hyperref[tab:tab1]{bảng 2.1}. Ngoài ra chúng tôi cũng cố gắng đánh giá hai đề xuất của chúng tôi trong việc thêm một lượng tri thức mới vào đồ thị bằng cách chúng tôi xem tập test là một lượng tri thức mới cần thêm vào và dùng tập vadidation để đánh giá lại phương pháp của chúng tôi. Kết quả chi tiết được báo cáo ở \hyperref[tab:tab1]{bảng 2.2}
+\subsection{Các tập dữ liệu huấn luyện} \label{datasets}
 Trong thí nghiệm của chúng tôi, chúng tôi thực hiện trên bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR.Các bộ dữ liệu này là tập hợp các bộ ba (triple) \(\langle head, relation, tail \rangle\) biểu thị cho thực thể đầu có một mối quan hệ với thực thể cuối.
 
 Bộ dữ liệu FB15k: Bộ dữ liệu này được tạo bởi nhóm nghiên cứu A. Bordes, N. Usunier, A. Garcia-Duran, J. Weston, and O. Yakhnenko \cite{bordes2013translating} bằng cách trích xuất từ bộ dữ liệu Wikilinks database \footnote{https://code.google.com/archive/p/wiki-links/}.Wikilinks database thu thập các siêu liên kết(hyperlinks) đến Wikipedia gồm 40 triệu lượt đề cập trên 3 triệu thực thể, họ trích xuất tất cả các dữ kiện liên quan đến một thực thể nhất định có hơn 100 lần được đề cập đến bởi các tài liệu khác cùng với tất cả các dữ kiện liên quan đến thực thể đó (bao gồm cả những thực thể con được nhắc đến trong tài liệu Wikipedia đó), ngoại trừ những thonng tin như: ngày tháng, danh từ riêng, v.v ... Họ cũng chuyển đổi các đỉnh có bậc \(n\) được biểu diễn thành các nhóm các cạnh nhị phân tức là liệt kê các cạnh và quan hệ của mọi đỉnh. Tập dữ liệu được chia ngẫu nhiên thành 3 tập: tập training với 1345 relations, 14834 head entities và 14903 tail entities, tập test gồm 916 relations, 11886 head entities, và 11285 tail entities, tập vadiation gồm 961 relations, 12297 head entities, và 11825 tail entities.
@@ -165,13 +197,28 @@ Bộ dữ liệu WN18: được giới thiệu bởi các tác giả của Trans
 Bộ dữ liệu WN18RR: là một tập hợp con của WN18 được xây dựng bởi DeŠmers et al.\cite{dettmers2017convolutional}, cũng là người giải quyết vấn đề rò rỉ thử nghiệm (test leakage)trong WN18. Để giải quyết vấn đề đó, họ xây dựng tập dữ liệu WN18RR thách thức hơn nhiều bằng cách áp dụng một phương pháp tương tự đưược sử dụng cho FB15k-237 \cite{toutanova2015observed}. Training gồm 11 relations, 39610 head entities, và 31881 tail entities, tập test gồm 11 relations, 2958 head entities, và 2619 tail entities, tập vadition gồm 11 relations, 2851 head entities, and 2575 tail entities.
 
 \subsection{Kết quả thực nghiệm}
+Trong phần này chúng tôi mô tả lại các phương pháp đánh giá(độ do), môi trường thực hiện cũng như các tập dữ liệu mà chúng tôi sử dụng để dánh giá phương pháp của mình. Các phương pháp đánh giá(độ do) này cũng phổ biến nó được đánh giá cho hầu hết các mô hình dự đoán liên kết trên đồ thị. Chúng tôi tiến hành so sánh với bốn phương pháp nổi bật khác được báo cáo trong \cite{rossi2020knowledge}.
 \subsubsection{Các độ đo}
-\subsubsection{Kết quả}
-Như đã nói trước đây với mô hình dựa trên luật của chúng tôi hoàn toàn có thể thực hiện trên một laptop với cấu hình thông thường. Trong thí nghiệm của chúng tôi cấu hình máy để thực thi như sau: T480, core i5 8th Gen, ram 16Gb, 4 core 8 thread. Mã nguồn thực thi được viết bằng ngôn ngữ Python phiên bản 3.6 và dùng các hàm hỗ trợ có sẵn trong Python với không một thư viện bên thứ ba nào. Thí nghiệm được thực hiện với bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR. Thông tin chi tiết các bộ dữ liệu này được mô tả ở phần [?].
+\textit{Mean Rank} (MR). Đây là giá trị trung bình của rank thu được cho một dự đoán chính xác. Càng nhỏ thì mô hình càng chính xác:
+\[MR = \frac{1}{\mid Q \mid} \sum_{q ~\in~ Q} rank(q) \]
+Trong đó \(\mid Q \mid\) là độ lớn của tập hợp các câu hỏi bằng độ lớn của tập test hoặc vadidation. Khi dự đoán chúng tôi dự đoán cả head và tail cho một dòng tương ứng trong tập dữ liệu thử nghiệm. Ví dụ chún tôi sẽ dự đoán \(\langle ?,~ relation,~ tail \rangle\) và \(\langle head,~ relation,~ ?\rangle\) cho 1 dòng tương ứng. \(q\) thể hiện cho câu hỏi chúng tôi dự đoán và \(rank(q)\) thể hiện cho kết quả đúng của câu hỏi đứng ở vị trí thứ mấy trong xếp hạng của chúng tôi sau đó lấy trung bình rank của các dự đoán head và tail. Rõ ràng độ đo này nằm giữa \([1, \mid \text{số lượng các entity} \mid]\) do có tối da \(n\) cạnh nối 1 đỉnh tới \(n-1\) đỉnh còn lại và thêm cạnh nối tới chính đỉnh nó(cạnh khuyên). Và độ đo này đễ bị ảnh hưởng bởi nhiễu vì có những quan hệ có những thực thể được xếp hạng gần cuối. Để giải quyết vấn đề này nhóm chúng tôi và các nhóm nghiên cứu khác sử dụng thêm độ đo Mean Reciprocal Rank (MMR).
 
-Bảng ? bên dưới mô tả các kết quả thực nghiệm của chúng tôi với các độ đo \(h@k\) cùng với các kết quả thực nghiệm của các phương pháp khác được đề cập trong khảo  sát \cite{rossi2020knowledge}
+\textit{Mean Reciprocal Rank} (MMR). Đây là xếp hạng đối ứng trung bình, là nghịch đảo của giá trị trung bình của rank thu được cho một dự đoán chính xác ở trên. Và càng lớn thì mô hình càng chính xác. Do độ đo này lấy nghịch đảo của các rank nên tránh dược vấn đề nhiễu của độ đo MR ở trên.
+\[MRR =\frac{1}{\mid Q \mid} \sum_{q~ \in ~Q} \frac{1}{rank(q)}\]
+
+\textit{Hit@K} (H@K). Đó là tỷ lệ các dự đoán đúng mà rank nhỏ hơn hoặc bằng ngưỡng \(K\):
+\[H@K = \frac{\mid {q ~\in ~Q~: rank(q) \leq K} \mid}{\mid Q \mid}\]
+\subsubsection{Kết quả}
+Như đã nói trước đây với mô hình dựa trên luật của chúng tôi hoàn toàn có thể thực hiện trên một laptop với cấu hình thông thường. Trong thí nghiệm của chúng tôi cấu hình máy để thực thi như sau: T480, core i5 8th Gen, ram 16Gb, 4 core 8 thread. Mã nguồn thực thi được viết bằng ngôn ngữ Python phiên bản 3.6 và dùng các hàm hỗ trợ có sẵn trong Python với không một thư viện bên thứ ba nào. Thí nghiệm được thực hiện với bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR. Thông tin chi tiết các bộ dữ liệu này được mô tả ở phần \hyperref[datasets]{các tập dữ liệu huấn luyện}.
+
+Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật toán này sẽ học các luật được sinh ra trong một khoảng thời gian nhất định do người dùng cấu hình. Ở đây chúng tôi chọn cấu hình thời gian là 1000 giây tương đương khoảng 17 phút đào tạo, với độ bão hòa(SAT) \(0.85\), độ tin cậy Q \(0.05\), kích thước mẫu S (\(\frac{1}{10}~ \text{tập huấn luyện}\)). Với cấu hình như vậy mô hình phiên bản Python của chúng tối cho kết quả tương đương với phiên bản Java nhóm tác giả Meilicke, Christian et al. \cite{burl} với cấu hình tương tự nhưng thời gian training là 100 giây. Sự khác biệt về thời gian học tập ở đây chủ yếu là do hiệu năng của hai ngôn ngữ Python và Java. Ở đây chúng tôi chọn ngôn ngữ Python vì nó được dùng làm ngôn ngữ chính cho nhiều mô hình trí tuệ nhân tạo gần đây, và cũng thuận tiện cho chúng tôi khi so sánh hiệu năng cũng như đánh giá với các phương pháp học sâu khác da số được viết bằng Python.
+
+Bảng \hyperref[tab:tab1]{2.1} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với các độ đo \(H@K\) cùng với các kết quả thực nghiệm của các phương pháp khác được đề cập trong khảo  sát \cite{rossi2020knowledge}
 
 \begin{table}[ht]
+\caption{Kết quả phương pháp AnyBURL}
+\label{tab:tab1}%
+\begin{center}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{lllllllllllllllll}
 \cline{2-17}
@@ -334,7 +381,17 @@ Rank &
    &
 
 \end{tabular}}
+\end{center}
 \end{table}
+
+Bảng \hyperref[tab:tab2]{2.2} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với các độ đo \(H@K\) trên tập validation khi thêm toàn bộ phần tử trong tập test vào mô hình đã train trong bước trên. Đối với chiến lược online-to-online chúng tôi nhận thấy khó đánh giá trên tập validation nên chúng dôi đánh giá dựa trên số luật trung bình được sinh ra thi thêm một luật vào và đánh giá độ chính xác một lần khi thêm tất cả các phần tử trong tập huấn luyện.
+
+\section{Kết luận}
+Trong phần này chúng tôi đưa ra các kết quả đạt được của mô hình chúng tôi, chúng tôi cố gắng tìm hiểu các đặc trưng của các bộ dữ liệu tương ứng để cố gắng lý giải thích tại sao mô hình của chúng tôi hoặc các công trình khác có được kết quả tốt trên tập dữ liệu tương ứng đó. Những kết quả của hai đề xuất của chúng tôi cũng như các dịnh hướng nghiên cứu của chúng tôi trong tương lai.
+
+Mặc dù kết quả chúng tôi cho thấy phương pháp của chúng tôi có hiệu suất tương đương với các mô hình học sâu hiện đại(state-of-art) và có ưu thế vượt trội trong thời gian đào tạo khoảng 17 phút so với thời gian hàng giờ của phương pháp học sâu khác nhưng không phải là các mô hình deep learning này không đáng nghiên cứu. Chúng tôi cũng nhận thấy đối với những tập dữ liệu khó như FB15-237 hay WN18RR phương pháp của chúng tôi thường cho kết quả không tốt do các quan hệ tương tự hay nghịch đảo không không xuất hiện trong ví dụ đào tạo nên chúng tôi khó tạo ra các luật đủ tốt để có thể khái quát hóa trên toàn bộ đồ thị đẫn đến các kết quả không tốt. Ngược lại đối với các phương pháp dựa trên học sâu lại có ưu thế rất lớn trong các tập dữ liệu này do có thể dễ đàng tính toán độ gần của các luật mới cần đánh giá so với các luật đã học từ đó có một kết quả khá tốt. Do đó chúng tôi cũng sẽ tiếp tục nghiên cứu các phương pháp học sâu và sẽ dùng phương pháp này làm đường cơ sở(base line) để so sánh với các nghiên cứu của chúng tôi trong tương lai.
+
+Đối với hai thuật toán mở rộng của chúng tôi trong việc thêm tri thức mới vào đồ thị chúng tôi nhận thấy rằng là vượt trội hoàn toàn so với các phương pháp học sâu. Ở các phương pháp học sâu điều này đường như chưa được ai chú trọng nghiên cứu mặc dù thời gian đào tạo một mô hình là tương đối mất thời gian. Khi có tri thức mới hầu hết các mô hình phải đào tạo lại toàn bộ điều này khá lãng phí. Chúng tôi cũng xem đây là mục tiêu tiếp theo cho chúng tôi khi nghiên cứu các mô hình học sâu trong tương lai. Gần đây nhánh học tăng cường(Reinforcement learning) khá phát triển và nhóm tác giả Meilicke, Christian and Chekol \cite{meilicke2020reinforced} gần đây cũng đã có 1 nghiên cứu để tối ưu hóa lại phương pháp AnyBURL này. Chúng tôi cũng có ý định nghiên cứu về hướng này và cố gắng báo cáo lại trong một tương lai gần. 
 
 \section{Bố cục của báo cáo}
 
