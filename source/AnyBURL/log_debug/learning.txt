@@ -1394,3 +1394,7 @@ Heads:[('/m/0524b41', 0.36103542234332425), ('/m/02648p', 0.36103542234332425), 
 Tails[('/m/0564mx', 0.5398550724637681), ('/m/06gh0t', 0.36106737973347075), ('/m/0g8st4', 0.36103542234332425), ('/m/06j8wx', 0.3195739014647137), ('/m/05gnf', 0.039735099337748346), ('/m/017s11', 0.02178217821782178), ('/m/01kb2j', 0.015841584158415842), ('/m/0gsg7', 0.013861386138613862), ('/m/01x6v6', 0.011881188118811881), ('/m/0151w_', 0.011881188118811881)]
 
 15:51:58,352 Predict INFO finished in 1185 s.
+15:58:23,16 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+15:58:23,16 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+15:58:23,16 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+15:58:23,16 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
