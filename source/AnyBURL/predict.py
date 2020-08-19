@@ -37,6 +37,7 @@ class Predict(object):
       rules_exd = RuleReader(self.cfg['path_rules_ext']).read()
       rules.extend(rules_exd)
       path_output_used = 'predictions/{}/ext_{}'.format(self.datasets, tmp_path[2].replace('rule', 'predict'))
+      test_set, valid_set = valid_set, test_set
     rules_size = len(rules)
     print('*** read rules {} rom file {}'.format(rules_size, path_rules_used))
     rule_engine = RuleEngine(path_output_used, self.cfg['unseen_nagative_examples'])
