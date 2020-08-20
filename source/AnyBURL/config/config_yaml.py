@@ -61,20 +61,24 @@ class Config(object):
         config_yaml['path_training'] = config_yaml['path_training'][2]
         config_yaml['path_valid'] = config_yaml['path_valid'][2]
         config_yaml['path_test'] = config_yaml['path_test'][2]
+        config_yaml['path_rules_ext'] = config_yaml['path_rules_ext'][2]
       elif dataset == 'FB15k':
         config_yaml['path_rules'] = config_yaml['path_rules'][0]
         config_yaml['path_training'] = config_yaml['path_training'][0]
         config_yaml['path_valid'] = config_yaml['path_valid'][0]
         config_yaml['path_test'] = config_yaml['path_test'][0]
+        config_yaml['path_rules_ext'] = config_yaml['path_rules_ext'][0]
       elif dataset == 'FB15k-237':
         config_yaml['path_rules'] = config_yaml['path_rules'][1]
         config_yaml['path_training'] = config_yaml['path_training'][1]
         config_yaml['path_valid'] = config_yaml['path_valid'][1]
         config_yaml['path_test'] = config_yaml['path_test'][1]
+        config_yaml['path_rules_ext'] = config_yaml['path_rules_ext'][1]
       elif dataset == 'WN18RR':
         config_yaml['path_rules'] = config_yaml['path_rules'][3]
         config_yaml['path_training'] = config_yaml['path_training'][3]
         config_yaml['path_valid'] = config_yaml['path_valid'][3]
         config_yaml['path_test'] = config_yaml['path_test'][3]
+        config_yaml['path_rules_ext'] = config_yaml['path_rules_ext'][3]
       config_yaml['dataset'] = dataset
       return config_yaml
