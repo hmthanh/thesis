@@ -78,8 +78,6 @@ class RuleEngine(object):
       k_head_tree.get_as_linked_map(k_head_candidates)
       top_k_tail_candidates = self.__sort_by_value(k_tail_candidates, k)
       top_k_head_candidates = self.__sort_by_value(k_head_candidates, k)
-      # if counter % 500 == 0:
-        # self.log.info('* write top {} candidates \nHeads:{}\nTails{}\n'.format(k, top_k_tail_candidates, top_k_head_candidates))
       counter += 1
       writer = threading.Thread(target=self.__process_write_top_k_candidates, args=(triple, test_set, top_k_tail_candidates, top_k_head_candidates, ))
       writer.start()
@@ -124,14 +122,6 @@ class RuleEngine(object):
     res = []
     for key, val in candidates.items():
       res.append((key, val))
-
-    # res = {}
-    # i = 0
-    # while i < k and len(heap):
-    #   (_, (key, val)) = heapq.heappop(heap)
-    #   res[key] = val
-    #   i += 1
-    # return res
     res.sort(key=lambda item: item[1], reverse=True)
     return res[:k]
 
