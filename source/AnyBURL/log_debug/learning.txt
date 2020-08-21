@@ -1398,3 +1398,85 @@ Tails[('/m/0564mx', 0.5398550724637681), ('/m/06gh0t', 0.36106737973347075), ('/
 15:58:23,16 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
 15:58:23,16 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
 15:58:23,16 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+16:32:03,349 Learning INFO ****************************start new section*************************************
+16:32:03,349 Learning INFO initialize learning 1598002323350
+16:32:20,99 Learning INFO train_with_batch triple_set: 542213, new_triple: 59071
+16:32:20,99 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+16:32:20,99 Learning INFO time elapsed: 0 ms
+16:34:38,184 Learning INFO ****************************start new section*************************************
+16:34:38,185 Learning INFO initialize learning 1598002478185
+16:34:40,742 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+16:34:40,743 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+16:34:40,744 Learning INFO time elapsed: 2 ms
+16:35:34,509 Learning INFO ****************************start new section*************************************
+16:35:34,509 Learning INFO initialize learning 1598002534510
+16:35:37,749 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+16:35:37,749 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+16:35:37,749 Learning INFO time elapsed: 1 ms
+16:35:49,867 Learning INFO increasing rule size of CYCLIC rules to 2  after 12 s
+16:36:03,57 Learning INFO ****************************start new section*************************************
+16:36:03,57 Learning INFO initialize learning 1598002563058
+16:36:09,929 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+16:36:09,929 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+16:36:09,929 Learning INFO time elapsed: 1 ms
+16:36:24,883 Learning INFO ****************************start new section*************************************
+16:36:24,885 Learning INFO initialize learning 1598002584885
+16:36:29,998 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+16:36:29,999 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+16:36:29,999 Learning INFO time elapsed: 1 ms
+16:36:53,823 Learning INFO ****************************start new section*************************************
+16:36:53,824 Learning INFO initialize learning 1598002613824
+16:36:58,896 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+16:36:58,897 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+16:36:58,897 Learning INFO time elapsed: 1 ms
+16:37:15,190 Learning INFO ****************************start new section*************************************
+16:37:15,191 Learning INFO initialize learning 1598002635192
+16:37:20,144 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+16:37:20,144 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+16:37:20,144 Learning INFO time elapsed: 0 ms
+16:37:26,366 Learning INFO ****************************start new section*************************************
+16:37:26,366 Learning INFO initialize learning 1598002646366
+16:37:29,493 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+16:37:29,493 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+16:37:29,493 Learning INFO time elapsed: 0 ms
+16:37:45,207 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+16:37:45,207 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+16:37:45,207 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+16:37:45,207 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+16:37:48,515 Learning INFO ****************************start new section*************************************
+16:37:48,515 Learning INFO initialize learning 1598002668515
+16:37:51,867 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+16:37:51,867 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+16:37:51,868 Learning INFO time elapsed: 0 ms
+16:40:24,990 Learning INFO ****************************start new section*************************************
+16:40:24,990 Learning INFO initialize learning 1598002824991
+16:40:37,917 Learning INFO train_with_batch triple_set: 542213, new_triple: 59071
+16:40:37,917 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+16:40:37,917 Learning INFO time elapsed: 0 ms
+16:43:36,564 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+16:43:36,565 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+16:43:36,565 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+16:43:36,565 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+16:44:10,963 Learning INFO ****************************start new section*************************************
+16:44:10,963 Learning INFO initialize learning 1598003050964
+16:46:02,280 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+16:46:02,280 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+16:46:02,280 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+16:46:02,281 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+16:46:51,542 Learning INFO ****************************start new section*************************************
+16:46:51,542 Learning INFO initialize learning 1598003211542
+16:47:04,623 Learning INFO train_with_batch triple_set: 542213, new_triple: 59071
+16:47:04,623 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+16:47:04,623 Learning INFO time elapsed: 0 ms
+16:48:46,918 Learning INFO ***************************************************************
+16:48:46,919 Learning INFO **snapshot_rules: 1528 in file learning_rules/FB15k/rule_extend_800.txt
+16:48:46,919 Learning INFO ***************************************************************
+16:59:00,641 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+16:59:00,642 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+16:59:00,642 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+16:59:00,642 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+16:59:06,731 Learning INFO ****************************start new section*************************************
+16:59:06,732 Learning INFO initialize learning 1598003946732
+16:59:21,333 Learning INFO train_with_batch triple_set: 542213, new_triple: 59071
+16:59:21,333 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+16:59:21,334 Learning INFO time elapsed: 0 ms

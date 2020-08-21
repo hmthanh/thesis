@@ -29,7 +29,8 @@ class Evaluation(object):
     hitsAtK.filter_sets.append(self.validation_set)
     hitsAtK.filter_sets.append(self.test_set)
     score_set = self.test_set if is_test_set else self.validation_set
-    score_set = self.validation_set if path_extend else self.test_set
+    if path_extend:
+      score_set = self.validation_set
     self.__compute_scores(self.result_set, score_set, hitsAtK)
     print('hits@1    hits@3    hits@10')
     h1 = (hitsAtK.hits_adn_head_filtered[0] + hitsAtK.hits_adn_tail_filtered[0]) / (hitsAtK.counter_head + hitsAtK.counter_tail)

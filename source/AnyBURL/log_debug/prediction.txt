@@ -818,3 +818,9 @@ Tails[('02483564', 0.9347826086956522), ('02482820', 0.18181818181818182), ('015
 15:24:03,589 Predict INFO output learning: predictions/FB15k/predict_1000.txt
 15:26:55,100 RuleEngine INFO ****************************start new section*************************************
 15:26:55,100 RuleEngine INFO initialize rule engine 1597998415100
+15:48:00,467 Predict INFO finished in 1436 s.
+15:48:24,61 Predict INFO rules learning: learning_rules/FB15k/rule_1000.txt
+15:48:24,62 Predict INFO output learning: predictions/FB15k/predict_1000.txt
+15:53:23,896 RuleEngine INFO ****************************start new section*************************************
+15:53:23,897 RuleEngine INFO initialize rule engine 1598000003897
+16:11:38,391 Predict INFO finished in 1394 s.
