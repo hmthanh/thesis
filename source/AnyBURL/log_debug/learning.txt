@@ -1480,3 +1480,98 @@ Tails[('/m/0564mx', 0.5398550724637681), ('/m/06gh0t', 0.36106737973347075), ('/
 16:59:21,333 Learning INFO train_with_batch triple_set: 542213, new_triple: 59071
 16:59:21,333 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
 16:59:21,334 Learning INFO time elapsed: 0 ms
+17:01:04,195 Learning INFO ***************************************************************
+17:01:04,195 Learning INFO **snapshot_rules: 1011 in file learning_rules/FB15k/rule_extend_800.txt
+17:01:04,196 Learning INFO ***************************************************************
+17:03:40,662 Learning INFO ****************************start new section*************************************
+17:03:40,663 Learning INFO initialize learning 1598004220663
+17:03:53,12 Learning INFO train_with_batch triple_set: 292581, new_triple: 20466
+17:03:53,13 Learning INFO indexing dataset: ../../datasets/FB15k-237/train.txt
+17:03:53,13 Learning INFO time elapsed: 1 ms
+17:04:17,330 Learning INFO increasing rule size of CYCLIC rules to 2  after 24 s
+17:05:34,443 Learning INFO ***************************************************************
+17:05:34,443 Learning INFO **snapshot_rules: 1120 in file learning_rules/FB15k-237/rule_extend_800.txt
+17:05:34,443 Learning INFO ***************************************************************
+17:07:38,438 Learning INFO ****************************start new section*************************************
+17:07:38,438 Learning INFO initialize learning 1598004458438
+17:07:44,584 Learning INFO train_with_batch triple_set: 277115, new_triple: 5000
+17:07:44,584 Learning INFO indexing dataset: ../../datasets/FB15k-237/train.txt
+17:07:44,584 Learning INFO time elapsed: 1 ms
+17:07:46,613 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+17:08:45,802 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+17:08:45,802 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+17:08:45,803 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+17:08:45,803 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+17:08:51,352 Learning INFO ****************************start new section*************************************
+17:08:51,352 Learning INFO initialize learning 1598004531352
+17:08:54,380 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+17:08:54,381 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+17:08:54,381 Learning INFO time elapsed: 0 ms
+17:09:06,487 Learning INFO increasing rule size of CYCLIC rules to 2  after 12 s
+17:10:37,129 Learning INFO ***************************************************************
+17:10:37,129 Learning INFO **snapshot_rules: 533 in file learning_rules/WN18/rule_extend_800.txt
+17:10:37,132 Learning INFO ***************************************************************
+17:11:41,575 Learning INFO ****************************start new section*************************************
+17:11:41,575 Learning INFO initialize learning 1598004701576
+17:11:43,688 Learning INFO train_with_batch triple_set: 89969, new_triple: 3134
+17:11:43,688 Learning INFO indexing dataset: ../../datasets/WN18RR/train.txt
+17:11:43,688 Learning INFO time elapsed: 1 ms
+17:11:51,727 Learning INFO increasing rule size of CYCLIC rules to 2  after 8 s
+17:12:28,149 Learning INFO increasing rule size of CYCLIC rules to 3  after 44 s
+17:13:26,24 Learning INFO ***************************************************************
+17:13:26,26 Learning INFO **snapshot_rules: 439 in file learning_rules/WN18RR/rule_extend_800.txt
+17:13:26,26 Learning INFO ***************************************************************
+17:16:00,453 Predict INFO ****************************start new section*************************************
+17:16:00,454 Predict INFO initialize learning 1598004960455
+17:16:06,720 Predict INFO rules learning: learning_rules/FB15k-237/rule_1000.txt
+17:16:06,721 Predict INFO output learning: predictions/FB15k-237/predict_1000.txt
+17:19:20,268 RuleEngine INFO ****************************start new section*************************************
+17:19:20,268 RuleEngine INFO initialize rule engine 1598005160269
+17:26:17,309 Predict INFO finished in 610 s.
+17:26:22,699 Predict INFO rules learning: learning_rules/FB15k-237/rule_1000.txt
+17:26:22,699 Predict INFO output learning: predictions/FB15k-237/predict_1000.txt
+17:28:47,672 RuleEngine INFO ****************************start new section*************************************
+17:28:47,672 RuleEngine INFO initialize rule engine 1598005727673
+17:35:34,344 Predict INFO finished in 551 s.
+17:37:14,850 Learning INFO ****************************start new section*************************************
+17:37:14,850 Learning INFO initialize learning 1598006234851
+17:37:17,872 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+17:37:17,872 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+17:37:17,872 Learning INFO time elapsed: 1 ms
+17:37:32,599 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+17:37:32,600 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+17:37:32,600 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+17:37:32,600 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+17:37:36,393 Learning INFO ****************************start new section*************************************
+17:37:36,393 Learning INFO initialize learning 1598006256393
+17:37:39,260 Learning INFO train_with_batch triple_set: 146442, new_triple: 5000
+17:37:39,260 Learning INFO indexing dataset: ../../datasets/WN18/train.txt
+17:37:39,260 Learning INFO time elapsed: 0 ms
+17:37:55,361 Learning INFO increasing rule size of CYCLIC rules to 2  after 16 s
+17:39:20,943 Learning INFO ***************************************************************
+17:39:20,944 Learning INFO **snapshot_rules: 702 in file learning_rules/WN18/rule_extend_800.txt
+17:39:20,944 Learning INFO ***************************************************************
+17:39:39,270 Predict INFO ****************************start new section*************************************
+17:39:39,270 Predict INFO initialize learning 1598006379270
+17:39:42,393 Predict INFO rules learning: learning_rules/WN18/rule_1000.txt
+17:39:42,393 Predict INFO output learning: predictions/WN18/predict_1000.txt
+17:40:11,750 RuleEngine INFO ****************************start new section*************************************
+17:40:11,750 RuleEngine INFO initialize rule engine 1598006411750
+17:41:41,595 Predict INFO finished in 119 s.
+17:41:44,904 Predict INFO rules learning: learning_rules/WN18/rule_1000.txt
+17:41:44,904 Predict INFO output learning: predictions/WN18/predict_1000.txt
+17:42:19,847 RuleEngine INFO ****************************start new section*************************************
+17:42:19,848 RuleEngine INFO initialize rule engine 1598006539848
+17:44:04,594 Predict INFO finished in 139 s.
+17:45:48,547 Predict INFO ****************************start new section*************************************
+17:45:48,547 Predict INFO initialize learning 1598006748547
+17:45:51,413 Predict INFO rules learning: learning_rules/WN18RR/rule_1000.txt
+17:45:51,413 Predict INFO output learning: predictions/WN18RR/predict_1000.txt
+17:46:23,530 RuleEngine INFO ****************************start new section*************************************
+17:46:23,530 RuleEngine INFO initialize rule engine 1598006783531
+17:47:33,411 Predict INFO finished in 101 s.
+17:47:41,726 Predict INFO rules learning: learning_rules/WN18RR/rule_1000.txt
+17:47:41,726 Predict INFO output learning: predictions/WN18RR/predict_1000.txt
+17:48:17,691 RuleEngine INFO ****************************start new section*************************************
+17:48:17,691 RuleEngine INFO initialize rule engine 1598006897692
+17:49:54,689 Predict INFO finished in 132 s.
