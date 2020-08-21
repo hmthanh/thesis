@@ -12,6 +12,7 @@ import time
 import copy
 import threading
 from os import remove, path
+import os
 
 
 class Learning(object):
@@ -143,12 +144,15 @@ class Learning(object):
           for _rules in all_useful_rules:
             total_rule += len(_rules)
           snapshot_file = 'learning_rules/{}/rule_extend_{}.txt'.format(dataset, 800)
-          snapshot_index += 1
-          self.log.info('snapshot_rules: {} in file {}'.format(total_rule, snapshot_file))
+          self.log.info('***************************************************************')
+          self.log.info('**snapshot_rules: {} in file {}'.format(total_rule, snapshot_file))
+          self.log.info('***************************************************************')
+          if os.path.exists(snapshot_file):
+            remove(snapshot_file)
           snapshot_rules = copy.deepcopy(all_useful_rules)
           thread_snapshot = threading.Thread(target=self.process_snapshot_rule, args=(snapshot_rules, snapshot_file, ))
           thread_snapshot.start()
-          print('created snapshot {} after {} seconds'.format(snapshot_index, elapsed_seconds))
+          print('created snapshot {} after {} seconds'.format(total_rule, elapsed_seconds))
           print('*************************done learning*********************************')
           thread_snapshot.join()
           return 0
