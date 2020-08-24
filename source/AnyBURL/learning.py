@@ -118,6 +118,12 @@ class Learning(object):
         for rule in set_rule:
           print(rule, file=output_stream)
 
+  def process_snapshot_rule_exis_file(self, rules, file):
+    with open(file, 'a+') as output_stream:
+      for set_rule in rules:
+        for rule in set_rule:
+          print(rule, file=output_stream)
+
   def train_with_batch(self, batch_triple, batch_time=100):
     is_connected, new_triple = self.triple_set.add_batch_triple(batch_triple)
     if is_connected:
@@ -147,8 +153,6 @@ class Learning(object):
           self.log.info('***************************************************************')
           self.log.info('**snapshot_rules: {} in file {}'.format(total_rule, snapshot_file))
           self.log.info('***************************************************************')
-          if os.path.exists(snapshot_file):
-            remove(snapshot_file)
           snapshot_rules = copy.deepcopy(all_useful_rules)
           thread_snapshot = threading.Thread(target=self.process_snapshot_rule, args=(snapshot_rules, snapshot_file, ))
           thread_snapshot.start()
@@ -204,8 +208,87 @@ class Learning(object):
           mine_cyclic_not_acyclic = False
 
   def train_with_edge(self, triple):
-    is_connected, new_triple = self.triple_set.add_edge_triple(batch_triple)
-    triple_set =  self.triple_set
-    path_sampler = PathSampler(triple_set)
+    is_connected, new_triple = self.triple_set.add_edge_triple(triple)
     if is_connected:
-      path = path_sampler.sample_batch_path(rule_size + 2, new_triple, mine_cyclic_not_acyclic)
+      triple_set =  self.triple_set
+      path_sampler = PathSampler(triple_set)
+      index_start_time = current_milli_time()
+      self.log.info('train_with_batch triple_set: {}, new_triple: {}'.format(len(triple_set.triples), new_triple))
+      path_counter, batch_counter = 0, 0
+      mine_cyclic_not_acyclic = False
+      all_useful_rules = [set()]
+      snapshot_index, rule_size_cyclic, rule_size_acyclic = 0, 0, 0
+      last_cyclic_coverage, last_acyclic_coverage = 0.0,0.0
+      self.log.info('indexing dataset: {}'.format(self.cfg['path_training']))
+      self.log.info('time elapsed: {} ms'.format(current_milli_time() - index_start_time))
+      dataset = self.cfg['dataset']
+      start_time = current_milli_time()
+      while True:
+        batch_previously_found_rules, batch_new_useful_rules, batch_rules = 0, 0, 0
+        rule_size = rule_size_cyclic if mine_cyclic_not_acyclic else rule_size_acyclic
+        useful_rules = all_useful_rules[rule_size]
+        elapsed_seconds = (current_milli_time() - start_time) // 1000
+        if elapsed_seconds > 1:
+          total_rule = 0
+          for _rules in all_useful_rules:
+            total_rule += len(_rules)
+          snapshot_file = 'learning_rules/{}/rule_extend_{}.txt'.format(dataset, 20)
+          self.log.info('***************************************************************')
+          self.log.info('**snapshot_rules: {} in file {}'.format(total_rule, snapshot_file))
+          self.log.info('***************************************************************')
+          snapshot_rules = copy.deepcopy(all_useful_rules)
+          thread_snapshot = threading.Thread(target=self.process_snapshot_rule_exis_file, args=(snapshot_rules, snapshot_file, ))
+          thread_snapshot.start()
+          print('created snapshot {} after {} seconds'.format(total_rule, elapsed_seconds))
+          print('*************************done learning*********************************')
+          thread_snapshot.join()
+          return 0
+        batch_start_time = current_milli_time()
+        while True:
+          if current_milli_time() - batch_start_time > self.cfg['batch_time']:
+            break
+          path_counter += 1
+          path = path_sampler.sample_triple(rule_size + 2, new_triple, mine_cyclic_not_acyclic)
+          if path != None and path.is_valid():
+            rule = Rule()
+            rule.init_from_path(path)
+            gen_rules = rule.get_generalizations(mine_cyclic_not_acyclic)
+            for r in gen_rules:
+              if r.is_trivial():
+                continue
+              batch_rules += 1
+              if r not in useful_rules:
+                r.compute_scores(triple_set)
+              if r.confidence >= 0.45 and r.correctly_predicted >= self.cfg['threshold_correct_predictions']: #self.cfg['threshold_confidence']
+                batch_new_useful_rules += 1
+                useful_rules.add(r)
+              else:
+                batch_previously_found_rules += 1
+        batch_counter += 1
+        str_type = 'CYCLIC' if mine_cyclic_not_acyclic else 'ACYCLIC'
+        print('=====> batch [{} {}] {} (sampled {} pathes) *****'.format(str_type, rule_size + 1, batch_counter, path_counter))
+        if batch_new_useful_rules + batch_previously_found_rules != 0:
+          current_coverage = batch_previously_found_rules / (batch_new_useful_rules + batch_previously_found_rules)
+        else:
+          current_coverage = 0
+        print('=====> fraction of previously seen rules within useful rules in this batch: {} num of new rule = {} num of previously rule = {} num of all batch rules = {}'.format(current_coverage,batch_new_useful_rules, batch_previously_found_rules, batch_rules))
+        print('=====> stored rules: {}'.format(len(useful_rules)))
+        if mine_cyclic_not_acyclic:
+          last_cyclic_coverage = current_coverage
+        else:
+          last_cyclic_coverage = current_coverage
+
+        if current_coverage > self.cfg['saturation'] and batch_previously_found_rules > 1:
+          rule_size += 1
+          if mine_cyclic_not_acyclic:
+            rule_size_cyclic = rule_size
+          if not mine_cyclic_not_acyclic:
+            rule_size_acyclic = rule_size
+          print('=========================================================')
+          print('=====> increasing rule size of {} rule to {}'.format(str_type, rule_size + 1))
+          self.log.info('increasing rule size of {} rules to {}  after {} s'.format(str_type, rule_size + 1, (current_milli_time() - start_time)//1000))
+          all_useful_rules.append(set())
+
+        mine_cyclic_not_acyclic = not mine_cyclic_not_acyclic
+        if mine_cyclic_not_acyclic and rule_size_cyclic + 1 > self.cfg['max_length_cylic']:
+          mine_cyclic_not_acyclic = False

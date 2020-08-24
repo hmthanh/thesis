@@ -1579,3 +1579,1961 @@ Tails[('/m/0564mx', 0.5398550724637681), ('/m/06gh0t', 0.36106737973347075), ('/
 20:33:14,474 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
 20:33:14,474 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
 20:33:14,474 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+11:27:02,616 Learning INFO ****************************start new section*************************************
+11:27:02,616 Learning INFO initialize learning 1598243222616
+11:28:02,229 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+11:28:02,229 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+11:28:02,230 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+11:28:02,230 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+11:28:12,194 Learning INFO ****************************start new section*************************************
+11:28:12,195 Learning INFO initialize learning 1598243292195
+11:29:27,5 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+11:29:27,6 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+11:29:27,6 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+11:29:27,6 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+11:29:40,805 Learning INFO ****************************start new section*************************************
+11:29:40,806 Learning INFO initialize learning 1598243380806
+11:30:18,18 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+11:30:18,19 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+11:30:18,19 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+11:30:18,19 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+11:30:26,469 Learning INFO ****************************start new section*************************************
+11:30:26,470 Learning INFO initialize learning 1598243426470
+11:32:29,725 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+11:32:29,725 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+11:32:29,725 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+11:32:29,725 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+11:32:44,703 Learning INFO ****************************start new section*************************************
+11:32:44,704 Learning INFO initialize learning 1598243564704
+11:34:07,277 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+11:34:07,277 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+11:34:07,277 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+11:34:07,278 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+11:34:20,639 Learning INFO ****************************start new section*************************************
+11:34:20,639 Learning INFO initialize learning 1598243660640
+11:35:10,37 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+11:35:10,37 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+11:35:10,37 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+11:35:10,38 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+11:35:17,371 Learning INFO ****************************start new section*************************************
+11:35:17,371 Learning INFO initialize learning 1598243717372
+11:51:31,674 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+11:51:31,675 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+11:51:31,675 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+11:51:31,675 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+11:51:39,307 Learning INFO ****************************start new section*************************************
+11:51:39,307 Learning INFO initialize learning 1598244699308
+11:57:33,663 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+11:57:33,663 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+11:57:33,663 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+11:57:33,663 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+11:57:40,911 Learning INFO ****************************start new section*************************************
+11:57:40,912 Learning INFO initialize learning 1598245060912
+11:59:44,345 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+11:59:44,346 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+11:59:44,346 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+11:59:44,346 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+11:59:55,707 Learning INFO ****************************start new section*************************************
+11:59:55,708 Learning INFO initialize learning 1598245195708
+12:00:04,347 Learning INFO train_with_batch triple_set: 483143, new_triple: /m/01qscs /award/award_nominee/award_nominations./award/award_nomination/award /m/02x8n1n
+12:00:04,348 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:00:04,348 Learning INFO time elapsed: 0 ms
+12:00:12,390 Learning INFO increasing rule size of CYCLIC rules to 2  after 8 s
+12:00:26,847 Learning INFO ***************************************************************
+12:00:26,847 Learning INFO **snapshot_rules: 181 in file learning_rules/FB15k/rule_extend_20.txt
+12:00:26,847 Learning INFO ***************************************************************
+12:02:14,788 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+12:02:14,788 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+12:02:14,788 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+12:02:14,788 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+12:02:26,229 Learning INFO ****************************start new section*************************************
+12:02:26,229 Learning INFO initialize learning 1598245346229
+12:02:34,2 Learning INFO train_with_batch triple_set: 483143, new_triple: /m/01qscs /award/award_nominee/award_nominations./award/award_nomination/award /m/02x8n1n
+12:02:34,2 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:02:34,2 Learning INFO time elapsed: 1 ms
+12:02:42,64 Learning INFO increasing rule size of CYCLIC rules to 2  after 8 s
+12:02:46,167 Learning INFO increasing rule size of CYCLIC rules to 3  after 12 s
+12:02:51,935 Learning INFO increasing rule size of CYCLIC rules to 4  after 17 s
+12:02:55,980 Learning INFO ***************************************************************
+12:02:55,980 Learning INFO **snapshot_rules: 36 in file learning_rules/FB15k/rule_extend_20.txt
+12:02:55,980 Learning INFO ***************************************************************
+12:05:35,377 Learning INFO train_with_batch triple_set: 483144, new_triple: /m/01qscs /award/award_nominee/award_nominations./award/award_nomination/award /m/02x8n1n
+12:05:35,377 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:05:35,378 Learning INFO time elapsed: 0 ms
+12:05:43,449 Learning INFO increasing rule size of CYCLIC rules to 2  after 8 s
+12:05:47,502 Learning INFO increasing rule size of CYCLIC rules to 3  after 12 s
+12:05:54,881 Learning INFO ****************************start new section*************************************
+12:05:54,881 Learning INFO initialize learning 1598245554881
+12:06:04,432 Learning INFO train_with_batch triple_set: 483143, new_triple: /m/01qscs /award/award_nominee/award_nominations./award/award_nomination/award /m/02x8n1n
+12:06:04,432 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:04,433 Learning INFO time elapsed: 1 ms
+12:06:06,453 Learning INFO ***************************************************************
+12:06:06,454 Learning INFO **snapshot_rules: 15 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:06,454 Learning INFO ***************************************************************
+12:06:06,457 Learning INFO train_with_batch triple_set: 483144, new_triple: /m/040db /base/activism/activist/area_of_activism /m/0148d
+12:06:06,457 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:06,457 Learning INFO time elapsed: 0 ms
+12:06:08,480 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:06:08,480 Learning INFO ***************************************************************
+12:06:08,480 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:08,480 Learning INFO ***************************************************************
+12:06:08,481 Learning INFO train_with_batch triple_set: 483145, new_triple: /m/08966 /travel/travel_destination/climate./travel/travel_destination_monthly_climate/month /m/05lf_
+12:06:08,481 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:08,481 Learning INFO time elapsed: 0 ms
+12:06:10,513 Learning INFO ***************************************************************
+12:06:10,513 Learning INFO **snapshot_rules: 31 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:10,513 Learning INFO ***************************************************************
+12:06:10,518 Learning INFO train_with_batch triple_set: 483146, new_triple: /m/01hww_ /music/performance_role/regular_performances./music/group_membership/group /m/01q99h
+12:06:10,518 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:10,519 Learning INFO time elapsed: 0 ms
+12:06:12,549 Learning INFO ***************************************************************
+12:06:12,549 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:12,550 Learning INFO ***************************************************************
+12:06:12,552 Learning INFO train_with_batch triple_set: 483147, new_triple: /m/0c1pj /award/award_nominee/award_nominations./award/award_nomination/award /m/019f4v
+12:06:12,552 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:12,553 Learning INFO time elapsed: 0 ms
+12:06:14,573 Learning INFO ***************************************************************
+12:06:14,573 Learning INFO **snapshot_rules: 14 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:14,573 Learning INFO ***************************************************************
+12:06:14,576 Learning INFO train_with_batch triple_set: 483148, new_triple: /m/0ddd9 /award/award_category/nominees./award/award_nomination/award_nominee /m/07dnx
+12:06:14,576 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:14,576 Learning INFO time elapsed: 0 ms
+12:06:16,608 Learning INFO ***************************************************************
+12:06:16,609 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:16,609 Learning INFO ***************************************************************
+12:06:16,611 Learning INFO train_with_batch triple_set: 483149, new_triple: /m/09v3jyg /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/0f8l9c
+12:06:16,611 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:16,611 Learning INFO time elapsed: 0 ms
+12:06:18,628 Learning INFO ***************************************************************
+12:06:18,628 Learning INFO **snapshot_rules: 30 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:18,628 Learning INFO ***************************************************************
+12:06:18,633 Learning INFO train_with_batch triple_set: 483150, new_triple: /m/02jx1 /location/location/contains /m/013t85
+12:06:18,634 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:18,634 Learning INFO time elapsed: 0 ms
+12:06:20,659 Learning INFO ***************************************************************
+12:06:20,659 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:20,659 Learning INFO ***************************************************************
+12:06:20,661 Learning INFO train_with_batch triple_set: 483151, new_triple: /m/02jx1 /location/location/contains /m/0m0bj
+12:06:20,661 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:20,661 Learning INFO time elapsed: 0 ms
+12:06:22,682 Learning INFO ***************************************************************
+12:06:22,682 Learning INFO **snapshot_rules: 19 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:22,683 Learning INFO ***************************************************************
+12:06:22,687 Learning INFO train_with_batch triple_set: 483152, new_triple: /m/02bfmn /film/actor/film./film/performance/film /m/04ghz4m
+12:06:22,687 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:22,687 Learning INFO time elapsed: 0 ms
+12:06:24,696 Learning INFO ***************************************************************
+12:06:24,696 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:24,696 Learning INFO ***************************************************************
+12:06:24,699 Learning INFO train_with_batch triple_set: 483153, new_triple: /m/05zrvfd /award/award_category/nominees./award/award_nomination/nominated_for /m/04y9mm8
+12:06:24,699 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:24,699 Learning INFO time elapsed: 0 ms
+12:06:26,709 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:06:26,710 Learning INFO ***************************************************************
+12:06:26,710 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:26,710 Learning INFO ***************************************************************
+12:06:26,711 Learning INFO train_with_batch triple_set: 483154, new_triple: /m/04mrgz /soccer/football_team/current_roster./soccer/football_roster_position/position /m/0dgrmp
+12:06:26,711 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:26,711 Learning INFO time elapsed: 0 ms
+12:06:28,734 Learning INFO ***************************************************************
+12:06:28,734 Learning INFO **snapshot_rules: 56 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:28,734 Learning INFO ***************************************************************
+12:06:28,742 Learning INFO train_with_batch triple_set: 483155, new_triple: /m/060bp /government/government_office_category/officeholders./government/government_position_held/jurisdiction_of_office /m/04j53
+12:06:28,742 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:28,742 Learning INFO time elapsed: 0 ms
+12:06:30,748 Learning INFO ***************************************************************
+12:06:30,748 Learning INFO **snapshot_rules: 37 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:30,748 Learning INFO ***************************************************************
+12:06:30,755 Learning INFO train_with_batch triple_set: 483156, new_triple: /m/060bp /government/government_office_category/officeholders./government/government_position_held/appointed_by /m/0cmpn
+12:06:30,755 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:30,755 Learning INFO time elapsed: 0 ms
+12:06:32,770 Learning INFO ***************************************************************
+12:06:32,770 Learning INFO **snapshot_rules: 14 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:32,770 Learning INFO ***************************************************************
+12:06:32,773 Learning INFO train_with_batch triple_set: 483157, new_triple: /m/07l450 /film/film/genre /m/082gq
+12:06:32,773 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:32,773 Learning INFO time elapsed: 0 ms
+12:06:34,814 Learning INFO ***************************************************************
+12:06:34,815 Learning INFO **snapshot_rules: 19 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:34,830 Learning INFO ***************************************************************
+12:06:34,836 Learning INFO train_with_batch triple_set: 483158, new_triple: /m/07h1h5 /sports/pro_athlete/teams./sports/sports_team_roster/team /m/029q3k
+12:06:34,836 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:34,837 Learning INFO time elapsed: 0 ms
+12:06:36,844 Learning INFO ***************************************************************
+12:06:36,844 Learning INFO **snapshot_rules: 9 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:36,844 Learning INFO ***************************************************************
+12:06:36,847 Learning INFO train_with_batch triple_set: 483159, new_triple: /m/06yxd /base/biblioness/bibs_location/country /m/09c7w0
+12:06:36,847 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:36,847 Learning INFO time elapsed: 0 ms
+12:06:38,853 Learning INFO ***************************************************************
+12:06:38,853 Learning INFO **snapshot_rules: 34 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:38,853 Learning INFO ***************************************************************
+12:06:38,859 Learning INFO train_with_batch triple_set: 483160, new_triple: /m/012q4n /award/award_nominee/award_nominations./award/award_nomination/award_nominee /m/04g4n
+12:06:38,859 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:38,859 Learning INFO time elapsed: 1 ms
+12:06:40,881 Learning INFO ***************************************************************
+12:06:40,882 Learning INFO **snapshot_rules: 12 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:40,882 Learning INFO ***************************************************************
+12:06:40,884 Learning INFO train_with_batch triple_set: 483161, new_triple: /m/0djb3vw /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/0jgd
+12:06:40,885 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:40,885 Learning INFO time elapsed: 0 ms
+12:06:42,888 Learning INFO ***************************************************************
+12:06:42,889 Learning INFO **snapshot_rules: 21 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:42,889 Learning INFO ***************************************************************
+12:06:42,894 Learning INFO train_with_batch triple_set: 483162, new_triple: /m/0dg3n1 /base/locations/continents/countries_within /m/01699
+12:06:42,894 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:42,894 Learning INFO time elapsed: 1 ms
+12:06:44,925 Learning INFO ***************************************************************
+12:06:44,926 Learning INFO **snapshot_rules: 8 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:44,926 Learning INFO ***************************************************************
+12:06:44,928 Learning INFO train_with_batch triple_set: 483163, new_triple: /m/036jp8 /people/person/places_lived./people/place_lived/location /m/0fpzwf
+12:06:44,928 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:44,928 Learning INFO time elapsed: 0 ms
+12:06:46,964 Learning INFO ***************************************************************
+12:06:46,965 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:46,965 Learning INFO ***************************************************************
+12:06:46,966 Learning INFO train_with_batch triple_set: 483164, new_triple: /m/031y2 /base/popstra/location/vacationers./base/popstra/vacation_choice/vacationer /m/0dxmyh
+12:06:46,966 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:46,966 Learning INFO time elapsed: 0 ms
+12:06:48,968 Learning INFO ***************************************************************
+12:06:48,968 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:48,968 Learning INFO ***************************************************************
+12:06:48,970 Learning INFO train_with_batch triple_set: 483165, new_triple: /m/01d8l /olympics/olympic_participating_country/medals_won./olympics/olympic_medal_honor/medal /m/02lq67
+12:06:48,970 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:48,970 Learning INFO time elapsed: 0 ms
+12:06:50,994 Learning INFO ***************************************************************
+12:06:50,995 Learning INFO **snapshot_rules: 42 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:50,995 Learning INFO ***************************************************************
+12:06:51,0 Learning INFO train_with_batch triple_set: 483166, new_triple: /m/0ncy4 /location/location/containedby /m/07ssc
+12:06:51,1 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:51,1 Learning INFO time elapsed: 0 ms
+12:06:53,17 Learning INFO ***************************************************************
+12:06:53,18 Learning INFO **snapshot_rules: 14 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:53,18 Learning INFO ***************************************************************
+12:06:53,21 Learning INFO train_with_batch triple_set: 483167, new_triple: /m/0ydpd /location/location/time_zones /m/02hcv8
+12:06:53,22 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:53,22 Learning INFO time elapsed: 0 ms
+12:06:55,27 Learning INFO ***************************************************************
+12:06:55,28 Learning INFO **snapshot_rules: 11 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:55,28 Learning INFO ***************************************************************
+12:06:55,29 Learning INFO train_with_batch triple_set: 483168, new_triple: /m/0738b8 /people/person/places_lived./people/place_lived/location /m/02xry
+12:06:55,30 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:55,30 Learning INFO time elapsed: 0 ms
+12:06:57,36 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:06:57,36 Learning INFO ***************************************************************
+12:06:57,36 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:57,36 Learning INFO ***************************************************************
+12:06:57,37 Learning INFO train_with_batch triple_set: 483169, new_triple: /m/02h8p8 /sports/sports_team/roster./baseball/baseball_roster_position/position /m/02wszf
+12:06:57,38 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:57,38 Learning INFO time elapsed: 0 ms
+12:06:59,63 Learning INFO ***************************************************************
+12:06:59,63 Learning INFO **snapshot_rules: 44 in file learning_rules/FB15k/rule_extend_20.txt
+12:06:59,63 Learning INFO ***************************************************************
+12:06:59,72 Learning INFO train_with_batch triple_set: 483170, new_triple: /m/0cm2xh /base/culturalevent/event/entity_involved /m/03b79
+12:06:59,72 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:06:59,72 Learning INFO time elapsed: 1 ms
+12:07:01,109 Learning INFO ***************************************************************
+12:07:01,109 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:07:01,109 Learning INFO ***************************************************************
+12:07:01,112 Learning INFO train_with_batch triple_set: 483171, new_triple: /m/027f7dj /award/award_nominee/award_nominations./award/award_nomination/award /m/09sb52
+12:07:01,112 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:07:01,112 Learning INFO time elapsed: 1 ms
+12:07:03,132 Learning INFO ***************************************************************
+12:07:03,132 Learning INFO **snapshot_rules: 14 in file learning_rules/FB15k/rule_extend_20.txt
+12:07:03,132 Learning INFO ***************************************************************
+12:07:03,136 Learning INFO train_with_batch triple_set: 483172, new_triple: /m/0chgr2 /base/aareas/schema/administrative_area/administrative_parent /m/0chghy
+12:07:03,136 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:07:03,136 Learning INFO time elapsed: 1 ms
+12:07:43,117 Learning INFO ****************************start new section*************************************
+12:07:43,117 Learning INFO initialize learning 1598245663117
+12:07:53,340 Learning INFO train_with_batch triple_set: 483143, new_triple: /m/01qscs /award/award_nominee/award_nominations./award/award_nomination/award /m/02x8n1n
+12:07:53,340 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:07:53,340 Learning INFO time elapsed: 1 ms
+12:07:55,372 Learning INFO ***************************************************************
+12:07:55,374 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:07:55,374 Learning INFO ***************************************************************
+12:07:55,376 Learning INFO train_with_batch triple_set: 483144, new_triple: /m/040db /base/activism/activist/area_of_activism /m/0148d
+12:07:55,377 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:07:55,377 Learning INFO time elapsed: 0 ms
+12:07:57,419 Learning INFO ***************************************************************
+12:07:57,420 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:07:57,420 Learning INFO ***************************************************************
+12:07:57,423 Learning INFO train_with_batch triple_set: 483145, new_triple: /m/08966 /travel/travel_destination/climate./travel/travel_destination_monthly_climate/month /m/05lf_
+12:07:57,424 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:07:57,425 Learning INFO time elapsed: 1 ms
+12:07:59,492 Learning INFO ***************************************************************
+12:07:59,492 Learning INFO **snapshot_rules: 22 in file learning_rules/FB15k/rule_extend_20.txt
+12:07:59,492 Learning INFO ***************************************************************
+12:07:59,502 Learning INFO train_with_batch triple_set: 483146, new_triple: /m/01hww_ /music/performance_role/regular_performances./music/group_membership/group /m/01q99h
+12:07:59,502 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:07:59,503 Learning INFO time elapsed: 0 ms
+12:08:01,540 Learning INFO ***************************************************************
+12:08:01,540 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:01,540 Learning INFO ***************************************************************
+12:08:01,542 Learning INFO train_with_batch triple_set: 483147, new_triple: /m/0c1pj /award/award_nominee/award_nominations./award/award_nomination/award /m/019f4v
+12:08:01,542 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:01,542 Learning INFO time elapsed: 0 ms
+12:08:03,582 Learning INFO ***************************************************************
+12:08:03,582 Learning INFO **snapshot_rules: 13 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:03,582 Learning INFO ***************************************************************
+12:08:03,585 Learning INFO train_with_batch triple_set: 483148, new_triple: /m/0ddd9 /award/award_category/nominees./award/award_nomination/award_nominee /m/07dnx
+12:08:03,585 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:03,585 Learning INFO time elapsed: 0 ms
+12:08:05,609 Learning INFO ***************************************************************
+12:08:05,609 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:05,609 Learning INFO ***************************************************************
+12:08:05,611 Learning INFO train_with_batch triple_set: 483149, new_triple: /m/09v3jyg /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/0f8l9c
+12:08:05,611 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:05,611 Learning INFO time elapsed: 1 ms
+12:08:07,655 Learning INFO ***************************************************************
+12:08:07,655 Learning INFO **snapshot_rules: 26 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:07,655 Learning INFO ***************************************************************
+12:08:07,659 Learning INFO train_with_batch triple_set: 483150, new_triple: /m/02jx1 /location/location/contains /m/013t85
+12:08:07,659 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:07,659 Learning INFO time elapsed: 0 ms
+12:08:09,696 Learning INFO ***************************************************************
+12:08:09,697 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:09,698 Learning INFO ***************************************************************
+12:08:09,700 Learning INFO train_with_batch triple_set: 483151, new_triple: /m/02jx1 /location/location/contains /m/0m0bj
+12:08:09,700 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:09,700 Learning INFO time elapsed: 0 ms
+12:08:11,724 Learning INFO ***************************************************************
+12:08:11,724 Learning INFO **snapshot_rules: 18 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:11,725 Learning INFO ***************************************************************
+12:08:11,729 Learning INFO train_with_batch triple_set: 483152, new_triple: /m/02bfmn /film/actor/film./film/performance/film /m/04ghz4m
+12:08:11,729 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:11,729 Learning INFO time elapsed: 1 ms
+12:08:13,736 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:08:13,737 Learning INFO ***************************************************************
+12:08:13,737 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:13,737 Learning INFO ***************************************************************
+12:08:13,738 Learning INFO train_with_batch triple_set: 483153, new_triple: /m/05zrvfd /award/award_category/nominees./award/award_nomination/nominated_for /m/04y9mm8
+12:08:13,738 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:13,738 Learning INFO time elapsed: 0 ms
+12:08:15,765 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:08:15,766 Learning INFO ***************************************************************
+12:08:15,766 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:15,766 Learning INFO ***************************************************************
+12:08:15,768 Learning INFO train_with_batch triple_set: 483154, new_triple: /m/04mrgz /soccer/football_team/current_roster./soccer/football_roster_position/position /m/0dgrmp
+12:08:15,768 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:15,768 Learning INFO time elapsed: 1 ms
+12:08:17,769 Learning INFO ***************************************************************
+12:08:17,769 Learning INFO **snapshot_rules: 56 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:17,769 Learning INFO ***************************************************************
+12:08:17,779 Learning INFO train_with_batch triple_set: 483155, new_triple: /m/060bp /government/government_office_category/officeholders./government/government_position_held/jurisdiction_of_office /m/04j53
+12:08:17,779 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:17,779 Learning INFO time elapsed: 0 ms
+12:08:19,803 Learning INFO ***************************************************************
+12:08:19,803 Learning INFO **snapshot_rules: 32 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:19,803 Learning INFO ***************************************************************
+12:08:19,809 Learning INFO train_with_batch triple_set: 483156, new_triple: /m/060bp /government/government_office_category/officeholders./government/government_position_held/appointed_by /m/0cmpn
+12:08:19,809 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:19,809 Learning INFO time elapsed: 0 ms
+12:08:21,835 Learning INFO ***************************************************************
+12:08:21,835 Learning INFO **snapshot_rules: 8 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:21,835 Learning INFO ***************************************************************
+12:08:21,838 Learning INFO train_with_batch triple_set: 483157, new_triple: /m/07l450 /film/film/genre /m/082gq
+12:08:21,838 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:21,838 Learning INFO time elapsed: 0 ms
+12:08:23,873 Learning INFO ***************************************************************
+12:08:23,874 Learning INFO **snapshot_rules: 17 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:23,875 Learning INFO ***************************************************************
+12:08:23,878 Learning INFO train_with_batch triple_set: 483158, new_triple: /m/07h1h5 /sports/pro_athlete/teams./sports/sports_team_roster/team /m/029q3k
+12:08:23,878 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:23,878 Learning INFO time elapsed: 0 ms
+12:08:25,880 Learning INFO ***************************************************************
+12:08:25,880 Learning INFO **snapshot_rules: 9 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:25,881 Learning INFO ***************************************************************
+12:08:25,883 Learning INFO train_with_batch triple_set: 483159, new_triple: /m/06yxd /base/biblioness/bibs_location/country /m/09c7w0
+12:08:25,883 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:25,883 Learning INFO time elapsed: 0 ms
+12:08:27,917 Learning INFO ***************************************************************
+12:08:27,918 Learning INFO **snapshot_rules: 20 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:27,918 Learning INFO ***************************************************************
+12:08:27,921 Learning INFO train_with_batch triple_set: 483160, new_triple: /m/012q4n /award/award_nominee/award_nominations./award/award_nomination/award_nominee /m/04g4n
+12:08:27,922 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:27,922 Learning INFO time elapsed: 0 ms
+12:08:29,932 Learning INFO ***************************************************************
+12:08:29,932 Learning INFO **snapshot_rules: 14 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:29,932 Learning INFO ***************************************************************
+12:08:29,934 Learning INFO train_with_batch triple_set: 483161, new_triple: /m/0djb3vw /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/0jgd
+12:08:29,935 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:29,935 Learning INFO time elapsed: 0 ms
+12:08:31,949 Learning INFO ***************************************************************
+12:08:31,949 Learning INFO **snapshot_rules: 26 in file learning_rules/FB15k/rule_extend_20.txt
+12:08:31,949 Learning INFO ***************************************************************
+12:08:31,953 Learning INFO train_with_batch triple_set: 483162, new_triple: /m/0dg3n1 /base/locations/continents/countries_within /m/01699
+12:08:31,953 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:08:31,953 Learning INFO time elapsed: 1 ms
+12:10:08,348 Learning INFO ****************************start new section*************************************
+12:10:08,348 Learning INFO initialize learning 1598245808349
+12:10:23,814 Learning INFO train_with_batch triple_set: 483143, new_triple: /m/01qscs /award/award_nominee/award_nominations./award/award_nomination/award /m/02x8n1n
+12:10:23,816 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:23,816 Learning INFO time elapsed: 2 ms
+12:10:25,843 Learning INFO ***************************************************************
+12:10:25,843 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:25,844 Learning INFO ***************************************************************
+12:10:25,845 Learning INFO train_with_batch triple_set: 483144, new_triple: /m/040db /base/activism/activist/area_of_activism /m/0148d
+12:10:25,845 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:25,846 Learning INFO time elapsed: 0 ms
+12:10:27,852 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:10:27,853 Learning INFO ***************************************************************
+12:10:27,853 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:27,853 Learning INFO ***************************************************************
+12:10:27,855 Learning INFO train_with_batch triple_set: 483145, new_triple: /m/08966 /travel/travel_destination/climate./travel/travel_destination_monthly_climate/month /m/05lf_
+12:10:27,855 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:27,855 Learning INFO time elapsed: 0 ms
+12:10:29,891 Learning INFO ***************************************************************
+12:10:29,891 Learning INFO **snapshot_rules: 34 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:29,891 Learning INFO ***************************************************************
+12:10:29,896 Learning INFO train_with_batch triple_set: 483146, new_triple: /m/01hww_ /music/performance_role/regular_performances./music/group_membership/group /m/01q99h
+12:10:29,896 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:29,896 Learning INFO time elapsed: 1 ms
+12:10:31,918 Learning INFO ***************************************************************
+12:10:31,918 Learning INFO **snapshot_rules: 8 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:31,919 Learning INFO ***************************************************************
+12:10:31,922 Learning INFO train_with_batch triple_set: 483147, new_triple: /m/0c1pj /award/award_nominee/award_nominations./award/award_nomination/award /m/019f4v
+12:10:31,922 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:31,922 Learning INFO time elapsed: 0 ms
+12:10:33,949 Learning INFO ***************************************************************
+12:10:33,949 Learning INFO **snapshot_rules: 8 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:33,949 Learning INFO ***************************************************************
+12:10:33,953 Learning INFO train_with_batch triple_set: 483148, new_triple: /m/0ddd9 /award/award_category/nominees./award/award_nomination/award_nominee /m/07dnx
+12:10:33,953 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:33,953 Learning INFO time elapsed: 0 ms
+12:10:35,967 Learning INFO ***************************************************************
+12:10:35,967 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:35,967 Learning INFO ***************************************************************
+12:10:35,969 Learning INFO train_with_batch triple_set: 483149, new_triple: /m/09v3jyg /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/0f8l9c
+12:10:35,970 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:35,970 Learning INFO time elapsed: 1 ms
+12:10:37,976 Learning INFO ***************************************************************
+12:10:37,976 Learning INFO **snapshot_rules: 32 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:37,976 Learning INFO ***************************************************************
+12:10:37,983 Learning INFO train_with_batch triple_set: 483150, new_triple: /m/02jx1 /location/location/contains /m/013t85
+12:10:37,983 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:37,983 Learning INFO time elapsed: 0 ms
+12:10:40,7 Learning INFO ***************************************************************
+12:10:40,7 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:40,7 Learning INFO ***************************************************************
+12:10:40,10 Learning INFO train_with_batch triple_set: 483151, new_triple: /m/02jx1 /location/location/contains /m/0m0bj
+12:10:40,10 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:40,11 Learning INFO time elapsed: 1 ms
+12:10:42,17 Learning INFO ***************************************************************
+12:10:42,18 Learning INFO **snapshot_rules: 14 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:42,19 Learning INFO ***************************************************************
+12:10:42,22 Learning INFO train_with_batch triple_set: 483152, new_triple: /m/02bfmn /film/actor/film./film/performance/film /m/04ghz4m
+12:10:42,22 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:42,22 Learning INFO time elapsed: 0 ms
+12:10:44,46 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:10:44,46 Learning INFO ***************************************************************
+12:10:44,46 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:44,46 Learning INFO ***************************************************************
+12:10:44,48 Learning INFO train_with_batch triple_set: 483153, new_triple: /m/05zrvfd /award/award_category/nominees./award/award_nomination/nominated_for /m/04y9mm8
+12:10:44,48 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:44,48 Learning INFO time elapsed: 0 ms
+12:10:46,75 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:10:46,75 Learning INFO ***************************************************************
+12:10:46,75 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:46,76 Learning INFO ***************************************************************
+12:10:46,76 Learning INFO train_with_batch triple_set: 483154, new_triple: /m/04mrgz /soccer/football_team/current_roster./soccer/football_roster_position/position /m/0dgrmp
+12:10:46,76 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:46,76 Learning INFO time elapsed: 0 ms
+12:10:48,117 Learning INFO ***************************************************************
+12:10:48,118 Learning INFO **snapshot_rules: 67 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:48,118 Learning INFO ***************************************************************
+12:10:48,128 Learning INFO train_with_batch triple_set: 483155, new_triple: /m/060bp /government/government_office_category/officeholders./government/government_position_held/jurisdiction_of_office /m/04j53
+12:10:48,128 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:48,128 Learning INFO time elapsed: 0 ms
+12:10:50,136 Learning INFO ***************************************************************
+12:10:50,136 Learning INFO **snapshot_rules: 46 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:50,136 Learning INFO ***************************************************************
+12:10:50,142 Learning INFO train_with_batch triple_set: 483156, new_triple: /m/060bp /government/government_office_category/officeholders./government/government_position_held/appointed_by /m/0cmpn
+12:10:50,142 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:50,142 Learning INFO time elapsed: 1 ms
+12:10:52,162 Learning INFO ***************************************************************
+12:10:52,162 Learning INFO **snapshot_rules: 12 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:52,162 Learning INFO ***************************************************************
+12:10:52,164 Learning INFO train_with_batch triple_set: 483157, new_triple: /m/07l450 /film/film/genre /m/082gq
+12:10:52,164 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:52,164 Learning INFO time elapsed: 0 ms
+12:10:54,211 Learning INFO ***************************************************************
+12:10:54,211 Learning INFO **snapshot_rules: 20 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:54,211 Learning INFO ***************************************************************
+12:10:54,220 Learning INFO train_with_batch triple_set: 483158, new_triple: /m/07h1h5 /sports/pro_athlete/teams./sports/sports_team_roster/team /m/029q3k
+12:10:54,220 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:54,220 Learning INFO time elapsed: 1 ms
+12:10:56,247 Learning INFO ***************************************************************
+12:10:56,247 Learning INFO **snapshot_rules: 9 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:56,247 Learning INFO ***************************************************************
+12:10:56,249 Learning INFO train_with_batch triple_set: 483159, new_triple: /m/06yxd /base/biblioness/bibs_location/country /m/09c7w0
+12:10:56,250 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:56,250 Learning INFO time elapsed: 0 ms
+12:10:58,264 Learning INFO ***************************************************************
+12:10:58,265 Learning INFO **snapshot_rules: 23 in file learning_rules/FB15k/rule_extend_20.txt
+12:10:58,266 Learning INFO ***************************************************************
+12:10:58,269 Learning INFO train_with_batch triple_set: 483160, new_triple: /m/012q4n /award/award_nominee/award_nominations./award/award_nomination/award_nominee /m/04g4n
+12:10:58,269 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:10:58,270 Learning INFO time elapsed: 0 ms
+12:11:00,292 Learning INFO ***************************************************************
+12:11:00,292 Learning INFO **snapshot_rules: 14 in file learning_rules/FB15k/rule_extend_20.txt
+12:11:00,292 Learning INFO ***************************************************************
+12:11:00,294 Learning INFO train_with_batch triple_set: 483161, new_triple: /m/0djb3vw /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/0jgd
+12:11:00,294 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:11:00,294 Learning INFO time elapsed: 1 ms
+12:11:13,900 Learning INFO ****************************start new section*************************************
+12:11:13,901 Learning INFO initialize learning 1598245873901
+12:11:33,442 Learning INFO train_with_batch triple_set: 483143, new_triple: /m/01qscs /award/award_nominee/award_nominations./award/award_nomination/award /m/02x8n1n
+12:11:33,442 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:11:33,445 Learning INFO time elapsed: 3 ms
+12:11:35,505 Learning INFO ***************************************************************
+12:11:35,505 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:11:35,505 Learning INFO ***************************************************************
+12:11:35,506 Learning INFO train_with_batch triple_set: 483144, new_triple: /m/040db /base/activism/activist/area_of_activism /m/0148d
+12:11:35,507 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:11:35,508 Learning INFO time elapsed: 1 ms
+12:11:37,522 Learning INFO ***************************************************************
+12:11:37,522 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:11:37,522 Learning INFO ***************************************************************
+12:11:37,523 Learning INFO train_with_batch triple_set: 483145, new_triple: /m/08966 /travel/travel_destination/climate./travel/travel_destination_monthly_climate/month /m/05lf_
+12:11:37,523 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:11:37,523 Learning INFO time elapsed: 1 ms
+12:11:39,563 Learning INFO ***************************************************************
+12:11:39,563 Learning INFO **snapshot_rules: 35 in file learning_rules/FB15k/rule_extend_20.txt
+12:11:39,563 Learning INFO ***************************************************************
+12:11:39,570 Learning INFO train_with_batch triple_set: 483146, new_triple: /m/01hww_ /music/performance_role/regular_performances./music/group_membership/group /m/01q99h
+12:11:39,570 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:11:39,570 Learning INFO time elapsed: 0 ms
+12:11:41,589 Learning INFO ***************************************************************
+12:11:41,589 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:11:41,589 Learning INFO ***************************************************************
+12:11:41,591 Learning INFO train_with_batch triple_set: 483147, new_triple: /m/0c1pj /award/award_nominee/award_nominations./award/award_nomination/award /m/019f4v
+12:11:41,591 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:11:41,591 Learning INFO time elapsed: 1 ms
+12:11:43,616 Learning INFO ***************************************************************
+12:11:43,617 Learning INFO **snapshot_rules: 8 in file learning_rules/FB15k/rule_extend_20.txt
+12:11:43,617 Learning INFO ***************************************************************
+12:11:43,619 Learning INFO train_with_batch triple_set: 483148, new_triple: /m/0ddd9 /award/award_category/nominees./award/award_nomination/award_nominee /m/07dnx
+12:11:43,619 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:11:43,619 Learning INFO time elapsed: 0 ms
+12:11:45,644 Learning INFO ***************************************************************
+12:11:45,644 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:11:45,645 Learning INFO ***************************************************************
+12:11:45,646 Learning INFO train_with_batch triple_set: 483149, new_triple: /m/09v3jyg /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/0f8l9c
+12:11:45,646 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:11:45,646 Learning INFO time elapsed: 0 ms
+12:11:47,663 Learning INFO ***************************************************************
+12:11:47,663 Learning INFO **snapshot_rules: 34 in file learning_rules/FB15k/rule_extend_20.txt
+12:11:47,663 Learning INFO ***************************************************************
+12:11:47,667 Learning INFO train_with_batch triple_set: 483150, new_triple: /m/02jx1 /location/location/contains /m/013t85
+12:11:47,667 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:11:47,667 Learning INFO time elapsed: 1 ms
+12:11:49,697 Learning INFO ***************************************************************
+12:11:49,697 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:11:49,697 Learning INFO ***************************************************************
+12:11:49,698 Learning INFO train_with_batch triple_set: 483151, new_triple: /m/02jx1 /location/location/contains /m/0m0bj
+12:11:49,699 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:11:49,699 Learning INFO time elapsed: 0 ms
+12:11:51,730 Learning INFO ***************************************************************
+12:11:51,730 Learning INFO **snapshot_rules: 15 in file learning_rules/FB15k/rule_extend_20.txt
+12:11:51,731 Learning INFO ***************************************************************
+12:11:51,733 Learning INFO train_with_batch triple_set: 483152, new_triple: /m/02bfmn /film/actor/film./film/performance/film /m/04ghz4m
+12:11:51,733 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:11:51,733 Learning INFO time elapsed: 0 ms
+12:11:53,760 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:11:53,760 Learning INFO ***************************************************************
+12:11:53,761 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:11:53,761 Learning INFO ***************************************************************
+12:11:53,761 Learning INFO train_with_batch triple_set: 483153, new_triple: /m/05zrvfd /award/award_category/nominees./award/award_nomination/nominated_for /m/04y9mm8
+12:11:53,761 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:11:53,761 Learning INFO time elapsed: 0 ms
+12:11:55,770 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:11:55,771 Learning INFO ***************************************************************
+12:11:55,771 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:11:55,771 Learning INFO ***************************************************************
+12:11:55,772 Learning INFO train_with_batch triple_set: 483154, new_triple: /m/04mrgz /soccer/football_team/current_roster./soccer/football_roster_position/position /m/0dgrmp
+12:11:55,772 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:11:55,772 Learning INFO time elapsed: 0 ms
+12:12:10,78 Learning INFO ****************************start new section*************************************
+12:12:10,79 Learning INFO initialize learning 1598245930079
+12:12:19,293 Learning INFO train_with_batch triple_set: 483143, new_triple: /m/01qscs /award/award_nominee/award_nominations./award/award_nomination/award /m/02x8n1n
+12:12:19,293 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:19,294 Learning INFO time elapsed: 0 ms
+12:12:21,309 Learning INFO ***************************************************************
+12:12:21,309 Learning INFO **snapshot_rules: 12 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:21,309 Learning INFO ***************************************************************
+12:12:21,314 Learning INFO train_with_batch triple_set: 483144, new_triple: /m/040db /base/activism/activist/area_of_activism /m/0148d
+12:12:21,315 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:21,315 Learning INFO time elapsed: 2 ms
+12:12:23,346 Learning INFO ***************************************************************
+12:12:23,346 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:23,347 Learning INFO ***************************************************************
+12:12:23,348 Learning INFO train_with_batch triple_set: 483145, new_triple: /m/08966 /travel/travel_destination/climate./travel/travel_destination_monthly_climate/month /m/05lf_
+12:12:23,348 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:23,348 Learning INFO time elapsed: 0 ms
+12:12:25,358 Learning INFO ***************************************************************
+12:12:25,358 Learning INFO **snapshot_rules: 30 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:25,358 Learning INFO ***************************************************************
+12:12:25,364 Learning INFO train_with_batch triple_set: 483146, new_triple: /m/01hww_ /music/performance_role/regular_performances./music/group_membership/group /m/01q99h
+12:12:25,365 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:25,365 Learning INFO time elapsed: 0 ms
+12:12:27,396 Learning INFO ***************************************************************
+12:12:27,396 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:27,396 Learning INFO ***************************************************************
+12:12:27,398 Learning INFO train_with_batch triple_set: 483147, new_triple: /m/0c1pj /award/award_nominee/award_nominations./award/award_nomination/award /m/019f4v
+12:12:27,398 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:27,398 Learning INFO time elapsed: 0 ms
+12:12:29,408 Learning INFO ***************************************************************
+12:12:29,411 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:29,411 Learning INFO ***************************************************************
+12:12:29,414 Learning INFO train_with_batch triple_set: 483148, new_triple: /m/0ddd9 /award/award_category/nominees./award/award_nomination/award_nominee /m/07dnx
+12:12:29,414 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:29,414 Learning INFO time elapsed: 1 ms
+12:12:31,418 Learning INFO ***************************************************************
+12:12:31,418 Learning INFO **snapshot_rules: 8 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:31,418 Learning INFO ***************************************************************
+12:12:31,419 Learning INFO train_with_batch triple_set: 483149, new_triple: /m/09v3jyg /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/0f8l9c
+12:12:31,420 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:31,420 Learning INFO time elapsed: 0 ms
+12:12:33,435 Learning INFO ***************************************************************
+12:12:33,436 Learning INFO **snapshot_rules: 29 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:33,436 Learning INFO ***************************************************************
+12:12:33,440 Learning INFO train_with_batch triple_set: 483150, new_triple: /m/02jx1 /location/location/contains /m/013t85
+12:12:33,440 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:33,440 Learning INFO time elapsed: 0 ms
+12:12:35,472 Learning INFO ***************************************************************
+12:12:35,472 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:35,473 Learning INFO ***************************************************************
+12:12:35,475 Learning INFO train_with_batch triple_set: 483151, new_triple: /m/02jx1 /location/location/contains /m/0m0bj
+12:12:35,476 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:35,476 Learning INFO time elapsed: 0 ms
+12:12:37,498 Learning INFO ***************************************************************
+12:12:37,499 Learning INFO **snapshot_rules: 16 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:37,499 Learning INFO ***************************************************************
+12:12:37,502 Learning INFO train_with_batch triple_set: 483152, new_triple: /m/02bfmn /film/actor/film./film/performance/film /m/04ghz4m
+12:12:37,502 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:37,502 Learning INFO time elapsed: 0 ms
+12:12:39,523 Learning INFO ***************************************************************
+12:12:39,524 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:39,525 Learning INFO ***************************************************************
+12:12:39,526 Learning INFO train_with_batch triple_set: 483153, new_triple: /m/05zrvfd /award/award_category/nominees./award/award_nomination/nominated_for /m/04y9mm8
+12:12:39,527 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:39,527 Learning INFO time elapsed: 0 ms
+12:12:41,539 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:12:41,539 Learning INFO ***************************************************************
+12:12:41,539 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:41,540 Learning INFO ***************************************************************
+12:12:41,540 Learning INFO train_with_batch triple_set: 483154, new_triple: /m/04mrgz /soccer/football_team/current_roster./soccer/football_roster_position/position /m/0dgrmp
+12:12:41,540 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:41,540 Learning INFO time elapsed: 0 ms
+12:12:43,568 Learning INFO ***************************************************************
+12:12:43,569 Learning INFO **snapshot_rules: 50 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:43,569 Learning INFO ***************************************************************
+12:12:43,577 Learning INFO train_with_batch triple_set: 483155, new_triple: /m/060bp /government/government_office_category/officeholders./government/government_position_held/jurisdiction_of_office /m/04j53
+12:12:43,577 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:43,577 Learning INFO time elapsed: 0 ms
+12:12:45,600 Learning INFO ***************************************************************
+12:12:45,601 Learning INFO **snapshot_rules: 35 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:45,601 Learning INFO ***************************************************************
+12:12:45,609 Learning INFO train_with_batch triple_set: 483156, new_triple: /m/060bp /government/government_office_category/officeholders./government/government_position_held/appointed_by /m/0cmpn
+12:12:45,609 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:45,609 Learning INFO time elapsed: 0 ms
+12:12:47,640 Learning INFO ***************************************************************
+12:12:47,640 Learning INFO **snapshot_rules: 12 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:47,640 Learning INFO ***************************************************************
+12:12:47,648 Learning INFO train_with_batch triple_set: 483157, new_triple: /m/07l450 /film/film/genre /m/082gq
+12:12:47,648 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:47,648 Learning INFO time elapsed: 1 ms
+12:12:49,698 Learning INFO ***************************************************************
+12:12:49,699 Learning INFO **snapshot_rules: 15 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:49,699 Learning INFO ***************************************************************
+12:12:49,706 Learning INFO train_with_batch triple_set: 483158, new_triple: /m/07h1h5 /sports/pro_athlete/teams./sports/sports_team_roster/team /m/029q3k
+12:12:49,706 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:49,707 Learning INFO time elapsed: 1 ms
+12:12:51,707 Learning INFO ***************************************************************
+12:12:51,707 Learning INFO **snapshot_rules: 12 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:51,707 Learning INFO ***************************************************************
+12:12:51,710 Learning INFO train_with_batch triple_set: 483159, new_triple: /m/06yxd /base/biblioness/bibs_location/country /m/09c7w0
+12:12:51,710 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:51,710 Learning INFO time elapsed: 0 ms
+12:12:53,729 Learning INFO ***************************************************************
+12:12:53,730 Learning INFO **snapshot_rules: 20 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:53,730 Learning INFO ***************************************************************
+12:12:53,733 Learning INFO train_with_batch triple_set: 483160, new_triple: /m/012q4n /award/award_nominee/award_nominations./award/award_nomination/award_nominee /m/04g4n
+12:12:53,734 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:53,734 Learning INFO time elapsed: 0 ms
+12:12:55,794 Learning INFO ***************************************************************
+12:12:55,795 Learning INFO **snapshot_rules: 15 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:55,795 Learning INFO ***************************************************************
+12:12:55,799 Learning INFO train_with_batch triple_set: 483161, new_triple: /m/0djb3vw /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/0jgd
+12:12:55,799 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:55,799 Learning INFO time elapsed: 0 ms
+12:12:57,843 Learning INFO ***************************************************************
+12:12:57,843 Learning INFO **snapshot_rules: 24 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:57,843 Learning INFO ***************************************************************
+12:12:57,847 Learning INFO train_with_batch triple_set: 483162, new_triple: /m/0dg3n1 /base/locations/continents/countries_within /m/01699
+12:12:57,847 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:57,847 Learning INFO time elapsed: 0 ms
+12:12:59,867 Learning INFO ***************************************************************
+12:12:59,867 Learning INFO **snapshot_rules: 9 in file learning_rules/FB15k/rule_extend_20.txt
+12:12:59,867 Learning INFO ***************************************************************
+12:12:59,869 Learning INFO train_with_batch triple_set: 483163, new_triple: /m/036jp8 /people/person/places_lived./people/place_lived/location /m/0fpzwf
+12:12:59,869 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:12:59,869 Learning INFO time elapsed: 0 ms
+12:13:01,882 Learning INFO ***************************************************************
+12:13:01,882 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:01,882 Learning INFO ***************************************************************
+12:13:01,885 Learning INFO train_with_batch triple_set: 483164, new_triple: /m/031y2 /base/popstra/location/vacationers./base/popstra/vacation_choice/vacationer /m/0dxmyh
+12:13:01,885 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:01,885 Learning INFO time elapsed: 1 ms
+12:13:03,888 Learning INFO ***************************************************************
+12:13:03,888 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:03,888 Learning INFO ***************************************************************
+12:13:03,889 Learning INFO train_with_batch triple_set: 483165, new_triple: /m/01d8l /olympics/olympic_participating_country/medals_won./olympics/olympic_medal_honor/medal /m/02lq67
+12:13:03,889 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:03,889 Learning INFO time elapsed: 0 ms
+12:13:05,904 Learning INFO ***************************************************************
+12:13:05,904 Learning INFO **snapshot_rules: 43 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:05,904 Learning INFO ***************************************************************
+12:13:05,909 Learning INFO train_with_batch triple_set: 483166, new_triple: /m/0ncy4 /location/location/containedby /m/07ssc
+12:13:05,909 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:05,909 Learning INFO time elapsed: 1 ms
+12:13:07,934 Learning INFO ***************************************************************
+12:13:07,935 Learning INFO **snapshot_rules: 14 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:07,935 Learning INFO ***************************************************************
+12:13:07,938 Learning INFO train_with_batch triple_set: 483167, new_triple: /m/0ydpd /location/location/time_zones /m/02hcv8
+12:13:07,938 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:07,938 Learning INFO time elapsed: 0 ms
+12:13:09,955 Learning INFO ***************************************************************
+12:13:09,956 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:09,956 Learning INFO ***************************************************************
+12:13:09,958 Learning INFO train_with_batch triple_set: 483168, new_triple: /m/0738b8 /people/person/places_lived./people/place_lived/location /m/02xry
+12:13:09,958 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:09,958 Learning INFO time elapsed: 0 ms
+12:13:11,977 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:13:11,978 Learning INFO ***************************************************************
+12:13:11,978 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:11,978 Learning INFO ***************************************************************
+12:13:11,979 Learning INFO train_with_batch triple_set: 483169, new_triple: /m/02h8p8 /sports/sports_team/roster./baseball/baseball_roster_position/position /m/02wszf
+12:13:11,979 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:11,979 Learning INFO time elapsed: 0 ms
+12:13:14,21 Learning INFO ***************************************************************
+12:13:14,21 Learning INFO **snapshot_rules: 40 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:14,21 Learning INFO ***************************************************************
+12:13:14,27 Learning INFO train_with_batch triple_set: 483170, new_triple: /m/0cm2xh /base/culturalevent/event/entity_involved /m/03b79
+12:13:14,27 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:14,27 Learning INFO time elapsed: 0 ms
+12:13:16,38 Learning INFO ***************************************************************
+12:13:16,38 Learning INFO **snapshot_rules: 8 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:16,38 Learning INFO ***************************************************************
+12:13:16,40 Learning INFO train_with_batch triple_set: 483171, new_triple: /m/027f7dj /award/award_nominee/award_nominations./award/award_nomination/award /m/09sb52
+12:13:16,40 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:16,40 Learning INFO time elapsed: 0 ms
+12:13:18,52 Learning INFO ***************************************************************
+12:13:18,53 Learning INFO **snapshot_rules: 12 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:18,53 Learning INFO ***************************************************************
+12:13:18,55 Learning INFO train_with_batch triple_set: 483172, new_triple: /m/0chgr2 /base/aareas/schema/administrative_area/administrative_parent /m/0chghy
+12:13:18,55 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:18,55 Learning INFO time elapsed: 0 ms
+12:13:20,70 Learning INFO ***************************************************************
+12:13:20,70 Learning INFO **snapshot_rules: 10 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:20,70 Learning INFO ***************************************************************
+12:13:20,72 Learning INFO train_with_batch triple_set: 483173, new_triple: /m/070xg /sports/sports_team/colors /m/01g5v
+12:13:20,72 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:20,72 Learning INFO time elapsed: 0 ms
+12:13:22,100 Learning INFO ***************************************************************
+12:13:22,100 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:22,100 Learning INFO ***************************************************************
+12:13:22,102 Learning INFO train_with_batch triple_set: 483174, new_triple: /m/0mwk9 /location/statistical_region/rent50_2./measurement_unit/dated_money_value/currency /m/09nqf
+12:13:22,102 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:22,102 Learning INFO time elapsed: 0 ms
+12:13:24,120 Learning INFO ***************************************************************
+12:13:24,120 Learning INFO **snapshot_rules: 21 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:24,120 Learning INFO ***************************************************************
+12:13:24,123 Learning INFO train_with_batch triple_set: 483175, new_triple: /m/09306z /award/award_ceremony/awards_presented./award/award_honor/honored_for /m/0sxkh
+12:13:24,123 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:24,123 Learning INFO time elapsed: 0 ms
+12:13:26,135 Learning INFO ***************************************************************
+12:13:26,136 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:26,136 Learning INFO ***************************************************************
+12:13:26,137 Learning INFO train_with_batch triple_set: 483176, new_triple: /m/0kbws /olympics/olympic_games/participating_countries /m/027jk
+12:13:26,137 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:26,137 Learning INFO time elapsed: 0 ms
+12:13:28,149 Learning INFO ***************************************************************
+12:13:28,150 Learning INFO **snapshot_rules: 32 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:28,150 Learning INFO ***************************************************************
+12:13:28,154 Learning INFO train_with_batch triple_set: 483177, new_triple: /m/0kbws /olympics/olympic_games/participating_countries /m/04vjh
+12:13:28,154 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:28,154 Learning INFO time elapsed: 0 ms
+12:13:30,219 Learning INFO ***************************************************************
+12:13:30,219 Learning INFO **snapshot_rules: 23 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:30,219 Learning INFO ***************************************************************
+12:13:30,222 Learning INFO train_with_batch triple_set: 483178, new_triple: /m/017j69 /education/educational_institution/students_graduates./education/education/major_field_of_study /m/01mkq
+12:13:30,222 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:30,222 Learning INFO time elapsed: 0 ms
+12:13:32,251 Learning INFO ***************************************************************
+12:13:32,251 Learning INFO **snapshot_rules: 35 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:32,251 Learning INFO ***************************************************************
+12:13:32,255 Learning INFO train_with_batch triple_set: 483179, new_triple: /m/07z1m /location/statistical_region/religions./location/religion_percentage/religion /m/0631_
+12:13:32,255 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:32,256 Learning INFO time elapsed: 0 ms
+12:13:34,287 Learning INFO ***************************************************************
+12:13:34,287 Learning INFO **snapshot_rules: 40 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:34,287 Learning INFO ***************************************************************
+12:13:34,301 Learning INFO train_with_batch triple_set: 483180, new_triple: /m/03gqgt3 /military/military_conflict/combatants./military/military_combatant_group/combatants /m/0d060g
+12:13:34,301 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:34,302 Learning INFO time elapsed: 0 ms
+12:13:36,327 Learning INFO ***************************************************************
+12:13:36,327 Learning INFO **snapshot_rules: 12 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:36,327 Learning INFO ***************************************************************
+12:13:36,330 Learning INFO train_with_batch triple_set: 483181, new_triple: /m/01c9f2 /award/award_category/winners./award/award_honor/ceremony /m/01bx35
+12:13:36,331 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:36,331 Learning INFO time elapsed: 0 ms
+12:13:38,351 Learning INFO ***************************************************************
+12:13:38,352 Learning INFO **snapshot_rules: 32 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:38,352 Learning INFO ***************************************************************
+12:13:38,356 Learning INFO train_with_batch triple_set: 483182, new_triple: /m/01c9f2 /award/award_category/winners./award/award_honor/ceremony /m/01s695
+12:13:38,356 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:38,357 Learning INFO time elapsed: 0 ms
+12:13:40,362 Learning INFO ***************************************************************
+12:13:40,362 Learning INFO **snapshot_rules: 35 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:40,363 Learning INFO ***************************************************************
+12:13:40,368 Learning INFO train_with_batch triple_set: 483183, new_triple: /m/01lp8 /user/tsegaran/random/taxonomy_subject/entry./user/tsegaran/random/taxonomy_entry/taxonomy /m/04n6k
+12:13:40,368 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:40,368 Learning INFO time elapsed: 0 ms
+12:13:42,395 Learning INFO ***************************************************************
+12:13:42,395 Learning INFO **snapshot_rules: 9 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:42,395 Learning INFO ***************************************************************
+12:13:42,397 Learning INFO train_with_batch triple_set: 483184, new_triple: /m/01xwqn /influence/influence_node/influenced_by /m/0121rx
+12:13:42,397 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:42,397 Learning INFO time elapsed: 0 ms
+12:13:44,424 Learning INFO ***************************************************************
+12:13:44,424 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:44,424 Learning INFO ***************************************************************
+12:13:44,425 Learning INFO train_with_batch triple_set: 483185, new_triple: /m/065ym0c /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/07ssc
+12:13:44,425 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:44,425 Learning INFO time elapsed: 0 ms
+12:13:46,447 Learning INFO ***************************************************************
+12:13:46,447 Learning INFO **snapshot_rules: 12 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:46,447 Learning INFO ***************************************************************
+12:13:46,449 Learning INFO train_with_batch triple_set: 483186, new_triple: /m/06kxk2 /people/person/place_of_birth /m/01_d4
+12:13:46,449 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:46,449 Learning INFO time elapsed: 1 ms
+12:13:48,472 Learning INFO ***************************************************************
+12:13:48,473 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:48,473 Learning INFO ***************************************************************
+12:13:48,475 Learning INFO train_with_batch triple_set: 483187, new_triple: /m/07l2m /american_football/football_team/historical_coaching_staff./american_football/football_historical_coach_position/position /m/02md_2
+12:13:48,475 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:48,475 Learning INFO time elapsed: 0 ms
+12:13:50,509 Learning INFO ***************************************************************
+12:13:50,509 Learning INFO **snapshot_rules: 28 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:50,509 Learning INFO ***************************************************************
+12:13:50,514 Learning INFO train_with_batch triple_set: 483188, new_triple: /m/08q1tg /people/cause_of_death/people /m/0lcx
+12:13:50,514 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:50,514 Learning INFO time elapsed: 0 ms
+12:13:52,547 Learning INFO ***************************************************************
+12:13:52,547 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:52,547 Learning INFO ***************************************************************
+12:13:52,549 Learning INFO train_with_batch triple_set: 483189, new_triple: /m/037fqp /education/educational_institution/school_type /m/04399
+12:13:52,549 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:52,549 Learning INFO time elapsed: 0 ms
+12:13:54,558 Learning INFO ***************************************************************
+12:13:54,558 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:54,558 Learning INFO ***************************************************************
+12:13:54,560 Learning INFO train_with_batch triple_set: 483190, new_triple: /m/0xxc /education/educational_institution/students_graduates./education/education/major_field_of_study /m/01lj9
+12:13:54,560 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:54,560 Learning INFO time elapsed: 0 ms
+12:13:56,588 Learning INFO ***************************************************************
+12:13:56,588 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:56,588 Learning INFO ***************************************************************
+12:13:56,589 Learning INFO train_with_batch triple_set: 483191, new_triple: /m/01l_pn /film/film/prequel /m/01y9jr
+12:13:56,590 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:56,590 Learning INFO time elapsed: 0 ms
+12:13:58,641 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:13:58,642 Learning INFO ***************************************************************
+12:13:58,642 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:13:58,642 Learning INFO ***************************************************************
+12:13:58,642 Learning INFO train_with_batch triple_set: 483192, new_triple: /m/09sdmz /award/award_category/nominees./award/award_nomination/nominated_for /m/09gq0x5
+12:13:58,642 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:13:58,642 Learning INFO time elapsed: 0 ms
+12:14:00,645 Learning INFO ***************************************************************
+12:14:00,645 Learning INFO **snapshot_rules: 24 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:00,645 Learning INFO ***************************************************************
+12:14:00,649 Learning INFO train_with_batch triple_set: 483193, new_triple: /m/09sdmz /award/award_category/nominees./award/award_nomination/nominated_for /m/011yn5
+12:14:00,649 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:00,649 Learning INFO time elapsed: 0 ms
+12:14:02,728 Learning INFO ***************************************************************
+12:14:02,729 Learning INFO **snapshot_rules: 10 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:02,729 Learning INFO ***************************************************************
+12:14:02,734 Learning INFO train_with_batch triple_set: 483194, new_triple: /m/02ghq /people/person/profession /m/01d_h8
+12:14:02,735 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:02,735 Learning INFO time elapsed: 2 ms
+12:14:04,738 Learning INFO ***************************************************************
+12:14:04,738 Learning INFO **snapshot_rules: 10 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:04,738 Learning INFO ***************************************************************
+12:14:04,742 Learning INFO train_with_batch triple_set: 483195, new_triple: /m/016tt2 /award/award_nominee/award_nominations./award/award_nomination/nominated_for /m/02pxmgz
+12:14:04,742 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:04,742 Learning INFO time elapsed: 1 ms
+12:14:06,783 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:14:06,784 Learning INFO ***************************************************************
+12:14:06,785 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:06,785 Learning INFO ***************************************************************
+12:14:06,787 Learning INFO train_with_batch triple_set: 483196, new_triple: /m/016tt2 /film/film_distributor/films_distributed./film/film_film_distributor_relationship/film /m/0dtfn
+12:14:06,787 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:06,787 Learning INFO time elapsed: 0 ms
+12:14:08,820 Learning INFO ***************************************************************
+12:14:08,821 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:08,821 Learning INFO ***************************************************************
+12:14:08,823 Learning INFO train_with_batch triple_set: 483197, new_triple: /m/016tt2 /film/film_distributor/films_distributed./film/film_film_distributor_relationship/film /m/04zl8
+12:14:08,823 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:08,823 Learning INFO time elapsed: 1 ms
+12:14:10,838 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:14:10,838 Learning INFO ***************************************************************
+12:14:10,838 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:10,838 Learning INFO ***************************************************************
+12:14:10,839 Learning INFO train_with_batch triple_set: 483198, new_triple: /m/016tt2 /award/award_nominee/award_nominations./award/award_nomination/award_nominee /m/01gb54
+12:14:10,839 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:10,839 Learning INFO time elapsed: 0 ms
+12:14:12,845 Learning INFO ***************************************************************
+12:14:12,845 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:12,845 Learning INFO ***************************************************************
+12:14:12,847 Learning INFO train_with_batch triple_set: 483199, new_triple: /m/07nv3_ /soccer/football_player/current_team./sports/sports_team_roster/team /m/0cnk2q
+12:14:12,847 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:12,847 Learning INFO time elapsed: 0 ms
+12:14:14,876 Learning INFO ***************************************************************
+12:14:14,876 Learning INFO **snapshot_rules: 23 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:14,876 Learning INFO ***************************************************************
+12:14:14,880 Learning INFO train_with_batch triple_set: 483200, new_triple: /m/07jrjb /tv/tv_producer/programs_produced./tv/tv_producer_term/producer_type /m/0ckd1
+12:14:14,880 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:14,880 Learning INFO time elapsed: 0 ms
+12:14:16,908 Learning INFO ***************************************************************
+12:14:16,908 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:16,908 Learning INFO ***************************************************************
+12:14:16,910 Learning INFO train_with_batch triple_set: 483201, new_triple: /m/07jrjb /people/person/places_lived./people/place_lived/location /m/02_286
+12:14:16,910 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:16,910 Learning INFO time elapsed: 0 ms
+12:14:18,915 Learning INFO ***************************************************************
+12:14:18,916 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:18,917 Learning INFO ***************************************************************
+12:14:18,919 Learning INFO train_with_batch triple_set: 483202, new_triple: /m/09v71cj /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/015fr
+12:14:18,919 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:18,919 Learning INFO time elapsed: 0 ms
+12:14:20,935 Learning INFO ***************************************************************
+12:14:20,935 Learning INFO **snapshot_rules: 28 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:20,935 Learning INFO ***************************************************************
+12:14:20,940 Learning INFO train_with_batch triple_set: 483203, new_triple: /m/01k5y0 /film/film/edited_by /m/0dky9n
+12:14:20,940 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:20,940 Learning INFO time elapsed: 1 ms
+12:14:22,971 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:14:22,971 Learning INFO ***************************************************************
+12:14:22,971 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:22,972 Learning INFO ***************************************************************
+12:14:22,973 Learning INFO train_with_batch triple_set: 483204, new_triple: /m/01k5y0 /award/award_winning_work/awards_won./award/award_honor/ceremony /m/0bzmt8
+12:14:22,973 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:22,973 Learning INFO time elapsed: 0 ms
+12:14:24,974 Learning INFO ***************************************************************
+12:14:24,974 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:24,990 Learning INFO ***************************************************************
+12:14:24,992 Learning INFO train_with_batch triple_set: 483205, new_triple: /m/0jmbv /sports/sports_team/roster./basketball/basketball_roster_position/position /m/0ctt4z
+12:14:24,992 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:24,992 Learning INFO time elapsed: 0 ms
+12:14:27,23 Learning INFO ***************************************************************
+12:14:27,24 Learning INFO **snapshot_rules: 65 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:27,24 Learning INFO ***************************************************************
+12:14:27,35 Learning INFO train_with_batch triple_set: 483206, new_triple: /m/06x76 /sports/sports_team/sport /m/0jm_
+12:14:27,36 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:27,36 Learning INFO time elapsed: 2 ms
+12:14:29,73 Learning INFO ***************************************************************
+12:14:29,73 Learning INFO **snapshot_rules: 32 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:29,74 Learning INFO ***************************************************************
+12:14:29,80 Learning INFO train_with_batch triple_set: 483207, new_triple: /m/0x67 /people/ethnicity/people /m/0411q
+12:14:29,80 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:29,80 Learning INFO time elapsed: 0 ms
+12:14:31,122 Learning INFO ***************************************************************
+12:14:31,122 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:31,122 Learning INFO ***************************************************************
+12:14:31,123 Learning INFO train_with_batch triple_set: 483208, new_triple: /m/0x67 /people/ethnicity/people /m/030wkp
+12:14:31,123 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:31,123 Learning INFO time elapsed: 0 ms
+12:14:33,151 Learning INFO ***************************************************************
+12:14:33,152 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:33,153 Learning INFO ***************************************************************
+12:14:33,154 Learning INFO train_with_batch triple_set: 483209, new_triple: /m/0gmgwnv /film/film/estimated_budget./measurement_unit/dated_money_value/currency /m/09nqf
+12:14:33,154 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:33,155 Learning INFO time elapsed: 0 ms
+12:14:35,156 Learning INFO ***************************************************************
+12:14:35,157 Learning INFO **snapshot_rules: 36 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:35,157 Learning INFO ***************************************************************
+12:14:35,162 Learning INFO train_with_batch triple_set: 483210, new_triple: /m/01wkmgb /people/person/profession /m/09jwl
+12:14:35,163 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:35,163 Learning INFO time elapsed: 0 ms
+12:14:37,188 Learning INFO ***************************************************************
+12:14:37,188 Learning INFO **snapshot_rules: 29 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:37,188 Learning INFO ***************************************************************
+12:14:37,194 Learning INFO train_with_batch triple_set: 483211, new_triple: /m/0154j /organization/organization_member/member_of./organization/organization_membership/organization /m/04k4l
+12:14:37,194 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:37,194 Learning INFO time elapsed: 0 ms
+12:14:39,217 Learning INFO ***************************************************************
+12:14:39,218 Learning INFO **snapshot_rules: 38 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:39,218 Learning INFO ***************************************************************
+12:14:39,223 Learning INFO train_with_batch triple_set: 483212, new_triple: /m/0tbql /base/biblioness/bibs_location/country /m/09c7w0
+12:14:39,223 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:39,223 Learning INFO time elapsed: 1 ms
+12:14:41,238 Learning INFO ***************************************************************
+12:14:41,238 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:41,238 Learning INFO ***************************************************************
+12:14:41,239 Learning INFO train_with_batch triple_set: 483213, new_triple: /m/02j4sk /people/deceased_person/place_of_death /m/027l4q
+12:14:41,240 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:41,240 Learning INFO time elapsed: 0 ms
+12:14:43,262 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:14:43,264 Learning INFO ***************************************************************
+12:14:43,264 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:43,264 Learning INFO ***************************************************************
+12:14:43,265 Learning INFO train_with_batch triple_set: 483214, new_triple: /m/059gkk /award/award_nominee/award_nominations./award/award_nomination/award_nominee /m/01l1sq
+12:14:43,265 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:43,265 Learning INFO time elapsed: 0 ms
+12:14:45,291 Learning INFO ***************************************************************
+12:14:45,292 Learning INFO **snapshot_rules: 32 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:45,292 Learning INFO ***************************************************************
+12:14:45,300 Learning INFO train_with_batch triple_set: 483215, new_triple: /m/017jv5 /film/film_distributor/films_distributed./film/film_film_distributor_relationship/film /m/0d1qmz
+12:14:45,300 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:45,300 Learning INFO time elapsed: 0 ms
+12:14:47,327 Learning INFO ***************************************************************
+12:14:47,329 Learning INFO **snapshot_rules: 15 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:47,329 Learning INFO ***************************************************************
+12:14:47,334 Learning INFO train_with_batch triple_set: 483216, new_triple: /m/017jv5 /award/award_nominee/award_nominations./award/award_nomination/award_nominee /m/01b9ck
+12:14:47,335 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:47,336 Learning INFO time elapsed: 2 ms
+12:14:49,370 Learning INFO ***************************************************************
+12:14:49,370 Learning INFO **snapshot_rules: 11 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:49,370 Learning INFO ***************************************************************
+12:14:49,372 Learning INFO train_with_batch triple_set: 483217, new_triple: /m/02x2gy0 /award/award_category/nominees./award/award_nomination/nominated_for /m/04jplwp
+12:14:49,372 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:49,372 Learning INFO time elapsed: 0 ms
+12:14:51,388 Learning INFO ***************************************************************
+12:14:51,388 Learning INFO **snapshot_rules: 13 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:51,388 Learning INFO ***************************************************************
+12:14:51,391 Learning INFO train_with_batch triple_set: 483218, new_triple: /m/02079p /government/government_office_category/officeholders./government/government_position_held/legislative_sessions /m/01grmk
+12:14:51,391 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:51,391 Learning INFO time elapsed: 0 ms
+12:14:53,418 Learning INFO ***************************************************************
+12:14:53,418 Learning INFO **snapshot_rules: 45 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:53,418 Learning INFO ***************************************************************
+12:14:53,424 Learning INFO train_with_batch triple_set: 483219, new_triple: /m/053rxgm /film/film/executive_produced_by /m/0g_rs_
+12:14:53,425 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:53,425 Learning INFO time elapsed: 0 ms
+12:14:55,463 Learning INFO ***************************************************************
+12:14:55,463 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:55,464 Learning INFO ***************************************************************
+12:14:55,465 Learning INFO train_with_batch triple_set: 483220, new_triple: /m/011k11 /music/record_label/artist /m/03h_yfh
+12:14:55,466 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:55,466 Learning INFO time elapsed: 0 ms
+12:14:57,490 Learning INFO ***************************************************************
+12:14:57,490 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:57,491 Learning INFO ***************************************************************
+12:14:57,492 Learning INFO train_with_batch triple_set: 483221, new_triple: /m/014zfs /award/award_nominee/award_nominations./award/award_nomination/award /m/0bdw6t
+12:14:57,492 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:57,492 Learning INFO time elapsed: 1 ms
+12:14:59,507 Learning INFO ***************************************************************
+12:14:59,507 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:14:59,507 Learning INFO ***************************************************************
+12:14:59,508 Learning INFO train_with_batch triple_set: 483222, new_triple: /m/04b2qn /award/award_nominated_work/award_nominations./award/award_nomination/award /m/0gqyl
+12:14:59,508 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:14:59,508 Learning INFO time elapsed: 0 ms
+12:15:01,510 Learning INFO ***************************************************************
+12:15:01,510 Learning INFO **snapshot_rules: 16 in file learning_rules/FB15k/rule_extend_20.txt
+12:15:01,510 Learning INFO ***************************************************************
+12:15:01,513 Learning INFO train_with_batch triple_set: 483223, new_triple: /m/04b2qn /award/award_nominated_work/award_nominations./award/award_nomination/award /m/054krc
+12:15:01,513 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:15:01,513 Learning INFO time elapsed: 0 ms
+12:15:03,521 Learning INFO ***************************************************************
+12:15:03,521 Learning INFO **snapshot_rules: 12 in file learning_rules/FB15k/rule_extend_20.txt
+12:15:03,521 Learning INFO ***************************************************************
+12:15:03,523 Learning INFO train_with_batch triple_set: 483224, new_triple: /m/0fg04 /film/film/genre /m/03npn
+12:15:03,523 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:15:03,523 Learning INFO time elapsed: 0 ms
+12:15:05,551 Learning INFO ***************************************************************
+12:15:05,552 Learning INFO **snapshot_rules: 11 in file learning_rules/FB15k/rule_extend_20.txt
+12:15:05,552 Learning INFO ***************************************************************
+12:15:05,554 Learning INFO train_with_batch triple_set: 483225, new_triple: /m/0fg04 /film/film/starring./film/performance/actor /m/01mqnr
+12:15:05,554 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:15:05,554 Learning INFO time elapsed: 0 ms
+12:15:07,559 Learning INFO ***************************************************************
+12:15:07,559 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:15:07,559 Learning INFO ***************************************************************
+12:15:07,561 Learning INFO train_with_batch triple_set: 483226, new_triple: /m/0fg04 /award/award_winning_work/awards_won./award/award_honor/award /m/02x2gy0
+12:15:07,561 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:15:07,561 Learning INFO time elapsed: 0 ms
+12:15:09,598 Learning INFO ***************************************************************
+12:15:09,599 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:15:09,599 Learning INFO ***************************************************************
+12:15:09,601 Learning INFO train_with_batch triple_set: 483227, new_triple: /m/05typm /film/actor/film./film/performance/film /m/0k2cb
+12:15:09,601 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:15:09,601 Learning INFO time elapsed: 1 ms
+12:15:11,635 Learning INFO ***************************************************************
+12:15:11,635 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:15:11,635 Learning INFO ***************************************************************
+12:15:11,637 Learning INFO train_with_batch triple_set: 483228, new_triple: /m/0cwy47 /film/film/featured_film_locations /m/06c62
+12:15:11,637 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:15:11,637 Learning INFO time elapsed: 1 ms
+12:15:13,676 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:15:13,677 Learning INFO ***************************************************************
+12:15:13,677 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:15:13,677 Learning INFO ***************************************************************
+12:15:13,678 Learning INFO train_with_batch triple_set: 483229, new_triple: /m/0cbv4g /film/film/production_companies /m/016tt2
+12:15:13,678 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:15:13,678 Learning INFO time elapsed: 0 ms
+12:15:15,683 Learning INFO ***************************************************************
+12:15:15,684 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:15:15,684 Learning INFO ***************************************************************
+12:15:15,685 Learning INFO train_with_batch triple_set: 483230, new_triple: /m/019vhk /film/film/film_festivals /m/09rwjly
+12:15:15,685 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:15:15,685 Learning INFO time elapsed: 0 ms
+12:15:17,704 Learning INFO ***************************************************************
+12:15:17,704 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:15:17,704 Learning INFO ***************************************************************
+12:15:17,705 Learning INFO train_with_batch triple_set: 483231, new_triple: /m/019vhk /award/award_nominated_work/award_nominations./award/award_nomination/award_nominee /m/01tc9r
+12:15:17,705 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:15:17,705 Learning INFO time elapsed: 0 ms
+12:15:19,720 Learning INFO ***************************************************************
+12:15:19,720 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:15:19,720 Learning INFO ***************************************************************
+12:15:19,722 Learning INFO train_with_batch triple_set: 483232, new_triple: /m/02s7tr /sports/sports_position/players./sports/sports_team_roster/team /m/049n7
+12:15:19,722 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:15:19,722 Learning INFO time elapsed: 0 ms
+12:15:21,725 Learning INFO ***************************************************************
+12:15:21,726 Learning INFO **snapshot_rules: 29 in file learning_rules/FB15k/rule_extend_20.txt
+12:15:21,741 Learning INFO ***************************************************************
+12:15:21,745 Learning INFO train_with_batch triple_set: 483233, new_triple: /m/06sy4c /people/person/gender /m/05zppz
+12:15:21,745 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:15:21,745 Learning INFO time elapsed: 0 ms
+12:15:23,757 Learning INFO ***************************************************************
+12:15:23,757 Learning INFO **snapshot_rules: 31 in file learning_rules/FB15k/rule_extend_20.txt
+12:15:23,757 Learning INFO ***************************************************************
+12:15:23,762 Learning INFO train_with_batch triple_set: 483234, new_triple: /m/0dr1c2 /tv/tv_program/regular_cast./tv/regular_tv_appearance/actor /m/04f62k
+12:15:23,763 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:15:23,763 Learning INFO time elapsed: 0 ms
+12:15:25,764 Learning INFO ***************************************************************
+12:15:25,764 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:15:25,765 Learning INFO ***************************************************************
+12:15:25,766 Learning INFO train_with_batch triple_set: 483235, new_triple: /m/01q2sk /education/educational_institution_campus/educational_institution /m/01q2sk
+12:15:25,766 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:15:25,766 Learning INFO time elapsed: 0 ms
+12:20:16,69 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+12:20:16,69 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+12:20:16,69 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+12:20:16,69 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
+12:20:26,344 Learning INFO ****************************start new section*************************************
+12:20:26,344 Learning INFO initialize learning 1598246426345
+12:20:36,769 Learning INFO train_with_batch triple_set: 483143, new_triple: /m/01qscs /award/award_nominee/award_nominations./award/award_nomination/award /m/02x8n1n
+12:20:36,772 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:20:36,773 Learning INFO time elapsed: 3 ms
+12:20:38,815 Learning INFO ***************************************************************
+12:20:38,815 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:20:38,815 Learning INFO ***************************************************************
+12:20:38,818 Learning INFO train_with_batch triple_set: 483144, new_triple: /m/040db /base/activism/activist/area_of_activism /m/0148d
+12:20:38,818 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:20:38,818 Learning INFO time elapsed: 0 ms
+12:20:40,830 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:20:40,830 Learning INFO ***************************************************************
+12:20:40,831 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:20:40,831 Learning INFO ***************************************************************
+12:20:40,832 Learning INFO train_with_batch triple_set: 483145, new_triple: /m/08966 /travel/travel_destination/climate./travel/travel_destination_monthly_climate/month /m/05lf_
+12:20:40,832 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:20:40,832 Learning INFO time elapsed: 0 ms
+12:20:42,861 Learning INFO ***************************************************************
+12:20:42,861 Learning INFO **snapshot_rules: 28 in file learning_rules/FB15k/rule_extend_20.txt
+12:20:42,861 Learning INFO ***************************************************************
+12:20:42,866 Learning INFO train_with_batch triple_set: 483146, new_triple: /m/01hww_ /music/performance_role/regular_performances./music/group_membership/group /m/01q99h
+12:20:42,866 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:20:42,866 Learning INFO time elapsed: 1 ms
+12:20:44,880 Learning INFO ***************************************************************
+12:20:44,880 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:20:44,880 Learning INFO ***************************************************************
+12:20:44,881 Learning INFO train_with_batch triple_set: 483147, new_triple: /m/0c1pj /award/award_nominee/award_nominations./award/award_nomination/award /m/019f4v
+12:20:44,882 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:20:44,882 Learning INFO time elapsed: 0 ms
+12:20:46,894 Learning INFO ***************************************************************
+12:20:46,894 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:20:46,894 Learning INFO ***************************************************************
+12:20:46,895 Learning INFO train_with_batch triple_set: 483148, new_triple: /m/0ddd9 /award/award_category/nominees./award/award_nomination/award_nominee /m/07dnx
+12:20:46,895 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:20:46,895 Learning INFO time elapsed: 0 ms
+12:20:48,920 Learning INFO ***************************************************************
+12:20:48,921 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:20:48,921 Learning INFO ***************************************************************
+12:20:48,923 Learning INFO train_with_batch triple_set: 483149, new_triple: /m/09v3jyg /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/0f8l9c
+12:20:48,923 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:20:48,923 Learning INFO time elapsed: 1 ms
+12:20:50,936 Learning INFO ***************************************************************
+12:20:50,937 Learning INFO **snapshot_rules: 29 in file learning_rules/FB15k/rule_extend_20.txt
+12:20:50,937 Learning INFO ***************************************************************
+12:20:50,941 Learning INFO train_with_batch triple_set: 483150, new_triple: /m/02jx1 /location/location/contains /m/013t85
+12:20:50,941 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:20:50,941 Learning INFO time elapsed: 0 ms
+12:20:52,957 Learning INFO ***************************************************************
+12:20:52,957 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:20:52,957 Learning INFO ***************************************************************
+12:20:52,959 Learning INFO train_with_batch triple_set: 483151, new_triple: /m/02jx1 /location/location/contains /m/0m0bj
+12:20:52,959 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:20:52,959 Learning INFO time elapsed: 0 ms
+12:20:54,990 Learning INFO ***************************************************************
+12:20:54,990 Learning INFO **snapshot_rules: 12 in file learning_rules/FB15k/rule_extend_20.txt
+12:20:54,990 Learning INFO ***************************************************************
+12:20:54,992 Learning INFO train_with_batch triple_set: 483152, new_triple: /m/02bfmn /film/actor/film./film/performance/film /m/04ghz4m
+12:20:54,993 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:20:54,993 Learning INFO time elapsed: 0 ms
+12:20:56,997 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:20:56,998 Learning INFO ***************************************************************
+12:20:56,998 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:20:56,998 Learning INFO ***************************************************************
+12:20:56,999 Learning INFO train_with_batch triple_set: 483153, new_triple: /m/05zrvfd /award/award_category/nominees./award/award_nomination/nominated_for /m/04y9mm8
+12:20:56,999 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:20:56,999 Learning INFO time elapsed: 0 ms
+12:20:59,20 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:20:59,20 Learning INFO ***************************************************************
+12:20:59,20 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:20:59,20 Learning INFO ***************************************************************
+12:20:59,21 Learning INFO train_with_batch triple_set: 483154, new_triple: /m/04mrgz /soccer/football_team/current_roster./soccer/football_roster_position/position /m/0dgrmp
+12:20:59,21 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:20:59,21 Learning INFO time elapsed: 0 ms
+12:21:01,39 Learning INFO ***************************************************************
+12:21:01,39 Learning INFO **snapshot_rules: 60 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:01,39 Learning INFO ***************************************************************
+12:21:01,47 Learning INFO train_with_batch triple_set: 483155, new_triple: /m/060bp /government/government_office_category/officeholders./government/government_position_held/jurisdiction_of_office /m/04j53
+12:21:01,47 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:01,47 Learning INFO time elapsed: 0 ms
+12:21:03,74 Learning INFO ***************************************************************
+12:21:03,74 Learning INFO **snapshot_rules: 44 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:03,74 Learning INFO ***************************************************************
+12:21:03,80 Learning INFO train_with_batch triple_set: 483156, new_triple: /m/060bp /government/government_office_category/officeholders./government/government_position_held/appointed_by /m/0cmpn
+12:21:03,80 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:03,80 Learning INFO time elapsed: 0 ms
+12:21:05,99 Learning INFO ***************************************************************
+12:21:05,99 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:05,99 Learning INFO ***************************************************************
+12:21:05,100 Learning INFO train_with_batch triple_set: 483157, new_triple: /m/07l450 /film/film/genre /m/082gq
+12:21:05,100 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:05,100 Learning INFO time elapsed: 0 ms
+12:21:07,130 Learning INFO ***************************************************************
+12:21:07,131 Learning INFO **snapshot_rules: 12 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:07,131 Learning INFO ***************************************************************
+12:21:07,134 Learning INFO train_with_batch triple_set: 483158, new_triple: /m/07h1h5 /sports/pro_athlete/teams./sports/sports_team_roster/team /m/029q3k
+12:21:07,134 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:07,134 Learning INFO time elapsed: 1 ms
+12:21:09,166 Learning INFO ***************************************************************
+12:21:09,166 Learning INFO **snapshot_rules: 9 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:09,166 Learning INFO ***************************************************************
+12:21:09,168 Learning INFO train_with_batch triple_set: 483159, new_triple: /m/06yxd /base/biblioness/bibs_location/country /m/09c7w0
+12:21:09,168 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:09,168 Learning INFO time elapsed: 0 ms
+12:21:11,195 Learning INFO ***************************************************************
+12:21:11,196 Learning INFO **snapshot_rules: 18 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:11,196 Learning INFO ***************************************************************
+12:21:11,198 Learning INFO train_with_batch triple_set: 483160, new_triple: /m/012q4n /award/award_nominee/award_nominations./award/award_nomination/award_nominee /m/04g4n
+12:21:11,198 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:11,198 Learning INFO time elapsed: 0 ms
+12:21:13,237 Learning INFO ***************************************************************
+12:21:13,237 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:13,237 Learning INFO ***************************************************************
+12:21:13,239 Learning INFO train_with_batch triple_set: 483161, new_triple: /m/0djb3vw /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/0jgd
+12:21:13,239 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:13,239 Learning INFO time elapsed: 0 ms
+12:21:15,254 Learning INFO ***************************************************************
+12:21:15,254 Learning INFO **snapshot_rules: 16 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:15,254 Learning INFO ***************************************************************
+12:21:15,258 Learning INFO train_with_batch triple_set: 483162, new_triple: /m/0dg3n1 /base/locations/continents/countries_within /m/01699
+12:21:15,258 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:15,258 Learning INFO time elapsed: 1 ms
+12:21:17,271 Learning INFO ***************************************************************
+12:21:17,271 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:17,271 Learning INFO ***************************************************************
+12:21:17,273 Learning INFO train_with_batch triple_set: 483163, new_triple: /m/036jp8 /people/person/places_lived./people/place_lived/location /m/0fpzwf
+12:21:17,273 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:17,273 Learning INFO time elapsed: 0 ms
+12:21:19,299 Learning INFO ***************************************************************
+12:21:19,300 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:19,300 Learning INFO ***************************************************************
+12:21:19,301 Learning INFO train_with_batch triple_set: 483164, new_triple: /m/031y2 /base/popstra/location/vacationers./base/popstra/vacation_choice/vacationer /m/0dxmyh
+12:21:19,301 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:19,301 Learning INFO time elapsed: 0 ms
+12:21:21,315 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:21:21,316 Learning INFO ***************************************************************
+12:21:21,317 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:21,317 Learning INFO ***************************************************************
+12:21:21,318 Learning INFO train_with_batch triple_set: 483165, new_triple: /m/01d8l /olympics/olympic_participating_country/medals_won./olympics/olympic_medal_honor/medal /m/02lq67
+12:21:21,319 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:21,319 Learning INFO time elapsed: 1 ms
+12:21:23,345 Learning INFO ***************************************************************
+12:21:23,345 Learning INFO **snapshot_rules: 39 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:23,361 Learning INFO ***************************************************************
+12:21:23,368 Learning INFO train_with_batch triple_set: 483166, new_triple: /m/0ncy4 /location/location/containedby /m/07ssc
+12:21:23,368 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:23,368 Learning INFO time elapsed: 0 ms
+12:21:25,401 Learning INFO ***************************************************************
+12:21:25,401 Learning INFO **snapshot_rules: 9 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:25,402 Learning INFO ***************************************************************
+12:21:25,405 Learning INFO train_with_batch triple_set: 483167, new_triple: /m/0ydpd /location/location/time_zones /m/02hcv8
+12:21:25,406 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:25,406 Learning INFO time elapsed: 0 ms
+12:21:27,413 Learning INFO ***************************************************************
+12:21:27,414 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:27,414 Learning INFO ***************************************************************
+12:21:27,414 Learning INFO train_with_batch triple_set: 483168, new_triple: /m/0738b8 /people/person/places_lived./people/place_lived/location /m/02xry
+12:21:27,415 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:27,415 Learning INFO time elapsed: 0 ms
+12:21:29,471 Learning INFO ***************************************************************
+12:21:29,471 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:29,471 Learning INFO ***************************************************************
+12:21:29,473 Learning INFO train_with_batch triple_set: 483169, new_triple: /m/02h8p8 /sports/sports_team/roster./baseball/baseball_roster_position/position /m/02wszf
+12:21:29,473 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:29,473 Learning INFO time elapsed: 0 ms
+12:21:31,492 Learning INFO ***************************************************************
+12:21:31,493 Learning INFO **snapshot_rules: 33 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:31,493 Learning INFO ***************************************************************
+12:21:31,497 Learning INFO train_with_batch triple_set: 483170, new_triple: /m/0cm2xh /base/culturalevent/event/entity_involved /m/03b79
+12:21:31,498 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:31,498 Learning INFO time elapsed: 0 ms
+12:21:33,521 Learning INFO ***************************************************************
+12:21:33,522 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:33,522 Learning INFO ***************************************************************
+12:21:33,524 Learning INFO train_with_batch triple_set: 483171, new_triple: /m/027f7dj /award/award_nominee/award_nominations./award/award_nomination/award /m/09sb52
+12:21:33,525 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:33,525 Learning INFO time elapsed: 0 ms
+12:21:35,552 Learning INFO ***************************************************************
+12:21:35,553 Learning INFO **snapshot_rules: 10 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:35,553 Learning INFO ***************************************************************
+12:21:35,555 Learning INFO train_with_batch triple_set: 483172, new_triple: /m/0chgr2 /base/aareas/schema/administrative_area/administrative_parent /m/0chghy
+12:21:35,555 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:35,556 Learning INFO time elapsed: 0 ms
+12:21:37,587 Learning INFO ***************************************************************
+12:21:37,588 Learning INFO **snapshot_rules: 8 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:37,588 Learning INFO ***************************************************************
+12:21:37,590 Learning INFO train_with_batch triple_set: 483173, new_triple: /m/070xg /sports/sports_team/colors /m/01g5v
+12:21:37,591 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:37,591 Learning INFO time elapsed: 0 ms
+12:21:39,618 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:21:39,618 Learning INFO ***************************************************************
+12:21:39,618 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:39,618 Learning INFO ***************************************************************
+12:21:39,619 Learning INFO train_with_batch triple_set: 483174, new_triple: /m/0mwk9 /location/statistical_region/rent50_2./measurement_unit/dated_money_value/currency /m/09nqf
+12:21:39,619 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:39,619 Learning INFO time elapsed: 0 ms
+12:21:41,630 Learning INFO ***************************************************************
+12:21:41,631 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:41,632 Learning INFO ***************************************************************
+12:21:41,633 Learning INFO train_with_batch triple_set: 483175, new_triple: /m/09306z /award/award_ceremony/awards_presented./award/award_honor/honored_for /m/0sxkh
+12:21:41,633 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:41,633 Learning INFO time elapsed: 0 ms
+12:21:43,635 Learning INFO ***************************************************************
+12:21:43,635 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:43,635 Learning INFO ***************************************************************
+12:21:43,637 Learning INFO train_with_batch triple_set: 483176, new_triple: /m/0kbws /olympics/olympic_games/participating_countries /m/027jk
+12:21:43,637 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:43,637 Learning INFO time elapsed: 0 ms
+12:21:45,653 Learning INFO ***************************************************************
+12:21:45,654 Learning INFO **snapshot_rules: 13 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:45,654 Learning INFO ***************************************************************
+12:21:45,657 Learning INFO train_with_batch triple_set: 483177, new_triple: /m/0kbws /olympics/olympic_games/participating_countries /m/04vjh
+12:21:45,657 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:45,657 Learning INFO time elapsed: 0 ms
+12:21:47,687 Learning INFO ***************************************************************
+12:21:47,688 Learning INFO **snapshot_rules: 23 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:47,688 Learning INFO ***************************************************************
+12:21:47,691 Learning INFO train_with_batch triple_set: 483178, new_triple: /m/017j69 /education/educational_institution/students_graduates./education/education/major_field_of_study /m/01mkq
+12:21:47,691 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:47,691 Learning INFO time elapsed: 0 ms
+12:21:49,714 Learning INFO ***************************************************************
+12:21:49,714 Learning INFO **snapshot_rules: 24 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:49,714 Learning INFO ***************************************************************
+12:21:49,719 Learning INFO train_with_batch triple_set: 483179, new_triple: /m/07z1m /location/statistical_region/religions./location/religion_percentage/religion /m/0631_
+12:21:49,719 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:49,719 Learning INFO time elapsed: 0 ms
+12:21:51,720 Learning INFO ***************************************************************
+12:21:51,720 Learning INFO **snapshot_rules: 22 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:51,721 Learning INFO ***************************************************************
+12:21:51,724 Learning INFO train_with_batch triple_set: 483180, new_triple: /m/03gqgt3 /military/military_conflict/combatants./military/military_combatant_group/combatants /m/0d060g
+12:21:51,724 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:51,724 Learning INFO time elapsed: 0 ms
+12:21:53,757 Learning INFO ***************************************************************
+12:21:53,757 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:53,757 Learning INFO ***************************************************************
+12:21:53,759 Learning INFO train_with_batch triple_set: 483181, new_triple: /m/01c9f2 /award/award_category/winners./award/award_honor/ceremony /m/01bx35
+12:21:53,759 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:53,759 Learning INFO time elapsed: 0 ms
+12:21:55,798 Learning INFO ***************************************************************
+12:21:55,799 Learning INFO **snapshot_rules: 33 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:55,799 Learning INFO ***************************************************************
+12:21:55,804 Learning INFO train_with_batch triple_set: 483182, new_triple: /m/01c9f2 /award/award_category/winners./award/award_honor/ceremony /m/01s695
+12:21:55,805 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:55,805 Learning INFO time elapsed: 0 ms
+12:21:57,832 Learning INFO ***************************************************************
+12:21:57,832 Learning INFO **snapshot_rules: 32 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:57,832 Learning INFO ***************************************************************
+12:21:57,836 Learning INFO train_with_batch triple_set: 483183, new_triple: /m/01lp8 /user/tsegaran/random/taxonomy_subject/entry./user/tsegaran/random/taxonomy_entry/taxonomy /m/04n6k
+12:21:57,836 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:57,837 Learning INFO time elapsed: 0 ms
+12:21:59,855 Learning INFO ***************************************************************
+12:21:59,856 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:21:59,856 Learning INFO ***************************************************************
+12:21:59,859 Learning INFO train_with_batch triple_set: 483184, new_triple: /m/01xwqn /influence/influence_node/influenced_by /m/0121rx
+12:21:59,860 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:21:59,860 Learning INFO time elapsed: 1 ms
+12:22:01,891 Learning INFO ***************************************************************
+12:22:01,892 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:01,893 Learning INFO ***************************************************************
+12:22:01,895 Learning INFO train_with_batch triple_set: 483185, new_triple: /m/065ym0c /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/07ssc
+12:22:01,895 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:01,896 Learning INFO time elapsed: 1 ms
+12:22:03,901 Learning INFO ***************************************************************
+12:22:03,902 Learning INFO **snapshot_rules: 13 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:03,902 Learning INFO ***************************************************************
+12:22:03,904 Learning INFO train_with_batch triple_set: 483186, new_triple: /m/06kxk2 /people/person/place_of_birth /m/01_d4
+12:22:03,904 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:03,904 Learning INFO time elapsed: 0 ms
+12:22:05,935 Learning INFO ***************************************************************
+12:22:05,936 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:05,936 Learning INFO ***************************************************************
+12:22:05,937 Learning INFO train_with_batch triple_set: 483187, new_triple: /m/07l2m /american_football/football_team/historical_coaching_staff./american_football/football_historical_coach_position/position /m/02md_2
+12:22:05,937 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:05,937 Learning INFO time elapsed: 0 ms
+12:22:07,975 Learning INFO ***************************************************************
+12:22:07,976 Learning INFO **snapshot_rules: 9 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:07,976 Learning INFO ***************************************************************
+12:22:07,980 Learning INFO train_with_batch triple_set: 483188, new_triple: /m/08q1tg /people/cause_of_death/people /m/0lcx
+12:22:07,981 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:07,981 Learning INFO time elapsed: 0 ms
+12:22:10,17 Learning INFO ***************************************************************
+12:22:10,17 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:10,18 Learning INFO ***************************************************************
+12:22:10,19 Learning INFO train_with_batch triple_set: 483189, new_triple: /m/037fqp /education/educational_institution/school_type /m/04399
+12:22:10,19 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:10,19 Learning INFO time elapsed: 0 ms
+12:22:12,43 Learning INFO ***************************************************************
+12:22:12,43 Learning INFO **snapshot_rules: 8 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:12,43 Learning INFO ***************************************************************
+12:22:12,45 Learning INFO train_with_batch triple_set: 483190, new_triple: /m/0xxc /education/educational_institution/students_graduates./education/education/major_field_of_study /m/01lj9
+12:22:12,45 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:12,45 Learning INFO time elapsed: 1 ms
+12:22:14,48 Learning INFO ***************************************************************
+12:22:14,49 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:14,49 Learning INFO ***************************************************************
+12:22:14,50 Learning INFO train_with_batch triple_set: 483191, new_triple: /m/01l_pn /film/film/prequel /m/01y9jr
+12:22:14,50 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:14,50 Learning INFO time elapsed: 1 ms
+12:22:16,56 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:22:16,57 Learning INFO ***************************************************************
+12:22:16,57 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:16,58 Learning INFO ***************************************************************
+12:22:16,59 Learning INFO train_with_batch triple_set: 483192, new_triple: /m/09sdmz /award/award_category/nominees./award/award_nomination/nominated_for /m/09gq0x5
+12:22:16,60 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:16,60 Learning INFO time elapsed: 0 ms
+12:22:18,72 Learning INFO ***************************************************************
+12:22:18,72 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:18,72 Learning INFO ***************************************************************
+12:22:18,74 Learning INFO train_with_batch triple_set: 483193, new_triple: /m/09sdmz /award/award_category/nominees./award/award_nomination/nominated_for /m/011yn5
+12:22:18,74 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:18,75 Learning INFO time elapsed: 0 ms
+12:22:20,76 Learning INFO ***************************************************************
+12:22:20,76 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:20,76 Learning INFO ***************************************************************
+12:22:20,77 Learning INFO train_with_batch triple_set: 483194, new_triple: /m/02ghq /people/person/profession /m/01d_h8
+12:22:20,77 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:20,78 Learning INFO time elapsed: 0 ms
+12:22:22,86 Learning INFO ***************************************************************
+12:22:22,86 Learning INFO **snapshot_rules: 10 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:22,86 Learning INFO ***************************************************************
+12:22:22,91 Learning INFO train_with_batch triple_set: 483195, new_triple: /m/016tt2 /award/award_nominee/award_nominations./award/award_nomination/nominated_for /m/02pxmgz
+12:22:22,91 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:22,92 Learning INFO time elapsed: 0 ms
+12:22:24,127 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:22:24,128 Learning INFO ***************************************************************
+12:22:24,128 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:24,128 Learning INFO ***************************************************************
+12:22:24,129 Learning INFO train_with_batch triple_set: 483196, new_triple: /m/016tt2 /film/film_distributor/films_distributed./film/film_film_distributor_relationship/film /m/0dtfn
+12:22:24,129 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:24,129 Learning INFO time elapsed: 1 ms
+12:22:26,156 Learning INFO ***************************************************************
+12:22:26,157 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:26,157 Learning INFO ***************************************************************
+12:22:26,158 Learning INFO train_with_batch triple_set: 483197, new_triple: /m/016tt2 /film/film_distributor/films_distributed./film/film_film_distributor_relationship/film /m/04zl8
+12:22:26,158 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:26,158 Learning INFO time elapsed: 0 ms
+12:22:28,169 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:22:28,169 Learning INFO ***************************************************************
+12:22:28,170 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:28,170 Learning INFO ***************************************************************
+12:22:28,171 Learning INFO train_with_batch triple_set: 483198, new_triple: /m/016tt2 /award/award_nominee/award_nominations./award/award_nomination/award_nominee /m/01gb54
+12:22:28,171 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:28,171 Learning INFO time elapsed: 1 ms
+12:22:30,193 Learning INFO ***************************************************************
+12:22:30,193 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:30,193 Learning INFO ***************************************************************
+12:22:30,195 Learning INFO train_with_batch triple_set: 483199, new_triple: /m/07nv3_ /soccer/football_player/current_team./sports/sports_team_roster/team /m/0cnk2q
+12:22:30,195 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:30,195 Learning INFO time elapsed: 1 ms
+12:22:32,214 Learning INFO ***************************************************************
+12:22:32,214 Learning INFO **snapshot_rules: 28 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:32,214 Learning INFO ***************************************************************
+12:22:32,220 Learning INFO train_with_batch triple_set: 483200, new_triple: /m/07jrjb /tv/tv_producer/programs_produced./tv/tv_producer_term/producer_type /m/0ckd1
+12:22:32,220 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:32,220 Learning INFO time elapsed: 1 ms
+12:22:34,246 Learning INFO ***************************************************************
+12:22:34,246 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:34,246 Learning INFO ***************************************************************
+12:22:34,249 Learning INFO train_with_batch triple_set: 483201, new_triple: /m/07jrjb /people/person/places_lived./people/place_lived/location /m/02_286
+12:22:34,249 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:34,249 Learning INFO time elapsed: 0 ms
+12:22:36,262 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:22:36,262 Learning INFO ***************************************************************
+12:22:36,263 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:36,263 Learning INFO ***************************************************************
+12:22:36,264 Learning INFO train_with_batch triple_set: 483202, new_triple: /m/09v71cj /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/015fr
+12:22:36,264 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:36,264 Learning INFO time elapsed: 1 ms
+12:22:38,285 Learning INFO ***************************************************************
+12:22:38,285 Learning INFO **snapshot_rules: 38 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:38,286 Learning INFO ***************************************************************
+12:22:38,291 Learning INFO train_with_batch triple_set: 483203, new_triple: /m/01k5y0 /film/film/edited_by /m/0dky9n
+12:22:38,291 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:38,291 Learning INFO time elapsed: 0 ms
+12:22:40,298 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:22:40,298 Learning INFO ***************************************************************
+12:22:40,299 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:40,299 Learning INFO ***************************************************************
+12:22:40,299 Learning INFO train_with_batch triple_set: 483204, new_triple: /m/01k5y0 /award/award_winning_work/awards_won./award/award_honor/ceremony /m/0bzmt8
+12:22:40,299 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:40,299 Learning INFO time elapsed: 1 ms
+12:22:42,318 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:22:42,319 Learning INFO ***************************************************************
+12:22:42,319 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:42,319 Learning INFO ***************************************************************
+12:22:42,320 Learning INFO train_with_batch triple_set: 483205, new_triple: /m/0jmbv /sports/sports_team/roster./basketball/basketball_roster_position/position /m/0ctt4z
+12:22:42,320 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:42,320 Learning INFO time elapsed: 0 ms
+12:22:44,335 Learning INFO ***************************************************************
+12:22:44,335 Learning INFO **snapshot_rules: 48 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:44,335 Learning INFO ***************************************************************
+12:22:44,340 Learning INFO train_with_batch triple_set: 483206, new_triple: /m/06x76 /sports/sports_team/sport /m/0jm_
+12:22:44,340 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:44,340 Learning INFO time elapsed: 0 ms
+12:22:46,366 Learning INFO ***************************************************************
+12:22:46,367 Learning INFO **snapshot_rules: 19 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:46,367 Learning INFO ***************************************************************
+12:22:46,370 Learning INFO train_with_batch triple_set: 483207, new_triple: /m/0x67 /people/ethnicity/people /m/0411q
+12:22:46,370 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:46,370 Learning INFO time elapsed: 0 ms
+12:22:48,376 Learning INFO ***************************************************************
+12:22:48,376 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:48,376 Learning INFO ***************************************************************
+12:22:48,377 Learning INFO train_with_batch triple_set: 483208, new_triple: /m/0x67 /people/ethnicity/people /m/030wkp
+12:22:48,378 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:48,378 Learning INFO time elapsed: 0 ms
+12:22:50,405 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:22:50,405 Learning INFO ***************************************************************
+12:22:50,405 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:50,405 Learning INFO ***************************************************************
+12:22:50,406 Learning INFO train_with_batch triple_set: 483209, new_triple: /m/0gmgwnv /film/film/estimated_budget./measurement_unit/dated_money_value/currency /m/09nqf
+12:22:50,406 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:50,406 Learning INFO time elapsed: 0 ms
+12:22:52,423 Learning INFO ***************************************************************
+12:22:52,424 Learning INFO **snapshot_rules: 33 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:52,424 Learning INFO ***************************************************************
+12:22:52,428 Learning INFO train_with_batch triple_set: 483210, new_triple: /m/01wkmgb /people/person/profession /m/09jwl
+12:22:52,428 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:52,429 Learning INFO time elapsed: 0 ms
+12:22:54,431 Learning INFO ***************************************************************
+12:22:54,431 Learning INFO **snapshot_rules: 21 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:54,432 Learning INFO ***************************************************************
+12:22:54,435 Learning INFO train_with_batch triple_set: 483211, new_triple: /m/0154j /organization/organization_member/member_of./organization/organization_membership/organization /m/04k4l
+12:22:54,435 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:54,435 Learning INFO time elapsed: 1 ms
+12:22:56,449 Learning INFO ***************************************************************
+12:22:56,449 Learning INFO **snapshot_rules: 28 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:56,449 Learning INFO ***************************************************************
+12:22:56,453 Learning INFO train_with_batch triple_set: 483212, new_triple: /m/0tbql /base/biblioness/bibs_location/country /m/09c7w0
+12:22:56,453 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:56,453 Learning INFO time elapsed: 0 ms
+12:22:58,469 Learning INFO ***************************************************************
+12:22:58,469 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:22:58,469 Learning INFO ***************************************************************
+12:22:58,470 Learning INFO train_with_batch triple_set: 483213, new_triple: /m/02j4sk /people/deceased_person/place_of_death /m/027l4q
+12:22:58,470 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:22:58,470 Learning INFO time elapsed: 0 ms
+12:23:00,497 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:23:00,498 Learning INFO ***************************************************************
+12:23:00,498 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:00,498 Learning INFO ***************************************************************
+12:23:00,498 Learning INFO train_with_batch triple_set: 483214, new_triple: /m/059gkk /award/award_nominee/award_nominations./award/award_nomination/award_nominee /m/01l1sq
+12:23:00,499 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:00,499 Learning INFO time elapsed: 0 ms
+12:23:02,514 Learning INFO ***************************************************************
+12:23:02,514 Learning INFO **snapshot_rules: 32 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:02,514 Learning INFO ***************************************************************
+12:23:02,519 Learning INFO train_with_batch triple_set: 483215, new_triple: /m/017jv5 /film/film_distributor/films_distributed./film/film_film_distributor_relationship/film /m/0d1qmz
+12:23:02,519 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:02,519 Learning INFO time elapsed: 0 ms
+12:23:04,534 Learning INFO ***************************************************************
+12:23:04,534 Learning INFO **snapshot_rules: 10 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:04,534 Learning INFO ***************************************************************
+12:23:04,536 Learning INFO train_with_batch triple_set: 483216, new_triple: /m/017jv5 /award/award_nominee/award_nominations./award/award_nomination/award_nominee /m/01b9ck
+12:23:04,536 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:04,536 Learning INFO time elapsed: 0 ms
+12:23:06,552 Learning INFO ***************************************************************
+12:23:06,552 Learning INFO **snapshot_rules: 9 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:06,553 Learning INFO ***************************************************************
+12:23:06,555 Learning INFO train_with_batch triple_set: 483217, new_triple: /m/02x2gy0 /award/award_category/nominees./award/award_nomination/nominated_for /m/04jplwp
+12:23:06,555 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:06,556 Learning INFO time elapsed: 1 ms
+12:23:08,600 Learning INFO ***************************************************************
+12:23:08,601 Learning INFO **snapshot_rules: 8 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:08,601 Learning INFO ***************************************************************
+12:23:08,602 Learning INFO train_with_batch triple_set: 483218, new_triple: /m/02079p /government/government_office_category/officeholders./government/government_position_held/legislative_sessions /m/01grmk
+12:23:08,602 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:08,603 Learning INFO time elapsed: 0 ms
+12:23:10,619 Learning INFO ***************************************************************
+12:23:10,620 Learning INFO **snapshot_rules: 51 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:10,620 Learning INFO ***************************************************************
+12:23:10,626 Learning INFO train_with_batch triple_set: 483219, new_triple: /m/053rxgm /film/film/executive_produced_by /m/0g_rs_
+12:23:10,626 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:10,626 Learning INFO time elapsed: 0 ms
+12:23:12,628 Learning INFO ***************************************************************
+12:23:12,629 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:12,629 Learning INFO ***************************************************************
+12:23:12,630 Learning INFO train_with_batch triple_set: 483220, new_triple: /m/011k11 /music/record_label/artist /m/03h_yfh
+12:23:12,630 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:12,631 Learning INFO time elapsed: 0 ms
+12:23:14,638 Learning INFO ***************************************************************
+12:23:14,638 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:14,639 Learning INFO ***************************************************************
+12:23:14,640 Learning INFO train_with_batch triple_set: 483221, new_triple: /m/014zfs /award/award_nominee/award_nominations./award/award_nomination/award /m/0bdw6t
+12:23:14,640 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:14,640 Learning INFO time elapsed: 1 ms
+12:23:16,693 Learning INFO ***************************************************************
+12:23:16,694 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:16,694 Learning INFO ***************************************************************
+12:23:16,696 Learning INFO train_with_batch triple_set: 483222, new_triple: /m/04b2qn /award/award_nominated_work/award_nominations./award/award_nomination/award /m/0gqyl
+12:23:16,696 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:16,696 Learning INFO time elapsed: 0 ms
+12:23:18,711 Learning INFO ***************************************************************
+12:23:18,711 Learning INFO **snapshot_rules: 8 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:18,711 Learning INFO ***************************************************************
+12:23:18,713 Learning INFO train_with_batch triple_set: 483223, new_triple: /m/04b2qn /award/award_nominated_work/award_nominations./award/award_nomination/award /m/054krc
+12:23:18,713 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:18,713 Learning INFO time elapsed: 0 ms
+12:23:20,742 Learning INFO ***************************************************************
+12:23:20,742 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:20,742 Learning INFO ***************************************************************
+12:23:20,744 Learning INFO train_with_batch triple_set: 483224, new_triple: /m/0fg04 /film/film/genre /m/03npn
+12:23:20,744 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:20,744 Learning INFO time elapsed: 0 ms
+12:23:22,790 Learning INFO ***************************************************************
+12:23:22,791 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:22,791 Learning INFO ***************************************************************
+12:23:22,793 Learning INFO train_with_batch triple_set: 483225, new_triple: /m/0fg04 /film/film/starring./film/performance/actor /m/01mqnr
+12:23:22,793 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:22,793 Learning INFO time elapsed: 0 ms
+12:23:24,819 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:23:24,819 Learning INFO ***************************************************************
+12:23:24,819 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:24,820 Learning INFO ***************************************************************
+12:23:24,820 Learning INFO train_with_batch triple_set: 483226, new_triple: /m/0fg04 /award/award_winning_work/awards_won./award/award_honor/award /m/02x2gy0
+12:23:24,820 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:24,821 Learning INFO time elapsed: 0 ms
+12:23:26,851 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:23:26,851 Learning INFO ***************************************************************
+12:23:26,851 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:26,851 Learning INFO ***************************************************************
+12:23:26,853 Learning INFO train_with_batch triple_set: 483227, new_triple: /m/05typm /film/actor/film./film/performance/film /m/0k2cb
+12:23:26,853 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:26,853 Learning INFO time elapsed: 0 ms
+12:23:28,868 Learning INFO ***************************************************************
+12:23:28,868 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:28,868 Learning INFO ***************************************************************
+12:23:28,869 Learning INFO train_with_batch triple_set: 483228, new_triple: /m/0cwy47 /film/film/featured_film_locations /m/06c62
+12:23:28,869 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:28,870 Learning INFO time elapsed: 0 ms
+12:23:30,898 Learning INFO ***************************************************************
+12:23:30,899 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:30,899 Learning INFO ***************************************************************
+12:23:30,901 Learning INFO train_with_batch triple_set: 483229, new_triple: /m/0cbv4g /film/film/production_companies /m/016tt2
+12:23:30,901 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:30,901 Learning INFO time elapsed: 0 ms
+12:23:32,924 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:23:32,924 Learning INFO ***************************************************************
+12:23:32,925 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:32,925 Learning INFO ***************************************************************
+12:23:32,926 Learning INFO train_with_batch triple_set: 483230, new_triple: /m/019vhk /film/film/film_festivals /m/09rwjly
+12:23:32,926 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:32,926 Learning INFO time elapsed: 0 ms
+12:23:34,942 Learning INFO ***************************************************************
+12:23:34,942 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:34,942 Learning INFO ***************************************************************
+12:23:34,943 Learning INFO train_with_batch triple_set: 483231, new_triple: /m/019vhk /award/award_nominated_work/award_nominations./award/award_nomination/award_nominee /m/01tc9r
+12:23:34,943 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:34,943 Learning INFO time elapsed: 1 ms
+12:23:36,984 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:23:36,984 Learning INFO ***************************************************************
+12:23:36,984 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:36,984 Learning INFO ***************************************************************
+12:23:36,985 Learning INFO train_with_batch triple_set: 483232, new_triple: /m/02s7tr /sports/sports_position/players./sports/sports_team_roster/team /m/049n7
+12:23:36,985 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:36,985 Learning INFO time elapsed: 0 ms
+12:23:39,1 Learning INFO ***************************************************************
+12:23:39,2 Learning INFO **snapshot_rules: 30 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:39,2 Learning INFO ***************************************************************
+12:23:39,6 Learning INFO train_with_batch triple_set: 483233, new_triple: /m/06sy4c /people/person/gender /m/05zppz
+12:23:39,6 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:39,6 Learning INFO time elapsed: 1 ms
+12:23:41,37 Learning INFO ***************************************************************
+12:23:41,38 Learning INFO **snapshot_rules: 23 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:41,38 Learning INFO ***************************************************************
+12:23:41,41 Learning INFO train_with_batch triple_set: 483234, new_triple: /m/0dr1c2 /tv/tv_program/regular_cast./tv/regular_tv_appearance/actor /m/04f62k
+12:23:41,41 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:41,42 Learning INFO time elapsed: 0 ms
+12:23:43,61 Learning INFO ***************************************************************
+12:23:43,62 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:43,62 Learning INFO ***************************************************************
+12:23:43,64 Learning INFO train_with_batch triple_set: 483235, new_triple: /m/01q2sk /education/educational_institution_campus/educational_institution /m/01q2sk
+12:23:43,64 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:43,64 Learning INFO time elapsed: 1 ms
+12:23:45,65 Learning INFO ***************************************************************
+12:23:45,65 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:45,65 Learning INFO ***************************************************************
+12:23:45,66 Learning INFO train_with_batch triple_set: 483236, new_triple: /m/012vd6 /influence/influence_node/influenced /m/03g5jw
+12:23:45,66 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:45,66 Learning INFO time elapsed: 0 ms
+12:23:47,98 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:23:47,98 Learning INFO ***************************************************************
+12:23:47,99 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:47,99 Learning INFO ***************************************************************
+12:23:47,100 Learning INFO train_with_batch triple_set: 483237, new_triple: /m/07b_l /location/location/contains /m/013m43
+12:23:47,100 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:47,101 Learning INFO time elapsed: 0 ms
+12:23:49,118 Learning INFO ***************************************************************
+12:23:49,119 Learning INFO **snapshot_rules: 6 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:49,119 Learning INFO ***************************************************************
+12:23:49,121 Learning INFO train_with_batch triple_set: 483238, new_triple: /m/01lf293 /music/musical_group/member./music/group_membership/role /m/02pprs
+12:23:49,121 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:49,121 Learning INFO time elapsed: 1 ms
+12:23:51,146 Learning INFO ***************************************************************
+12:23:51,146 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:51,146 Learning INFO ***************************************************************
+12:23:51,148 Learning INFO train_with_batch triple_set: 483239, new_triple: /m/0lsxr /film/film_genre/films_in_this_genre /m/0ckrnn
+12:23:51,149 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:51,149 Learning INFO time elapsed: 0 ms
+12:23:53,151 Learning INFO ***************************************************************
+12:23:53,152 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:53,152 Learning INFO ***************************************************************
+12:23:53,154 Learning INFO train_with_batch triple_set: 483240, new_triple: /m/0lsxr /film/film_genre/films_in_this_genre /m/06z8s_
+12:23:53,154 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:53,154 Learning INFO time elapsed: 0 ms
+12:23:55,181 Learning INFO ***************************************************************
+12:23:55,182 Learning INFO **snapshot_rules: 19 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:55,182 Learning INFO ***************************************************************
+12:23:55,185 Learning INFO train_with_batch triple_set: 483241, new_triple: /m/0lsxr /film/film_genre/films_in_this_genre /m/014lc_
+12:23:55,185 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:55,185 Learning INFO time elapsed: 1 ms
+12:23:57,226 Learning INFO ***************************************************************
+12:23:57,226 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:57,226 Learning INFO ***************************************************************
+12:23:57,227 Learning INFO train_with_batch triple_set: 483242, new_triple: /m/0lsxr /film/film_genre/films_in_this_genre /m/01kjr0
+12:23:57,227 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:57,227 Learning INFO time elapsed: 0 ms
+12:23:59,271 Learning INFO ***************************************************************
+12:23:59,271 Learning INFO **snapshot_rules: 12 in file learning_rules/FB15k/rule_extend_20.txt
+12:23:59,272 Learning INFO ***************************************************************
+12:23:59,275 Learning INFO train_with_batch triple_set: 483243, new_triple: /m/02_1sj /film/film/starring./film/performance/actor /m/04xhwn
+12:23:59,275 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:23:59,275 Learning INFO time elapsed: 0 ms
+12:24:01,299 Learning INFO ***************************************************************
+12:24:01,300 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:01,300 Learning INFO ***************************************************************
+12:24:01,301 Learning INFO train_with_batch triple_set: 483244, new_triple: /m/0mm1q /people/person/profession /m/01d_h8
+12:24:01,301 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:01,301 Learning INFO time elapsed: 0 ms
+12:24:03,316 Learning INFO ***************************************************************
+12:24:03,316 Learning INFO **snapshot_rules: 25 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:03,316 Learning INFO ***************************************************************
+12:24:03,320 Learning INFO train_with_batch triple_set: 483245, new_triple: /m/0prjs /film/director/film /m/062zjtt
+12:24:03,320 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:03,320 Learning INFO time elapsed: 0 ms
+12:24:05,327 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:24:05,328 Learning INFO ***************************************************************
+12:24:05,328 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:05,328 Learning INFO ***************************************************************
+12:24:05,329 Learning INFO train_with_batch triple_set: 483246, new_triple: /m/02vz6dn /film/film/distributors./film/film_film_distributor_relationship/distributor /m/03xq0f
+12:24:05,329 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:05,329 Learning INFO time elapsed: 0 ms
+12:24:07,333 Learning INFO ***************************************************************
+12:24:07,333 Learning INFO **snapshot_rules: 4 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:07,333 Learning INFO ***************************************************************
+12:24:07,334 Learning INFO train_with_batch triple_set: 483247, new_triple: /m/0hv4t /film/film/music /m/023361
+12:24:07,334 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:07,335 Learning INFO time elapsed: 0 ms
+12:24:09,368 Learning INFO ***************************************************************
+12:24:09,369 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:09,369 Learning INFO ***************************************************************
+12:24:09,371 Learning INFO train_with_batch triple_set: 483248, new_triple: /m/0bt4g /award/award_nominated_work/award_nominations./award/award_nomination/award /m/0gr51
+12:24:09,371 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:09,371 Learning INFO time elapsed: 0 ms
+12:24:11,386 Learning INFO ***************************************************************
+12:24:11,386 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:11,387 Learning INFO ***************************************************************
+12:24:11,388 Learning INFO train_with_batch triple_set: 483249, new_triple: /m/01v40wd /award/award_nominee/award_nominations./award/award_nomination/award /m/01c9dd
+12:24:11,388 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:11,388 Learning INFO time elapsed: 1 ms
+12:24:13,408 Learning INFO ***************************************************************
+12:24:13,408 Learning INFO **snapshot_rules: 13 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:13,409 Learning INFO ***************************************************************
+12:24:13,411 Learning INFO train_with_batch triple_set: 483250, new_triple: /m/0kvgnq /award/award_winning_work/awards_won./award/award_honor/award_winner /m/05dppk
+12:24:13,411 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:13,411 Learning INFO time elapsed: 0 ms
+12:24:15,421 Learning INFO ***************************************************************
+12:24:15,422 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:15,423 Learning INFO ***************************************************************
+12:24:15,424 Learning INFO train_with_batch triple_set: 483251, new_triple: /m/017149 /award/award_winner/awards_won./award/award_honor/honored_for /m/0gmblvq
+12:24:15,424 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:15,424 Learning INFO time elapsed: 1 ms
+12:24:17,484 Learning INFO ***************************************************************
+12:24:17,484 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:17,484 Learning INFO ***************************************************************
+12:24:17,485 Learning INFO train_with_batch triple_set: 483252, new_triple: /m/017149 /film/actor/film./film/performance/film /m/09m6kg
+12:24:17,486 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:17,486 Learning INFO time elapsed: 0 ms
+12:24:19,524 Learning INFO ***************************************************************
+12:24:19,525 Learning INFO **snapshot_rules: 1 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:19,525 Learning INFO ***************************************************************
+12:24:19,526 Learning INFO train_with_batch triple_set: 483253, new_triple: /m/014g9y /people/person/place_of_birth /m/05qtj
+12:24:19,526 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:19,526 Learning INFO time elapsed: 0 ms
+12:24:21,535 Learning INFO ***************************************************************
+12:24:21,536 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:21,537 Learning INFO ***************************************************************
+12:24:21,538 Learning INFO train_with_batch triple_set: 483254, new_triple: /m/01ckbq /award/award_category/winners./award/award_honor/ceremony /m/013b2h
+12:24:21,538 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:21,538 Learning INFO time elapsed: 1 ms
+12:24:23,560 Learning INFO ***************************************************************
+12:24:23,560 Learning INFO **snapshot_rules: 15 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:23,560 Learning INFO ***************************************************************
+12:24:23,564 Learning INFO train_with_batch triple_set: 483255, new_triple: /m/0f_nbyh /award/award_category/nominees./award/award_nomination/nominated_for /m/07yk1xz
+12:24:23,564 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:23,564 Learning INFO time elapsed: 1 ms
+12:24:25,623 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:24:25,623 Learning INFO ***************************************************************
+12:24:25,623 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:25,623 Learning INFO ***************************************************************
+12:24:25,623 Learning INFO train_with_batch triple_set: 483256, new_triple: /m/0418wg /film/film/language /m/02bjrlw
+12:24:25,623 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:25,624 Learning INFO time elapsed: 0 ms
+12:24:27,637 Learning INFO ***************************************************************
+12:24:27,637 Learning INFO **snapshot_rules: 15 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:27,637 Learning INFO ***************************************************************
+12:24:27,639 Learning INFO train_with_batch triple_set: 483257, new_triple: /m/01pcz9 /award/award_nominee/award_nominations./award/award_nomination/award_nominee /m/08k881
+12:24:27,640 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:27,640 Learning INFO time elapsed: 0 ms
+12:24:29,647 Learning INFO ***************************************************************
+12:24:29,647 Learning INFO **snapshot_rules: 9 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:29,647 Learning INFO ***************************************************************
+12:24:29,650 Learning INFO train_with_batch triple_set: 483258, new_triple: /m/09qwmm /award/award_category/nominees./award/award_nomination/award_nominee /m/06x58
+12:24:29,650 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:29,650 Learning INFO time elapsed: 1 ms
+12:24:31,652 Learning INFO ***************************************************************
+12:24:31,652 Learning INFO **snapshot_rules: 11 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:31,652 Learning INFO ***************************************************************
+12:24:31,654 Learning INFO train_with_batch triple_set: 483259, new_triple: /m/09qwmm /award/award_category/winners./award/award_honor/award_winner /m/0794g
+12:24:31,654 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:31,654 Learning INFO time elapsed: 1 ms
+12:24:33,679 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:24:33,679 Learning INFO ***************************************************************
+12:24:33,680 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:33,680 Learning INFO ***************************************************************
+12:24:33,681 Learning INFO train_with_batch triple_set: 483260, new_triple: /m/02kth6 /organization/non_profit_organization/registered_with./organization/non_profit_registration/registering_agency /m/03z19
+12:24:33,681 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:33,681 Learning INFO time elapsed: 0 ms
+12:24:35,716 Learning INFO ***************************************************************
+12:24:35,716 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:35,716 Learning INFO ***************************************************************
+12:24:35,719 Learning INFO train_with_batch triple_set: 483261, new_triple: /m/0lbbj /olympics/olympic_games/sports /m/03_8r
+12:24:35,719 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:35,719 Learning INFO time elapsed: 0 ms
+12:24:37,735 Learning INFO ***************************************************************
+12:24:37,735 Learning INFO **snapshot_rules: 33 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:37,735 Learning INFO ***************************************************************
+12:24:37,740 Learning INFO train_with_batch triple_set: 483262, new_triple: /m/0bwfn /education/educational_institution/students_graduates./education/education/major_field_of_study /m/02h40lc
+12:24:37,740 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:37,740 Learning INFO time elapsed: 1 ms
+12:24:39,752 Learning INFO ***************************************************************
+12:24:39,753 Learning INFO **snapshot_rules: 5 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:39,753 Learning INFO ***************************************************************
+12:24:39,754 Learning INFO train_with_batch triple_set: 483263, new_triple: /m/026c1 /film/actor/film./film/performance/film /m/03s6l2
+12:24:39,755 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:39,755 Learning INFO time elapsed: 0 ms
+12:24:41,788 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:24:41,788 Learning INFO ***************************************************************
+12:24:41,788 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:41,788 Learning INFO ***************************************************************
+12:24:41,789 Learning INFO train_with_batch triple_set: 483264, new_triple: /m/03j90 /people/person/profession /m/05z96
+12:24:41,789 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:41,789 Learning INFO time elapsed: 0 ms
+12:24:43,834 Learning INFO ***************************************************************
+12:24:43,835 Learning INFO **snapshot_rules: 2 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:43,835 Learning INFO ***************************************************************
+12:24:43,836 Learning INFO train_with_batch triple_set: 483265, new_triple: /m/0p9sw /award/award_category/nominees./award/award_nomination/nominated_for /m/02zk08
+12:24:43,836 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:43,837 Learning INFO time elapsed: 0 ms
+12:24:45,862 Learning INFO ***************************************************************
+12:24:45,864 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:45,865 Learning INFO ***************************************************************
+12:24:45,868 Learning INFO train_with_batch triple_set: 483266, new_triple: /m/01hydr /music/genre/parent_genre /m/0kz10
+12:24:45,868 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:45,868 Learning INFO time elapsed: 1 ms
+12:24:47,890 Learning INFO ***************************************************************
+12:24:47,890 Learning INFO **snapshot_rules: 3 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:47,890 Learning INFO ***************************************************************
+12:24:47,893 Learning INFO train_with_batch triple_set: 483267, new_triple: /m/06ms6 /education/field_of_study/students_majoring./education/education/major_field_of_study /m/02j62
+12:24:47,893 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:47,893 Learning INFO time elapsed: 0 ms
+12:24:49,921 Learning INFO ***************************************************************
+12:24:49,922 Learning INFO **snapshot_rules: 14 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:49,922 Learning INFO ***************************************************************
+12:24:49,924 Learning INFO train_with_batch triple_set: 483268, new_triple: /m/01gtc0 /government/legislative_session/members./government/government_position_held/district_represented /m/0vbk
+12:24:49,924 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:49,924 Learning INFO time elapsed: 0 ms
+12:24:51,934 Learning INFO ***************************************************************
+12:24:51,935 Learning INFO **snapshot_rules: 7 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:51,935 Learning INFO ***************************************************************
+12:24:51,936 Learning INFO train_with_batch triple_set: 483269, new_triple: /m/0h63gl9 /film/film/release_date_s./film/film_regional_release_date/film_release_region /m/07ssc
+12:24:51,936 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:51,937 Learning INFO time elapsed: 0 ms
+12:24:53,948 Learning INFO ***************************************************************
+12:24:53,948 Learning INFO **snapshot_rules: 18 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:53,949 Learning INFO ***************************************************************
+12:24:53,952 Learning INFO train_with_batch triple_set: 483270, new_triple: /m/033cnk /food/food/nutrients./food/nutrition_fact/nutrient /m/0f4hc
+12:24:53,952 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:53,952 Learning INFO time elapsed: 0 ms
+12:24:55,985 Learning INFO ***************************************************************
+12:24:55,986 Learning INFO **snapshot_rules: 27 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:55,986 Learning INFO ***************************************************************
+12:24:55,991 Learning INFO train_with_batch triple_set: 483271, new_triple: /m/033cnk /food/food/nutrients./food/nutrition_fact/nutrient /m/02y_3rf
+12:24:55,992 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:55,992 Learning INFO time elapsed: 0 ms
+12:24:58,6 Learning INFO ***************************************************************
+12:24:58,7 Learning INFO **snapshot_rules: 22 in file learning_rules/FB15k/rule_extend_20.txt
+12:24:58,7 Learning INFO ***************************************************************
+12:24:58,11 Learning INFO train_with_batch triple_set: 483272, new_triple: /m/084m3 /film/actor/film./film/performance/film /m/034qrh
+12:24:58,11 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:24:58,11 Learning INFO time elapsed: 0 ms
+12:25:00,15 Learning INFO increasing rule size of ACYCLIC rules to 2  after 2 s
+12:25:00,15 Learning INFO ***************************************************************
+12:25:00,15 Learning INFO **snapshot_rules: 0 in file learning_rules/FB15k/rule_extend_20.txt
+12:25:00,15 Learning INFO ***************************************************************
+12:25:00,16 Learning INFO train_with_batch triple_set: 483273, new_triple: /m/014mlp /education/educational_degree/people_with_this_degree./education/education/specialization /m/01mkq
+12:25:00,16 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:25:00,16 Learning INFO time elapsed: 0 ms
+12:25:02,40 Learning INFO ***************************************************************
+12:25:02,40 Learning INFO **snapshot_rules: 11 in file learning_rules/FB15k/rule_extend_20.txt
+12:25:02,40 Learning INFO ***************************************************************
+12:25:02,42 Learning INFO train_with_batch triple_set: 483274, new_triple: /m/014mlp /education/educational_degree/people_with_this_degree./education/education/institution /m/01x5fb
+12:25:02,43 Learning INFO indexing dataset: ../../datasets/FB15k/freebase_mtr100_mte100-train.txt
+12:25:02,43 Learning INFO time elapsed: 0 ms
