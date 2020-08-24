@@ -1575,3 +1575,7 @@ Tails[('/m/0564mx', 0.5398550724637681), ('/m/06gh0t', 0.36106737973347075), ('/
 17:48:17,691 RuleEngine INFO ****************************start new section*************************************
 17:48:17,691 RuleEngine INFO initialize rule engine 1598006897692
 17:49:54,689 Predict INFO finished in 132 s.
+20:33:14,474 root ERROR Invalid alias: The name clear can't be aliased because it is another magic command.
+20:33:14,474 root ERROR Invalid alias: The name more can't be aliased because it is another magic command.
+20:33:14,474 root ERROR Invalid alias: The name less can't be aliased because it is another magic command.
+20:33:14,474 root ERROR Invalid alias: The name man can't be aliased because it is another magic command.
