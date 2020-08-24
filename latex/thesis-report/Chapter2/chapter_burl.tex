@@ -384,8 +384,21 @@ Rank &
 \end{center}
 \end{table}
 
-Bảng \hyperref[tab:tab2]{2.2} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với hai chiến lược thêm tri thức mới vào đồ thị. Chúng tôi đánh giá trên hai phương diện là tổng số luật được sinh ra, các luật có độ tin cậy \(>= 80\%\) và \(>= 50\%\). Thứ các độ đo \(H@K\) trên tập validation khi thêm toàn bộ phần tử trong tập test vào mô hình đã train trong bước trên.
-
+Bảng \hyperref[tab:tab2]{2.2} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với hai chiến lược thêm tri thức mới vào đồ thị. Chúng tôi đánh giá trên hai phương diện là tổng số luật được sinh ra, và số luật có độ tin cậy \(>= 50\%\) và \(>= 80\%\).
+\begin{table}[ht]
+\caption{Kết quả phương pháp AnyBURL}
+\label{tab:tab1}%
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\cline{2-13}
+                                 & \multicolumn{3}{l|}{FB15k}                & \multicolumn{3}{l|}{FB15k-237}        & \multicolumn{3}{l|}{WN18}                 & \multicolumn{3}{l|}{WN18RR}            \\ \cline{2-13} 
+                                 & num\_rule & 50\%          & 80\%          & num\_rule & 50\%         & 80\%       & num\_rule & 50\%           & 80\%         & num\_rule & 50\%         & 80\%        \\ \hline
+\multicolumn{1}{|l|}{onl-to-off} & 1011      & 416(41,14\%)  & 284(28, 09\%) & 1120      & 244(21,79\%) & 95(8,48\%) & 533       & 270(38, 46 \%) & 240(34,19\%) & 439       & 110(25,05\%) & 83(18,91)   \\ \hline
+\multicolumn{1}{|l|}{onl-to-onl} & 1367      & 1185(86,69\%) & 481(35,18\%)  & 756       & 660(87,30\%) & 162(21,43) & 260       & 252(96,92\%)   & 225(86,54\%) & 106       & 102(96,22)   & 85(81,19\%) \\ \hline
+\end{tabular}}
+\end{center}
+\end{table}
 \section{Kết luận}
 Trong phần này chúng tôi đưa ra các kết quả đạt được của mô hình chúng tôi, chúng tôi cố gắng tìm hiểu các đặc trưng của các bộ dữ liệu tương ứng để cố gắng lý giải thích tại sao mô hình của chúng tôi hoặc các công trình khác có được kết quả tốt trên tập dữ liệu tương ứng đó. Những kết quả của hai đề xuất của chúng tôi cũng như các dịnh hướng nghiên cứu của chúng tôi trong tương lai.
 
