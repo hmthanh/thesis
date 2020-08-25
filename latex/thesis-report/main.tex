@@ -1,4 +1,4 @@
-% Template KLTN cho SV trường ĐHKHTN
+    % Template KLTN cho SV trường ĐHKHTN
 % Liên hệ: nqminh@fit.hcmus.edu.vn
 % Last update: 08/06/2016
 
@@ -11,6 +11,8 @@
 % Font tiếng Việt
 \usepackage[T5]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
 \DeclareTextSymbolDefault{\DH}{T1}
 
 % Tài liệu tham khảo
@@ -27,7 +29,7 @@
 
 % Chèn hình, các hình trong luận văn được để trong thư mục Images/
 \usepackage{graphicx}
-\graphicspath{ {./images/} }
+\graphicspath{ {Images/} }
 
 % Chèn và định dạng mã nguồn
 \usepackage{listings}
@@ -99,38 +101,31 @@
 \usepackage{tikz}
 \usetikzlibrary{calc}
 \newcommand\HRule{\rule{\textwidth}{1pt}}
-% ========================================================================================= %
-% error citation
-\usepackage[strings]{underscore}
-\usepackage{url}
-
-% Math
-\usepackage{amsfonts}
-
-\usepackage{stmaryrd}
-\newcommand*\concat{\mathbin{\|}} % parallel
 
 % ========================================================================================= %
 % CHÚ Ý: Thông tin chung về KLTN - sinh viên điền vào đây để tự động update các trang khác  %
 % ========================================================================================= %
-\newcommand{\tenSV}{Hoàng~Minh~Thanh~-~Phan~Minh~Tân} % Dấu ~ là khoảng trắng không được tách (các chữ nối với nhau bằng dấu ~ sẽ nằm cùng 1 dòng
-\newcommand{\mssv}{18424062~-~18424059}
-\newcommand{\tenKL}{Đự~đoán~liên~kết~trong~đồ~thị~phức} % Chú ý dấu ~ trong tên khóa luận
-\newcommand{\tenGVHD}{Th.S~Lê~Ngọc~Thành}
-\newcommand{\tenBM}{Khoa~học~máy~tính}
+\newcommand{\tenSV}{Phan~Minh~Tâm~-~Hoàng~Minh~Thanh} % Dấu ~ là khoảng trắng không được tách (các chữ nối với nhau bằng dấu ~ sẽ nằm cùng 1 dòng
+\newcommand{\mssv}{18424059-18424062}
+\newcommand{\tenKL}{ĐỰ~ĐOÁN~LIÊN~KẾT~TRONG~ĐỒ~THỊ~TRI~THỨC} % Chú ý dấu ~ trong tên khóa luận
+\newcommand{\tenGVHD}{ThS.~Lê~Ngọc~Thành}
+\newcommand{\tenBM}{Bm. Khoa~Học~Máy~Tính}
 
 \begin{document}
-\iffalse
+
 \input{Title/title.tex}
 % Sasu trang Title, các bạn chèn nhận xét gủa GVHD và GVPB. Nhận xét sẽ được giáo vụ phát sau buổi bảo vệ để các bạn đóng quyển.
 
 \pagenumbering{roman} % Đánh số i, ii, iii, ...
 
-%\addcontentsline{toc}{chapter}{Lời cam đoan}
-%\include{Appendix/reassurances}s
+\addcontentsline{toc}{chapter}{Lời cam đoan}
+\include{Appendix/reassurances}
 
 \addcontentsline{toc}{chapter}{Lời cảm ơn}
 \include{Appendix/thanks}
+
+\addcontentsline{toc}{chapter}{Đề cương chi tiết}
+\include{Appendix/decuong}
 
 % Mục lục, danh sách hình, danh sách bảng
 \addcontentsline{toc}{chapter}{Mục lục}
@@ -138,28 +133,24 @@
 \listoffigures
 \listoftables
 
-
-\include{Abstract/abstract}
+\addcontentsline{toc}{chapter}{Tóm tắt}
+\include{Appendix/tomtat}
 
 \clearpage
 
 \pagenumbering{arabic} % Đánh số 1, 2, 3, ...
 
 % Các chương nội dung
-% 1. Giới thiệu
-\include{Introduction/introduction}
+\include{Chapter1/chapter1}
 
-% 2. Tổng quan (Cơ sở lý thuyết và Các nghiên cứu liên quan)
-\include{Overview/overview}
-\fi
-% 3. Phương pháp đề xuất
-\include{Approachs/approachs}
+\include{Chapter2/chapter2}
+% \include{Chapter2/chapter_burl}
 
-% 4. Kết quả thực nghiệm và phân tích
-\include{Results/results}
+\include{Chapter3/chapter3}
 
-% 5. Kết luận
-\include{Conclusions/conclusions}
+\include{Chapter4/chapter4}
+
+\include{Chapter5/chapter5}
 
 % Công trình của tác giả (nếu không có thì comment 02 dòng dưới)
 \addcontentsline{toc}{chapter}{Danh mục công trình của tác giả}
@@ -169,19 +160,16 @@
 \addcontentsline{toc}{chapter}{Tài liệu tham khảo}
 \printbibheading[title={Tài liệu tham khảo}]
 
+\printbibliography[heading=subbibliography, title={Tiếng Việt}, keyword=Viet, resetnumbers=true]
+
 \DeclareNameAlias{sortname}{last-first}
 \DeclareNameAlias{default}{last-first}
 
-\printbibliography[heading=subbibliography, title={Đồ thị tri thức}, keyword=KG, resetnumbers=true]
-
-\printbibliography[heading=subbibliography, title={Phương pháp AnyBURL}, keyword=AnyBURL, resetnumbers=3]
-
-\printbibliography[heading=subbibliography, title={Phương pháp CGAT}, keyword=CGAT, resetnumbers=4]
-
-
+\printbibliography[heading=subbibliography, title={Tiếng Anh}, notkeyword=Viet, resetnumbers=2] 
 % ===================================================================== %
 % CHÚ Ý: phải gán lại resetnumbers=số tài liệu tham khảo tiếng Việt + 1 %
 % ===================================================================== %
+
 % Phần phụ lục
 \include{Appendix/appendix1}
 \include{Appendix/appendix2}
