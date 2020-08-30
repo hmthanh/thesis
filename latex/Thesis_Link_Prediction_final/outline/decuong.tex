@@ -1,0 +1,151 @@
+%Đây là template dùng cho đề cương đề tài tốt nghiệp
+%Khoa Công nghệ Thông tin
+%Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM
+
+%Liên hệ về mẫu LaTEX này: Thầy Bùi Huy Thông (bhthong@fit.hcmus.edu.vn)
+
+\documentclass{article}[14pt]
+\usepackage[utf8]{vietnam}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage[left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{fancybox,framed}
+\linespread{1.2}
+\usepackage{lastpage}
+\usepackage{floatrow}
+\usepackage{floatrow}
+\pagenumbering{arabic}
+\usepackage{dirtytalk}
+%\pagestyle{fancy}
+\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+
+\usepackage{blindtext}
+\usepackage{titlesec}
+\usepackage[nottoc]{tocbibind}
+
+\titleformat*{\section}{\LARGE\bfseries}
+\titleformat*{\subsection}{\Large\bfseries}
+\titleformat*{\subsubsection}{\large\bfseries}
+%\addbibresource{ref.bib}
+
+
+\begin{document}
+    \begin{figure}[h]
+        \begin{floatrow}
+        \ffigbox{\includegraphics[scale = 0.1]{logo.png}}  
+        {%
+    
+        }
+        \capbtabbox{
+            \begin{tabular}{l}
+            \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN\\KHOA CÔNG NGHỆ THÔNG TIN\end{tabular}}} \\ \\ \\
+            \end{tabular}
+        }
+        {%
+    
+        }
+        \end{floatrow}
+    \end{figure}
+    
+    \begin{center}
+        
+        %Xác định loại đề tài tốt nghiệp tương ứng: Khóa luận, Thực tập, Đồ án
+        \textbf{\Large ĐỀ CƯƠNG KHOÁ LUẬN TỐT NGHIỆP} \\ 
+    \end{center}
+    
+    %\vspace{.5cm}
+    
+    \begin{center}
+    %Tên đề tài phải VIẾT HOA
+        
+        \textbf{\huge Dự Đoán Liên Kết Trong Đồ Thị Tri Thức} 
+        \\
+        
+    %Tên đề tài bằng tiếng Anh (nếu có)
+    \vspace{.5cm}
+        \textit{\textbf{\Large (Knowledge Graph Embedding for Link Prediction)}}
+    \end{center}
+    
+    \vspace{.5cm}
+    
+    \Large
+    \section{THÔNG TIN CHUNG}
+    \begin{itemize}[label = {}]
+        
+        \item \textbf{Người hướng dẫn:} 
+        %Thể hiện dạng: <Chức danh> <Họ và tên> (<Đơn vị công tác>)
+        \begin{itemize}
+            \item Ths. Lê Ngọc Thành (Khoa Công nghệ Thông tin)
+        \end{itemize}{}
+    
+        
+        \item \textbf{Nhóm Sinh viên thực hiện:}
+        
+        %Thể hiện dạng: <Họ và tên sinh viên> (MSSV: )
+        \begin{enumerate}
+        
+            \item Phan Minh Tâm (18424059)
+            \item Hoàng Minh Thanh (18424062)
+        \end{enumerate}
+
+       %Chọn loại thích hợp
+        \item \textbf{Loại đề tài:} Nghiên cứu
+        
+        \item \textbf{Thời gian thực hiện:} Từ \textit{04/2020} đến \textit{10/2020}
+        
+        
+    \end{itemize}
+    
+    \section{NỘI DUNG THỰC HIỆN}
+    {
+
+    %Mỗi mục dưới đây phải viết ít nhất là 5 câu mô tả/giới thiệu.
+    
+    \subsection{Giới thiệu về đề tài}
+    
+    Đồ thị tri thức (Knowledge Graphs-KG) là các biểu diễn cấu trúc của thông tin thế giới thực. Do khả năng mô hình hóa dữ liệu có cấu trúc, phức tạp theo cách máy tính có thể dễ dàng \say{hiểu được}, KG hiện đang được sử dụng rộng rãi trong nhiều lĩnh vực khác nhau, từ trả lời câu hỏi đến truy xuất thông tin và các hệ thống có thể suy luận dựa trên nội dung đã có.
+    Việc phát triển một KG có thể được thực hiện bằng cách trích xuất các sự kiện mới từ các nguồn bên ngoài hoặc bằng cách suy ra các sự kiện còn thiếu từ những sự kiện đã có trong KG. Phương pháp tiếp cận, được gọi là Dự đoán liên kết (Link Prediction-LP).
+    
+    \subsection{Mục tiêu đề tài}
+    %Phần này mô tả mục tiêu thực hiện đề tài.
+    Cùng với nhiều kỹ thuật trí tuệ nhân tạo phát triển mạnh gần đây, đề tài tập chung nghiên cứu vào các khía cạnh của bài toán LP trên KG như đặc trưng tập dữ liệu, thuật toán, thực nghiệm đánnh giá các phương pháp cũng như các kỹ thuật khác nhau cùng tìm hiểu xem liệu những đặc trưng gì của tập dữ liệu hoặc các thuật toán khác nhau ảnh hưởng tới khả năng khái quát hóa của mô hình.
+    \subsection{Phạm vi của đề tài}
+    
+    LP là một lĩnh vực nghiên cứu ngày càng sôi nổi gần đây đã phát triển mạnh mẽ từ sự bùng nổ của các kỹ thuật trong trí tuệ nhân tạo như: máy học (machine learning) và kỹ thuật học sâu (deep learning). Đề tài sẽ tập trung nghiên cứu các mô hình LP sử dụng KG làm nền tảng để tìm hiểu các biểu diễn dữ liệu với số chiều thấp còn được gọi là Knowledge Graph Embeddings, sau đó sử dụng chúng để suy ra các sự kiện, quan hệ mới.
+    
+    \subsection{Cách tiếp cận dự kiến}
+    
+    %Có thể bổ sung hình ảnh vào để làm rõ phương pháp hoặc cách tiếp cận dự kiến.
+    Với mong muốn được tìm hiểu và nghiên cứu các phương pháp trí tuệ nhân tạo được áp dụng vào LG từ cổ điển đến hiện đại đề tài sẽ nghiên cứu một phương pháp cổ điển dựa trên luật (rule base \cite{burl}) và phương pháp còn lại dựa vào phương pháp học sâu (learning attention \cite{gat}). Đối với phương pháp cổ điển thuật toán cố gắng đưa các luật Horn \cite{wiki:Hornclause} sau đó khái quát hóa chúng thành các luật tổng quát trên tập dữ liệu huấn luyện. Phương pháp còn lại dựa vào kỹ thuật nhúng \cite{BordesUGWY13} đồ thị tri thức vào một không gian số chiều thấp dựa trên các láng giềng lân cận \cite{gat} sau đó học trên không gian này để đưa ra các dự đoán về các cạnh của đồ thị.
+    
+    \subsection{Kết quả dự kiến của đề tài}
+    Tìm hiểu các phương pháp khác thực nghiệm và so sánh kết quả với phương pháp đang nghiên cứu với các phương pháp khác trên bốn tập dữ liệu được nghiên cứu nhiều nhất là FB15k \cite{toutanova2015observed}, FB15k-273 \cite{toutanova2015observed}, WN188 \cite{BordesUGWY13}, WN188RR \cite{GEmbedding}
+    
+    \subsection{Kế hoạch thực hiện}
+    \begin{itemize}
+        \item 4/2020 - 6/2020: Tìm hiểu các kiến thức liên quan về mạng nơ-ron,  KG. Đọc các  tài liệu bài báo liên quan tới đề tài.
+        \item 6/2020 - 8/2020: Hiện thực các phương pháp, thuât toán đã đề xuất và tìm hiểu.
+        \item 8/2020 - 9/2020: Tìm hiểu các phương pháp khác thực nghiệm và so sánh kết quả với phương pháp nghiên cứu.
+        \item 9/2020 - 10/2020: Báo cáo và bảo vệ khóa luận tốt nghiệp.
+    \end{itemize}
+    }
+    %TÀI LIỆU TRÍCH DẪN
+    %Đây là ví dụ
+    \bibliographystyle{ieeetr}
+    \bibliography{sample}
+    \nocite{*}
+
+    \begin{table}[h]
+    \centering
+        \begin{tabular}{p{7cm}p{7cm}}
+        \textbf{\begin{tabular}[c]{@{}c@{}}\\XÁC NHẬN\\CỦA NGƯỜI HƯỚNG DẪN\\ \textit{(Ký và ghi rõ họ tên)}\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}\textit{TP. Hồ Chí Minh, ngày 20 tháng 09 năm 2020}\\NHÓM SINH VIÊN THỰC HIỆN\\\textit{(Ký và ghi rõ họ tên}) \end{tabular}}
+        \end{tabular}
+    \end{table}
+    
+\end{document}              

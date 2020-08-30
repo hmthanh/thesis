@@ -1,3 +1,20 @@
+%❖ Là chương mở rộng của tóm tắt
+%❖ Nội dung bao gồm
+%o Ngữ cảnh, vấn đề cần giải quyết là gì?
+%o Vì sao vấn đề/bài toán quan trọng và thú vị?
+%o Bài toán có gì khó? Vì sao cần phải giải quyết?
+%o Những giải pháp (nghiên cứu, ứng dụng) đã giải quyết bài toán này?
+%o Những giải pháp này có hạn chế, thiếu sót gì?
+%o Giải pháp của bạn là gì? Kết quả thế nào?
+%o Đóng góp của nghiên cứu/ứng dụng của bạn? 
+%❖ Độ dài từ 3 đến 8 trang
+%❖ Có thể chia ra các mục
+%o Đặt vấn đề (Problem)
+%o Mục tiêu (Objectives)
+%o Giải pháp/Cách tiếp cận (An Approach)
+%o Đóng góp (Contributions)
+%o Bố cục (Outline)
+%❖ Lưu ý, nội dung các chương sau phải khớp với mục tiêu, giải pháp, đóng góp ở chương này
 \chapter{Giới thiệu}
 \label{Chapter1}
 
@@ -6,13 +23,13 @@ Ngày nay đồ thị đã được ứng dụng vào mọi mặt của đời s
 Khai thác đồ thị tri thức hiệu quả cung cấp cho người dùng hiểu sâu hơn về những gì đằng sau dữ liệu và từ đó có thể mang lại lợi ích cho nhiều ứng dụng trong thực tế. Tuy nhiên, trong thực tế, luôn có những tri thức mới được sinh ra mỗi ngày, thông tin thu được thường bị mất mát và không đầy đủ, từ đó nảy sinh ra vấn đề hoàn thiện đồ thị tri thức (knowledge graph completion) hay dự đoán liên kết (linking prediction) trong đồ thị tri thức.
 Hầu hết các phương tiếp cận hiện nay là dự đoán một cạnh mới nối từ đỉnh này tới đỉnh khác. Với cách tiếp cận như vậy đồ thị tri thức có đầy đủ các tri thức nói cách khác làm cho đồ thị đày đặc nhờ tạo thêm cách cạnh nối. Nhưng như vậy chỉ mới giải quyết được vấn đề hoàn thành đồ thị, vấn đề thêm một (hoặc một lượng) tri thức mới vào đồ thị vẫn còn là một câu hỏi mở.
 
-Hiện nay các bài toán liên quan đến hoàn thành đồ thị tri thức rất được quan tâm có hai cách tiếp cận chính là tối ưu hóa hàm mục tiêu tức là đưa ra dự đoán đựa trên có sai sót ít nhất như trong RuDiK\cite{ortona2018robust}, AMIE\cite{galarraga2015fast}, RuleN\cite{meilicke2018fine} liên quan tới các ứng dụng phân loại đỉnh, phân loại cạnh. Hoặc đưa ra một danh sách gồm \(k\) ứng viên với số điểm đại điện cho độ tin cậy giảm đần như trong các nghiên cứu TransE\cite{bordes2013translating}, ConvKB\cite{vu2019capsule} liên quan tới các hệ thống gợi ý (recommend system)...Cách tiếp cận của chúng tôi dựa trên cách tạo ra một danh sách gồm \(k\) ứng viên này.
+Hiện nay các bài toán liên quan đến hoàn thành đồ thị tri thức có hai cách tiếp cận chính là tối ưu hóa hàm mục tiêu tức là đưa ra dự đoán đựa trên có sai sót ít nhất như trong RuDiK\cite{ortona2018robust}, AMIE\cite{galarraga2015fast}, RuleN\cite{meilicke2018fine} liên quan tới các ứng dụng phân loại đỉnh, phân loại cạnh. Hoặc đưa ra một danh sách gồm \(k\) ứng viên với số điểm đại điện cho độ tin cậy giảm đần như trong các nghiên cứu TransE\cite{bordes2013translating}, ConvKB\cite{vu2019capsule} liên quan tới các hệ thống gợi ý (recommend system)...Cách tiếp cận của chúng tôi dựa trên cách tạo ra một danh sách gồm \(k\) ứng viên này.
 
-Với mỗi cách tiếp cận trên có hai phương pháp chính đưa ra nghiên cứu một cách dựa trên luật như trong AnyBURL\cite{burl} hoặc dựa trên nhúng đồ thị như trong ConvE\cite{dettmers2017convolutional}, TransE\cite{bordes2013translating}, ComplEx \cite{trouillon2016complex}. Với mong muốn được tiếp cận các phương pháp có hệ thống nên chúng tôi chọn ở cả hai phương pháp để nghiên cứu thực hiện đề tài này. Đối với phương pháp dựa trên luật chúng tôi chọn phương pháp AnyBURL\cite{burl} còn với phương pháp dựa trên nhúng đồ thị GAT\cite{nathani2019learning}.
+Với mỗi cách tiếp cận trên có hai phương pháp chính đưa ra nghiên cứu một cách dựa trên luật như trong AnyBURL\cite{burl} hoặc dựa trên nhúng đồ thị như trong ConvE\cite{dettmers2017convolutional}, TransE\cite{bordes2013translating}, ComplEx \cite{trouillon2016complex}. Với mong muốn được tiếp cận các phương pháp có hệ thống nên chúng tôi chọn ở cả hai phương pháp để nghiên cứu thực hiện đề tài này. Đối với phương pháp dựa trên luật chúng tôi chọn phương pháp AnyBURL\cite{burl} còn với phương pháp dựa trên nhúng đồ thị chúng tôi chọn phương pháp KBAT \cite{nathani2019learning} sử dụng cơ chế chú  ý.
 
 Đóng góp của chúng tôi trong phương pháp AnyBURL\cite{burl} gồm mã nguồn Python phương pháp AnyBURL. Cùng với đó chúng tôi cung cấp thêm hai chiến lược để thêm tri thức mới vào đồ thị mà chúng tôi gọi là online-to-offline là mở rộng của AnyBURL trong việc tạo ra các luật khi có một lượng (tập hợp) tri thức mới được thêm vào. Online-to-online sẽ tạo ngay các luật mới khi có một tri thức mới(cạnh) được thêm vào.
 
-Về phương pháp dựa trên nhúng đồ thị chúng tôi sẽ trình bày lại về cơ chế chú ý (attention mechanisms), cách cơ chế chú ý được áp dụng vào đồ thị tri thức bằng mô hình GAT và mô hình KBAT %cũng như cải tiến của chúng tôi trên đồ thị dưa trên cải tiến mới nhất của cơ chế chú ý.
+Với phương pháp dựa trên nhúng đồ thị chúng tôi sẽ trình bày lại về cơ chế chú ý (attention mechanisms \cite{vaswani2017attention}), cách cơ chế chú ý được áp dụng vào đồ thị tri thức bằng mô hình Mạng Đồ Thị Chú Ý (Graph Attention Network - GAT \cite{velivckovic2017graph}), mô hình KBAT \cite{nathani2019learning}, cũng như cải tiến của chúng tôi trên đồ thị dưa trên cải tiến mới nhất của cơ chế chú ý.
 Đóng góp của chúng tôi trong phương pháp học sâu bao gồm mã nguồn trực tuyến trên Google Colab về cách cải tiến của mô hình chúng tôi, cũng như các phân tích của chúng tôi về các siêu tham số trong quá trình huấn luyện để đạt được kết quả tốt hơn.
 
 % Hiện nay các bài toán liên quan đến hoàn thành đồ thị tri thức rất được quan tâm có bốn nhánh nghiên cứu chính như được nhắc đến trong nghiên cứu \cite{ampligraph} có hai nhánh nghiên cứu chính là nhúng đồ thị \cite{cai2018comprehensive} và dựa trên luật \cite{burl}. Với mong muốn được tiếp cận các phương pháp có hệ thống nên chúng tôi chọn ở mỗi nhánh một phương pháp làm chủ để chính cho các nghiên cứu và báo cáo này. Trong bài toán dự đự đoán liên kết cũng có hai phương pháp chính được đề xuất một là tối ưu hóa hàm mục tiêu đ

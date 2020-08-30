@@ -109,9 +109,28 @@
 \usetikzlibrary{calc}
 \newcommand\HRule{\rule{\textwidth}{1pt}}
 % ========================================================================================= %
-% CUSTOMIZE
+% PACKAGE CUSTOMIZE
+% pdf
+\usepackage{pdfpages}
 
+\usepackage[strings]{underscore}
+\usepackage{url}
 
+% Math
+\usepackage{amsfonts}
+
+\usepackage{stmaryrd}
+\newcommand*\concat{\mathbin{\|}} % parallel
+
+% Vẽ cây
+\usetikzlibrary{trees}
+
+% subfigure
+\usepackage{subcaption}
+\usepackage[justification=centering]{caption}
+
+% Bảng thuật ngữ
+\usepackage[acronym,nomain]{glossaries}
 % ========================================================================================= %
 % CHÚ Ý: Thông tin chung về KLTN - sinh viên điền vào đây để tự động update các trang khác  %
 % ========================================================================================= %
@@ -135,7 +154,7 @@
 \include{Appendix/thanks}
 
 \addcontentsline{toc}{chapter}{Đề cương chi tiết}
-\include{Appendix/decuong}
+%\include{Appendix/decuong}
 
 % Mục lục, danh sách hình, danh sách bảng
 \addcontentsline{toc}{chapter}{Mục lục}
@@ -151,15 +170,20 @@
 \pagenumbering{arabic} % Đánh số 1, 2, 3, ...
 
 % Các chương nội dung
+% Giới thiệu
 \include{Chapter1/chapter1}
 
+% Các công trình liên quan
 \include{Chapter2/chapter2}
 % \include{Chapter2/chapter_burl}
 
+% Phương pháp đề xuất
 \include{Chapter3/chapter3}
 
+% Kết quả thí nghiệm
 \include{Chapter4/chapter4}
 
+% Kêt luận
 \include{Chapter5/chapter5}
 
 % Công trình của tác giả (nếu không có thì comment 02 dòng dưới)
@@ -175,7 +199,7 @@
 \DeclareNameAlias{sortname}{last-first}
 \DeclareNameAlias{default}{last-first}
 
-\printbibliography[heading=subbibliography, title={Tiếng Anh}, notkeyword=Viet, resetnumbers=1] 
+\printbibliography[heading=subbibliography, title={Tiếng Anh}, notkeyword=Viet, resetnumbers=5] 
 % ===================================================================== %
 % CHÚ Ý: phải gán lại resetnumbers=số tài liệu tham khảo tiếng Việt + 1 %
 % ===================================================================== %
