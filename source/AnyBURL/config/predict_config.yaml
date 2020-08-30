@@ -22,7 +22,11 @@ path_test:
   - ../../datasets/FB15k-237/test.txt
   - ../../datasets/WN18/test.txt
   - ../../datasets/WN18RR/test.txt
-path_rules_ext: learning_rules/WN18/rule_final.txt
+path_rules_ext:
+  - learning_rules/FB15k/rule_extend_800.txt
+  - learning_rules/FB15k-237/rule_extend_800.txt
+  - learning_rules/WN18/rule_extend_800.txt
+  - learning_rules/WN18RR/rule_extend_800.txt
 unseen_nagative_examples: 5
 top_k_output: 10
 threshold_confidence_predictions: 2

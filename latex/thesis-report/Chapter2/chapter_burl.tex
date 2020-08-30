@@ -184,7 +184,7 @@ Thuật toán này là một phần bổ xung cho thuật toán 3 ở trên. S�
 %Các bảng biểu trình bày theo chiều ngang khổ giấy thì đầu bảng là lề trái của trang.
 
 \section{Kết quả thí nghiệm}
-Trong phần này chúng tôi mô tả lại các bộ dữ liệu mà chúng tôi đùng để thực nghiệm đánh giá phương pháp của chúng tôi cùng với so sánh với các kết quả khác của các công trình nổi bật khác. Cùng với đó chúng tôi cố gắng tìm hiểu các đặc trưng của các bộ dữ liệu tương ứng để cố gắng lý giải thích tại sao mô hình của chúng tôi hoặc các công trình khác có được kết quả tốt trên tập dữ liệu tương ứng đó.
+Trong phần này chúng tôi mô tả lại các bộ dữ liệu mà chúng tôi đùng để thực nghiệm đánh giá phương pháp của chúng tôi cùng với so sánh với các kết quả khác của các công trình nổi bật khác được báo cáo trong \hyperref[tab:tab1]{bảng 2.1}. Ngoài ra chúng tôi cũng cố gắng đánh giá hai đề xuất của chúng tôi trong việc thêm một lượng tri thức mới vào đồ thị bằng cách chúng tôi xem tập test là một lượng tri thức mới cần thêm vào và dùng tập vadidation để đánh giá lại phương pháp của chúng tôi. Kết quả chi tiết được báo cáo ở \hyperref[tab:tab1]{bảng 2.2}
 \subsection{Các tập dữ liệu huấn luyện} \label{datasets}
 Trong thí nghiệm của chúng tôi, chúng tôi thực hiện trên bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR.Các bộ dữ liệu này là tập hợp các bộ ba (triple) \(\langle head, relation, tail \rangle\) biểu thị cho thực thể đầu có một mối quan hệ với thực thể cuối.
 
@@ -201,9 +201,9 @@ Trong phần này chúng tôi mô tả lại các phương pháp đánh giá(đ�
 \subsubsection{Các độ đo}
 \textit{Mean Rank} (MR). Đây là giá trị trung bình của rank thu được cho một dự đoán chính xác. Càng nhỏ thì mô hình càng chính xác:
 \[MR = \frac{1}{\mid Q \mid} \sum_{q ~\in~ Q} rank(q) \]
-Trong đó \(\mid Q \mid\) là độ lớn của tập hợp các câu hỏi bằng độ lớn của tập test hoặc vadidation nhân 2. Vì khi dự đoán chúng tôi dự đoán cả head và tail cho một dòng tương ứng trong tập dữ liệu thử nghiệm. Ví dụ chún tôi sẽ dự đoán \(\langle ?,~ relation,~ tail \rangle\) và \(\langle head,~ relation,~ ?\rangle\) cho 1 dòng tương ứng. \(q\) thể hiện cho câu hỏi chúng tôi dự đoán và \(rank(q)\) thể hiện cho kết quả đúng của câu hỏi đứng ở vị trí thứ mấy trong xếp hạng của chúng tôi. Rõ ràng độ đo này nằm giữa \([1, \mid \text{số lượng các entity} \mid]\) do có tối da \(n\) cạnh nối 1 đỉnh tới \(n-1\) đỉnh còn lại và thêm cạnh nối tới chính đỉnh nó. Và độ đo này đễ bị ảnh hưởng bởi nhiễu vì có những quan hệ có những thực thể được xếp hạng gần cuối. Để giải quyết vấn đề này nhóm chúng tôi và các nhóm nghiên cứu khác sử dụng thêm độ đo Mean Reciprocal Rank (MMR).
+Trong đó \(\mid Q \mid\) là độ lớn của tập hợp các câu hỏi bằng độ lớn của tập test hoặc vadidation. Khi dự đoán chúng tôi dự đoán cả head và tail cho một dòng tương ứng trong tập dữ liệu thử nghiệm. Ví dụ chún tôi sẽ dự đoán \(\langle ?,~ relation,~ tail \rangle\) và \(\langle head,~ relation,~ ?\rangle\) cho 1 dòng tương ứng. \(q\) thể hiện cho câu hỏi chúng tôi dự đoán và \(rank(q)\) thể hiện cho kết quả đúng của câu hỏi đứng ở vị trí thứ mấy trong xếp hạng của chúng tôi sau đó lấy trung bình rank của các dự đoán head và tail. Rõ ràng độ đo này nằm giữa \([1, \mid \text{số lượng các entity} \mid]\) do có tối da \(n\) cạnh nối 1 đỉnh tới \(n-1\) đỉnh còn lại và thêm cạnh nối tới chính đỉnh nó(cạnh khuyên). Và độ đo này đễ bị ảnh hưởng bởi nhiễu vì có những quan hệ có những thực thể được xếp hạng gần cuối. Để giải quyết vấn đề này nhóm chúng tôi và các nhóm nghiên cứu khác sử dụng thêm độ đo Mean Reciprocal Rank (MMR).
 
-\textit{Mean Reciprocal Rank} (MMR). Đây là xếp hạng đối ứng trung bình, là nghịch đảo của giá trị trung bình của rank thu được cho một dự đoán chính xác ở trên. Và càng lớn thì mô hình càng chính xác. Do độ đo này lấy nghịch đảo của các rank nên tránh dược vấn đề nhiễu của mô hình.
+\textit{Mean Reciprocal Rank} (MMR). Đây là xếp hạng đối ứng trung bình, là nghịch đảo của giá trị trung bình của rank thu được cho một dự đoán chính xác ở trên. Và càng lớn thì mô hình càng chính xác. Do độ đo này lấy nghịch đảo của các rank nên tránh dược vấn đề nhiễu của độ đo MR ở trên.
 \[MRR =\frac{1}{\mid Q \mid} \sum_{q~ \in ~Q} \frac{1}{rank(q)}\]
 
 \textit{Hit@K} (H@K). Đó là tỷ lệ các dự đoán đúng mà rank nhỏ hơn hoặc bằng ngưỡng \(K\):
@@ -211,175 +211,83 @@ Trong đó \(\mid Q \mid\) là độ lớn của tập hợp các câu hỏi b�
 \subsubsection{Kết quả}
 Như đã nói trước đây với mô hình dựa trên luật của chúng tôi hoàn toàn có thể thực hiện trên một laptop với cấu hình thông thường. Trong thí nghiệm của chúng tôi cấu hình máy để thực thi như sau: T480, core i5 8th Gen, ram 16Gb, 4 core 8 thread. Mã nguồn thực thi được viết bằng ngôn ngữ Python phiên bản 3.6 và dùng các hàm hỗ trợ có sẵn trong Python với không một thư viện bên thứ ba nào. Thí nghiệm được thực hiện với bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR. Thông tin chi tiết các bộ dữ liệu này được mô tả ở phần \hyperref[datasets]{các tập dữ liệu huấn luyện}.
 
-Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật toán này sẽ học các luật được sinh ra trong một khoảng thời gian nhất định do người dùng cấu hình. Ở đây chúng tôi chọn cấu hình thời gian là 1000 giây tương đương khoảng 17 phút đào tạo, với độ bão hòa(SAT) \(0.85\), độ tin cậy Q \(0.05\), kích thước mẫu S (\(\frac{1}{10}~ \text{tập huấn luyện}\)). Với cấu hình như vậy mô hình phiên bản python của chúng tối cho kết quả tương đương với phiên bản Java nhóm tác giả với cấu hình tương tự nhưng thời gian training là 100 giây. 
+Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật toán này sẽ học các luật được sinh ra trong một khoảng thời gian nhất định do người dùng cấu hình. Ở đây chúng tôi chọn cấu hình thời gian là 1000 giây tương đương khoảng 17 phút đào tạo, với độ bão hòa(SAT) \(0.85\), độ tin cậy Q \(0.05\), kích thước mẫu S (\(\frac{1}{10}~ \text{tập huấn luyện}\)). Với cấu hình như vậy mô hình phiên bản Python của chúng tối cho kết quả tương đương với phiên bản Java nhóm tác giả Meilicke, Christian et al. \cite{burl} với cấu hình tương tự nhưng thời gian training là 100 giây. Sự khác biệt về thời gian học tập ở đây chủ yếu là do hiệu năng của hai ngôn ngữ Python và Java. Ở đây chúng tôi chọn ngôn ngữ Python vì nó được dùng làm ngôn ngữ chính cho nhiều mô hình trí tuệ nhân tạo gần đây, và cũng thuận tiện cho chúng tôi khi so sánh hiệu năng cũng như đánh giá với các phương pháp học sâu khác da số được viết bằng Python.
 
-Bảng \hyperref[table1]{2.1} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với các độ đo \(H@K\) cùng với các kết quả thực nghiệm của các phương pháp khác được đề cập trong khảo  sát \cite{rossi2020knowledge}
+\hyperref[tab:tab1]{Bảng 2.1}, và \hyperref[tab:tab2]{bảng 2.2} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với các độ đo \(H@K\) cùng với các kết quả thực nghiệm của các phương pháp khác được đề cập trong khảo  sát \cite{rossi2020knowledge}
 
-\begin{table}[ht] \label{table1}
+\begin{table}[ht]
+\caption{Kết quả phương pháp AnyBURL trên FB15k, FB15k-237}
+\label{tab:tab1}%
+\begin{center}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{lllllllllllllllll}
-\cline{2-17}
-\multicolumn{1}{l|}{} &
-  \multicolumn{4}{c|}{\textbf{FB15k}} &
-  \multicolumn{4}{c|}{\textbf{FB15-237}} &
-  \multicolumn{4}{c|}{\textbf{WN18}} &
-  \multicolumn{4}{c|}{\textbf{WN18RR}} \\ \cline{2-17}
-\multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{\textbf{H@1}} &
-  \multicolumn{1}{l|}{\textbf{H@10}} &
-  \multicolumn{1}{l|}{\textbf{MR}} &
-  \multicolumn{1}{l|}{\textbf{MRR}} &
-  \multicolumn{1}{l|}{\textbf{H@1}} &
-  \multicolumn{1}{l|}{\textbf{H@10}} &
-  \multicolumn{1}{l|}{\textbf{MR}} &
-  \multicolumn{1}{l|}{\textbf{MRR}} &
-  \multicolumn{1}{l|}{\textbf{H@1}} &
-  \multicolumn{1}{l|}{\textbf{H@10}} &
-  \multicolumn{1}{l|}{\textbf{MR}} &
-  \multicolumn{1}{l|}{\textbf{MRR}} &
-  \multicolumn{1}{l|}{\textbf{H@1}} &
-  \multicolumn{1}{l|}{\textbf{H@10}} &
-  \multicolumn{1}{l|}{\textbf{MR}} &
-  \multicolumn{1}{l|}{\textbf{MRR}} \\ \hline
-\multicolumn{1}{|l|}{\textbf{ComplEx}} &
-  \multicolumn{1}{l|}{81.56} &
-  \multicolumn{1}{l|}{90.53} &
-  \multicolumn{1}{l|}{34} &
-  \multicolumn{1}{l|}{0.848} &
-  \multicolumn{1}{l|}{94.53} &
-  \multicolumn{1}{l|}{95.50} &
-  \multicolumn{1}{l|}{3623} &
-  \multicolumn{1}{l|}{0.949} &
-  \multicolumn{1}{l|}{25.72} &
-  \multicolumn{1}{l|}{52.97} &
-  \multicolumn{1}{l|}{202} &
-  \multicolumn{1}{l|}{0.349} &
-  \multicolumn{1}{l|}{42.55} &
-  \multicolumn{1}{l|}{52.12} &
-  \multicolumn{1}{l|}{4907} &
-  \multicolumn{1}{l|}{0.458} \\ \hline
-\multicolumn{1}{|l|}{\textbf{TuckER}} &
-  \multicolumn{1}{l|}{72.89} &
-  \multicolumn{1}{l|}{88.88} &
-  \multicolumn{1}{l|}{39} &
-  \multicolumn{1}{l|}{0.788} &
-  \multicolumn{1}{l|}{94.64} &
-  \multicolumn{1}{l|}{95.80} &
-  \multicolumn{1}{l|}{510} &
-  \multicolumn{1}{l|}{0.951} &
-  \multicolumn{1}{l|}{25.90} &
-  \multicolumn{1}{l|}{53.61} &
-  \multicolumn{1}{l|}{162} &
-  \multicolumn{1}{l|}{0.352} &
-  \multicolumn{1}{l|}{42.95} &
-  \multicolumn{1}{l|}{51.40} &
-  \multicolumn{1}{l|}{6239} &
-  \multicolumn{1}{l|}{0.459} \\ \hline
-\multicolumn{1}{|l|}{\textbf{TransE}} &
-  \multicolumn{1}{l|}{49.36} &
-  \multicolumn{1}{l|}{84.73} &
-  \multicolumn{1}{l|}{45} &
-  \multicolumn{1}{l|}{0.628} &
-  \multicolumn{1}{l|}{40.56} &
-  \multicolumn{1}{l|}{94.87} &
-  \multicolumn{1}{l|}{279} &
-  \multicolumn{1}{l|}{0.646} &
-  \multicolumn{1}{l|}{21.72} &
-  \multicolumn{1}{l|}{49.65} &
-  \multicolumn{1}{l|}{209} &
-  \multicolumn{1}{l|}{0.31} &
-  \multicolumn{1}{l|}{2.79} &
-  \multicolumn{1}{l|}{49.65} &
-  \multicolumn{1}{l|}{3936} &
-  \multicolumn{1}{l|}{0.206} \\ \hline
-\multicolumn{1}{|l|}{\textbf{RotatE}} &
-  \multicolumn{1}{l|}{73.93} &
-  \multicolumn{1}{l|}{88.10} &
-  \multicolumn{1}{l|}{42} &
-  \multicolumn{1}{l|}{0.791} &
-  \multicolumn{1}{l|}{94.30} &
-  \multicolumn{1}{l|}{96.02} &
-  \multicolumn{1}{l|}{274} &
-  \multicolumn{1}{l|}{0.949} &
-  \multicolumn{1}{l|}{23.83} &
-  \multicolumn{1}{l|}{53.06} &
-  \multicolumn{1}{l|}{178} &
-  \multicolumn{1}{l|}{0.336} &
-  \multicolumn{1}{l|}{42.60} &
-  \multicolumn{1}{l|}{57.35} &
-  \multicolumn{1}{l|}{3318} &
-  \multicolumn{1}{l|}{0.475} \\ \hline
-\multicolumn{1}{|l|}{\textbf{ConvKB}} &
-  \multicolumn{1}{l|}{11.44} &
-  \multicolumn{1}{l|}{40.83} &
-  \multicolumn{1}{l|}{324} &
-  \multicolumn{1}{l|}{0.211} &
-  \multicolumn{1}{l|}{94.89} &
-  \multicolumn{1}{l|}{52.89} &
-  \multicolumn{1}{l|}{202} &
-  \multicolumn{1}{l|}{0.709} &
-  \multicolumn{1}{l|}{13.98} &
-  \multicolumn{1}{l|}{41.46} &
-  \multicolumn{1}{l|}{309} &
-  \multicolumn{1}{l|}{0.230} &
-  \multicolumn{1}{l|}{5.63} &
-  \multicolumn{1}{l|}{52.50} &
-  \multicolumn{1}{l|}{3429} &
-  \multicolumn{1}{l|}{0.249} \\ \hline
-\multicolumn{1}{|l|}{\textbf{GAT}} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} \\ \hline
-\multicolumn{1}{|l|}{\textbf{BURL}} &
-  \multicolumn{1}{l|}{79.13} &
-  \multicolumn{1}{l|}{82.30} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{20.85} &
-  \multicolumn{1}{l|}{42.40} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{\textbf{93.86}} &
-  \multicolumn{1}{l|}{\textbf{94.07}} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{\textbf{44.22}} &
-  \multicolumn{1}{l|}{54.23} &
-  \multicolumn{1}{l|}{} &
-  \multicolumn{1}{l|}{} \\ \hline
-Rank &
-   &
-   &
-   &
-   &
-   &
-   &
-   &
-   &
-   &
-   &
-   &
-   &
-   &
-   &
-   &
-
-\end{tabular}}
-\caption{Bảng 1}
+\begin{tabular}{l|l|l|l|l|l|l|l|l|}
+\cline{2-9}
+                                       & \multicolumn{4}{c|}{\textbf{FB15k-237}}                   & \multicolumn{4}{c|}{\textbf{FB15k-237}}                   \\ \cline{2-9} 
+                                       & \textbf{H@1} & \textbf{H@10} & \textbf{MR} & \textbf{MRR} & \textbf{H@1} & \textbf{H@10} & \textbf{MR} & \textbf{MRR} \\ \hline
+\multicolumn{1}{|l|}{\textbf{ComplEx}} & 81.56        & 90.53         & 34          & 0.848        & 25.72        & 52.97         & 202        & 0.349        \\ \hline
+\multicolumn{1}{|l|}{\textbf{TuckER}}  & 72.89        & 88.88         & 39          & 0.788        & 25.90        & 53.61         & 162         & 0.352        \\ \hline
+\multicolumn{1}{|l|}{\textbf{TransE}}  & 49.36        & 84.73         & 45          & 0.628        & 21.72        & 49.65         & 209         & 0.31        \\ \hline
+\multicolumn{1}{|l|}{\textbf{RoteE}}   & 73.93        & 88.10         & 42          & 0.791        & 23.83        & 53.06         & 178         & 0.336        \\ \hline
+\multicolumn{1}{|l|}{\textbf{ConvKb}}  & 59.46        & 84.94         & 51         & 0.688        & 21.90        & 47.62         & 281         &0.305        \\ \hline
+\multicolumn{1}{|l|}{\textbf{GAT}}     &              &               &             &              &              &               &             &              \\ \hline
+\multicolumn{1}{|l|}{\textbf{BURL}}    & \textbf{79.13}        & \textbf{82.30}         & \textbf{285}         & \textbf{0.824}        & \textbf{20.85}        & \textbf{42.40}         & \textbf{490}         & \textbf{0.311}        \\ \hline
+\end{tabular}
+}
+\end{center}
 \end{table}
+
+\begin{table}[ht]
+\caption{Kết quả phương pháp AnyBURL trên WN18, WN18RR}
+\label{tab:tab2}%
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l|l|l|l|l|l|l|l|l|}
+\cline{2-9}
+                                       & \multicolumn{4}{c|}{\textbf{WN18}}                              & \multicolumn{4}{c|}{\textbf{WN18RR}}                            \\ \cline{2-9} 
+                                       & \textbf{H@1}   & \textbf{H@10}  & \textbf{MR}  & \textbf{MRR}   & \textbf{H@1}   & \textbf{H@10}  & \textbf{MR}  & \textbf{MRR}   \\ \hline
+\multicolumn{1}{|l|}{\textbf{ComplEx}} & 94.53          & 95.50          & 3623         & 0.349          & 42.55          & 52.12          & 4909         & 0.458          \\ \hline
+\multicolumn{1}{|l|}{\textbf{TuckER}}  & 94.64          & 95.80          & 510          & 0.951          & 42.95          & 51.40          & 6239         & 0.459          \\ \hline
+\multicolumn{1}{|l|}{\textbf{TransE}}  & 40.56          & 94.87          & 279          & 0.646          & 2.79           & 94.87          & 279          & 0.646          \\ \hline
+\multicolumn{1}{|l|}{\textbf{RoteE}}   & 94.30          & 96.02          & 274          & 0.949          & 42.60          & 57.35          & 3318         & 0.475          \\ \hline
+\multicolumn{1}{|l|}{\textbf{ConvKb}}  & 93.89          & 95.68          & 413          & 0.945          & 38.99          & 50.75          & 4944         & 0.427          \\ \hline
+\multicolumn{1}{|l|}{\textbf{GAT}}     &                &                &              &                &                &                &              &                \\ \hline
+\multicolumn{1}{|l|}{\textbf{BURL}}    & \textbf{93.96} & \textbf{95.07} & \textbf{230} & \textbf{0.955} & \textbf{44.22} & \textbf{54.40} & \textbf{490} & \textbf{0.490} \\ \hline
+\end{tabular}
+}
+\end{center}
+\end{table}
+
+Bảng \hyperref[tab:tab3]{2.3} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với hai chiến lược thêm tri thức mới vào đồ thị. Chúng tôi đánh giá trên tổng số luật được sinh ra, và số luật có độ tin cậy \(>= 50\%\) và \(>= 80\%\).
+\begin{table}[ht]
+\caption{Kết quả hai chiến lược thêm tri thức mới}
+\label{tab:tab3}%
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{ll|l|l|}
+\cline{3-4}
+                                                          &                 & \textbf{online-to-offline} & \textbf{online-to-online} \\ \hline
+\multicolumn{1}{|c|}{\multirow{3}{*}{\textbf{FB15k}}}     & num rule        & 1011                       & 1367                      \\ \cline{2-4} 
+\multicolumn{1}{|c|}{}                                    & confidence 50\% & 416 (41,14\%)              & 1185 (86,69\%)            \\ \cline{2-4} 
+\multicolumn{1}{|c|}{}                                    & confidence 80\% & 284 (28, 09\%)             & 481 (35,18\%)             \\ \hline
+\multicolumn{1}{|l|}{\multirow{3}{*}{\textbf{FB15k-237}}} & num rule        & 1120                       & 756                       \\ \cline{2-4} 
+\multicolumn{1}{|l|}{}                                    & confidence 50\% & 244 (21,79\%)              & 660 (87,30\%)             \\ \cline{2-4} 
+\multicolumn{1}{|l|}{}                                    & confidence 80\% & 95 (8,48\%)                & 162 (21,43\%)             \\ \hline
+\multicolumn{1}{|l|}{\multirow{3}{*}{\textbf{WN18}}}      & num rule        & 533                        & 260                       \\ \cline{2-4} 
+\multicolumn{1}{|l|}{}                                    & confidence 50\% & 270 (38, 46 \%)            & 252 (96,92\%)             \\ \cline{2-4} 
+\multicolumn{1}{|l|}{}                                    & confidence 80\% & 240 (34,19\%)              & 225 (86,54\%)             \\ \hline
+\multicolumn{1}{|l|}{\multirow{3}{*}{\textbf{WN18RR}}}    & num rule        & 439                        & 106                       \\ \cline{2-4} 
+\multicolumn{1}{|l|}{}                                    & confidence 50\% & 110 (25,05\%)              & 102 (96,22\%)             \\ \cline{2-4} 
+\multicolumn{1}{|l|}{}                                    & confidence 80\% & 83 (18,91\%)               & 85 (81,19\%)              \\ \hline
+\end{tabular}
+}
+\end{center}
+\end{table}
+\section{Kết luận}
+Trong phần này chúng tôi đưa ra các kết quả đạt được của mô hình chúng tôi, chúng tôi cố gắng tìm hiểu các đặc trưng của các bộ dữ liệu tương ứng để cố gắng lý giải thích tại sao mô hình của chúng tôi hoặc các công trình khác có được kết quả tốt trên tập dữ liệu tương ứng đó. Những kết quả của hai đề xuất của chúng tôi cũng như các dịnh hướng nghiên cứu của chúng tôi trong tương lai.
+
+Mặc dù kết quả chúng tôi cho thấy phương pháp của chúng tôi có hiệu suất tương đương với các mô hình học sâu hiện đại(state-of-art) và có ưu thế vượt trội trong thời gian đào tạo khoảng 17 phút so với thời gian hàng giờ của phương pháp học sâu khác nhưng không phải là các mô hình deep learning này không đáng nghiên cứu. Chúng tôi cũng nhận thấy đối với những tập dữ liệu khó như FB15-237 hay WN18RR phương pháp của chúng tôi thường cho kết quả không tốt do các quan hệ tương tự hay nghịch đảo không không xuất hiện trong ví dụ đào tạo nên chúng tôi khó tạo ra các luật đủ tốt để có thể khái quát hóa trên toàn bộ đồ thị đẫn đến các kết quả không tốt. Ngược lại đối với các phương pháp dựa trên học sâu lại có ưu thế rất lớn trong các tập dữ liệu này do có thể dễ đàng tính toán độ gần của các luật mới cần đánh giá so với các luật đã học từ đó có một kết quả khá tốt. Do đó chúng tôi cũng sẽ tiếp tục nghiên cứu các phương pháp học sâu và sẽ dùng phương pháp này làm đường cơ sở(base line) để so sánh với các nghiên cứu của chúng tôi trong tương lai. Một điểm yếu nữa của mô hình đựa trên luật của chúng tôi là mặc dù thời gian học là vượt trội nhưng thời gian để tính toán đưa ra đự đoán khá lâu do phải duyệt qua tất cả các luật được sinh ra mới có thể đưa ra dự đoán. Không giống như các phương pháp nhúng đồ thị khác thao tác này có thể dễ dàng tính toán.
+
+Đối với hai thuật toán mở rộng của chúng tôi trong việc thêm tri thức mới vào đồ thị chúng tôi nhận thấy rằng là vượt trội hoàn toàn so với các phương pháp học sâu. Ở các phương pháp học sâu điều này đường như chưa được ai chú trọng nghiên cứu mặc dù thời gian đào tạo một mô hình là tương đối mất thời gian. Khi có tri thức mới hầu hết các mô hình phải đào tạo lại toàn bộ điều này khá lãng phí. Chúng tôi cũng xem đây là mục tiêu tiếp theo cho chúng tôi khi nghiên cứu các mô hình học sâu trong tương lai. Gần đây nhánh học tăng cường(Reinforcement learning) khá phát triển và nhóm tác giả Meilicke, Christian and Chekol \cite{meilicke2020reinforced} gần đây cũng đã có 1 nghiên cứu để tối ưu hóa lại phương pháp AnyBURL này. Chúng tôi cũng có ý định nghiên cứu về hướng này và cố gắng báo cáo lại trong một tương lai gần. 
 
 \section{Bố cục của báo cáo}
 
