@@ -639,7 +639,7 @@ Tương tự như các vector nhúng thực thể, các vector nhúng quan hệ 
 Với $\alpha'^{(h)}_{ijk}$ và $t'^{(h)}_{ijk}$ tương ứng là hệ số chú ý đã chuẩn hóa và vector nhúng đại diện cho một bộ ba $(e_i, r_k, e_j)$ thuộc các lớp $(h)$ khác nhau.
 
 
-Đến đây, mô hình KBAT đã áp dụng giống như mô hình GAT \ref{sec:GAT} nhưng ta bổ sung thêm thông tin vector nhúng thực thể và thông tin các đỉnh hàng xóm cách $n_{\text{hop}}$ bậc, ta đã thu được ma trận nhúng thực thể $\mathbf{E}'' \in \mathbb{R}^{N_e \times D''}$, và ma trận nhúng quan hệ $\mathbf{R}'' \in \mathbb{R}^{N_r \times P''}$. Tuy nhiên, sau khi trải qua quá trình học ma trận nhúng mới, ma trận nhúng thực thể $\mathbf{E}''$ mất đi thông tin nhúng khởi tạo ban đầu. Để giải quyết vấn đề này, mô hình sẽ cho nhân ma trận nhúng khởi tạo ban đầu $\mathbf{E}$ với một ma trận trọng số $\mathbf{W}^E \in \mathbb{R}^{D_{\text{in}} \times D''}$ để tạo thành ma trận nhúng mới rồi cộng trực tiếp ma trận nhúng đó vào vào để đảo bảo quá thông tin nhúng khởi tạo trong quá trình huấn luyện :
+Đến đây, mô hình KBAT đã áp dụng giống như mô hình GAT \ref{sec:GAT} nhưng ta bổ sung thêm thông tin vector nhúng thực thể và thông tin các đỉnh hàng xóm cách $n_{\text{hop}}$ bậc, ta đã thu được ma trận nhúng thực thể $\mathbf{E}'' \in \mathbb{R}^{N_e \times D''}$, và ma trận nhúng quan hệ $\mathbf{R}'' \in \mathbb{R}^{N_r \times P''}$. Tuy nhiên, sau khi trải qua quá trình học ma trận nhúng mới, ma trận nhúng thực thể $\mathbf{E}''$ mất đi thông tin nhúng khởi tạo ban đầu. Để giải quyết vấn đề này, mô hình sẽ cho nhân ma trận nhúng khởi tạo ban đầu $\mathbf{E}$ với một ma trận trọng số $\mathbf{W}^E \in \mathbb{R}^{D_{\text{in}} \times D''}$ để tạo thành ma trận nhúng mới rồi cộng trực tiếp ma trận nhúng đó vào để đảm bảo thông tin nhúng khởi tạo trong quá trình huấn luyện :
 
 \begin{align}
 \mathbf{H} = \mathbf{W}^E \mathbf{E} + \mathbf{E''}
@@ -648,25 +648,16 @@ Với $\alpha'^{(h)}_{ijk}$ và $t'^{(h)}_{ijk}$ tương ứng là hệ số ch�
 \subsection{Huấn luyện}
 \label{sec:KBATTraning}
 
-Mô hình mượn ý tưởng từ hàm chấm điểm tịnh tiến (translational
-scoring function) từ mô hình TransE \cite{bordes2013translating} 
+Các vector khởi tạo của mô hình KBAT được xây dựng từ ý tưởng của mô hình TransE \cite{bordes2013translating}, mô hình sẽ học vector nhúng dựa trên những cạnh/bộ ba $t^k_{ij} = (e_i, r_k, e_j)$ với điều kiện vector nhúng đuôi sẽ là kết quả của vector nhúng đầu cộng với quan hệ : $\vec{h_i}+\vec{g_k} \approx \vec{h_j}$. Phương pháp này được huấn luyện để tạo ra vector nhúng thực thể và quan hệ bằng cách tối thiểu hóa sự khác biệt của độ đo chuẩn L1 theo công thức sau :
+$d_{t_{ij}} = \big|\big|\vec{h_i}+ \vec{g_k}-\vec{h_j}\big|\big|_1$.
 
-Our model borrows the idea of a translational
-scoring function from (Bordes et al., 2013), which
-learns embeddings such that for a given valid triple $t^k_{ij} = (e_i, r_k, e_j)$, the condition $\vec{h_i}+\vec{g_k} \approx \vec{h_j}$ holds, i.e., $e_j$ is the nearest neighbor of $e_i$ connected via relation $r_k$.
+Mô hình của chúng tôi sử dụng mất mát-lề theo công thức sau :
 
-Specifically, we try to learn entity and relation embeddings to minimize the L1-norm dissimilarity measure given by $d_{t_{ij}} = \big|\big|\vec{h_i}+ \vec{g_k}-\vec{h_j}\big|\big|_1$.
+\begin{equation}
+L(\Omega)=\sum_{t_{ij} \in S} \sum_{t'_{ij} \in S'} \text{max}\{d_{t'_{ij}} - d_{t_{ij}} + \gamma , 0 \}
+\end{equation}
 
-We train our model using hinge-loss which is
-given by the following expression
-
-
-\begin{align}
-{L(\Omega)}&={\sum_{t_{ij} \in S} \sum_{t'_{ij} \in S'} \text{max}\{d_{t'_{ij}} - d_{t_{ij}} + \gamma , 0 \}}
-\end{align}
-
-where $\gamma > 0$ is a margin hyper-parameter, $S$ is the set of valid triples, and $S'$ denotes the set of invalid
-triples, given formally as
+trong đó $\gamma > 0$ là tham số lề, $S$ là tập hợp bộ ba chuẩn (valid triple), và $S'$ là tập hợp của ba lỗi (invalid triple) theo công thức sau :
 
 \begin{align}
 {S'}&={\underbrace{\{ t^k_{i'j} | e'_i \in \mathcal{E}\setminus e_i\}}_{\text{thay thế thực thể đầu}}\cup \underbrace{\{ t^k_{ij'} | e'_j \in \mathcal{E}\setminus e_j\}}_{\text{thay thế thực thể đuôi}}}
