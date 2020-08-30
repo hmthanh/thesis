@@ -15,9 +15,9 @@
 
 % Tài liệu tham khảo
 \usepackage[
-	sorting=nty,
-	backend=bibtex,
-	defernumbers=true]{biblatex}
+sorting=nty,
+backend=bibtex,
+defernumbers=true]{biblatex}
 \usepackage[unicode]{hyperref} % Bookmark tiếng Việt
 \addbibresource{References/references.bib}
 
@@ -37,22 +37,22 @@
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 \lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},   
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
 }
 \lstset{style=mystyle}
 
@@ -89,12 +89,12 @@
 
 % Canh lề
 \usepackage[
-  top=30mm,
-  bottom=25mm,
-  left=30mm,
-  right=20mm,
-  includefoot]{geometry}
-  
+top=30mm,
+bottom=25mm,
+left=30mm,
+right=20mm,
+includefoot]{geometry}
+
 % Trang bìa
 \usepackage{tikz}
 \usetikzlibrary{calc}
@@ -110,6 +110,22 @@
 \usepackage{stmaryrd}
 \newcommand*\concat{\mathbin{\|}} % parallel
 
+% Vẽ cây
+\usetikzlibrary{trees}
+
+% subfigure
+\usepackage{subcaption}
+\usepackage[justification=centering]{caption}
+
+% Định nghĩa
+\newtheorem{definition}{Định nghĩa}
+
+% Bảng thuật ngữ
+\usepackage[acronym,nomain]{glossaries}
+
+% mindmap
+\usetikzlibrary{shapes.geometric, arrows}
+
 % ========================================================================================= %
 % CHÚ Ý: Thông tin chung về KLTN - sinh viên điền vào đây để tự động update các trang khác  %
 % ========================================================================================= %
@@ -120,70 +136,69 @@
 \newcommand{\tenBM}{Khoa~học~máy~tính}
 
 \begin{document}
-\iffalse
-\input{Title/title.tex}
-% Sasu trang Title, các bạn chèn nhận xét gủa GVHD và GVPB. Nhận xét sẽ được giáo vụ phát sau buổi bảo vệ để các bạn đóng quyển.
-
-\pagenumbering{roman} % Đánh số i, ii, iii, ...
-
-%\addcontentsline{toc}{chapter}{Lời cam đoan}
-%\include{Appendix/reassurances}s
-
-\addcontentsline{toc}{chapter}{Lời cảm ơn}
-\include{Appendix/thanks}
-
-% Mục lục, danh sách hình, danh sách bảng
-\addcontentsline{toc}{chapter}{Mục lục}
-\tableofcontents
-\listoffigures
-\listoftables
-
-
-\include{Abstract/abstract}
-
-\clearpage
-
-\pagenumbering{arabic} % Đánh số 1, 2, 3, ...
-
-% Các chương nội dung
-% 1. Giới thiệu
-\include{Introduction/introduction}
-
-% 2. Tổng quan (Cơ sở lý thuyết và Các nghiên cứu liên quan)
-\include{Overview/overview}
-\fi
-% 3. Phương pháp đề xuất
-\include{Approachs/approachs}
-
-% 4. Kết quả thực nghiệm và phân tích
-\include{Results/results}
-
-% 5. Kết luận
-\include{Conclusions/conclusions}
-
-% Công trình của tác giả (nếu không có thì comment 02 dòng dưới)
-\addcontentsline{toc}{chapter}{Danh mục công trình của tác giả}
-\include{Appendix/publish}
-
-% In tài liệu tham khảo
-\addcontentsline{toc}{chapter}{Tài liệu tham khảo}
-\printbibheading[title={Tài liệu tham khảo}]
-
-\DeclareNameAlias{sortname}{last-first}
-\DeclareNameAlias{default}{last-first}
-
-\printbibliography[heading=subbibliography, title={Đồ thị tri thức}, keyword=KG, resetnumbers=true]
-
-\printbibliography[heading=subbibliography, title={Phương pháp AnyBURL}, keyword=AnyBURL, resetnumbers=3]
-
-\printbibliography[heading=subbibliography, title={Phương pháp CGAT}, keyword=CGAT, resetnumbers=4]
-
-
-% ===================================================================== %
-% CHÚ Ý: phải gán lại resetnumbers=số tài liệu tham khảo tiếng Việt + 1 %
-% ===================================================================== %
-% Phần phụ lục
-\include{Appendix/appendix1}
-\include{Appendix/appendix2}
-
+	\input{Title/title.tex}
+	% Sasu trang Title, các bạn chèn nhận xét gủa GVHD và GVPB. Nhận xét sẽ được giáo vụ phát sau buổi bảo vệ để các bạn đóng quyển.
+	
+	\pagenumbering{roman} % Đánh số i, ii, iii, ...
+	
+	%\addcontentsline{toc}{chapter}{Lời cam đoan}
+	%\include{Appendix/reassurances}s
+	
+	\addcontentsline{toc}{chapter}{Lời cảm ơn}
+	\include{Appendix/thanks}
+	
+	% Mục lục, danh sách hình, danh sách bảng
+	\addcontentsline{toc}{chapter}{Mục lục}
+	\tableofcontents
+	\listoffigures
+	\listoftables
+	
+	
+	\include{Abstract/abstract}
+	
+	\clearpage
+	
+	\pagenumbering{arabic} % Đánh số 1, 2, 3, ...
+	
+	% Các chương nội dung
+	% 1. Giới thiệu
+	\include{Introduction/introduction}
+	
+	% 2. Tổng quan (Cơ sở lý thuyết và Các nghiên cứu liên quan)
+	\include{Overview/overview}
+	
+	% 3. Phương pháp đề xuất
+	\include{Approachs/approachs}
+	
+	% 4. Kết quả thực nghiệm và phân tích
+	\include{Results/results}
+	
+	% 5. Kết luận
+	\include{Conclusions/conclusions}
+	
+	% Công trình của tác giả (nếu không có thì comment 02 dòng dưới)
+	\addcontentsline{toc}{chapter}{Danh mục công trình của tác giả}
+	\include{Appendix/publish}
+	
+	% In tài liệu tham khảo
+	\addcontentsline{toc}{chapter}{Tài liệu tham khảo}
+	\printbibheading[title={Tài liệu tham khảo}]
+	
+	\DeclareNameAlias{sortname}{last-first}
+	\DeclareNameAlias{default}{last-first}
+	
+	\printbibliography[heading=subbibliography, title={Đồ thị tri thức}, keyword=KG, resetnumbers=true]
+	
+	\printbibliography[heading=subbibliography, title={Phương pháp AnyBURL}, keyword=AnyBURL, resetnumbers=6]
+	
+	\printbibliography[heading=subbibliography, title={Phương pháp CGAT}, keyword=CGAT, resetnumbers=15]
+	
+	
+	% ===================================================================== %
+	% CHÚ Ý: phải gán lại resetnumbers=số tài liệu tham khảo tiếng Việt + 1 %
+	% ===================================================================== %
+	% Phần phụ lục
+	\include{Appendix/appendix1}
+	\include{Appendix/appendix2}
+	
 \end{document} 
