@@ -1,24 +1,7 @@
-%%
-%% WinShell 3.3.2.6
-%% http://www.winshell.org/
-%%
+% ###########################################
+% AnyBURL
+% ###########################################
 
-% Strings
-
-
-% Preamble
-
-
-% BibTeX Entries
-
-@book{2006-DDien,
- author               = {Đinh Điền},
- keywords             = {Viet},
- publisher            = {Nhà xuất bản Đại học Quốc gia TP.HCM},
- title                = {Xử lý ngôn ngữ tự nhiên},
- year                 = {2006},
- }
- 
 @misc{ampligraph,
  author              = {Luca Costabello and
                           Sumit Pai and
@@ -91,6 +74,7 @@
   year={2015},
   publisher={Springer}
 }
+
 @article{rossi2020knowledge,
   title={Knowledge Graph Embedding for Link Prediction: A Comparative Analysis},
   author={Rossi, Andrea and Firmani, Donatella and Matinata, Antonio and Merialdo, Paolo and Barbosa, Denilson},
@@ -152,13 +136,42 @@
   year={2020}
 }
 
+@inproceedings{vu2019capsule,
+  title={A capsule network-based embedding model for knowledge graph completion and search personalization},
+  author={Vu, Thanh and Nguyen, Tu Dinh and Nguyen, Dat Quoc and Phung, Dinh and others},
+  booktitle={Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)},
+  pages={2180--2189},
+  year={2019}
+}
 
-% GAT
+@inproceedings{trouillon2016complex,
+  title={Complex embeddings for simple link prediction},
+  author={Trouillon, Th{\'e}o and Welbl, Johannes and Riedel, Sebastian and Gaussier, {\'E}ric and Bouchard, Guillaume},
+  year={2016},
+  organization={International Conference on Machine Learning (ICML)}
+}
+
+@inproceedings{ortona2018robust,
+  title={Robust discovery of positive and negative rules in knowledge bases},
+  author={Ortona, Stefano and Meduri, Venkata Vamsikrishna and Papotti, Paolo},
+  booktitle={2018 IEEE 34th International Conference on Data Engineering (ICDE)},
+  pages={1168--1179},
+  year={2018},
+  organization={IEEE}
+}
+
 
 % ###########################################
 % Knowledge Graph
 % ###########################################
 % Survey
+@article{rossi2020knowledge,
+	keywords={KG},
+    title={Knowledge Graph Embedding for Link Prediction: A Comparative Analysis},
+    author={Rossi, Andrea and Firmani, Donatella and Matinata, Antonio and Merialdo, Paolo and Barbosa, Denilson},
+    journal={arXiv preprint arXiv:2002.00819},
+    year={2020}
+}
 
 @article{cai2018comprehensive,
     keywords={KG},
@@ -204,6 +217,172 @@
     publisher={Elsevier}
 }
 
+% Graph Laplacian Eigenmaps
+@inproceedings{cai2007spectral,
+  keywords={KG},
+  title={Spectral regression: a unified subspace learning framework for content-based image retrieval},
+  author={Cai, Deng and He, Xiaofei and Han, Jiawei},
+  booktitle={Proceedings of the 15th ACM international conference on Multimedia},
+  pages={403--412},
+  year={2007}
+}
+
+% Categories research KGs
+@article{ji2020survey,
+  keywords={KG},
+  title={A survey on knowledge graphs: Representation, acquisition and applications},
+  author={Ji, Shaoxiong and Pan, Shirui and Cambria, Erik and Marttinen, Pekka and Yu, Philip S},
+  journal={arXiv preprint arXiv:2002.00388},
+  year={2020}
+}
+
+% DeepWalk
+@inproceedings{perozzi2014deepwalk,
+  keywords={KG},
+  title={Deepwalk: Online learning of social representations},
+  author={Perozzi, Bryan and Al-Rfou, Rami and Skiena, Steven},
+  booktitle={Proceedings of the 20th ACM SIGKDD international conference on Knowledge discovery and data mining},
+  pages={701--710},
+  year={2014}
+}
+
+% LINE
+@inproceedings{tang2015line,
+  keywords={KG},
+  title={Line: Large-scale information network embedding},
+  author={Tang, Jian and Qu, Meng and Wang, Mingzhe and Zhang, Ming and Yan, Jun and Mei, Qiaozhu},
+  booktitle={Proceedings of the 24th international conference on world wide web},
+  pages={1067--1077},
+  year={2015}
+}
+
+% node2vec
+@inproceedings{grover2016node2vec,
+  keywords={KG},
+  title={node2vec: Scalable feature learning for networks},
+  author={Grover, Aditya and Leskovec, Jure},
+  booktitle={Proceedings of the 22nd ACM SIGKDD international conference on Knowledge discovery and data mining},
+  pages={855--864},
+  year={2016}
+}
+
+% Anonymous Walk Embeddings
+@article{ivanov2018anonymous,
+  keywords={KG},
+  title={Anonymous walk embeddings},
+  author={Ivanov, Sergey and Burnaev, Evgeny},
+  journal={arXiv preprint arXiv:1805.11921},
+  year={2018}
+}
+
+% NetGAN
+@article{bojchevski2018netgan,
+  keywords={KG},
+  title={Netgan: Generating graphs via random walks},
+  author={Bojchevski, Aleksandar and Shchur, Oleksandr and Z{\"u}gner, Daniel and G{\"u}nnemann, Stephan},
+  journal={arXiv preprint arXiv:1803.00816},
+  year={2018}
+}
+
+% ConvE
+@article{dettmers2017convolutional,
+  keywords={KG},
+  title={Convolutional 2d knowledge graph embeddings},
+  author={Dettmers, Tim and Minervini, Pasquale and Stenetorp, Pontus and Riedel, Sebastian},
+  journal={arXiv preprint arXiv:1707.01476},
+  year={2017}
+}
+
+% RSN
+@article{guo2019learning,
+  keywords={KG},
+  title={Learning to exploit long-term relational dependencies in knowledge graphs},
+  author={Guo, Lingbing and Sun, Zequn and Hu, Wei},
+  journal={arXiv preprint arXiv:1905.04914},
+  year={2019}
+}
+
+% CNN for graph embedding
+@inproceedings{niepert2016learning,
+  keywords={KG},
+  title={Learning convolutional neural networks for graphs},
+  author={Niepert, Mathias and Ahmed, Mohamed and Kutzkov, Konstantin},
+  booktitle={International conference on machine learning},
+  pages={2014--2023},
+  year={2016}
+}
+
+% CapsE
+@inproceedings{vu2019capsule,
+  keywords={KG},
+  title={A capsule network-based embedding model for knowledge graph completion and search personalization},
+  author={Vu, Thanh and Nguyen, Tu Dinh and Nguyen, Dat Quoc and Phung, Dinh and others},
+  booktitle={Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)},
+  pages={2180--2189},
+  year={2019}
+}
+
+% Structural Deep Network Embedding
+@inproceedings{wang2016structural,
+  keywords={KG},
+  title={Structural deep network embedding},
+  author={Wang, Daixin and Cui, Peng and Zhu, Wenwu},
+  booktitle={Proceedings of the 22nd ACM SIGKDD international conference on Knowledge discovery and data mining},
+  pages={1225--1234},
+  year={2016}
+}
+
+@manual{memoryandattention:2020,
+  keywords={KG},
+  title  = "Trí nhớ và chú ý",
+  author = "Bộ Y Tế Việt-Nam",
+  url    = "https://healthvietnam.vn/thu-vien/tai-lieu-tieng-viet/bac-si-tam-ly/tri-nho-va-chu-y",
+  year   = "2020 (truy cập ngày 26/08/2020)"
+}
+
+@manual{factsaboutmemory:2020,
+  keywords={KG},
+  title  = "What are mind-blowing facts about human memory?",
+  author = "Douglas McKee",
+  url    = "https://www.quora.com/What-are-mind-blowing-facts-about-human-memory",
+  year   = "2020 (truy cập ngày 26/08/2020)"
+}
+
+% Relation of Conv and attention
+@article{cordonnier2019relationship,
+  keywords={KG},
+  title={On the relationship between self-attention and convolutional layers},
+  author={Cordonnier, Jean-Baptiste and Loukas, Andreas and Jaggi, Martin},
+  journal={arXiv preprint arXiv:1911.03584},
+  year={2019}
+}
+
+% Facebook
+@article{ugander2011anatomy,
+  keywords={KG},
+  title={The anatomy of the facebook social graph},
+  author={Ugander, Johan and Karrer, Brian and Backstrom, Lars and Marlow, Cameron},
+  journal={arXiv preprint arXiv:1111.4503},
+  year={2011}
+}
+
+% Youtube
+@inproceedings{baluja2008video,
+  title={Video suggestion and discovery for youtube: taking random walks through the view graph},
+  author={Baluja, Shumeet and Seth, Rohan and Sivakumar, Dharshi and Jing, Yushi and Yagnik, Jay and Kumar, Shankar and Ravichandran, Deepak and Aly, Mohamed},
+  booktitle={Proceedings of the 17th international conference on World Wide Web},
+  pages={895--904},
+  year={2008}
+}
+
+@manual{googlekg:2020,
+  keywords={KG},
+  title  = "Introducing the Knowledge Graph: things, not strings",
+  author = "Google",
+  url    = "https://googleblog.blogspot.com/2012/05/introducing-knowledge-graph-things-not.html",
+  year   = "2020 (truy cập ngày 27/08/2020)"
+}
+
 % ###########################################
 % CGAT
 % ###########################################
@@ -223,6 +402,16 @@ keywords={CGAT},
   author={Veli{\v{c}}kovi{\'c}, Petar and Cucurull, Guillem and Casanova, Arantxa and Romero, Adriana and Lio, Pietro and Bengio, Yoshua},
   journal={arXiv preprint arXiv:1710.10903},
   year={2017}
+}
+
+% TransE
+@inproceedings{bordes2013translating,
+  keywords={CGAT},
+  title={Translating embeddings for modeling multi-relational data},
+  author={Bordes, Antoine and Usunier, Nicolas and Garcia-Duran, Alberto and Weston, Jason and Yakhnenko, Oksana},
+  booktitle={Advances in neural information processing systems},
+  pages={2787--2795},
+  year={2013}
 }
 
 % Attention
@@ -333,4 +522,23 @@ keywords={CGAT},
     author={Lin, Xi Victoria and Socher, Richard and Xiong, Caiming},
     journal={arXiv preprint arXiv:1808.10568},
     year={2018}
+}
+
+% Attention in Vision
+@article{ramachandran2019stand,
+  keywords={CGAT},
+  title={Stand-alone self-attention in vision models},
+  author={Ramachandran, Prajit and Parmar, Niki and Vaswani, Ashish and Bello, Irwan and Levskaya, Anselm and Shlens, Jonathon},
+  journal={arXiv preprint arXiv:1906.05909},
+  year={2019}
+}
+
+
+@article{weng2018attention,
+  keywords={CGAT},
+  title   = "Attention? Attention!",
+  author  = "Weng, Lilian",
+  journal = "lilianweng.github.io/lil-log",
+  year    = "2018",
+  url     = "http://lilianweng.github.io/lil-log/2018/06/24/attention-attention.html"
 }

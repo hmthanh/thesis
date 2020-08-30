@@ -34,7 +34,7 @@ Như đã nói trước đây với mô hình dựa trên luật của chúng t�
 
 Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật toán này sẽ học các luật được sinh ra trong một khoảng thời gian nhất định do người dùng cấu hình. Ở đây chúng tôi chọn cấu hình thời gian là 1000 giây tương đương khoảng 17 phút đào tạo, với độ bão hòa(SAT) \(0.85\), độ tin cậy Q \(0.05\), kích thước mẫu S (\(\frac{1}{10}~ \text{tập huấn luyện}\)). Với cấu hình như vậy mô hình phiên bản Python của chúng tối cho kết quả tương đương với phiên bản Java nhóm tác giả Meilicke, Christian et al. \cite{burl} với cấu hình tương tự nhưng thời gian training là 100 giây. Sự khác biệt về thời gian học tập ở đây chủ yếu là do hiệu năng của hai ngôn ngữ Python và Java. Ở đây chúng tôi chọn ngôn ngữ Python vì nó được dùng làm ngôn ngữ chính cho nhiều mô hình trí tuệ nhân tạo gần đây, và cũng thuận tiện cho chúng tôi khi so sánh hiệu năng cũng như đánh giá với các phương pháp học sâu khác da số được viết bằng Python.
 
-\hyperref[tab:tab1]{Bảng 2.1}, và \hyperref[tab:tab2]{bảng 2.2} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với các độ đo \(H@K\) cùng với các kết quả thực nghiệm của các phương pháp khác được đề cập trong khảo  sát \cite{rossi2020knowledge}
+\hyperref[tab:tab1]{Bảng 4.1}, và \hyperref[tab:tab2]{bảng 4.2} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với các độ đo \(H@K\) cùng với các kết quả thực nghiệm của các phương pháp khác được đề cập trong khảo  sát \cite{rossi2020knowledge}
 
 \begin{table}[ht]
 \caption{Kết quả phương pháp AnyBURL trên FB15k, FB15k-237}
@@ -78,7 +78,7 @@ Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật to
 \end{center}
 \end{table}
 
-Bảng \hyperref[tab:tab3]{2.3} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với hai chiến lược thêm tri thức mới vào đồ thị. Chúng tôi đánh giá trên tổng số luật được sinh ra, và số luật có độ tin cậy \(>= 50\%\) và \(>= 80\%\).
+Bảng \hyperref[tab:tab3]{4.3} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với hai chiến lược thêm tri thức mới vào đồ thị. Chúng tôi đánh giá trên tổng số luật được sinh ra, và số luật có độ tin cậy \(>= 50\%\) và \(>= 80\%\).
 \begin{table}[ht]
 \caption{Kết quả hai chiến lược thêm tri thức mới}
 \label{tab:tab3}%

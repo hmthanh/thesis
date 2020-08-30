@@ -82,6 +82,13 @@
 \renewcommand{\listtablename}{Danh sách bảng}
 \renewcommand{\appendixname}{Phụ lục}
 
+% Định nghĩa
+\newtheorem{definition}{Định nghĩa}
+% Vẽ cây
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{trees}
+
 % Dãn dòng 1.5
 \usepackage{setspace}
 \onehalfspacing
@@ -101,6 +108,9 @@
 \usepackage{tikz}
 \usetikzlibrary{calc}
 \newcommand\HRule{\rule{\textwidth}{1pt}}
+% ========================================================================================= %
+% CUSTOMIZE
+
 
 % ========================================================================================= %
 % CHÚ Ý: Thông tin chung về KLTN - sinh viên điền vào đây để tự động update các trang khác  %
@@ -109,7 +119,7 @@
 \newcommand{\mssv}{18424059-18424062}
 \newcommand{\tenKL}{ĐỰ~ĐOÁN~LIÊN~KẾT~TRONG~ĐỒ~THỊ~TRI~THỨC} % Chú ý dấu ~ trong tên khóa luận
 \newcommand{\tenGVHD}{ThS.~Lê~Ngọc~Thành}
-\newcommand{\tenBM}{Bm. Khoa~Học~Máy~Tính}
+\newcommand{\tenBM}{BM. Khoa~Học~Máy~Tính}
 
 \begin{document}
 
@@ -165,7 +175,7 @@
 \DeclareNameAlias{sortname}{last-first}
 \DeclareNameAlias{default}{last-first}
 
-\printbibliography[heading=subbibliography, title={Tiếng Anh}, notkeyword=Viet, resetnumbers=2] 
+\printbibliography[heading=subbibliography, title={Tiếng Anh}, notkeyword=Viet, resetnumbers=1] 
 % ===================================================================== %
 % CHÚ Ý: phải gán lại resetnumbers=số tài liệu tham khảo tiếng Việt + 1 %
 % ===================================================================== %

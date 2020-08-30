@@ -4,10 +4,10 @@
 \section{Phương pháp dựa trên luật}
 Trong phần này chúng tôi mô tả lại cách mô hình hóa lại bài toán theo phương pháp dựa trên luật AnyBURL,thuật toán lấy mẫu luật (đường đẫn) và thuật toán khái quát hóa một luật để lưu trữ trở thành tri thức của mô hình. Cùng với những cải tiến của chúng tôi trong quá trình đào tạo khi có một tri thức mới được thêm vào đồ thị(thêm cạnh).
 
-\subsection{Horn rule}
-Trong logic toán học, một công thức nguyên tử - \textbf{atomic formula}\cite{wiki:Atomic} (còn được gọi đơn giản là một nguyên tử-\textbf{atom}) là một công thức không có cấu trúc mệnh đề, nghĩa là một công thức không chứa các liên kết logic (\(\vee, ~ \wedge\)) hoặc tương đương (\(\Leftrightarrow\)) là một công thức không có các mẫu con nghiêm ngặt (tức là atom không thể chia nhỏ ra thành các atom con nữa). Do đó, các nguyên tử là công thức đơn giản nhất để hình thành luật của logic. Các công thức hợp được hình thành bằng cách kết hợp các công thức nguyên tử bằng cách sử dụng các liên kết logic.
+\subsection{Luật Horn}
+Trong logic toán học, một công thức nguyên tử (\textbf{atomic formula})\cite{wiki:Atomic} còn được gọi đơn giản là một (nguyên tử-\textbf{atom}) là một công thức không có cấu trúc mệnh đề, nghĩa là một công thức không chứa các liên kết logic (\(\vee, ~ \wedge\)) hoặc tương đương (\(\Leftrightarrow\)) là một công thức không có các mẫu con nghiêm ngặt (tức là atom không thể chia nhỏ ra thành các atom con nữa). Do đó, các công thức nguyên tử là công thức đơn giản nhất để hình thành luật của logic. Các công thức hợp được hình thành bằng cách kết hợp các công thức nguyên tử bằng cách sử dụng các liên kết logic.
 
-Một \textbf{literal}\cite{wiki:Literal} là một công thức nguyên tử (nguyên tử) hoặc phủ định của nó. Định nghĩa chủ yếu xuất hiện trong lý thuyết logic cổ điển. \textbf{Literal} có thể được chia thành hai loại: Một \textbf{positive literal} chỉ là một nguyên tử (ví dụ: \(x\)). Một \textbf{negative literal} là phủ định của một nguyên tử (ví dụ: \(\neg x\)). Sự phân chia của \textbf{literal} là \textbf{positive literal} hay \textbf{negative literal} tùy thuộc vào việc \textbf{literal} được định nghĩa.
+Một \textbf{literal}\cite{wiki:Literal} là một công thức nguyên tử (atom) hoặc phủ định của nó. Định nghĩa chủ yếu xuất hiện trong lý thuyết logic cổ điển. \textbf{Literal} có thể được chia thành hai loại: Một \textbf{positive literal} chỉ là một nguyên tử (ví dụ: \(x\)). Một \textbf{negative literal} là phủ định của một nguyên tử (ví dụ: \(\neg x\)). Sự phân chia của \textbf{literal} là \textbf{positive literal} hay \textbf{negative literal} tùy thuộc vào việc \textbf{literal} được định nghĩa.
 
 Một mệnh đề (clause) là một literal hoặc nối rời của hai hoặc nhiều literal. Ở dạng \textbf{Horn} một mệnh đề có nhiều nhất một positive literal. Lưu ý: Không phải mọi công thức trong logic mệnh đề đều có thể đưa về dạng Horn.Mệnh đề xác định không có literal đôi khi được gọi là mệnh đề đơn vị (unit clause) và một mệnh đề đơn vị không có biến đôi khi được gọi là \textit{facts}\cite{wiki:Horn}.Một công thức nguyên tử được gọi là \textit{ground} hoặc \textit{ground atoms} nếu nó được xây dựng hoàn toàn từ các mệnh đề đơn vị; tất cả các \textit{ground atoms} có thể ghép lại từ một tập hợp hàm và các ký hiệu vị từ nhất định tạo nên cơ sở Herbrand cho các bộ ký hiệu này\cite{wiki:Term}.
 
@@ -35,11 +35,11 @@ Quy tắc (1) là quy tắc \textbf{B}(quy tắc nhị phân) quy tắc này nó
 
 Tất cả các quy tắc được xem xét sẽ được lọc lại đựa trên điểm được gọi là độ tin cậy của quy tắc là được đo trên tập dữ liệu huấn luyện. Độ tin cậy này được đo bằng tỷ lệ body atoms dẫn đến head atoms chia cho tất cả các đường đãn chứa body atoms.Ví dụ khi ta có quy tắc sau:
 \(\textit{gen}(X, female) \gets \textit{married}(X, A), \textit{gen}(A, male) \). Khi đó chúng ta thực hiện đếm tất cả các cặp thực thể có quan hệ  \(\textit{married}(X, A), \textit{gen}(A, male) \) được gọi là số đường dẫn chứa body atoms, sau đó thực hiện đếm tất cả các  thực thể thỏa quan hệ \(\textit{gen}(X, female) \gets \textit{married}(X, A), \textit{gen}(A, male) \) được gọi là số body atoms dẫn đến head atoms. Sau đó chia số body atoms dẫn đến head atoms cho  đường dẫn chứa body atoms được gọi là độ tin cậy của quy tắc.
-\subsection{Thuật toán} \label{algorithm2}
+\subsection{Thuật toán} \label{myalgorithm}
 Trong phần này chúng tôi mô tả lại thuật toán chính của phương pháp AnyBURL nó cũng được mô tả trong \cite{burl} cũng như hai thuật toán mở rộng của chúng tôi để giải quyết vấn đề khi đồ thị được thêm một hoặc một lượng tri thức mới (thêm cạnh). Ngoài ra chúng tôi cũng mô tả sơ lược lại cách khởi tạo một luật cũng như cách thức tính toán độ tin cậy bằng cách lấy mẫu trên tập huấn luyện và vấn đề độ tin cậy khi dự đoán một luật khi tính toán độ tin cậy bằng việc lấy mẫu.
 \subsubsection{Thuật toán 1 AnyBURL}
 \begin{algorithm}
-\caption{Anytime Bottom-up Rule Learning}\label{euclid}
+\caption{Anytime Bottom-up Rule Learning}\label{algorithm1}
 \begin{algorithmic}[1]
 \Procedure{AnyBURL($\mathbb{G}$, s, sat, Q, ts)}{}
 \State $\textit{n} = \text{2}$
@@ -72,7 +72,7 @@ Trong phần này chúng tôi mô tả lại thuật toán chính của phương
 
 \subsubsection{Thuật toán 2 tạo 1 luật}
 \begin{algorithm}
-\caption{Generate Rules(p)}\label{euclid}
+\caption{Generate Rules(p)}\label{algorithm2}
 \begin{algorithmic}[1]
 \Procedure{generate\_rules(p)}{}
 \State $\textit{generalizations} = \emptyset$
@@ -96,7 +96,7 @@ Trong phần này chúng tôi mô tả lại thuật toán chính của phương
 
 \subsubsection{Thuật toán 3 học offline-to-online}
 \begin{algorithm}
-\caption{AnyBURL Learning batch size}\label{euclid}
+\caption{AnyBURL Learning batch size}\label{algorithm3}
 \begin{algorithmic}[1]
 \Procedure{AnyBURLbatch($\mathbb{G}$, s, sat, Q, ts, batch\_edge)}{}
 \State $is\_connected = add(\mathbb{G}, batch\_edge)$
@@ -166,3 +166,6 @@ Thuật toán này là phần bổ xung của chúng tôi để tránh việc ph
 
 Thuật toán này là một phần bổ xung cho thuật toán 3 ở trên. Sở dĩ chúng tôi gọi là online-to-online là vì khi có một cạnh mới(tri thức mới) được thêm vào đồ thị chúng tôi sẽ thực hiện việc học ngay tức khắc trên các path rule liên quan tới cạnh đó không giống như ở thuật toán 3 khi có đủ 1 lượng tri thức mới được thêm vào.
 
+% \section{Phương pháp dựa trên học sâu - CGAT}
+% Trong phần này chúng tôi trình bày về đồ thị tri thức, và mô tả lại bài toán nhúng đồ thị (Graph Embedding), sơ lược về các kỹ thuật nhúng đồ thị hiện tại. Cùng với đó chúng ta sẽ trình bày phương pháp GAT (Graph Attention Network) và phương pháp KBAT.
+\input{Chapter3/GAT}
