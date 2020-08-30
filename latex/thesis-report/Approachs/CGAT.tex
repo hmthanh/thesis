@@ -1,130 +1,662 @@
-\section{CGAT}
+\section{Phương pháp dựa trên học sâu - CGAT}
+Trong phần này chúng tôi trình bày về Đồ Thị Tri Thức (Knowledge Graph), và mô tả lại bài toán Nhúng Đồ Thị (Graph Embedding), sơ lược về các kỹ thuật nhúng đồ thị hiện tại. Cùng với đó chúng ta sẽ trình bày phương pháp Mạng Đồ Thị Chú Ý (Graph Attention Network - GAT \cite{velivckovic2017graph}) và phương pháp Mạng Đồ Thị Chú Ý Cơ Sở (KBAT \cite{nathani2019learning}).
+% Cuối cùng chúng ta đưa ra đề xuất của chúng ta dựa trên các mô hình trên bằng cách cộng tác thay vì ghép các lớp chú ý lại với nhau.
+\subsection{Đồ thị tri thức}
 
-Ở phần này chúng tôi sẽ giới thiệu tóm lược về mạng đồ thị chú ý (GATs \cite{velivckovic2017graph}) và cải tiến của chúng tôi trên lớp GAT mà chúng tôi gọi là \textit{mạng cộng tác đồ thị chú ý} CGAT, và sau đó chúng tôi áp dụng vào để xây dựng đồ thị theo mô hình KGAT \cite{nathani2019learning} để tối ưu quá trình dự đoán các mối quan hệ. 
+Ngày nay đồ thị đã được ứng dụng vào mọi mặt của đời sống, với đồ thị về mạng xã hội (Facebook \cite{ugander2011anatomy}) thể hiện thông tin kết nối từng người với nhau, những nơi chúng ta đến, những thông tin chúng ta tương tác, đồ thị cũng được sử dụng làm cấu trúc trong hệ thống gợi ý video (Youtube \cite{baluja2008video}), trong mạng các chuyến bay, hệ thống định vị GPS, những tính toán khoa học hay thậm chí là kết nối não. Đồ thị tri thức của Google (Google's Knowledge Graph \cite{googlekg:2020}) được Google giới thiệu năm 2012 \cite{ji2020survey}, một loại đồ thị biểu diễn thông tin, là một trong những ứng dụng rõ ràng nhất về đồ thị tri thức cũng như cách dữ liệu được biểu diễn trên đồ thị. Khai thác đồ thị hay đồ thị tri thức hiệu quả cung cấp cho người dùng hiểu sâu hơn về những gì đằng sau dữ liệu và từ đó có thể mang lại lợi ích cho nhiều ứng dụng trong thực tế.
 
-\subsection{Mô hình GAT}
+Để tìm hiểu về đồ thị tri thức ta cần hiểu các đinh nghĩa về cơ bản đã được nhóm tác giả \cite{cai2018comprehensive} và \cite{goyal2018graph} kháo sát và phân loại như sau :
 
-Mạng đồ thị tích chập (Graph Convolutional Networks \citetitle{schlichtkrull2018modeling}{GCNs}) giúp tổng hợp thông tin bằng cách tính trung bình thông tin từ các thực thể lân cận, tuy nhiên cách này sẽ làm cho các thực thể có trọng số ngang bằng nhau không biểu diễn đúng thông tin trong thế giới thực. Để giải quyết vấn đề đó, GATs \cite{velivckovic2017graph} ra đời để đối xử với các thực thể lân cận bằng sự quan trọng của chúng.
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=7 cm]{images/graph_emb_1.png}
+	\caption{Ví dụ về đồ thị đầu vào}
+	\label{fig:graphInput}
+\end{figure}
 
-Đầu vào của mô hình là vector biểu diễn đặc trưng của từng thực thể (entity) $E = \Big\{\overrightarrow{e_1}, \overrightarrow{e_2}, ...,  \overrightarrow{e_N}\Big\}$. Và mục tiêu của chúng ta là biến đổi thành một đặc trưng đầu ra mới $E'' = \Big\{\overrightarrow{e''_1}, \overrightarrow{e''_2}, ...,  \overrightarrow{e''_N}\Big\}$; với $\overrightarrow{e_i}$ và $\overrightarrow{e''_i} \in \mathbb{R}^T$ tương ứng là vector nhúng đầu vào và vector đầu ra của của thực thể $e_i$, N là số lượng của các thực thể, T là số miền nhúng đặc trưng đầu vào.
+\begin{itemize}
+	\item \begin{definition}[Đồ thị]\label{def:defGraph}
+		\(\mathcal{G} = (V, E)\), trong đó \(v \in V\) là một đỉnh và \(e \in E\) là một cạnh. \(\mathcal{G}\) được liên kết với hàm ánh xạ loại đỉnh \(f_v: V \to T^v\) và hàm ánh xạ loại cạnh: \(f_e: E \to T^e\) .
+	\end{definition}
+	
+	Trong đó: \(T^v\) và \(T^e\) lần lượt là tập hợp các loại đỉnh và loại cạnh. Mỗi đỉnh \(v_i \in V\) thuộc về một loại cụ thể, tức là, \(f_v(v_i) \in T^v\). Tương tự, đối với \(e_{ij} \in E, f_e (e_{ij}) \in T^e\).
+	
+	\item
+	\begin{definition}[Đồ thị đồng nhất]\label{def:homogeneous}
+		Đồ thị đồng nhất (homogeneous graph) : \textit{ $\mathcal{G}_{homo} = (V, E)$ là đồ thị trong đó $\mid T^v \mid = \mid T^e \mid = 1$. Tất cả các đỉnh trong $\mathcal{G}$ thuộc về một loại duy nhất và tất cả các cạnh thuộc về một loại duy nhất}.
+	\end{definition}
+	
+	\item
+	\begin{definition}[Đồ thị không đồng nhất]\label{def:heterogeneous}
+		Đồ thị không đồng nhất (heterogeneous graph) : \textit{$\mathcal{G}_{hete} = (V, E)$ là một đồ thị trong đó $\mid T^v \mid > 1$ hoặc $\mid T^e \mid > 1$. Tức là có nhiều hơn một loại đỉnh hoặc nhiều hơn một loại cạnh}.
+	\end{definition}
+	
+	\item
+	\begin{definition}[Đồ thị tri thức]\label{def:knowledgeGraph}
+		Đồ thị tri thức (knowledge graph)
+		$\mathcal{G}_{know} = (V, E)$ là một đồ thị có hướng, có các đỉnh là các thực thể (entities) và các cạnh (edges) là các \textit{sự kiện} gồm bộ ba subject-property-object. Mỗi cạnh là một mẫu gồm (head entity, relation, tail entity) (ký hiệu là $\langle h, r, t \rangle$) biểu thị mối quan hệ của $r$ từ thực thể $h$ đến thực thể $t$ .
+	\end{definition}
+	$h, t \in V$ là các thực thể và $r \in E$ là quan hệ. Chúng ta gọi $\langle h, r, t \rangle$ một bộ ba đồ thị tri thức. Ví dụ: trong Hình \ref{fig:graphExample} có hai bộ ba: $\langle \text{Tom Cruise, born_in , New York} \rangle$ và $\langle \text{New York, state_of, U.S} \rangle$. Lưu ý rằng các thực thể và quan hệ trong đồ thị tri thức thường có các loại khác nhau. Do đó, đồ thị tri thức có thể được xem như là một ví dụ của đồ thị không đồng nhất.
+	
+\end{itemize}
 
-Mô hình sẽ đi qua hai quá trình biến đổi vector đặc trưng $\overrightarrow{e_i}$ và có thể tóm lược như sau :
-\begin{align}
-\overrightarrow{e_i} \longrightarrow \overrightarrow{e'_i} \longrightarrow \overrightarrow{e''_i}
-\end{align}
+Biểu diễn tri thức đã từng có lịch sử phát triển suốt chiều dài lịch sử trong lĩnh vực logic và trí tuệ nhân tạo. Trên đồ thị tri thức, có 4 bốn nhóm nghiên cứu chính đã được phân loại và tổng hợp ở báo cáo \cite{ji2020survey} bao gồm : Học Biểu Diễn Tri Thức (Knowledge Representation Learning), Thu Nhận Tri Thức (Knowledge Acquisition), Đồ Thị Tri Thức Về Thời Gian (Temporal Knowledge Graphs), Ứng Dụng Nhận Biết Tri Thức (Knowledge-aware Applications). Tất cả các danh mục nghiên cứu được minh họa ở hình \ref{fig:categoriesResearch}.
 
-Ở quá trình biên đổi đầu tiên, mô hình sẽ tổng hợp thông tin từ các thực thể lân cận và ghép chồng lên nhau để tạo ra vector $\overrightarrow{e'_i}$ sau đó mô hình sẽ dùng vector $\overrightarrow{e'_i}$ để coi là vector nhúng của thực thể cho lớp mới và tiếp tục quá trình tổng hợp từ các thông tin lân cận và tạo ra vector $\overrightarrow{e''_i}$ cuối cùng.
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=\textwidth]{images/categories_research_knowledge_graph.png}
+	\caption{
+		Danh mục các lĩnh vực nghiên cứu trên đồ thị tri thức}
+	\label{fig:categoriesResearch}
+\end{figure}
 
-Đầu tiên để tham số hóa quá trình biến đổi tuyến tính, ta cần một trọng số $W \in \mathbb{R}^{N_e \times T}$ ánh xạ vector đầu vào thành một vector mới với miền không gian lớn hơn và một hàm chú ý $a$ chúng ta tùy chọn :
+\textbf{Học biểu diễn tri thức}
 
-\begin{align}
+Học biểu diễn tri thức là vấn đề tìm hiểu thiết yếu của đồ thị tri thức giúp mở ra rất nhiều ứng dụng trong thực tế. Học biểu diễn tri thức được phân loại thành bốn nhóm con bao gồm : 
+
+\begin{itemize}
+	\item \textit{Biểu Diễn Không Gian} (Representation Space) nghiên cứu về cách các thực thể và quan hệ được biểu diễn trong không gian. Biểu diễn không gian bao gồm không gian điểm (point-wise), đa tạp (manifold), không gian vector số phức (complex), phân phối Gaussian và không gian rời rạc.
+	
+	\item \textit{Hàm Đánh Giá} (Scoring Function) nghiên cứu về hàm đo lường giá trị của một bộ ba trong thực tế, bao gồm các hàm đánh giá dựa trên khoảng cách hoặc dựa trên sự tương đồng.
+	
+	\item \textit{Mã Hóa Mô Hình} (Encoding Models) nghiên cứu về cách biểu diễn và học các tương tác giữa các mối quan hệ. Đây là hướng nghiên cứu chính hiện nay, bao gồm các mô hình tuyến tính hoặc phi tuyến tính, phân rã ma trận hoặc mạng neural.
+	
+	\item \textit{Thông Tin Bổ Trợ} (Auxiliary Information) nghiên cứu về cách kết hợp vào các phương pháp nhúng, các thông tin bổ trợ bao gồm văn bản, hình ảnh và loại thông tin .
+\end{itemize}
+
+\textbf{Thu nhận tri thức}
+
+Thu nhận tri thức nghiên cứu về cách thu nhận tri thức dựa trên đồ thị tri thức, bao gồm hoàn thiện đồ thị (knowledge graph completion), khai thác quan hệ và khai phá thực thể. Khai thác quan hệ và khai phát thực thể là nhóm phương pháp khai thác tri thức mới (bao gồm các quan hệ hoặc thực thể) trong đồ thị từ văn bản. Hoàn thiện đồ thị là nhiệm vụ mở rộng đồ thị tri thức dựa trên đồ thị đang có. Hoàn thiện đồ thị bao gồm các hướng nghiên cứu như : xếp hạng dựa trên nhúng (embedding-based ranking), dự đoán đường đi quan hệ (relation path reasoning), dự đoán dựa trên luật (rule-based reasoning) và học siêu quan hệ.
+Khai phá thực thể bao gồm nhận dạng, phân biệt, định kiểu và sắp xếp. 
+Các mô hình khai thác quan hệ sử dụng cơ chế chú ý, mạng đồ thị tích chập (graph
+convolutional networks), huấn luyện đối nghịch (adversarial training), học tăng cường (reinforcement learning), học sâu và học chuyển tiến (transfer learning), đây là hướng nghiên cứu trong phương pháp đề xuất của chúng tôi.
+
+Ngoài ra, trên đồ thị tri thức còn có các hướng nghiên cứu như \textbf{đồ thị tri thức về thời gian} và \textbf{ứng dụng nhận biết tri thức}. Đồ thị tri thức về thời gian sẽ kết hợp thêm thông tin thời gian trên đồ thị để học cách biểu diễn, còn ứng dụng nhận biết tri thức bao gồm hiểu ngôn ngữ tự nhiên (natural language understanding), trả lời câu hỏi (question answering), hệ thống gợi ý (recommendation systems) và nhiều nhiệm vụ khác trong thế giới thực mà nó tích hợp tri thức vào để cải thiện quá trình học biểu diễn .
+
+\subsection{Nhúng đồ thị}
+\label{sec:graphEmbedding}
+
+Trong thế giới thực, việc biểu diễn các thực thể và quan hệ thành các vector có thể được hiểu một cách tường minh là quá trình ánh xạ các đặc trưng, các đặc tính của một đối tượng nào đó xuống không gian có số chiều thấp hơn với mỗi thành phần đại diện cho một đặc trưng đơn vị nào đó. 
+
+Ví dụ, ta biết Donald Trump cao 1m9 và có người vợ là Melania, vì vậy ta có thể biểu diễn thực thể Donal Trump thành một vector
+
+ $\overrightarrow{e_\text{Trump}} = [1.9_{\text{heigh}}, 0_{\text{area}}, 1_\text{wife is Melania}, 0_\text{wife is Taylor}]$. Với các đặc trưng không thể đo hoặc không có giá trị ($._{\text{area}}$) sẽ bằng 0, với các đặc trưng là giá trị mà không có độ lớn ($._{\text{wife}}$) thì ta chia thành độ lớn là xác xuất của các đặc trưng thành phần đơn vị ($._{\text{wife is Melania}}$, $._{\text{wife is Taylor}}$). Như vậy mọi đối tượng trong thế giới thực đều các có thể \textit{nhúng} thành các vector một cách tường minh.
+
+Để tìm hiểu về các phương pháp và kỹ thuật \textit{nhúng đồ thị} (graph embedding) cần hiểu các định nghĩa cơ bản như sau : 	
+
+\begin{itemize}
+	\item
+	\begin{definition}[Lân Cận Bậc Nhất]\label{def:firstOrderProximity}
+		(First-Order Proximity)	giữa đỉnh $v_i$ và đỉnh $v_j$ là trọng số $A_{i, j}$ của cạnh $e_{ij}$.
+	\end{definition}
+	
+	Hai đỉnh giống nhau hơn nếu chúng được kết nối bởi một cạnh có trọng số lớn hơn. Suy ra lân cận bậc nhất giữa đỉnh $v_i$ và $v_j$ là $s^{(1)}_{ij}$, chúng ta có $s^{(1)}_{ij} = A_{i, j}$. Gọi $s^{(1)}_{i} = \begin{bmatrix} s^{(1)}_{i1}, s^{(1)}_{i2}, \dots, s^{(1)}_{i \mid V \mid} \end{bmatrix}$ biểu thị lân cận bậc nhất giữa \(v_i\) và các đỉnh khác. Lấy biểu đồ trong hình \ref{fig:graphInput} làm ví dụ, lân cận bậc nhất $v_1$ và $v_2$ là trọng số của cạnh $e_{12}$, ký hiệu là $s^{(1)}_{12} = 1.2$. Và $s^{(1)}_1$ ghi lại trọng số của các cạnh kết nối $v_1$ và các đỉnh khác trong đồ thị, tức là, $s^{(1)}_{1} = \begin{bmatrix}  0, 1.2, 1.5, 0, 0, 0, 0, 0, 0 \end{bmatrix} $.
+	
+	\item
+	\begin{definition}[Lân Cận Bậc Hai]\label{def:secondOrderProximity} (Second-Order Proximity)
+		$s^{(2)}_{ij}$ ở giữa đỉnh $v_i$ và $v_j$ là sự tương đồng giữa $v^{\prime}_i$ vùng lân cận $s^{(1)}_i$ và $v^{\prime}_j$ vùng lân cận $s^{(1)}_j$
+	\end{definition}
+	
+	Lấy hình \ref{fig:graphInput} làm ví dụ: $s^{(2)}_{12}$ là điểm tương đồng giữa $s^{(1)}_{1}$ và $s^{(1)}_{2}$. Như đã giới thiệu trước, $s^{(1)}_1 = \begin{bmatrix} 0, 1.2, 1.5, 0, 0, 0, 0, 0, 0 \end{bmatrix}$ và $s^{(1)}_2 = \begin{bmatrix} 1.2, 0, 0.8, 0, 0, 0, 0 , 0, 0 \end{bmatrix}$. Chúng ta hãy xem xét các điểm tương đồng cosine $s^{(2)}_{12} = cosine (s^{(1)}_1, s^{(1)}_2) = 0.43$ và $s^{(2)}_{15} = cosine(s^{(1)}_1, s^{(1)}_5) = 0$. Chúng ta có thể thấy rằng lân cận bậc hai giữa $v_1$ và $v_5$ bằng $0$ vì $v_1$ và $v_5$ không chia sẻ bất kỳ hàng xóm $1$ hop phổ biến nào. $v_1$ và $v_2$ chia sẻ một hàng xóm chung $v_3$, do đó khoảng cách thứ hai $s^{(2)}_{12}$ của chúng lớn hơn 0.
+	
+	Các độ do lân cận bậc cao hơn (higher-order proximity) có thể được định nghĩa tương tự. Ví dụ, lân cận cách thứ $k-th$ giữa đỉnh $v_i$ và $v_j$ là sự tương đồng giữa $s^{(k 1)}_i$ và $s^{(k 1)}_j$. Lưu ý rằng đôi khi các giá trị gần đúng bậc cao hơn cũng được xác định bằng cách sử dụng một số số liệu khác, ví dụ: Katz Index, RootR PageRank, Adamic Adar, v.v.
+	
+	\item
+	\begin{definition}[Nhúng đồ thị]\label{def:graphEmbedding}
+		Cho đầu vào của đồ thị \(\mathcal{G} = (V, E)\) và số chiều được xác định trước của nhúng $d (d \ll \mid V \mid)$, vấn đề nhúng đồ thị là chuyển $\mathcal{G}$ thành một không gian \(d\)-chiều, trong đó thuộc tính đồ thị được lưu giữ càng nhiều càng tốt. Thuộc tính đồ thị có thể được định lượng bằng cách sử dụng các biện pháp lân cận như lân cận bậc nhất và bậc cao hơn. Mỗi đồ thị được biểu diễn dưới dạng một vector $d$ chiều (cho toàn bộ đồ thị) hoặc một tập các vector $d$ chiều với mỗi vector biểu thị việc nhúng một phần của đồ thị (ví dụ: đỉnh, cạnh, cấu trúc con).
+	\end{definition}
+	
+\end{itemize}
+
+Nhúng đồ thị là quá trình biến đổi các đặc trưng của đồ thị thành các vector hoặc tập hợp những vector có số chiều thấp. Càng nhúng hiệu quả, thì kết quả của độ chính xác trong việc khai thác và phân tích đồ thị sau đó càng cao. Thách thức lớn nhất của việc nhúng đồ thị phụ thuộc vào cách thiết lập của bài toán (problem setting), bao gồm đầu vào nhúng và đầu ra nhúng như trình bày ở hình \ref{fig:graphEmbeddingSettingTree}.
+
+\begin{figure}[htp]
+	\centering
+	\scalebox{0.6}{
+		\tikzstyle{every node}=[draw=black,thick,anchor=west]
+		\begin{tikzpicture}[%
+		grow via three points={one child at (0.5,-0.73) and
+			two children at (0.5,-0.73) and (0.5,-1.35)},
+		edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+		\node {Nhúng đồ thị}
+		child [missing] {}
+		child { node {Đầu vào nhúng đồ thị}
+			child [missing] {}
+			child { node {Đồ thị đồng nhất} }
+			child [missing] {}
+			child { node {Đồ thị không đồng nhất} }
+			child [missing] {}
+			child { node {Đồ thị với thông tin phụ trợ} }
+			child [missing] {}
+			child { node {Đồ thị cấu trúc từ dữ liệu phi-quan hệ} }
+		}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child { node {Đầu ra nhúng đồ thị}
+			child [missing] {}
+			child { node {Nhúng đỉnh} }
+			child [missing] {}
+			child { node {Nhúng cạnh} }
+			child [missing] {}
+			child { node {Nhúng kết hợp} }
+			child [missing] {}
+			child { node {Nhúng toàn bộ đồ thị} }
+		};
+		\end{tikzpicture}}
+	\caption{Phương pháp thiết lập bài toán nhúng đồ thị}
+	\label{fig:graphEmbeddingSettingTree}
+\end{figure}
+
+Dựa trên đầu vào nhúng ta phân loại thành các nhóm phương pháp đã khảo sát ở \cite{cai2018comprehensive} như sau : 
+Đồ thị đồng nhất (homogeneous graph)
+Đồ thị không đồng nhất (heterogeneous graph)
+Đồ thị với thông tin phụ trợ (graph with auxiliary information)
+Độ thị cấu trúc từ dữ liệu phi-quan hệ (graph constructed from non-relational data).
+
+Các loại đầu vào nhúng khác nhau mang thông tin khác nhau được giữ lại trong không gian nhúng và do đó đặt ra những thách thức khác nhau đối với vấn đề nhúng đồ thị. 
+Ví dụ, khi nhúng một đồ thị chỉ với thông tin cấu trúc, các kết nối giữa các đỉnh là mục tiêu cần được lưu giữ. Tuy nhiên, đối với đồ thị có nhãn đỉnh hoặc thông tin thuộc tính của một thực thể, thông tin phụ trợ cung cấp thuộc tính đồ thị từ các ngữ cảnh khác và do đó cũng có thể được xem xét trong quá trình nhúng. Không giống như đầu vào nhúng (embedding input) được cho từ các tập dữ liệu và cố định, đầu ra nhúng (embedding output) được xác định theo từng nhiệm vụ cụ thể.
+Ví dụ, loại đầu ra nhúng phổ biến nhất là nhúng đỉnh, đại diện cho các đỉnh đóng vai trò như các vector thể hiện độ tương tự giữa các đỉnh. Việc nhúng đỉnh có thể có lợi cho các bài toán liên quan đến đỉnh như phân loại đỉnh, phân cụm đỉnh, v.v.
+
+Tuy nhiên, trong một số trường hợp, các bài toán có thể liên quan đến độ chi tiết cao hơn của đồ thị, ví dụ: cặp đỉnh, đồ thị con, toàn bộ đồ thị. Do đó, thách thức đầu tiên về nhúng là tìm ra loại đầu ra nhúng phù hợp cho ứng dụng quan tâm. Có 4 loại đầu ra nhúng được minh họa ở hình \ref{fig:graphInput} gồm : Nhúng Đỉnh (Node Embedding \ref{fig:nodeEmbedding}), Nhúng Cạnh (Edge Embedding \ref{fig:edgeEmbedding}), Nhúng Kết Hợp (Hybrid Embedding \ref{fig:substructureEmbedding}) và Nhúng Toàn Bộ Đồ Thị (Whole-Graph Embedding \ref{fig:wholeGraphEmbedding}). Các mức độ chi tiết đầu ra khác nhau có các tiêu chí khác nhau sẽ có thách thức khác nhau. Ví dụ, một đỉnh nhúng tốt lưu giữ sự tương tự với các đỉnh lân cận của nó trong không gian nhúng. Ngược lại, việc nhúng toàn bộ đồ thị tốt thể hiện toàn bộ đồ thị dưới dạng một vector sao cho độ tương tự ở mức đồ thị được giữ nguyên.
+
+\subsubsection{\underline{Phương pháp thiết lập bài toán nhúng đồ thị}}
+
+Với các đầu vào đã được thiết lập phụ thuộc vào thông tin cần lưu giữ, trong khi đó đầu ra thay đổi tùy theo mục tiêu khai thác đồ thị mà chúng ta mong muốn. Vì vậy ở đây chúng tôi đề cập chi tiết hơn đến các phương pháp thiết lập đồ thị theo kết quả đầu ra trong bài toán nhúng đồ thị.
+
+\textbf{Nhúng đỉnh}
+\label{sec:nodeEmbedding}
+
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=7 cm]{images/graph_emb_2.png}
+	\caption{
+		Nhúng đỉnh với từng vector thể hiện đặc trưng của từng đỉnh}
+	\label{fig:nodeEmbedding}
+\end{figure}
+
+Nhúng đỉnh (node embedding) biểu diễn mỗi đỉnh như một vector trong không gian số chiều thấp. Các đỉnh "gần" trong đồ thị được nhúng có các biểu diễn vector tương tự nhau. Sự khác biệt giữa các phương pháp nhúng đồ thị khác nhau nằm ở cách chúng xác định "độ gần nhau" giữa hai đỉnh. Lân cận bậc nhất (Định nghĩa \ref{def:firstOrderProximity}) và lân cận bậc hai (Định nghĩa \ref{def:secondOrderProximity})) là hai số liệu thường được sử dụng để tính độ tương tự đỉnh theo cặp. Trong một nghiên cứu, sự gần nhau bậc cao cũng được khám phá ở một mức độ nhất định. Ví dụ nắm bắt các quan hệ hàng xóm k-step (k = 1, 2, 3, ···) trong quá trình nhúng của chúng được đề cập trong nghiên cứu của nhóm tác giả \cite{cao2015grarep}.
+
+\textbf{Nhúng cạnh}
+\label{sec:edgeEmbedding}
+
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=7 cm]{images/graph_emb_3.png}
+	\caption{Nhúng cạnh với từng vector thể hiện đặc trưng của từng cạnh}
+	\label{fig:edgeEmbedding}
+\end{figure}
+
+Trái ngược với nhúng đỉnh, nhúng cạnh (edge embedding) nhằm mục đích biểu diễn một cạnh dưới dạng vector có số chiều thấp. Nhúng cạnh hữu ích trong hai trường hợp sau :
+
+Thứ nhất, nhúng đồ thị tri thức. Mỗi cạnh là một bộ ba $\langle h, r, t \rangle$ (Định nghĩa \ref{def:knowledgeGraph}). Phép nhúng được học để bảo toàn r giữa h và t trong không gian nhúng, để một thực thể hoặc quan hệ bị thiếu có thể được dự đoán chính xác với hai thành phần còn lại trong $\langle h, r, t \rangle$.
+
+Thứ hai, một số công việc nhúng một cặp đỉnh làm đặc trưng vector để làm cho cặp đỉnh này có thể so sánh với các đỉnh khác hoặc dự đoán sự tồn tại của một liên kết giữa hai đỉnh. Việc nhúng cạnh mang lại lợi ích cho việc phân tích đồ thị liên quan đến cạnh (cặp đỉnh), chẳng hạn như dự đoán liên kết, thực thể biểu đồ tri thức/dự đoán quan hệ, v.v.
+
+\textbf{Nhúng Kết Hợp}
+
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=6 cm]{images/graph_emb_4.png}
+	\caption{Nhúng một cấu trúc bộ phận của đồ thị}
+	\label{fig:substructureEmbedding}
+\end{figure}
+
+Nhúng kết hợp (hybrid embedding) là nhúng kết hợp các loại thành phần đồ thị khác nhau, ví dụ: đỉnh + cạnh (tức là cấu trúc con), đỉnh + bộ phận. Việc nhúng cấu trúc con hoặc bộ phận cũng có thể được bắt nguồn bằng cách tổng hợp các đỉnh riêng lẻ và nhúng cạnh bên trong nó. Tuy nhiên, kiểu tiếp cận "gián tiếp" như vậy không được tối ưu hóa để thể hiện cấu trúc của đồ thị. Hơn nữa, nhúng đỉnh và nhúng bộ phận có thể củng cố lẫn nhau. Nhúng đỉnh tốt hơn vì nó học được cách phối hợp từ sự quan tâm của nhóm lân cận bậc cao, nhúng bộ phận tốt hơn khi phát hiện chính xác hơn đỉnh nhúng được tạo ra.
+
+\textbf{Nhúng Toàn Bộ Đồ Thị}
+
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=6 cm]{images/graph_emb_5.png}
+	\caption{Nhúng toàn bộ đồ thị}
+	\label{fig:wholeGraphEmbedding}
+\end{figure}
+
+Nhúng toàn bộ đồ thị (whole-graph embedding) thường dành cho các đồ thị nhỏ, chẳng hạn như protein, phân tử, v.v. Trong trường hợp này, một đồ thị được biểu diễn dưới dạng một vector và hai đồ thị tương tự được nhúng để gần nhau hơn. Việc nhúng toàn bộ đồ thị mang lại lợi ích cho nhiệm vụ phân loại đồ thị bằng cách cung cấp một giải pháp đơn giản và hiệu quả để tính toán độ tương đồng của đồ thị. Để thiết lập sự thỏa hiệp giữa thời gian nhúng (tính hiệu quả) và khả năng lưu giữ thông tin (tính biểu đạt), phương pháp Nhúng đồ thị phân cấp \cite{mousavi2017hierarchical} thiết kế một khung nhúng đồ thị phân cấp. Nó cho rằng sự hiểu biết chính xác về thông tin đồ thị toàn cục đòi hỏi phải xử lý các cấu trúc con ở các quy mô khác nhau. Một kim tự tháp đồ thị được hình thành trong đó mỗi cấp là một đồ thị tóm tắt ở các tỷ lệ khác nhau. Biểu đồ được nhúng ở tất cả các cấp và sau đó được nối thành một vector. Việc nhúng toàn bộ đồ thị yêu cầu thu thâp được thông tin thuộc tính của toàn bộ đồ thị, và vì vậy sẽ tốn nhiều thời gian hơn các phương pháp thiết lập khác.
+
+\subsubsection{\underline{Các kỹ thuật nhúng đồ thị}}
+
+\begin{figure}[htp]
+	\centering
+	\scalebox{0.6}{
+		\tikzstyle{every node}=[draw=black,thick,anchor=west]
+		\begin{tikzpicture}[%
+		grow via three points={one child at (0.5,-0.7) and
+			two children at (0.5,-0.73) and (0.5,-1.35)},
+		edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+		\node {Kỹ thuật nhúng đồ thị}
+		child { node {Học sâu}
+			child [missing] {}
+			child { node {Sử dụng bước ngẫu nhiên} }
+			child [missing] {}
+			child { node {Không sử dụng bước ngẫu nhiên} }
+		}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child { node {Phân rã ma trận}
+			child [missing] {}
+			child { node {Đồ thị toán tử Laplace Eigenmaps} }
+			child [missing] {}
+			child { node {Phân rã ma trận bằng xấp xỉ đỉnh} }
+		}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child { node {Tái cấu trúc cạnh}
+			child [missing] {}
+			child { node {Cực đại hóa xác xuất tái cấu trúc cạnh} }
+			child [missing] {}
+			child { node {Tối thiểu hóa mất mát dựa trên khoảng cách} }
+			child [missing] {}
+			child { node {Tối thiểu hóa xếp hạng mất mát dựa trên lề} }
+		}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child { node {Đồ thị lõi}
+			child [missing] {}
+			child { node {Dựa trên graphlet} }
+			child [missing] {}
+			child { node {Dựa trên mẫu nhánh cây} }
+			child [missing] {}
+			child { node {Dựa trên bước nhảy ngẫu nhiên} }
+		}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child [missing] {}
+		child { node {Mô hình sinh}
+			child [missing] {}
+			child { node {Nhúng đồ thị dựa trên không gian ẩn} }
+			child [missing] {}
+			child { node {Nhúng kết hợp ngữ nghĩa} }
+		};
+		\end{tikzpicture}}
+	\caption{Các kỹ thuật nhúng đồ thị}
+	\label{fig:graphEmbeddingTechniquesTree}
+\end{figure}
+
+Trong phần này, chúng tôi phân loại các nhóm phương pháp nhúng đồ thị dựa vào kỹ thuật sử dụng, như đã nói ở trên, mục tiêu của việc nhúng đồ thị là biểu diễn một đồ thị vào không gian có số chiều thấp mà vẫn giữ vững được những thông tin vốn có của đồ thị nhiều nhất có thể. Các kỹ thuật nhúng đồ thị cơ bản khác nhau ở đinh nghĩa các đặc tính vốn có cần được đảm bảo. Vì mục tiêu chính của chúng tôi là tìm hiểu về các nhóm phương pháp nhúng đồ thị dựa trên kỹ thuật học sâu nên chúng tôi chỉ trình bày sơ lược đối với các nhóm phương pháp khác.
+
+\textbf{Học sâu}
+
+Ở phần này chúng tôi sẽ trình bày chi tiết về các hướng nghiên cứu của kỹ thuật học sâu (deep learning) bao gồm : sử dụng bước nhảy ngẫu nhiên (random walk) và không sử dụng bước nhảy ngẫu nhiên. Kỹ thuật học sâu được sử dụng phổ biến trong việc nhúng đồ thị bởi vì sự nhanh chóng và hiệu quả của nó. Trong các phương pháp sử dụng kỹ thuật học sâu này, cả 3 loại phương pháp thiết lập đồ thị dựa trên đầu vào (ngoại trừ đồ thị cấu trúc từ dữ liệu phi-quan hệ) và 4 loại đầu ra (Hình \ref{fig:graphEmbeddingSettingTree}) đều có thể áp dụng kỹ thuật học sâu. 
+
+\textit{Kỹ thuật học sâu với bước nhảy ngẫu nhiên}
+
+Trong nhóm phương pháp này, lân cận bậc hai (Định nghĩa \ref{def:secondOrderProximity}) trong đồ thị sẽ được bảo đảm trong không gian nhúng bằng cách cực đại hóa xác xuất của những hàng xóm quan sát của một đỉnh điều kiện trên vector nhúng của nó. Đồ thị sẽ được biểu diễn như là một tập hợp mẫu bằng cách lấy mẫu từ những bước đi ngẫu nhiên, và sau đó các phương pháp học sâu sẽ được áp dụng vào đồ thị nhúng để vẫn đảm bảo đặc tính của đồ thị mang theo thông tin đường đi. Các phương pháp sử dụng nhóm phương pháp này như : Deep Walk \cite{perozzi2014deepwalk}, LINE \cite{tang2015line}, Node2Vec \cite{grover2016node2vec}, Anonymous Walk \cite{ivanov2018anonymous}, NetGAN \cite{bojchevski2018netgan}, ...
+
+\textit{Kỹ thuật học sâu không sử dụng bước nhảy ngẫu nhiên}
+
+Trong phương pháp này, những cấu trúc học đa lớp sẽ được áp dụng một cách nhanh chóng và hiệu quả để biến đổi đồ thị thành không gian số chiều thấp hơn. Phương pháp này sẽ áp dụng cho toàn bộ đồ thị, có một số phương pháp phổ biến hiện nay đã được khảo sát và trình bày ở báo cáo \cite{rossi2020knowledge} như sau :
+
+\begin{itemize}
+	\item Mạng Neural Tích Chập (Convolutional Neural Networks)
+	
+	Mô hình này sử dụng nhiều lớp tích chập : Với mỗi lớp thực hiện tính tích chập trên dữ liệu đầu vào một bộ lọc có số chiều thấp. Kết quả là một bản đồ đặc trưng, sau đó lại tiếp tục đi qua một lớp kết nối đầy đủ để tính giá trị xác xuất. Ví dụ như \textbf{ConvE} \cite{dettmers2017convolutional} : Mỗi thực thể và mối quan hệ sẽ được biểu diễn bằng một vector số chiều thấp $d-\text{chiều}$. Với mỗi bộ ba, nó ghép và thay đổi kích thước của vector nhúng đỉnh $h$ và quan hệ $r$ vào một đầu vào duy nhất $[h, r]$ với kích thước kết quả là $d_m \times d_n$. Sau đó nó đi qua lớp tích chập với bộ lọc $\omega$ có kích thước $m \times n$, rồi đi qua một kết nối đầy đủ  (fully connected layers) và các trọng số $W$. Kết quả cuối cùng được kết hợp với vector nhúng đuôi $t$ bằng cách sử dụng tích vô hướng (dot products). Kiến trúc này có thể coi là một kiến trúc \textit{phân loại các lớp} .
+	
+	Một mô hình phổ biến khác là \textbf{ConvKB} \cite{nguyen2017novel}, tương tự như ConvE, nhưng nó ghép cả ba vector nhúng $h$, $r$ và $t$ vào một ma trận $[h, r, t]$ kích thước $d \times 3$ chiều. Sau đó nó đi qua một lớp tích chập với $T$ bộ lọc $\omega$ kích thước $1 \times 3$. Kết quả là $T \times 3$ bản đồ đặc trưng. Sau đó bản đồ đặc trưng lại đi qua lớp kết nối đầy đủ và trọng số $\mathbf{W}$. Kiến trúc này có thể coi là kiến trúc phân loại nhị phân.
+	
+	\item Mạng Hồi Qui Tuyến Tính (Recurrent Neural Networks)
+	
+	Những mô hình này sẽ cho một lớp hoặc nhiều lớp hồi tuyến tính để phân tích toàn bộ đường đi (một chuỗi sự kiện/bộ ba) lấy ra từ tập huấn luyện, thay vì chỉ xử lý các sự kiện một cách riêng biệt. Ví dụ như RSN \cite{guo2019learning}, nhận thấy mô hình hồi quy tuyến tính truyền thống không phù hợp cho đồ thị, với mỗi lần thực hiện nó chỉ lấy thông tin của mối quan hệ mà không lấy thông tin của vector đỉnh của lần thực hiện trước đó. Vì vậy nó không xử lý rõ ràng sự luân chuyển các đường dẫn của các thực thể và quan hệ. Để giải quyết vấn đề này, họ đề xuất Mạng Hồi Qui Nhảy (Recurrent Skipping Networks - RSNs) : với mỗi bước nhảy, nếu đầu vào là quan hệ, một trạng thái ẩn được cập nhật để tái sử dụng thêm vector đỉnh. Sau đó, kết quả đầu ra được nhân tích vô hướng với mỗi vector nhúng mục tiêu.
+	
+	\item Mạng Neural Bao Bọc (Capsule Neural Networks)
+	
+	Mạng bao bọc (capsule networks) sẽ sắp một nhóm neural lại với nhau gọi là viên nang \label{capsule}, mỗi viên nang này sẽ mã hóa những đặc trưng đặc biệt của đầu vào, như là đại diện cho một nhóm hình ảnh cụ thể. Ưu điểm của mạng bao bọc đó là giúp nhận ra những đặc trưng mà không mất thông tin không gian so với việc tính tích chập thông thường. Mỗi một viên nang tìm ra những đặc trưng theo kích thước vector đầu ra. Ví dụ như : \textbf{CapsE} \cite{vu2019capsule}, mỗi thực thể và quan hệ được xem là một vector nhúng như trên, tương tự như ConvKB, nó sẽ ghép ba vector nhúng $h$, $r$ và $t$ thành một ma trận nhúng kích thước $d \times 3$. Sau đó nó đi qua lớp có E bộ lọc tích chập có kích thước $1 \times 3$. Kết quả là một ma trận kích thước $d \times E$ mà với mỗi dòng thứ $i-th$ đại diện cho những thực thể $h[i]$, $t[i]$ và quan hệ $r[i]$ riêng biệt. Ma trận này sẽ đi lớp bao bọc mà mỗi viên nang (\ref{capsule}) riêng biệt xử lý mỗi cột, vì vậy nó nhận được thông tin dựa theo một đặc trưng của bộ ba đầu vào. Và lớp thứ hai với một lớp bao bọc được sử dụng để đưa ra kết quả đầu ra.
+	
+	\item Mạng đồ thị chú ý (Graph Attention Networks)
+	
+	Nhóm phương pháp này sử dụng cơ chế chú ý (attention mechanism \cite{vaswani2017attention}) mà đã đạt được kết quả cải thiện đáng kể trong xử lý ngôn ngữ tự nhiên. Ở nhóm phương pháp này với mỗi vector nhúng, các thực thể được tổng hợp thông tin chú ý từ các thực thể kế cận, sau đó các thông tin chú ý được ghép chồng với nhau và đi qua một lớp kết nối đầy đủ và trọng số để biến đổi thành các vector nhúng cuối cùng. Ví dụ như : GAT \cite{velivckovic2017graph} với mỗi bộ ba từ tập huấn luyện được nhúng và áp dụng cơ chế chú ý đa đỉnh để cho ra một vector nhúng. Sau đó vector nhúng này tiếp tục đi qua một ma trận trọng số để biến đổi thành vector nhúng mới có số chiều lớn hơn tổng hợp thông tin từ các đỉnh kế cận từ bộ ba ban đầu. Một cải tiến khác của GAT bằng cách thêm thông tin của vector nhúng quan hệ là KBAT \cite{nathani2019learning}. Các phương pháp này được trình bày cụ thể ở các phần tiếp theo.
+	
+	\item Ngoài ra còn một số phương pháp khác như sử dụng kỹ thuật tự động mã hóa (autoencoder) như Mạng Nhúng Cấu Trúc Sâu (Structural Deep Network Embedding \cite{wang2016structural}) .
+\end{itemize}
+
+\textbf{Phân rã ma trận}
+
+Phân rã ma trận (matrix factorization) dựa trên đồ thị nhúng biểu diễn những đặc tính của đồ thị (ví dụ những cặp tương đồng hay giống nhau) dưới hình thức một ma trận và phân rã ma trận này để lấy được thông tin nhúng của đỉnh. Đầu vào của nhóm phương pháp này thường là những đặc trưng phi-quan hệ nhiều chiều và đầu ra là tập hợp các đỉnh nhúng. Có hai phương pháp nhúng đồ thị dựa trên phân rã ma trận bao gồm : Đồ Thị Toán Tử Laplace Eigenmaps (Graph Laplacian Eigenmaps) và Phân Rã Ma Trận Xấp Xỉ Đỉnh (Node Proximity Matrix Factorization)
+
+\begin{itemize}
+	\item \textit{Đồ Thị Toán Tử Laplace Eigenmaps}
+	
+	Nhóm phương pháp này sẽ đảm bảo đặc tính của đồ thị bằng cách phân tích những cặp tương đồng và sẽ phạt nặng những đỉnh có sự tương đồng lớn hơn mà nhúng xa nhau. 
+	
+	\item \textit{Phân Rã Ma Trận Xấp Xỉ Đỉnh}
+	
+	Nhóm phương pháp này sẽ xấp xỉ các đỉnh lân cận trong một không gian số chiều thấp sử dụng kỹ thuật phân rã ma trận. Mục tiêu là để bảo toàn những đỉnh lân cận để tối thiểu hóa hàm xấp xỉ.
+\end{itemize}
+
+\textbf{Tái cấu trúc cạnh}
+
+Phương pháp tái cấu trúc cạnh (edge reconstruction) sẽ xây dựng các cạnh dựa trên những đỉnh nhúng sao cho giống với những đồ thị đầu vào nhất có thể. Phương pháp này tối tối đa hóa xác xuất tái tạo cạnh hoặc tối thiểu hóa hàm mất mát tái tạo cạnh, ngoài ra còn chia ra hàm mất mát dựa trên khoảng cách và hàm xếp hạng mất mất mát dựa trên lề .
+
+\begin{itemize}
+	\item \textit{Cực đại hóa xác xuất tái cấu trúc cạnh }
+	
+	Ở phương pháp Cực đại hóa xác xuất tái cấu trúc cạn (maximize edge reconstruct probability), một đỉnh nhúng tốt sẽ cực đại hóa xác xuất sinh của các cạnh quan sát trong một đồ thị. Nghĩa là một vector đỉnh nhúng tốt sẽ được tái xây dựng lại như là đồ thị đầu vào gốc. Chúng được phân biệt bằng cách cực đại hóa xuất xuất sinh của tất cả các cạnh quan sát sử dụng vector đỉnh nhúng .
+	
+	\item \textit{Tối thiểu hóa mất mát dựa trên khoảng cách}
+	
+	Trong phương pháp tối thiểu hóa mất mát dựa trên khoảng cách (minimize distance-based loss), các đỉnh lân cận tính toán dựa trên vector đỉnh nhúng phải càng gần nhất với những đỉnh lân cận trên các cạnh đang quan sát càng tốt.
+	Cụ thể là, độ gần của đỉnh có thể được tính toán dựa trên những đỉnh nhúng hoặc được tính toán theo kinh nghiệm dựa trên các cạnh được quan sát. Sau đó sẽ được tối thiểu hóa sự khác biệt giữa hai loại lân cận để đảm bảo độ gần tương ứng.
+	
+	\item \textit{Tối thiểu hóa xếp hạng mất mát dựa trên lề}
+	
+	Trong phương pháp tối thiểu xếp hạng mất mát dựa trên lề (minimize margin-based ranking loss), các cạnh của đồ thị đầu vào thể hiện sự tương quan giữa những cặp đỉnh. Một số đỉnh trong đồ thị thì thường liên kết với những tập hợp đỉnh liên quan. Cụ thể phương pháp này sẽ giúp các đỉnh vector nhúng sẽ gần nhau nếu các đỉnh liên quan đến nhau hơn so với những đỉnh không liên quan khác.
+\end{itemize}
+
+\textbf{Đồ thị lõi}
+
+Với đồ thị lõi (graph kernel) toàn bộ cấu trúc đồ thị có thể được biểu diễn như là một vector chứa số lượng cấu trúc con cơ bản được phân tách từ đồ thị. Kỹ thuật đồ thị lõi bao gồm các nhánh phương pháp con gồm : graphlet, mẫu đồ thị con (subtree patterns) và dựa trên bước nhảy ngẫu nhiên .
+
+Phương pháp này được thiết kế để nhúng toàn bộ đồ thị chỉ lấy đặc trưng toàn cục của toàn bộ đồ thị. Đầu vào của phương pháp này thường là đồ thị đồng nhất. hoặc đồ thị với thông tin bổ trợ
+
+\textbf{Mô hình sinh}
+
+Một mô hình sinh (generative model) có thể được định nghĩa bằng cách xác định sư phân phối chung của đặc trưng đầu vào và những lớp nhãn, và được điều chỉnh dựa trên một tập những tham số. Có hai nhóm phương pháp con của mô hình sinh bao gồm : Nhúng đồ thị dựa trên không gian ẩn (embed graph into latent space) và nhúng kết hợp ngữ nghĩa (incorporate semantics for embedding).
+Mô hình sinh có thể được dùng cho cả nhúng đỉnh và nhúng cạnh . Nó được xem như là đỉnh những ngữ nghĩa với đầu vào thường là các đồ thị không đồng nhất hoặc đồ thị với thông tin phụ trợ.
+\begin{itemize}
+	\item \textit{Nhúng đồ thị trên không gian ngữ nghĩa ẩn}
+	
+	Với nhóm phương này, các đỉnh được nhúng vào một không gian ngữ nghĩa ẩn nơi khoảng cách giữa cách đỉnh mô tả được cấu trúc của đồ thị.
+	
+	\item \textit{Nhúng kết hợp ngữ nghĩa}
+	
+	Phương pháp này thì mỗi đỉnh sẽ gần với đồ thị và có ngữ nghĩa mà nó phải được nhúng gần hơn. Những đỉnh ngữ nghĩa có thể được tìm ra từ những đỉnh mô tả thông qua một mô hình sinh.
+	
+\end{itemize}
+
+\textbf{Tổng kết} : Các phương pháp nhúng đồ thị đều có ưu nhược điểm riêng được nhóm tác giả \cite{cai2018comprehensive} tổng hợp và trình bày lại ở bảng \ref{tab:graphEmbeddingTechCompare}. Với nhóm phương pháp \textit{phân rã ma trận} dựa trên đồ thị nhúng sẽ học những đại diện dựa trên việc phân tích sự tương đồng các cặp toàn cục. Với nhóm phương pháp \textit{học sâu}, những mô hình này đạt được kết quả hứa hẹn so với những phương pháp khác và phù hợp cho việc nhúng đồ thị vì nó có khả năng học được các biểu diễn phức tạp từ các cấu trúc đồ thị phức tạp. Các phương pháp sử dụng kỹ thuật bước nhảy ngẫu nhiễn trong học sâu có chi phí tính toán thấp hơn so với các phương pháp sử dụng kỹ thuật học sâu. Các phương pháp truyền thống coi đồ thị như một lưới, tuy nhiên nó không giống với bản chất của đồ thị. Với nhóm phương pháp \textit{tái cấu trúc cạnh} sẽ tối ưu hàm mục tiêu dựa trên các cạnh quan sát hoặc xếp hạng các bộ ba. Nhóm phương pháp này hiệu quả hơn nhưng vector nhúng kết quả lại không quan tâm đến cấu trúc toàn cục của đồ thị. Nhóm phương pháp \textit{đồ thị lõi} chuyển đồ thị vào một vector để dễ dàng thực hiện các nhiệm vụ phân tích đồ thị như phân loại đồ thị. Vì vậy nó chỉ hiệu quả khi liệt kê những nhánh cấu trúc đơn vị mong muốn trong một đồ thị. Với nhóm phương pháp \textit{mô hình sinh}, nó tận dụng thông tin một cách tự nhiên từ nhiều nguồn khác nhau trong một mô hình duy nhất. Việc nhúng đồ thị vào không gian ngữ nghĩa ẩn tạo ra những vector nhúng có thể được diễn giải bằng cách sử dụng ngữ nghĩa. Nhưng giả định về việc lập mô hình quan sát bằng cách sử dụng các phân bố nhất định là khó có thể biện minh. Hơn nữa, phương pháp sinh cần một lượng lớn dữ liệu huấn luyện để ước tính mô hình kết quả phù hợp với dữ liệu. Vì thế nó có thể không đạt kết quả tốt cho những đồ thị nhỏ hoặc số lượng nhỏ đồ thị.
+
+\begin{table}[htbp]
+	\begin{center}
+		\scalebox{0.5}{
+			\begin{tabular}{|l|l|l|l|}
+				\hline
+				Nhóm phương pháp & Danh mục con & Ưu điểm & Nhược điểm \\
+				\hline \hline
+				\multirow{2}{*}{Phân rã ma trận} & Đồ thị toán tử Laplace Eigenmap            & \multirow{2}{*}{Xem xét toàn cục các đỉnh lân cận} &
+				\multirow{2}{*}{Sử dụng không gian và thời gian tính toán lớn}\\
+				\cline{2-2}
+				& Phân rã ma trận bằng xấp xỉ đỉnh & & \\
+				\hline
+				\multirow{3}{*}{Tái cấu trúc} & Cực đại hóa xác xuất tái cấu trúc cạnh & \multirow{3}{*}{Huấn luyện tương đối hiệu quả} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Tối ưu chỉ sử dụng thông tin cục bộ. \\ Ví dụ như các cạnh (hàng xóm 1 nước) \\ hoặc cặp đỉnh xếp hạng\end{tabular}} \\ \cline{2-2}
+				& Tối thiểu hóa mất mát dựa trên khoảng cách & & \\ \cline{2-2}
+				& Tối thiểu hóa xếp hạng mất mát dựa trên lề & & \\ \hline
+				\multirow{3}{*}{Đồ thị lõi} & Dựa trên graphlet & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Hiệu quả, chỉ tính những nhánh\\ \\ cấu trúc đơn vị mong muốn\end{tabular}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Nhánh cấu trúc thì không độc lập\\ \\ Số chiều nhúng tăng lên theo hàm mũ\end{tabular}} \\ \cline{2-2}
+				& Dựa trên mẫu nhánh cây   & & \\ \cline{2-2}
+				& Dựa trên bước nhảy ngẫu nhiên & & \\ \hline
+				
+				\multirow{3}{*}{Mô hình sinh} & Nhúng đồ thị dựa trên không gian ẩn & Phép nhúng có thể giải thích được & Khó điều chỉnh lựa chọn phân bố \\ \cline{2-3}
+				
+				& Nhúng kết hợp ngữ nghĩa & Tận dụng nhiều thông tin nguồn & Yêu cầu một lượng lớn dữ liệu huấn luyện\\
+				& & một cách tự nhiên & \\ \hline
+				
+				\multirow{3}{*}{Học sâu} & Sử dụng bước ngẫu nhiên & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}Hiệu quả và nhanh chóng\\ \\ Không phải trích đặc trưng\end{tabular}}& \begin{tabular}[c]{@{}l@{}}Chỉ xem xét đến nội dung cục bộ trong\\ một đường đi\\ Khó để tìm kiếm chiến lược lấy mẫu tối ưu\end{tabular} \\ \cline{2-2} \cline{4-4} 
+				& Không sử dụng bước ngẫu nhiên &  & Chi phí tính toán cao \\ \hline
+			\end{tabular}
+		}
+		\caption{Bảng so sánh ưu và nhược điểm của các kỹ thuật nhúng đồ thị}
+		\label{tab:graphEmbeddingTechCompare}
+	\end{center}
+\end{table}
+
+Trong các phương pháp trên, nhóm phương pháp nhúng đồ thị bằng học sâu giúp học được các biểu diễn phức tạp và đạt được kết quả hứa hẹn nhất hiện nay. 
+
+Tuy nhiên, nhược điểm của nhóm phương pháp học sâu đối với nhúng đồ thị là nếu coi các đỉnh và cạnh trong đồ thị như một lưới để thực hiện tích chập thì sẽ không đúng với bản chất của đồ thị vì không đảm bảo cấu trúc không gian của đồ thị. Mô hình mạng chú ý trên đồ thị dựa trên cơ chế 	chú ý giúp tổng hợp thông tin dựa vào các trọng số chú ý của một thực thể này đối với một thực thể khác. Chúng tôi cho rằng đây là hướng nghiên cứu tương tự như cơ chế ghi nhớ và chú ý của con người \cite{memoryandattention:2020} : Ghi nhớ là quá trình liên kết những gì chưa biết với những gì đã biết \cite{factsaboutmemory:2020}. Vì vậy đây là hướng nghiên cứu chúng tôi chọn trong các nhóm phương pháp trên.
+
+%
+%Trong cơ chế chú ý, khi nhân các vector
+%
+
+\subsection{Cơ chế cộng tác đa đỉnh chú ý}
+
+Cơ chế chú ý đa đỉnh (multi-head attention) là một phương pháp con của mô hình Transformer \cite{vaswani2017attention} được nhóm tác giả đề xuất năm 2017 giúp thể hiện sự quan trọng của một từ với các từ khác trong một câu. Cơ chế chú ý đa đỉnh có thể đại diện cho bất kỳ phép tính tích chập nào \cite{cordonnier2019relationship}. Trong phần này chúng tôi sẽ trình bày chi tiết về cơ chế chú ý đa đỉnh cũng như cải tiến mới nhất trên cơ chế chú ý đa đỉnh \cite{cordonnier2020multi} được chúng tôi gọi là \textit{cộng tác đa đỉnh chú ý} (collaborate multi-head attention).
+
+\subsubsection{Cơ Chế Chú Ý (Attention Mechanism)}
+\label{sec:attentionMechanism}
+
+Ta gọi $\mathbf{X} = \Big\{\overrightarrow{x_1}, \overrightarrow{x_2}, ...,  \overrightarrow{x_{N_x}}\Big\}$ và $\mathbf{Y} = \Big\{\overrightarrow{y_1}, \overrightarrow{y_2}, ...,  \overrightarrow{y_{N_y}}\Big\}$ là các ma trận nhúng đầu vào, với mỗi dòng $i^{\text{th}}$ hay $j^{\text{th}}$ trong ma trận $\mathbf{X}$ hay $\mathbf{Y}$ là một vector nhúng $\overrightarrow{x_i} \in \mathbb{R}^{1 \times D_{\text{in}}}$, $\overrightarrow{y_j} \in \mathbb{R}^{1 \times D_{\text{in}}}$.
+Cơ chế chú ý là quá trình biến đổi vector có $D_{\text{in}}$ chiều thành vector đầu ra có $D_{\text{attention}}$ chiều để thể hiện sự quan trọng của từng $N_x$ phần tử $x$ so với tất cả $N_y$ các phần tử $y$. Với $\mathbf{X} \in \mathbb{R}^{N_x \times D_\text{in}}$ và $\mathbf{Y} \in \mathbb{R}^{N_y \times D_\text{in}}$ là các ma trận nhúng đầu vào, và $\mathbf{H} \in \mathbb{R}^{N_x \times D_\text{attention}}$ là ma trận nhúng đầu ra như công thức sau :
+
+\begin{equation}
+\label{attention}
+\mathbf{H} = \text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\Big(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\Big) \mathbf{V}
+\end{equation}
+
+với  $\mathbf{Q} = \mathbf{X}\mathbf{W}_Q, \mathbf{K} = \mathbf{Y} \mathbf{W}_K, \mathbf{V} = \mathbf{Y} \mathbf{W}_V$
+
+Các ma trận trọng số 
+$\mathbf{W}_Q \in \mathbb{R}^{D_{\text{in}} \times D_{k}}$, 
+$\mathbf{W}_K \in \mathbb{R}^{D_{\text{in}} \times D_{k}}$ và 
+$\mathbf{W}_V \in \mathbb{R}^{D_{\text{in}} \times D_{\text{attention}}}$ là các vector thể hiện quá trình tham số hóa để biến đổi vector nhúng đầu vào $D_{\text{in}}$ chiều thành vector nhúng $D_{k}$ hoặc $D_{\text{attention}}$ chiều. $\mathbf{Q}\mathbf{K}^T$ là quá trình nhân tích vô hướng của từng vector nhúng $x$ ban đầu với tất cả vector nhúng y. Việc chia cho $\sqrt{d_k}$ là để chuẩn hóa theo số chiều $k$. Sau đó kết quả được chuẩn hóa lại bằng hàm \textit{softmax} để thể hiện độ lớn xác xuất của từng giá trị chú ý đối với phần tử x. Cuối cùng, kết quả được nhân với vector nhúng $\mathbf{V}$ để biến đổi từ vector nhúng $D_{k}$ chiều thành vector nhúng mới  $D_{\text{attention}}$ chiều .
+
+Nếu $\mathbf{X} = \mathbf{Y}$ nghĩa là chúng ta đang tính sự quan trọng của một phần tử so với chính các phần tử khác trong ma trận nhúng ban đầu và ta gọi nó là cơ chế tự-chú ý (self-attention mechanism) .
+
+\textbf{Cơ Chế Chú Ý Đa Đỉnh (Multi-Head Attention Mechanism)}
+
+Tương tự như cơ chế chú ý ở trên, cơ chế chú ý đa đỉnh (multi-head attention mechanism) là quá trình biến đổi $N_x$ vector nhúng ban đầu $D_{\text{in}}$ chiều thành vector nhúng $D_{\text{multi-head}}$ chiều với thông tin được tổng hợp từ nhiều đỉnh khác nhau giúp ổn định trong quá trình huấn luyện. Cơ chế chú ý đa đỉnh sẽ ghép $N_{\text{head}}$ các đầu ma trận chú ý $\mathbf{H}$ rồi sau đó tiếp tục nhân với một ma trận trọng số để biến đổi từ ma trận nhúng $\mathbf{X} \in \mathbb{R}^{N_x \times D_\text{in}}$ ban đầu thành ma trận nhúng mới $\mathbf{X}' \in \mathbb{R}^{N_x \times D_{\text{multi-head}}}$ như công thức sau :
+
+\begin{equation}
+\label{headAttention}
+\begin{split}
+\mathbf{X}'& =\left(\bigparallel_{h=1}^{N_{\text{head}}}\mathbf{H}^{(h)}\right)\mathbf{W}^{O} \\
+& = \left(\bigparallel_{h=1}^{N_{\text{head}}} \text{Attention}(\mathbf{X} \mathbf{W}_Q^{(h)}, \mathbf{Y} \mathbf{W}_K^{(h)}, \mathbf{Y} \mathbf{W}_V^{(h)}) \right)\mathbf{W}^{O}
+\end{split}
+\end{equation}
+
+Trong đó các ma trận trọng số $\mathbf{W}_Q^{(h)}$, $\mathbf{W}_K^{(h)} \in \mathbb{R}^{D_{\text{in}} \times D_{k}}$ và $\mathbf{W}_V^{(h)} \in \mathbb{R}^{D_{\text{in}} \times D_{\text{attention}}}$ thuộc vào từng lớp chú ý $h \in [N_{\text{head}}]$ khác nhau. $\mathbf{W}^{O} \in \mathbb{R}^{N_{\text{head}} D_{\text{attention}} \times D_{\text{multi-head}}}$ để tham số hóa quá trình biến đổi ma trận các đỉnh đã ghép thành một ma trận nhúng kết quả cuối cùng.
+
+\textbf{Lớp cộng tác đa đỉnh chú ý}
+
+\cite{weng2018attention}
+
+\subsection{Mạng đồ thị chú ý}
+\label{sec:GAT}
+
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{images/graph_example.png}
+	\caption{Đồ thị tri thức và các hệ số chú ý chuẩn hóa của thực thể}
+	\label{fig:graphExample}
+\end{figure}
+
+Với kết quả cải thiện đáng kể của \textit{cơ chế chú ý} trong xử lý ngôn ngữ tự nhiên, nó còn được nghiên cứu để áp dụng vào xử lý ảnh \cite{ramachandran2019stand}. Cơ chế chú ý có thể đại diện cho bất kỳ phép tính tích chập nào \cite{cordonnier2019relationship}, vì vậy cơ chế chú ý đã được nghiên cứu để áp dụng vào các mô hình nhúng đồ thị tri thức thay cho một phương pháp tính chập như Mạng Đồ Thị Tích Chập (GCNs \cite{kipf2016semi}). Ở phần này chúng tôi sẽ trình bày chi tiết về cách cơ chế chú ý ở \ref{sec:attentionMechanism} được áp dụng vào việc nhúng đồ thị theo phương pháp Mạng Đồ Thị Chú Ý (Graph Attention Network - GAT \cite{velivckovic2017graph}).
+
+Đầu vào của mô hình \textit{mạng đồ thị chú ý} là tập hợp các vector nhúng được khởi tạo ngẫu nhiên theo phân phối chuẩn biểu diễn đặc trưng của từng thực thể (entity) trong không gian : $\mathbf{E} = \Big\{\overrightarrow{e_1}, \overrightarrow{e_2}, ...,  \overrightarrow{e_{N_e}}\Big\}$. Mục tiêu của mô hình là biến đổi thành ma trận nhúng đầu ra mới $\mathbf{E}'' = \Big\{\overrightarrow{e''_1}, \overrightarrow{e''_2}, ...,  \overrightarrow{e''_{N_e}}\Big\}$ với khả năng tổng hợp thông tin nhúng từ các thực thể lân cận; $\mathbf{E} \in \mathbb{R}^{N_e \times D_{\text{in}}}$ và $\mathbf{E}'' \in \mathbb{R}^{N_e \times D''}$ tương ứng là ma trận nhúng đầu vào và ma trận nhúng đầu ra của của tập hợp thực thể, $N_e$ là kích thước của tập thực thể, $D_{\text{in}}$ và $D''$ tương ứng là số chiều nhúng đầu vào, và số chiều nhúng đầu ra
+
+Tương tự như cơ chế chú ý đa đỉnh được trình bày ở mục \ref{sec:attentionMechanism}, việc áp dụng của cơ chế chú ý đa đỉnh trên đồ thị tri thức sẽ áp dụng với chính mỗi vector nhúng thực thể giống như \textit{cơ chế tự-chú ý} (self-attention mechanism), mỗi đỉnh sẽ chú ý với tất cả các đỉnh khác trong đồ thị. Việc tính hệ số chú ý giữa tất cả các đỉnh với nhau trong đồ thị là không có ý nghĩa nếu không có mối quan giữa chúng và khối lượng tính toán rất lớn, vì vậy mô hình áp dụng cơ chế gọi là \textit{mặt nạ chú ý} (mask attention) bằng cách bỏ đi tất cả những hệ số chú ý không có quan hệ trong đồ thị, đó chính xác là giá trị của lân cận bậc nhất (Định nghĩa \ref{def:firstOrderProximity}) của một đỉnh trong đồ thị. Khi đó $\mathbf{X} = \mathbf{Y} = \mathbf{E}$ (\ref{sec:attentionMechanism}) và hệ số chú ý của cơ chế mặt nạ chú ý được hiểu là sự quan trọng của một đỉnh $j \in \mathcal{N}_{i}$ đối với đỉnh gốc $i$, với $\mathcal{N}_{i}$ là tập hợp tất cả những hàng xóm của đỉnh $i$ (bao gồm cả $i$). 
+
+Việc áp dụng cơ chế chú ý đa đỉnh (\textit{multi-head attention}) ở \ref{headAttention} vào đồ thị được mô tả như sau :
+
+\begin{equation}
+\label{maskAttention}
 \centering
-{e_{ij}}&={a(W \overrightarrow{e_i}, W \overrightarrow{e_j})}
-\end{align}
+{e_{ij}}={f_{\text{mask attention}}(\mathbf{W} \overrightarrow{e_i}, \mathbf{W} \overrightarrow{e_j})}
+\end{equation}
 
-trong đó $e_{ij}$ là giá trị chú ý của một cạnh $(e_i, e_j)$ trong đồ thị $\mathcal{G}$ hay $e_{ij}$ thể hiện sự quan trọng của đặc trưng cạnh $(e_i, e_j)$ so với thực thể $e_i$. Sau đó, chúng ta áp dụng hàm \textit{softmax} qua tất cả các giá trị nhúng của hàng xóm để tạo ra $\alpha_{ij}$ . Quá trình tổng hợp các sự chú ý được thể hiện ở biểu thức sau : 
+trong đó $e_{ij}$ là hệ số chú ý đa đỉnh của một cạnh $(e_i, e_j)$ đối với thực thể gốc $e_i$ trong đồ thị $\mathcal{G}_{\text{know}}$. $\mathbf{W}$ là ma trận trọng số để tham số hóa quá trình biến đổi tuyến tính. $f_{\text{mask attention}}$ là hàm áp dụng cơ chế chú ý.
 
-\begin{align}
+Trong mô hình GAT, mô hình sẽ đi qua hai quá trình biến đổi vector nhúng $\overrightarrow{e_i}$ của thực thể $e_i$. Toàn bộ mô hình bao gồm hai bước biến đổi, với mỗi bước là một quá trình biến đổi vector nhúng bằng cơ chế chú ý đa đỉnh như sau :
+\begin{equation}
+\label{gatProcess}
+\overrightarrow{e_i} \xrightarrow{f_{\text{mask attention}}^{(1)}} \overrightarrow{e'_i} \xrightarrow{f_{\text{mask attention}}^{(2)}} \overrightarrow{e''_i}
+\end{equation}
+
+Ở quá trình chú ý đa đỉnh đầu tiên ($f_{\text{mask attention}}^{(1)}$), mô hình sẽ tổng hợp thông tin từ các thực thể lân cận và ghép chồng lên nhau để tạo ra vector $\overrightarrow{e'_i}$, với $\overrightarrow{e'_i} \in \mathbb{R}^{1 \times D'}$ . Ở bước thứ hai ($f_{\text{mask attention}}^{(2)}$), lớp chú ý đa đỉnh đã đỉnh không còn nhạy cảm với quá trình tự-chú ý nên kết quả sẽ được tính \textit{trung bình} thay vì ghép các đỉnh chú ý lại với nhau, vector $\overrightarrow{e'_i}$ tiếp tục được xem là vector nhúng đầu vào để biến đổi thành vector nhúng $\overrightarrow{e''_i}$ cuối cùng với $\overrightarrow{e''_i} \in \mathbb{R}^{1 \times D''}$.
+
+Đầu tiên, giống như cơ chế chú ý \ref{attention}, mỗi vector nhúng sẽ được nhân với một ma trận trọng số $\mathbf{W} \in \mathbb{R}^{D_k \times D_{\text{in}}}$ để thể tham số hóa quá trình biến đổi tuyến tính từng vector nhúng của thực thể từ số chiều $D_{\text{in}}$ lên số chiều $D_k$ có đặc trưng cao hơn :
+
+\begin{equation}
+\overrightarrow{h_i} = \mathbf{W} \overrightarrow{e_i}
+\end{equation}
+
+khi đó $\overrightarrow{e_i} \in \mathbb{R}^{D_{\text{in}} \times 1}
+\xrightarrow{} \overrightarrow{h_i} \in \mathbb{R}^{D_k \times 1}$
+
+Sau đó, ta ghép các cặp vector nhúng thực thể vừa biến đổi tuyến tính với nhau để tính hệ số chú ý, hệ số chú ý $e_{ij}$ thể hiện sự quan trọng của đặc trưng cạnh $(e_i, e_j)$ đối với thực thể gốc $e_i$ hay sự quan trọng của một thực thể $e_j$ có quan hệ với thực thể gốc $e_i$ , ta áp dụng hàm $\text{LeakyReLU}$ để lấy giá trị tuyệt đối của hệ số chú ý, mỗi hệ số chú ý $e_{ij}$ được tính theo công thức sau :
+
+\begin{equation}
+e_{ij} = \Big( \text{LeakyReLU} \Big( \overrightarrow{\mathbf{a}}^{T} [\overrightarrow{h_i} || \overrightarrow{h_j}]\Big) \Big)
+\end{equation}
+
+với ${.}^{T}$ là phép chuyển vị, $||$ là phép ghép. Tương tự \ref{attention}, tuy nhiên thay vì thực hiện tính tích vô hướng thì ta sử dụng một \textit{cơ chế chú ý chung} (shared attentional mechanism) $\overrightarrow{\mathbf{a}}$ : $\mathbb{R}^{D_k} \times \mathbb{R}^{D_k} \xrightarrow{} \mathbb{R}$ để tính hệ số chú ý. Như đã trình bày ở \ref{maskAttention}, ta thực hiện tự chú ý giữa tất cả các đỉnh với nhau bằng cơ chế mặt nạ chú ý để bỏ hết tất cả thông tin cấu trúc.
+Để có thể dễ dàng so sánh các hệ số chú ý với nhau giữa tất cả các thực thể, một hàm \textit{softmax} được áp dụng để chuẩn hóa trên tất cả các hàng xóm $e_j$ có quan hệ với thực thể gốc $e_i$ : $\alpha_{ij} = \text{softmax}_j(e_{ij})$. Kết hợp lại ta có công thức của hệ số chú ý chuẩn hóa của từng hàng xóm đối với thực thể gốc như sau :
+
+\begin{equation}
+\label{attentionCoeff}
+\alpha_{ij} = \frac{
+	\text{exp} \Big( \text{LeakyReLU} \Big( \overrightarrow{\mathbf{a}}^{T} [ \overrightarrow{h_i} || \overrightarrow{h_j}]\Big) \Big))
+}
+{
+	\sum_{k \in \mathcal{N}_i}
+	\text{exp} \Big( \text{LeakyReLU} \Big( \overrightarrow{\mathbf{a}}^{T} [\overrightarrow{h_i} || \overrightarrow{h_k}]\Big) \Big))
+}
+\end{equation}
+
+Ở bước này, mô hình GAT tương tự như GCN \cite{kipf2016semi}, các vector nhúng từ hàng xóm sẽ được tổng hợp với nhau và mở rộng hay thu nhỏ (scale) theo hệ số chú ý đã chuẩn hóa :
+
+\begin{equation}
+\label{scaleAttentionCoef}
 \centering
-{\overrightarrow{a_{ij}}}&={\sigma\left(\sum_{j\in \mathcal{N}_i} {\alpha_{ij} \mathbf{W} \overrightarrow{e_j} }\right)}
-\end{align}
+{\overrightarrow{e'_i}}={\sigma\left(\sum_{j\in \mathcal{N}_i} {\alpha_{ij} \overrightarrow{h_j} }\right)}
+\end{equation}
 
-Tiếp theo mô hình GAT sẽ đi qua \textit{lớp chú ý đa đỉnh}(multi-head attention) để ổn định quá trình học bằng cách ghép $A$ đỉnh chú ý với nhau :
+Tương tự như lớp chú ý đa đỉnh, ta sẽ ghép $N_{\text{head}}$ đỉnh lại với nhau để giúp ổn định quá trình học ở bước ($f_{\text{mask attention}}^{(1)}$ \ref{gatProcess}) đầu tiên của mô hình:
 
-\begin{align}
-{\overrightarrow{x'_i}}&={\bigparallel_{a=1}^{A}\sigma\left(\sum_{j\in \mathcal{N}_i}\alpha_{ij}^{a} \mathbf{W}^{a} \overrightarrow{x_{j}} \right)}
-\end{align}
+\begin{equation}
+\label{multiHeadAttention}
+{\overrightarrow{e'_i}}={\bigparallel_{h=1}^{N_{\text{head}}}\sigma\left(\sum_{j\in \mathcal{N}_i}\alpha_{ij}^{h} \mathbf{W}^{h} \overrightarrow{h_{j}} \right)}
+\end{equation}
 
-trong đó phép $||$ biểu diễn quá trình ghép chồng lên nhau và $\sigma$ là bất kỳ hàm biến đổi phi tuyến tính nào, $\alpha_{ij}^a$ là hệ số chú ý được chuẩn hóa của cạnh $(e_i, e_j)$ được tính từ lớp thứ $a^{th}$	 cơ chế chú ý. Cuối cùng $\overrightarrow{x'_i}$ được coi là vector thực thể nhúng mới và cho vào lớp chú ý đa đỉnh với đầu ra thay vì ghép chồng như trên thì được tính trung bình như công thức sau :
+trong đó $\sigma$ là bất kỳ hàm biến đổi phi tuyến tính nào, $\alpha_{ij}^h$ là hệ số chú ý được chuẩn hóa của cạnh $(e_i, e_j)$ được tính từ lớp thứ $h^{th}$, tương tự như công thức \ref{attention} $\mathbf{W}^h$ là ma trận trọng số để biến đổi tuyến tính vector nhúng đầu vào, với $\mathbf{W}^h$ thuộc các lớp ghép chồng $h^{th}$ khác nhau. Cuối cùng vector nhúng mới $\overrightarrow{e'_i} \in \mathbb{R}^{1 \times D'}$ với $D' = N_{\text{head}} D_{\text{k}}$ tiếp tục được xem là vector đầu vào để thực hiện cơ chế chú ý. Tuy nhiên ở bước thứ hai ($f_{\text{mask attention}}^{(2)}$ \ref{gatProcess}) giá trị chú ý đa đỉnh sẽ được tính trung bình thay vì ghép chồng lên nhau theo công công thức sau :
 
-\begin{align}
-{\overrightarrow{x''_i}}&={\sigma\left(\frac{1}{A} \sum_{a=1}^{A}\sum_{j\in \mathcal{N}_i}\alpha_{ij}^{a} \mathbf{W}^{a} \overrightarrow{x'_{j}} \right)}
-\end{align}
+\begin{equation}
+\label{multiHeadConcat}
+{\overrightarrow{e''_i}}={\sigma\left(\frac{1}{N_{\text{head}}} \sum_{h=1}^{N_{\text{head}}}\sum_{j\in \mathcal{N}_i}\alpha_{ij}^{h} \mathbf{W}^{h} \overrightarrow{e'_{j}} \right)}
+\end{equation}
 
-\subsection{Knowledge Base Attention Network (KBAT)}
+\subsection{Mô hình KBAT}
 
-Trong phần này sẽ trình bày về mô hình Knowledge Base Attention (KBAT \cite{nathani2019learning}), là một mô hình cải tiến dựa trên mô hình GAT ở trên bằng cách lấy thêm thông tin của mối quan hệ trên một cạnh. Mục tiêu của mô hình là tạo ra hai ma trận mới biểu thị cho \textbf{ma trận nhúng thực thể} và \textbf{ma trận nhúng quan hệ}. Mô hình sẽ biến đổi từ ma trận thực thể $\mathbf{E} \in \mathbb{R}^{N_e \times T}$ và ma trận quan hệ $\mathbf{R} \in \mathbb{R}^{N_r \times P}$ để tạo thành một ma trận thực thể mới $\mathbf{E'} \in \mathbb{R}^{N_e \times T'}$ và ma trận quan hệ mới $\mathbf{R'} \in \mathbb{R}^{N_r \times P'}$, trong đó với mỗi dòng thứ $i^{\text{th}}$ trong ma trận với trọng số tương ứng biểu thị cho một thực thể $e_i$ hoặc một mối quan hệ $r_i$; $N_e$ hoặc $N_r$ tương ứng là số lượng của tập thực thể và tập quan hệ; trong khi $T$ và $P$ tương ứng là số chiều đầu vào của vector nhúng; thì $T'$ và $P'$ tương ứng là số chiều của vector nhúng đầu ra. Các ma trận trọng số trên được khởi tạo ngẫu nhiên theo phân phối chuẩn hoặc tái huấn luyện(pre-train) bằng mô hình TransE \cite{bordes2013translating} .
+Trong đồ thị tri thức, một thực thể không thể là một đại diện đầy đủ cho một cạnh, vì một thực thể có thể đóng nhiều vai trò khác nhau phụ thuộc vào từng loại quan hệ khác nhau. Ví dụ như hình \ref{fig:graphExample}, Donald Trump vừa đóng là vai trò là tổng thống, vừa đóng vai trò là người chồng. Do đó, mô hình Nhúng đồ thị dựa trên chú ý - KBAT (graph attention based embeddings \cite{nathani2019learning}) kết hợp thêm thông tin của quan \textit{quan hệ và đặc trưng các đỉnh hàng xóm} vào trong cơ chú ý.
 
-Tuy nhiên một cạnh trong đồ thị được biểu diễn bởi cặp vector $(\overrightarrow{e_\text{head}}, \overrightarrow{e_\text{tail}})$ không biểu thị thông tin một cách đầy đủ. Một tri thức 
-Tuy nhiên một vector $\overrightarrow{e_i}$ hay $\overrightarrow{r_k}$ không thể biểu thị một cách đầy đủ tri thức của một thực thể $e_i$ hay quan hệ $r_k$ trong một đồ thị, vì một tri thức sẽ có thể có mối liên hệ với những tri thức lân cận hay nói cách khác một \textbf{thực thể nhúng} (entity embedding) hay một \textbf{quan hệ nhúng} (relation embedding) sẽ cần thêm thông tin của các vector nhúng của thực thể lân cận và quan hệ lân cận khác để có thể là một đại diện đầy đủ . Chính vì vậy phương pháp \textit{n-hop neighborhood} \cite{lin2018multi} sẽ giúp bổ sung thêm thông tin lân cận của thực thể $e_i$ và quan hệ $r_k$ bằng cách ghép chồng để tạo thành một vector mới theo công thức sau :
-\begin{align}
-{\overrightarrow{h_i} = [\overrightarrow{e_i} \bigparallel_{\text{axis}=1} \overrightarrow{e_{i_{\text{n-hop}}}}]} \hspace{0.5cm};\hspace{1.5cm}&
-{\overrightarrow{g_k} = [\overrightarrow{r_k} \bigparallel_{\text{axis}=1} \overrightarrow{r_{k_{\text{n-hop}}}}]}
-\end{align}
+Mô hình sẽ biến đổi từ ma trận nhúng thực thể 
+$\mathbf{E} = \Big\{\overrightarrow{e_1}, \overrightarrow{e_2}, ...,  \overrightarrow{e_{N_e}}\Big\} \xrightarrow{} \mathbf{E''} = \Big\{\overrightarrow{e''_1}, \overrightarrow{e''_2}, ...,  \overrightarrow{e''_{N_e}}\Big\}$, với $\mathbf{E} \in \mathbb{R}^{N_e \times D_{\text{in}}}$ và $\mathbf{E''} \in \mathbb{R}^{N_e \times D''}$.
+Đồng thời biến đổi ma trận nhúng quan hệ 
+$\mathbf{R} = \Big\{\overrightarrow{r_1}, \overrightarrow{r_2}, ...,  \overrightarrow{r_{N_r}}\Big\} \xrightarrow{} \mathbf{R''} = \Big\{\overrightarrow{r''_1}, \overrightarrow{r''_2}, ...,  \overrightarrow{r''_{N_r}}\Big\}$ với $\mathbf{R} \in \mathbb{R}^{N_r \times P_{\text{in}}}$ và $\mathbf{R''} \in \mathbb{R}^{N_r \times P''}$. Tương tự như mô hình GAT đã trình bày ở mục \ref{sec:GAT}, mô hình sẽ biến đổi vector nhúng thực thể $D_{\text{in}}$ chiều thành $D''$ chiều với thông tin được tổng hợp từ các hệ số chú ý lân cận. $P_{\text{in}}$ và $P''$ lần lượt là số chiều của vector nhúng quan hệ đầu vào và đầu ra. $N_e$, $N_r$ tương ứng là kích thước của tập thực thể và tập quan hệ trong $\mathcal{G}_{know}$.
 
-Trong đó $\overrightarrow{h_i}$, $\overrightarrow{g_k}$ tương ứng là vector nhúng mới của thực thể $e_i$ và các thực thể lân cận ($e_{i_{\text{n-hop}}}$) hay quan hệ $r_k$ và các quan hệ lân cận ($r_{k_{\text{n-hop}}}$); ký hiệu $\bigparallel_{\text{axis}=1}$ biểu thị cho phép xếp chồng lên nhau. Các vector $\overrightarrow{e_{i_{\text{n-hop}}}}$ và $\overrightarrow{r_{k_{\text{n-hop}}}}$ được tính bằng tổng vector nhúng của các thực thể hoặc các quan hệ lân cận đi qua $n-hop$ độ sâu bắt đầu từ $e_i$ theo công thức sau : 
+Mô hình KBAT sẽ ghép các vector nhúng thực thể và vector nhúng quan hệ theo cấu trúc như sau :
 
-\begin{align}
-{\overrightarrow{e_{i_{\text{n-hop}}}} = \bigparallel_{d=1}^{\text{n-hop}} \sum_{n \in \mathcal{N}_i} \overrightarrow{e_n^d}} \hspace{0.5cm};\hspace{1.5cm}&
-{\overrightarrow{r_{k_{\text{n-hop}}}} = \bigparallel_{d=1}^{\text{n-hop}} \sum_{m \in \mathcal{N}_k} \overrightarrow{r_m^d}}
-\end{align}
+\begin{equation}
+\label{attentionWithRelation}
+\overrightarrow{t_{ijk}} = \mathbf{W_1} [\overrightarrow{e_i} || \overrightarrow{e_j} || \overrightarrow{r_k}]
+\end{equation}
 
-Với mối thực thể $e_n$ hay quan hệ $r_m$ có độ sâu d (depth) bắt đầu từ thực thể $e_i$, ta sẽ tính tổng các vector nhúng và ghép chồng với nhau.
+Với $\overrightarrow{t_{ijk}}$ là vector nhúng đại diện cho bộ ba  $t_{ij}^k = (e_i, r_k, e_j)$ với $e_j$, và $r_k$ lần lượt là các thực thể hàng xóm và quan hệ nối giữa đỉnh gốc $e_i$ với đỉnh $e_j$ , $\mathbf{W} \in \mathbb{R}^{D_k \times (2 D_{\text{in}} + P_{\text{in}})}$ là ma trận trọng số thể hiện quá trình biến đổi tuyến tính từ các vector đã ghép lại với nhau thành một vector với số chiều $D_k$ mới. Các ma trận trọng số trên được khởi tạo ngẫu nhiên theo phân phối chuẩn hoặc tái huấn luyện (pre-train) bằng mô hình TransE \cite{bordes2013translating}.
 
-Để biểu thị cho quá trình biến tuyến tính của vector nhúng, ta cho mỗi vector nhúng đi qua một ma trận trọng số : $\overrightarrow{h'_i} = \mathbf{W}_{\text{entity}} \overrightarrow{h_i}$ 
-và $\overrightarrow{g'_i} = \mathbf{W}_{\text{relation}} \overrightarrow{g_i}$. Tuy nhiên để thu được một trọng số mới biểu diễn bộ ba $t^k_{ij} = (e_{\text{head}}, relation, e_{\text{tail}})$ tương ứng với một cạnh trong trong KB. Ta thực hiện quá trình biến đổi tuyến tính đó bằng cách ghép cả thực thể và mối quan hệ với nhau rồi nhân với một ma trận trọng số chung như công thức sau :
+Tương tự với công thức \ref{attentionCoeff} của mô hình GAT, ta cần tính hệ số chú ý của từng cạnh đối với từng đỉnh, sau đó áp dụng hàm \textit{softmax} để chuẩn hóa hệ số lại theo công thức sau :
 
-\begin{align}
-\overrightarrow{t_{ijk}} = \mathbf{W_1} [\overrightarrow{h_i} || \overrightarrow{h_j} || \overrightarrow{g_k}]
-\end{align}
+\begin{equation}
+\label{attentionRelationCoeff}
+\begin{split}
+\alpha_{ijk}& = \text{softmax}_{jk}(\text{LeakyReLU}(\mathbf{W_2} \overrightarrow{t_{ijk}}))\\
+&= \frac{
+	\text{exp} \Big( \text{LeakyReLU} \Big( \mathbf{W_2} \overrightarrow{t_{ijk}}\Big) \Big))
+}
+{
+	\sum_{n\in \mathcal{N}_i} \sum_{r\in \mathcal{R}_{in}}
+	\text{exp} \Big( \text{LeakyReLU} \Big( \mathbf{W_2} \overrightarrow{t_{inr}} \Big) \Big)
+}
+\end{split}
+\end{equation}
 
-trong đó $\overrightarrow{t_{ijk}}$ là một vector nhúng biểu diễn cho một bộ ba $t^k_{ij}$. Các vector $\overrightarrow{h_i}$, $\overrightarrow{h_j}$ và $\overrightarrow{g_j}$ tương ứng là vector nhúng của các thực thể $e_i$, $e_j$ và quan hệ $r_k$. $\mathbf{W_1} \in \mathbb{R}^{3 T \times S^\text{batch}}$ . Để áp dụng cơ chế chú ý (attention mechanisms \cite{vaswani2017attention}), ta cần học sự quan trọng của một cạnh $t_{ij}^k$ bởi giá trị của $b_{ij}^k$. Để tham số hóa quá trình biến đổi tuyến tính ta nhân với ma trận trọng số $\mathbb{W}_{2}$ và lấy giá trị chú ý tuyệt đối bằng hàm $LeakyRelu$ theo công thức sau :
+%Trong đồ thị, mỗi cạnh của thực thể không chỉ được biểu diễn thông tin bởi thực thể đầu $e_\text{head}$ và thực thể đích $e_\text{tail}$ mà có các quan hệ giữa chúng. Hơn nữa trong một cạnh, các thực thể còn có thể đóng nhiều vai trò khác nhau phụ thuộc vào các loại quan hệ khác nhau. Vì vậy phương pháp KBGAT bổ sung thêm thông tin của một vector nhúng quan hệ vào một cạnh  nhúng $(\overrightarrow{e_\text{i}}, \overrightarrow{r_k}, \overrightarrow{e_\text{j}})$. Tuy nhiên một vector $\overrightarrow{e_i}$ hay $\overrightarrow{r_k}$ không thể biểu thị một cách đầy đủ tri thức của một thực thể $e_i$ hay quan hệ $r_k$ trong một đồ thị, vì một tri thức sẽ có thể có mối liên hệ với những tri thức lân cận hay nói cách khác một \textbf{thực thể nhúng} (entity embedding) hay một \textbf{quan hệ nhúng} (relation embedding) sẽ cần thêm thông tin của các vector nhúng của thực thể lân cận và quan hệ lân cận khác để có thể là một đại diện đầy đủ . Chính vì vậy phương pháp \textit{n-hop neighborhood} \cite{lin2018multi} sẽ giúp bổ sung thêm thông tin lân cận của thực thể $e_i$ và quan hệ $r_k$ bằng cách ghép chồng để tạo thành một vector mới theo công thức sau :
+%\begin{align}
+%{\overrightarrow{h_i} = [\overrightarrow{e_i} \bigparallel_{\text{axis}=1} \overrightarrow{e_{i_{\text{n-hop}}}}]} \hspace{0.5cm};\hspace{1.5cm}&
+%{\overrightarrow{g_k} = [\overrightarrow{r_k} \bigparallel_{\text{axis}=1} \overrightarrow{r_{k_{\text{n-hop}}}}]}
+%\end{align}
+%
+%Trong đó $\overrightarrow{h_i}$, $\overrightarrow{g_k}$ tương ứng là vector nhúng mới của thực thể $e_i$ và các thực thể lân cận ($e_{i_{\text{n-hop}}}$) hay quan hệ $r_k$ và các quan hệ lân cận ($r_{k_{\text{n-hop}}}$); ký hiệu $\bigparallel_{\text{axis}=1}$ biểu thị cho phép xếp chồng lên nhau. Các vector $\overrightarrow{e_{i_{\text{n-hop}}}}$ và $\overrightarrow{r_{k_{\text{n-hop}}}}$ được tính bằng tổng vector nhúng của các thực thể hoặc các quan hệ lân cận đi qua $n-hop$ độ sâu bắt đầu từ $e_i$ theo công thức sau : 
+%
+%\begin{align}
+%{\overrightarrow{e_{i_{\text{n-hop}}}} = \bigparallel_{d=1}^{\text{n-hop}} \sum_{n \in \mathcal{N}_i} \overrightarrow{e_n^d}} \hspace{0.5cm};\hspace{1.5cm}&
+%{\overrightarrow{r_{k_{\text{n-hop}}}} = \bigparallel_{d=1}^{\text{n-hop}} \sum_{m \in \mathcal{N}_k} \overrightarrow{r_m^d}}
+%\end{align}
+%
+%Với mối thực thể $e_n$ hay quan hệ $r_m$ có độ sâu d (depth) bắt đầu từ thực thể $e_i$, ta sẽ tính tổng các vector nhúng và ghép chồng với nhau.
+%
+%Để biểu thị cho quá trình biến tuyến tính của vector nhúng, ta cho mỗi vector nhúng đi qua một ma trận trọng số : $\overrightarrow{h'_i} = \mathbf{W}_{\text{entity}} \overrightarrow{h_i}$ 
+%và $\overrightarrow{g'_i} = \mathbf{W}_{\text{relation}} \overrightarrow{g_i}$. Tuy nhiên để thu được một trọng số mới biểu diễn bộ ba $t^k_{ij} = (e_{\text{head}}, relation, e_{\text{tail}})$ tương ứng với một cạnh trong KB. Ta thực hiện quá trình biến đổi tuyến tính đó bằng cách ghép cả thực thể và mối quan hệ với nhau rồi nhân với một ma trận trọng số chung như công thức sau :
+%
+%trong đó $\overrightarrow{t_{ijk}}$ là một vector nhúng biểu diễn cho một bộ ba $t^k_{ij}$. Các vector $\overrightarrow{h_i}$, $\overrightarrow{h_j}$ và $\overrightarrow{g_j}$ tương ứng là vector nhúng của các thực thể $e_i$, $e_j$ và quan hệ $r_k$. $\mathbf{W_1} \in \mathbb{R}^{3 T \times S^\text{batch}}$ . Để áp dụng cơ chế chú ý (attention mechanisms \cite{vaswani2017attention}), ta cần học sự quan trọng của một cạnh $t_{ij}^k$ bởi giá trị của $b_{ij}^k$. Để tham số hóa quá trình biến đổi tuyến tính ta nhân với ma trận trọng số $\mathbb{W}_{2}$ và lấy giá trị chú ý tuyệt đối bằng hàm $LeakyRelu$ theo công thức sau :
+%
+%\begin{align}
+%b_{ijk} = \text{LeakyRelu}\Big( \mathbf{W_2} t_{ijk} \Big)
+%\end{align}
+%
+%Sau đó, với mỗi độ lớn của $b^k_{ij}$ được cho qua hàm \textit{softmax} để tính giá trị thể hiện xác xuất của từng giá trị chú ý $\alpha_{ijk}$ đối với từng bộ ba .
 
-\begin{align}
-b_{ijk} = \text{LeakyRelu}\Big( \mathbf{W_2} t_{ijk} \Big)
-\end{align}
-
-Sau đó, với mỗi độ lớn của $b^k_{ij}$ được cho qua hàm \textit{softmax} để tính giá trị thể hiện xác xuất của từng giá trị chú ý $\alpha_{ijk}$ đối với từng bộ ba .
-
-\begin{align}
-{\alpha_{ijk}}&={\text{softmax}_{jk}(b_{ijk})} =\frac{\text{exp}(b_{ijk})}{\sum_{n\in \mathcal{N}_i} \sum_{r\in \mathcal{R}_{in}}\text{exp}(b_{inr})}
-\end{align}
-
-trong đó $\mathcal{N}_i$ là tập hợp những thực thể kế cận của $e_i$; $\mathcal{R}$ tập hợp những quan hệ nối hai thực thể $e_i$ và $e_j$. Để tăng cường đặc trưng cạnh tương ứng với từng xác xuất, ta sẽ nhân giá trị chú ý tương đối $\alpha_{ijk}$ với vector nhúng $\overrightarrow{t_{ijk}}$ đã được biến đổi tuyến tính ban đầu . Mô hình sẽ tạo ra vector thực thể nhúng mới với đã được tổng hợp từ các thực thể lân cận .
-
-\begin{align}
-{\overrightarrow{h'_{i}}}&={\sigma\left(\sum_{j \in \mathcal{N}_i} \sum_{k \in \mathcal{R}_{ij}} \alpha_{ijk} \overrightarrow{t_{ijk}}\right)}
-\end{align}
-
-Tương tự như mạng đồ thị chú ý ở trên, mô hình sẽ đi qua lớp chú ý đa đỉnh để ổn định quá trình học bằng cách ghép A đỉnh chú ý với nhau theo công thức sau :
-
-\begin{align}
-\overrightarrow{h'}_i=\bigparallel_{m=1}^{M} \sigma\left(\sum_{j\in \mathcal{N}(i)}\alpha_{ijk}^{m}t^{m}_{ijk}\right)
-\end{align}
-
-Như quá trình biến đổi tuyến tính của ma trận mối quan hệ ở trên, ma trận $R$ đầu vào sẽ được nhân với một vector nhúng $W$ quan hệ để tạo ra một ma trận mới biểu thể tập hợp các quan hệ nhúng mới :
-
-\begin{align}
-R' = R \mathbf{W^R}; \hspace{2cm} \text{Trong đó : } \mathbf{W^R} \in \mathbb{R}^{P \times P'}
-\end{align}
-
-Trong đó $\mathbf{W^R}$ là ma trận trọng số thể hiện quá trình biến đổi tuyến tính,$P$ và $P'$ lần lượt là số chiều của vector quan hệ nhúng đầu vào và đầu ra. Và trong trường hợp này  $P'$ phải bằng số chiều của vector nhúng thực thể.
-
-Đến đây, ta đã có hai ma trận $H'$ và $R'$ tương ứng là ma trận quan hệ và ma trận thực thể. Mô hình sẽ đi qua lớp cuối chú ý cùng bằng cách tiếp tục đi qua lớp mạng đồ thị chú ý tương tự ở trên nhưng thay vì ghép chồng thì ta thực hiện tính trung bình theo công thức sau :
-
-\begin{align}
-{\overrightarrow{h''_{i}}}&={\sigma\left(\frac{1}{M} \sum_{m=1}^{M} \sum_{j \in \mathcal{N}_i} \sum_{k \in \mathcal{R}_{ij}} \alpha'^m_{ijk} t'^m_{ijk}\right)}
-\end{align}
-
-Tương tự như trên, nhưng $\alpha'^m_{ijk}$ và $t'^m_{ijk}$ tương ứng là các vector được nhúng trên các mối quan hệ và thực thể mới.
-
-Sau quá trình nhúng trên, ta sẽ có một ma trận thực thể $H''$ và quan hệ $R''$ mới đã được tổng hợp thêm một lần nữa. Tuy nhiên ta muốn biểu diễn ma trận thực thể với số chiều mới, ta thực hiện phép biến đổi sau :
-
+trong đó $\mathcal{N}_i$ là tập hợp hàng xóm của đỉnh gốc $e_i$ có độ sâu $n_{\text{hop}}$; $\mathcal{R_{\textit{i} \textit{n}}}$ là tập hợp tất cả những quan hệ nối đỉnh gốc $e_i$ với thực thể $e_n \in \mathcal{N}_i$. Tương tự công thức \ref{scaleAttentionCoef}, các vector nhúng $\overrightarrow{t^k_{ij}}$ sẽ được thu nhỏ hoặc mở rộng khi nhân với hệ số chú ý đã được chuẩn hóa :
 
 \begin{align}
-\mathbf{E'} = \mathbf{W}^E \mathbf{E}^t + \mathbf{H''}
+{\overrightarrow{e'_{i}}}&={\sigma\left(\sum_{j \in \mathcal{N}_i} \sum_{k \in \mathcal{R}_{ij}} \alpha_{ijk} \overrightarrow{t_{ijk}}\right)}
 \end{align}
 
-Trước và sau mỗi lớp mạng đồ thị chú ý chúng tôi đề thực hiện chuẩn hóa.
+Tương tự như công thức \ref{multiHeadAttention} của \textit{cơ chế mặt nạ chú ý}, ta sẽ ghép $N_{\text{head}}$ đỉnh chú ý lại với nhau để ổn định quá trình học :
 
+\begin{align}
+\overrightarrow{e'}_i=\bigparallel_{h=1}^{N_{\text{head}}} \sigma\left(\sum_{j\in \mathcal{N}_i}\alpha_{ijk}^{(h)} \overrightarrow{t^{(h)}_{ijk}}\right)
+\end{align}
 
-Sau quá trình trên chúng ta đã tạo ra được ma trận nhúng thực thể và quan hệ. 
+Tương tự như các vector nhúng thực thể, các vector nhúng quan hệ cũng được nhân với một ma trận trọng số $\mathbf{W}_R$ để thực hiện biến đổi tuyến tính các vector nhúng quan hệ $P$ chiều lên vector nhúng có $P'$ chiều :
 
+\begin{align}
+\mathbf{R'} = \mathbf{R} \mathbf{W}^R; \hspace{2cm} \text{với: } \mathbf{W}^R \in \mathbb{R}^{P \times P'}
+\end{align}
+
+Đến đây, ta đã có hai ma trận $\mathbf{H}' \in \mathbb{R}^{N_e \times D'}$ và $\mathbf{R}' \in \mathbb{R}^{N_r \times P'}$ tương ứng là ma trận quan hệ và ma trận thực thể với số chiều mới. Mô hình sẽ đi qua lớp chú ý cuối cùng với đầu vào các vector nhúng quan hệ và thực thể mới như \ref{multiHeadConcat} . Tuy nhiên, nếu chúng ta thực hiện chú ý đa đỉnh trên lớp cuối cùng này để dự đoán, phép ghép chồng sẽ không còn \textit{nhạy cảm} với cơ chế tự-chú ý. Vì vậy thay vì ghép chồng, mô hình sẽ tính trung bình và sau đó áp dụng hàm phi tuyến tính cuối cùng :
+
+\begin{align}
+\label{eq:multiHeadRelationAttention}
+\overrightarrow{e''_{i}}=\sigma\left(\frac{1}{N_{\text{head}}} \sum_{h=1}^{N_{\text{head}}} \sum_{j \in \mathcal{N}_i} \sum_{k \in \mathcal{R}_{ij}} \alpha'^{(h)}_{ijk} \overrightarrow{t'^{(h)}_{ijk}} \right)
+\end{align}
+
+Với $\alpha'^{(h)}_{ijk}$ và $t'^{(h)}_{ijk}$ tương ứng là hệ số chú ý đã chuẩn hóa và vector nhúng đại diện cho một bộ ba $(e_i, r_k, e_j)$ thuộc các lớp $(h)$ khác nhau.
+
+Đến đây, mô hình KBAT đã áp dụng giống như mô hình GAT \ref{sec:GAT} nhưng ta bổ sung thêm thông tin vector nhúng thực thể và thông tin các đỉnh hàng xóm cách $n_{\text{hop}}$ bậc, ta đã thu được ma trận nhúng thực thể $\mathbf{E}'' \in \mathbb{R}^{N_e \times D''}$, và ma trận nhúng quan hệ $\mathbf{R}'' \in \mathbb{R}^{N_r \times P''}$. Tuy nhiên, sau khi trải qua quá trình học ma trận nhúng mới, ma trận nhúng thực thể $\mathbf{E}''$ mất đi thông tin nhúng khởi tạo ban đầu. Để giải quyết vấn đề này, mô hình sẽ cho nhân ma trận nhúng khởi tạo ban đầu $\mathbf{E}$ với một ma trận trọng số $\mathbf{W}^E \in \mathbb{R}^{D_{\text{in}} \times D''}$ để tạo thành ma trận nhúng mới rồi cộng trực tiếp ma trận nhúng đó vào vào để đảo bảo quá thông tin nhúng khởi tạo trong quá trình huấn luyện :
+
+\begin{align}
+\mathbf{H} = \mathbf{W}^E \mathbf{E} + \mathbf{E''}
+\end{align}
+
+\subsection{Huấn luyện}
+\label{sec:KBATTraning}
+
+Mô hình mượn ý tưởng từ hàm chấm điểm tịnh tiến (translational scoring function) từ mô hình TransE \cite{bordes2013translating}, mà sẽ học từ nhúng từ bộ ba \textit{chuẩn} $t_{ij}^k= (e_i, r_k, e_j)$, điều kiện $\overrightarrow{e_i} + \overrightarrow{r_k}$
 Our model borrows the idea of a translational
 scoring function from (Bordes et al., 2013), which
 learns embeddings such that for a given valid triple $t^k_{ij} = (e_i, r_k, e_j)$, the condition $\vec{h_i}+\vec{g_k} \approx \vec{h_j}$ holds, i.e., $e_j$ is the nearest neighbor of $e_i$ connected via relation $r_k$.
 
- Specifically, we try to learn entity and relation embeddings to minimize the L1-norm dissimilarity measure given by $d_{t_{ij}} = \big|\big|\vec{h_i}+ \vec{g_k}-\vec{h_j}\big|\big|_1$.
+Specifically, we try to learn entity and relation embeddings to minimize the L1-norm dissimilarity measure given by $d_{t_{ij}} = \big|\big|\vec{h_i}+ \vec{g_k}-\vec{h_j}\big|\big|_1$.
 
 We train our model using hinge-loss which is
 given by the following expression
@@ -142,8 +674,8 @@ triples, given formally as
 \end{align}
 
 where $\omega^m$ represents the $m-th$ convolutional filter,
-$Ω$ is a hyper-parameter denoting number of filters
-used, $\ast	$ is a convolution operator, and $\mathbf{W} \in \mathbb{R}^{\Omega k×1}$
+\(\omega\) is a hyper-parameter denoting number of filters
+used, \(\ast\) is a convolution operator, and \(\mathbf{W} \in \mathbb{R}^{\Omega k \times 1}\)
 represents a linear transformation matrix used to
 compute the final score of the triple. The model is
 trained using soft-margin loss as
@@ -156,10 +688,3 @@ where $l_{t^k_{ij}} = \begin{cases}
 1 &\text{for } t^k_{ij} \in S \\
 -1 &\text{for } t^k_{ij} \in S' \\
 \end{cases}$
-
-Attention 
-
-CAttention \cite{cordonnier2020multi}
-
-ConvKB \cite{nguyen2017novel}
-
