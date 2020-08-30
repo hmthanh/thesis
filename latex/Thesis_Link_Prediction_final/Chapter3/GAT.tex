@@ -645,13 +645,13 @@ Với $\alpha'^{(h)}_{ijk}$ và $t'^{(h)}_{ijk}$ tương ứng là hệ số ch�
 \mathbf{H} = \mathbf{W}^E \mathbf{E} + \mathbf{E''}
 \end{align}
 
-\subsection{Huấn luyện}
+\subsubsection{Thông tin khởi tạo}
 \label{sec:KBATTraning}
 
-Các vector khởi tạo của mô hình KBAT được xây dựng từ ý tưởng của mô hình TransE \cite{bordes2013translating}, mô hình sẽ học vector nhúng dựa trên những cạnh/bộ ba $t^k_{ij} = (e_i, r_k, e_j)$ với điều kiện vector nhúng đuôi sẽ là kết quả của vector nhúng đầu cộng với quan hệ : $\vec{h_i}+\vec{g_k} \approx \vec{h_j}$. Phương pháp này được huấn luyện để tạo ra vector nhúng thực thể và quan hệ bằng cách tối thiểu hóa sự khác biệt của độ đo chuẩn L1 theo công thức sau :
+Các vector khởi tạo của mô hình KBAT được xây dựng từ ý tưởng của mô hình TransE \cite{bordes2013translating}, mô hình sẽ học vector nhúng dựa trên những cạnh/bộ ba $t^k_{ij} = (e_i, r_k, e_j)$ với điều kiện vector nhúng đuôi sẽ là kết quả của vector nhúng đầu cộng với quan hệ : $\vec{e_i}+\vec{r_k} \approx \vec{e_j}$. Phương pháp này được huấn luyện để tạo ra vector nhúng thực thể và quan hệ bằng cách tối thiểu hóa sự khác biệt của độ đo chuẩn L1 theo công thức sau :
 $d_{t_{ij}} = \big|\big|\vec{h_i}+ \vec{g_k}-\vec{h_j}\big|\big|_1$.
 
-Mô hình của chúng tôi sử dụng mất mát-lề theo công thức sau :
+Để huấn luyện, chúng tôi sử dụng hàm mất mát-lề theo công thức sau :
 
 \begin{equation}
 L(\Omega)=\sum_{t_{ij} \in S} \sum_{t'_{ij} \in S'} \text{max}\{d_{t'_{ij}} - d_{t_{ij}} + \gamma , 0 \}
@@ -659,23 +659,28 @@ L(\Omega)=\sum_{t_{ij} \in S} \sum_{t'_{ij} \in S'} \text{max}\{d_{t'_{ij}} - d_
 
 trong đó $\gamma > 0$ là tham số lề, $S$ là tập hợp bộ ba chuẩn (valid triple), và $S'$ là tập hợp của ba lỗi (invalid triple) theo công thức sau :
 
-\begin{align}
-{S'}&={\underbrace{\{ t^k_{i'j} | e'_i \in \mathcal{E}\setminus e_i\}}_{\text{thay thế thực thể đầu}}\cup \underbrace{\{ t^k_{ij'} | e'_j \in \mathcal{E}\setminus e_j\}}_{\text{thay thế thực thể đuôi}}}
-\end{align}
+\begin{equation}
+{S'} ={\underbrace{\{ t^k_{i'j} | e'_i \in \mathcal{E}\setminus e_i\}}_{\text{thay thế thực thể đầu}}\cup \underbrace{\{ t^k_{ij'} | e'_j \in \mathcal{E}\setminus e_j\}}_{\text{thay thế thực thể đuôi}}}
+\end{equation}
 
-where $\omega^m$ represents the $m-th$ convolutional filter,
-\(\omega\) is a hyper-parameter denoting number of filters
-used, \(\ast\) is a convolution operator, and \(\mathbf{W} \in \mathbb{R}^{\Omega k \times 1}\)
-represents a linear transformation matrix used to
-compute the final score of the triple. The model is
-trained using soft-margin loss as
+\subsubsection{Dự đoán}
 
-\begin{align}
+Sau khi chúng ta biểu diễn các thực thể và quan hệ lên không gian số chiều thấp, mô hình sẽ sử dụng \cite{nguyen2017novel} làm mô hình để phân tích các đặc trưng toàn cục của một bộ ba $t_{ijk}$ qua mỗi chiều để khái quát hóa các đặc trưng biến đổi của mô hình bằng các lớp tính tích chập. Hàm tính điểm số với những bản đồ đặc trưng được tính theo công thức sau :
+
+\begin{equation}
+f(t_{i j k}) = \Big( \bigparallel_{m=1}^{\Omega} \text{ReLU} ([\overrightarrow{e_i}, \overrightarrow{r_k}, \overrightarrow{h_j}] \ast \omega^m)\Big).\mathbf{W}
+\end{equation}
+
+
+trong đó $\omega^m$ thể hiện bộ lọc tích chập thứ $m-th$,
+\(\omega\) là siêu tham số về số lượng lớp tích chập, \(\ast\) là thao tác thực hiện tính tích chập, và \(\mathbf{W} \in \mathbb{R}^{\Omega k \times 1}\)
+biểu thị ma trận biến đổi tuyến tính được sử dụng để tính kết quả cuối cùng của bộ ba. Mô hình được huấn luyện bằng lề-mềm (soft-margin) như sau :
+
+\begin{equation}
 \mathcal{L} = \sum_{t^k_{ij} \in \{S \cup S'\}} \text{log}(1 + exp(l_{t^k_{ij}} . f(t^k_{ij}))) + \frac{\lambda}{2} \parallel{\mathbf{W}}\parallel_2^2
-\end{align}
-where $l_{t^k_{ij}} = \begin{cases}
+\end{equation}
+trong đó $l_{t^k_{ij}} = \begin{cases}
 1 &\text{for } t^k_{ij} \in S \\
 -1 &\text{for } t^k_{ij} \in S' \\
 \end{cases}$
 
-sdf
