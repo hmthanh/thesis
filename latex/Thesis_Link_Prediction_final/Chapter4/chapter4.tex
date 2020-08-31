@@ -2,6 +2,41 @@
 \label{Chapter4}
 
 Trong phần này chúng tôi mô tả lại các bộ dữ liệu mà chúng tôi đùng để thực nghiệm đánh giá phương pháp của chúng tôi cùng với so sánh với các kết quả khác của các công trình nổi bật khác được báo cáo trong \hyperref[tab:tab1]{bảng 2.1}. Ngoài ra chúng tôi cũng cố gắng đánh giá hai đề xuất của chúng tôi trong việc thêm một lượng tri thức mới vào đồ thị bằng cách chúng tôi xem tập test là một lượng tri thức mới cần thêm vào và dùng tập vadidation để đánh giá lại phương pháp của chúng tôi. Kết quả chi tiết được báo cáo ở \hyperref[tab:tab1]{bảng 2.2}
+
+\begin{table}[htbp]
+	\begin{center}
+		\scalebox{0.5}{
+			\begin{tabular}{|l|l|l|l|}
+				\hline
+				Nhóm phương pháp & Danh mục con & Ưu điểm & Nhược điểm \\
+				\hline \hline
+				\multirow{2}{*}{Phân rã ma trận} & Đồ thị toán tử Laplace Eigenmap            & \multirow{2}{*}{Xem xét toàn cục các đỉnh lân cận} &
+				\multirow{2}{*}{Sử dụng không gian và thời gian tính toán lớn}\\
+				\cline{2-2}
+				& Phân rã ma trận bằng xấp xỉ đỉnh & & \\
+				\hline
+				\multirow{3}{*}{Tái cấu trúc cạnh} & Cực đại hóa xác xuất tái cấu trúc cạnh & \multirow{3}{*}{Huấn luyện tương đối hiệu quả} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Tối ưu chỉ sử dụng thông tin cục bộ. \\ Ví dụ như các cạnh (hàng xóm 1 nước) \\ hoặc cặp đỉnh xếp hạng\end{tabular}} \\ \cline{2-2}
+				& Tối thiểu hóa mất mát dựa trên khoảng cách & & \\ \cline{2-2}
+				& Tối thiểu hóa xếp hạng mất mát dựa trên lề & & \\ \hline
+				\multirow{3}{*}{Đồ thị lõi} & Dựa trên graphlet & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Hiệu quả, chỉ tính những nhánh\\ \\ cấu trúc đơn vị mong muốn\end{tabular}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Nhánh cấu trúc thì không độc lập\\ \\ Số chiều nhúng tăng lên theo hàm mũ\end{tabular}} \\ \cline{2-2}
+				& Dựa trên mẫu nhánh cây   & & \\ \cline{2-2}
+				& Dựa trên bước nhảy ngẫu nhiên & & \\ \hline
+				
+				\multirow{3}{*}{Mô hình sinh} & Nhúng đồ thị dựa trên không gian ẩn & Phép nhúng có thể giải thích được & Khó điều chỉnh lựa chọn phân bố \\ \cline{2-3}
+				
+				& Nhúng kết hợp ngữ nghĩa & Tận dụng nhiều thông tin nguồn & Yêu cầu một lượng lớn dữ liệu huấn luyện\\
+				& & một cách tự nhiên & \\ \hline
+				
+				\multirow{3}{*}{Học sâu} & Sử dụng bước ngẫu nhiên & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}Hiệu quả và nhanh chóng\\ \\ Không phải trích đặc trưng\end{tabular}}& \begin{tabular}[c]{@{}l@{}}Chỉ xem xét đến nội dung cục bộ trong\\ một đường đi\\ Khó để tìm kiếm chiến lược lấy mẫu tối ưu\end{tabular} \\ \cline{2-2} \cline{4-4} 
+				& Không sử dụng bước ngẫu nhiên &  & Chi phí tính toán cao \\ \hline
+			\end{tabular}
+		}
+		\caption{Thông tin tập các tập dữ liệu}
+		\label{tab:dataset}
+	\end{center}
+\end{table}
+
+
 \section{Các tập dữ liệu huấn luyện} \label{datasets}
 Trong thí nghiệm của chúng tôi, chúng tôi thực hiện trên bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR.Các bộ dữ liệu này là tập hợp các bộ ba (triple) \(\langle head, relation, tail \rangle\) biểu thị cho thực thể đầu có một mối quan hệ với thực thể cuối.
 
@@ -37,8 +72,6 @@ Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật to
 \hyperref[tab:tab1]{Bảng 4.1}, và \hyperref[tab:tab2]{bảng 4.2} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với các độ đo \(H@K\) cùng với các kết quả thực nghiệm của các phương pháp khác được đề cập trong khảo  sát \cite{rossi2020knowledge}
 
 \begin{table}[ht]
-\caption{Kết quả phương pháp AnyBURL trên FB15k, FB15k-237}
-\label{tab:tab1}%
 \begin{center}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{l|l|l|l|l|l|l|l|l|}
@@ -54,12 +87,12 @@ Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật to
 \multicolumn{1}{|l|}{\textbf{BURL}}    & \textbf{79.13}        & \textbf{82.30}         & \textbf{285}         & \textbf{0.824}        & \textbf{20.85}        & \textbf{42.40}         & \textbf{490}         & \textbf{0.311}        \\ \hline
 \end{tabular}
 }
+\caption{Kết quả phương pháp AnyBURL trên FB15k, FB15k-237}
+\label{tab:tab1}%
 \end{center}
 \end{table}
 
 \begin{table}[ht]
-\caption{Kết quả phương pháp AnyBURL trên WN18, WN18RR}
-\label{tab:tab2}%
 \begin{center}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{l|l|l|l|l|l|l|l|l|}
@@ -75,13 +108,13 @@ Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật to
 \multicolumn{1}{|l|}{\textbf{BURL}}    & \textbf{93.96} & \textbf{95.07} & \textbf{230} & \textbf{0.955} & \textbf{44.22} & \textbf{54.40} & \textbf{490} & \textbf{0.490} \\ \hline
 \end{tabular}
 }
+\caption{Kết quả phương pháp AnyBURL trên WN18, WN18RR}
+\label{tab:tab2}%
 \end{center}
 \end{table}
 
 Bảng \hyperref[tab:tab3]{4.3} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với hai chiến lược thêm tri thức mới vào đồ thị. Chúng tôi đánh giá trên tổng số luật được sinh ra, và số luật có độ tin cậy \(>= 50\%\) và \(>= 80\%\).
 \begin{table}[ht]
-\caption{Kết quả hai chiến lược thêm tri thức mới}
-\label{tab:tab3}%
 \begin{center}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{ll|l|l|}
@@ -101,5 +134,7 @@ Bảng \hyperref[tab:tab3]{4.3} bên dưới mô tả các kết quả thực ng
 \multicolumn{1}{|l|}{}                                    & confidence 80\% & 83 (18,91\%)               & 85 (81,19\%)              \\ \hline
 \end{tabular}
 }
+\caption{Kết quả hai chiến lược thêm tri thức mới}
+\label{tab:tab3}%
 \end{center}
 \end{table}
