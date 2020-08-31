@@ -2,20 +2,42 @@
 \label{Chapter4}
 
 Trong phần này chúng tôi mô tả lại các bộ dữ liệu mà chúng tôi đùng để thực nghiệm đánh giá phương pháp của chúng tôi cùng với so sánh với các kết quả khác của các công trình nổi bật khác được báo cáo trong \hyperref[tab:tab1]{bảng 2.1}. Ngoài ra chúng tôi cũng cố gắng đánh giá hai đề xuất của chúng tôi trong việc thêm một lượng tri thức mới vào đồ thị bằng cách chúng tôi xem tập test là một lượng tri thức mới cần thêm vào và dùng tập vadidation để đánh giá lại phương pháp của chúng tôi. Kết quả chi tiết được báo cáo ở \hyperref[tab:tab1]{bảng 2.2}
+
+\begin{table}[htbp]
+	\begin{center}
+		\resizebox{\textwidth}{!}{%
+			\begin{tabular}{lllllll}
+				\hline
+				&          &           & \multicolumn{4}{l}{\# Edges}    \\ \cline{4-7}
+
+				Dataset   & Entities & Relations & Training & Validation & Test   & Total   \\ \hline
+				FB15k     & 14,951   & 1,345     & 483,142  & 50,000     & 59,071 & 592,213 \\
+				FB15k-237 & 14,541   & 237       & 272,115  & 17,535     & 20,466 & 310,116 \\
+				WN18      & 40,943   & 18        & 141,442  & 5,000      & 5,000  & 151,442 \\
+				WN18RR    & 40,943   & 11        & 86,835   & 3034       & 3134   & 93,003 \\
+				\hline
+			\end{tabular}
+		}
+		\caption{Thông tin các tập dữ liệu}
+		\label{tab:dataset}
+	\end{center}
+\end{table}
+
+
 \section{Các tập dữ liệu huấn luyện} \label{datasets}
 Trong thí nghiệm của chúng tôi, chúng tôi thực hiện trên bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR.Các bộ dữ liệu này là tập hợp các bộ ba (triple) \(\langle head, relation, tail \rangle\) biểu thị cho thực thể đầu có một mối quan hệ với thực thể cuối.
 
 \subsection{Bộ dữ liệu FB15k}
-Bộ dữ liệu này được tạo bởi nhóm nghiên cứu A. Bordes, N. Usunier, A. Garcia-Duran, J. Weston, and O. Yakhnenko \cite{bordes2013translating} bằng cách trích xuất từ bộ dữ liệu Wikilinks database \footnote{https://code.google.com/archive/p/wiki-links/}.Wikilinks database thu thập các siêu liên kết(hyperlinks) đến Wikipedia gồm 40 triệu lượt đề cập trên 3 triệu thực thể, họ trích xuất tất cả các dữ kiện liên quan đến một thực thể nhất định có hơn 100 lần được đề cập đến bởi các tài liệu khác cùng với tất cả các dữ kiện liên quan đến thực thể đó (bao gồm cả những thực thể con được nhắc đến trong tài liệu Wikipedia đó), ngoại trừ những thonng tin như: ngày tháng, danh từ riêng, v.v ... Họ cũng chuyển đổi các đỉnh có bậc \(n\) được biểu diễn thành các nhóm các cạnh nhị phân tức là liệt kê các cạnh và quan hệ của mọi đỉnh. Tập dữ liệu được chia ngẫu nhiên thành 3 tập: tập training với 1345 relations, 14834 head entities và 14903 tail entities, tập test gồm 916 relations, 11886 head entities, và 11285 tail entities, tập vadiation gồm 961 relations, 12297 head entities, và 11825 tail entities.
+Bộ dữ liệu này được tạo bởi nhóm nghiên cứu A. Bordes, N. Usunier, A. Garcia-Duran, J. Weston, and O. Yakhnenko \cite{bordes2013translating} bằng cách trích xuất từ bộ dữ liệu Wikilinks database \footnote{https://code.google.com/archive/p/wiki-links/}.Wikilinks database thu thập các siêu liên kết(hyperlinks) đến Wikipedia gồm 40 triệu lượt đề cập trên 3 triệu thực thể, họ trích xuất tất cả các dữ kiện liên quan đến một thực thể nhất định có hơn 100 lần được đề cập đến bởi các tài liệu khác cùng với tất cả các dữ kiện liên quan đến thực thể đó (bao gồm cả những thực thể con được nhắc đến trong tài liệu Wikipedia đó), ngoại trừ những thonng tin như: ngày tháng, danh từ riêng, v.v ... Họ cũng chuyển đổi các đỉnh có bậc \(n\) được biểu diễn thành các nhóm các cạnh nhị phân tức là liệt kê các cạnh và quan hệ của mọi đỉnh. Tập dữ liệu được chia ngẫu nhiên thành 3 tập: tập training với 1345 relations, 14834 head entities và 14903 tail entities, tập test gồm 916 relations, 11886 head entities, và 11285 tail entities, tập validation gồm 961 relations, 12297 head entities, và 11825 tail entities.
 
 \subsection{Bộ dữ liệu FB15k-237}
-Bộ dữ liệu này là một tập hợp con của FB15k được xây dựng bởi Toutanova và Chen \cite{toutanova2015observed} lấy cảm hứng từ quan sát rằng FB15k bao gồm dữ liệu thử nghiệm được các mô hình nhìn thấy tại thời điểm đào tạo(test leekage). Trong FB15k, vấn đề này là do sự hiện diện của các quan hệ gần giống nhau hoặc nghịch đảo của nhau.FB15k-237 được xây dựng để trở thành một tập dữ liệu thách thức hơn: các tác giả đã chọn các dữ kiện liên quan đến 401 quan hệ xuất hiện nhiều nhất và loại bỏ tất cả các quan hệ tương đương hoặc nghịch đảo. Họ cũng đảm bảo rằng không có thực thể nào được kết nối trong tập huấn luyện cũng được liên kết trực tiếp trong tập test và validation.Tập training gồm 237 relations, 13781 head entities, và 13379 tail entities, tập test gồm 223 relations, 7652 head entities, và 5804 tail entities, tập vadition gồm 224 relations, 8171 head entities, and 6376 tail entities.
+Bộ dữ liệu này là một tập hợp con của FB15k được xây dựng bởi Toutanova và Chen \cite{toutanova2015observed} lấy cảm hứng từ quan sát rằng FB15k bao gồm dữ liệu thử nghiệm được các mô hình nhìn thấy tại thời điểm đào tạo (test leekage). Trong FB15k, vấn đề này là do sự hiện diện của các quan hệ gần giống nhau hoặc nghịch đảo của nhau.FB15k-237 được xây dựng để trở thành một tập dữ liệu thách thức hơn: các tác giả đã chọn các dữ kiện liên quan đến 401 quan hệ xuất hiện nhiều nhất và loại bỏ tất cả các quan hệ tương đương hoặc nghịch đảo. Họ cũng đảm bảo rằng không có thực thể nào được kết nối trong tập huấn luyện cũng được liên kết trực tiếp trong tập test và validation.Tập training gồm 237 relations, 13781 head entities, và 13379 tail entities, tập test gồm 223 relations, 7652 head entities, và 5804 tail entities, tập vadition gồm 224 relations, 8171 head entities, and 6376 tail entities.
 
 \subsection{Bộ dữ liệu WN18}
 Bộ dữ liệu này được giới thiệu bởi các tác giả của TransE \cite{bordes2013translating}, được trích xuất từ WordNet\footnote{https://wordnet.princeton.edu/}, một bản thể học ngôn ngữ KG có nghĩa là cung cấp một từ điển/từ đồng nghĩa để hỗ trợ NLP và phân tích văn bản tự động. Trong WordNet, các thực thể tương ứng với các tập hợp (\textit{word senses}) và các quan hệ đại diện cho các kết nối từ vựng của chúng (ví dụ: “hypernym”). Để xây dựng WN18, các tác giả đã sử dụng WordNet làm điểm bắt đầu và sau đó lặp đi lặp lại lọc ra các thực thể và mối quan hệ với quá ít lần được đề cập. Tập dữ liệu được chia ngẫu nhiên thành 3 tập: tập training với 18 relations, 40504 head entities, và 40551 tail entities, tập test gồm 18 relations, 4262 head entities, and 4338 tail entities, tập vadiation gồm 18 relations, 4349 head entities, and 4263 tail entities.
 
 \subsection{Bộ dữ liệu WN18RR}
-Bộ dữ liệu này là một tập hợp con của WN18 được xây dựng bởi DeŠmers et al.\cite{dettmers2017convolutional}, cũng là người giải quyết vấn đề rò rỉ thử nghiệm (test leakage)trong WN18. Để giải quyết vấn đề đó, họ xây dựng tập dữ liệu WN18RR thách thức hơn nhiều bằng cách áp dụng một phương pháp tương tự đưược sử dụng cho FB15k-237 \cite{toutanova2015observed}. Training gồm 11 relations, 39610 head entities, và 31881 tail entities, tập test gồm 11 relations, 2958 head entities, và 2619 tail entities, tập vadition gồm 11 relations, 2851 head entities, and 2575 tail entities.
+Bộ dữ liệu này là một tập hợp con của WN18 được xây dựng bởi DeŠmers et al.\cite{dettmers2017convolutional}, cũng là người giải quyết vấn đề rò rỉ thử nghiệm (test leakage)trong WN18. Để giải quyết vấn đề đó, họ xây dựng tập dữ liệu WN18RR thách thức hơn nhiều bằng cách áp dụng một phương pháp tương tự được sử dụng cho FB15k-237 \cite{toutanova2015observed}. Training gồm 11 relations, 39610 head entities, và 31881 tail entities, tập test gồm 11 relations, 2958 head entities, và 2619 tail entities, tập vadition gồm 11 relations, 2851 head entities, and 2575 tail entities.
 
 \section{Kết quả thực nghiệm}
 Trong phần này chúng tôi mô tả lại các phương pháp đánh giá(độ do), môi trường thực hiện cũng như các tập dữ liệu mà chúng tôi sử dụng để dánh giá phương pháp của mình. Các phương pháp đánh giá(độ do) này cũng phổ biến nó được đánh giá cho hầu hết các mô hình dự đoán liên kết trên đồ thị. Chúng tôi tiến hành so sánh với bốn phương pháp nổi bật khác được báo cáo trong \cite{rossi2020knowledge}.
@@ -37,13 +59,11 @@ Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật to
 \hyperref[tab:tab1]{Bảng 4.1}, và \hyperref[tab:tab2]{bảng 4.2} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với các độ đo \(H@K\) cùng với các kết quả thực nghiệm của các phương pháp khác được đề cập trong khảo  sát \cite{rossi2020knowledge}
 
 \begin{table}[ht]
-\caption{Kết quả phương pháp AnyBURL trên FB15k, FB15k-237}
-\label{tab:tab1}%
 \begin{center}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{l|l|l|l|l|l|l|l|l|}
 \cline{2-9}
-                                       & \multicolumn{4}{c|}{\textbf{FB15k-237}}                   & \multicolumn{4}{c|}{\textbf{FB15k-237}}                   \\ \cline{2-9} 
+                                       & \multicolumn{4}{c|}{\textbf{FB15k}}                   & \multicolumn{4}{c|}{\textbf{FB15k-237}}                   \\ \cline{2-9} 
                                        & \textbf{H@1} & \textbf{H@10} & \textbf{MR} & \textbf{MRR} & \textbf{H@1} & \textbf{H@10} & \textbf{MR} & \textbf{MRR} \\ \hline
 \multicolumn{1}{|l|}{\textbf{ComplEx}} & 81.56        & 90.53         & 34          & 0.848        & 25.72        & 52.97         & 202        & 0.349        \\ \hline
 \multicolumn{1}{|l|}{\textbf{TuckER}}  & 72.89        & 88.88         & 39          & 0.788        & 25.90        & 53.61         & 162         & 0.352        \\ \hline
@@ -54,12 +74,12 @@ Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật to
 \multicolumn{1}{|l|}{\textbf{BURL}}    & \textbf{79.13}        & \textbf{82.30}         & \textbf{285}         & \textbf{0.824}        & \textbf{20.85}        & \textbf{42.40}         & \textbf{490}         & \textbf{0.311}        \\ \hline
 \end{tabular}
 }
+\caption{Kết quả phương pháp AnyBURL trên FB15k, FB15k-237}
+\label{tab:tab1}%
 \end{center}
 \end{table}
 
 \begin{table}[ht]
-\caption{Kết quả phương pháp AnyBURL trên WN18, WN18RR}
-\label{tab:tab2}%
 \begin{center}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{l|l|l|l|l|l|l|l|l|}
@@ -75,13 +95,13 @@ Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật to
 \multicolumn{1}{|l|}{\textbf{BURL}}    & \textbf{93.96} & \textbf{95.07} & \textbf{230} & \textbf{0.955} & \textbf{44.22} & \textbf{54.40} & \textbf{490} & \textbf{0.490} \\ \hline
 \end{tabular}
 }
+\caption{Kết quả phương pháp AnyBURL trên WN18, WN18RR}
+\label{tab:tab2}%
 \end{center}
 \end{table}
 
 Bảng \hyperref[tab:tab3]{4.3} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với hai chiến lược thêm tri thức mới vào đồ thị. Chúng tôi đánh giá trên tổng số luật được sinh ra, và số luật có độ tin cậy \(>= 50\%\) và \(>= 80\%\).
 \begin{table}[ht]
-\caption{Kết quả hai chiến lược thêm tri thức mới}
-\label{tab:tab3}%
 \begin{center}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{ll|l|l|}
@@ -101,5 +121,7 @@ Bảng \hyperref[tab:tab3]{4.3} bên dưới mô tả các kết quả thực ng
 \multicolumn{1}{|l|}{}                                    & confidence 80\% & 83 (18,91\%)               & 85 (81,19\%)              \\ \hline
 \end{tabular}
 }
+\caption{Kết quả hai chiến lược thêm tri thức mới}
+\label{tab:tab3}%
 \end{center}
 \end{table}

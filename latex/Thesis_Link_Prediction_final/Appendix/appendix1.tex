@@ -1,6 +1,25 @@
 \appendix
 
-\chapter{Ngữ pháp tiếng Việt}
-% \label{Appendix1}
+\chapter{Các siêu tham số tối ưu}
+\label{Appendix1}
 
-Đây là phụ lục.
+Trong phần này chúng tôi sẽ báo cáo lại tập hợp các siêu tham số tối ưu trên cả mô hình Chú ý và mô hình ConvKB.
+Chúng tôi sử dụng tìm kiếm lưới theo Hits@10 để tìm các tham số tối ưu. Chúng tôi không chia nhỏ tập dữ liệu trong quá trình huấn luyện mô hình chú ý,
+đối với mô hình dự đoán, chúng tôi sử dụng kích thước cho tất cả các tập dữ liệu. Cụ thể các siêu tham số chúng tôi sử dụng được trình bày trong bảng sau :
+
+\begin{table}[htbp]
+	\begin{center}
+		\resizebox{\textwidth}{!}{%
+	\begin{tabular}{llllllllll}
+		\hline
+		& $\mu$  & Weight decay & Epochs & negative ratio  & Dropouts  & $\alpha_{\text{LeakyRELU}}$ & $N_{\text{head}}$ & $D_{\text{final}}$ & $\gamma$ \\
+		\hline
+		FB15k     & 1e-3 & 1e-5 & 3000 & 2 & 0.3 & 0.2 & 2 & 200 & 1 \\
+		FB15k-237 & 1e-3 & 1e-5 & 3000 & 2 & 0.3 & 0.2 & 2 & 200 & 1 \\
+		WN18      & 1e-3 & 5e-6 & 3600 & 2 & 0.3 & 0.2 & 2 & 200 & 5 \\
+		WN18RR    & 1e-3 & 5e-6 & 3600 & 2 & 0.3 & 0.2 & 2 & 200 & 5 \\
+		\hline
+	\end{tabular}
+}
+\end{center}
+\end{table}
