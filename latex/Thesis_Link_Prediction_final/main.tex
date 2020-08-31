@@ -131,6 +131,12 @@
 
 % Bảng thuật ngữ
 \usepackage[acronym,nomain]{glossaries}
+
+% Bảng ký hiệu
+\usepackage{tabularx}
+\usepackage{booktabs}
+\newcolumntype{b}{X}
+\newcolumntype{s}{>{\hsize=.5\hsize}X}
 % ========================================================================================= %
 % CHÚ Ý: Thông tin chung về KLTN - sinh viên điền vào đây để tự động update các trang khác  %
 % ========================================================================================= %
@@ -161,6 +167,8 @@
 \tableofcontents
 \listoffigures
 \listoftables
+
+\include{notation}
 
 \addcontentsline{toc}{chapter}{Tóm tắt}
 \include{Appendix/tomtat}
