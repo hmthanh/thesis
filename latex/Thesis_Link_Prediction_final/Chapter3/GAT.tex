@@ -35,14 +35,161 @@ Trong phần này chúng tôi trình bày về Đồ Thị Tri Thức (Knowledge
 		$\mathcal{G}_{know} = (V, E)$ là một đồ thị có hướng, có các đỉnh là các thực thể (entities) và các cạnh (edges) là các \textit{sự kiện} gồm bộ ba subject-property-object. Mỗi cạnh là một mẫu gồm (head entity, relation, tail entity) (ký hiệu là $\langle h, r, t \rangle$) biểu thị mối quan hệ của $r$ từ thực thể $h$ đến thực thể $t$ .
 	\end{definition}
 	$h, t \in V$ là các thực thể và $r \in E$ là quan hệ. Chúng ta gọi $\langle h, r, t \rangle$ một bộ ba đồ thị tri thức. Ví dụ: trong Hình \ref{fig:graphExample} có hai bộ ba: $\langle \text{Tom\ Cruise,\ born_in,\ New\ York} \rangle$ và $\langle \text{New York, state_of, U.S} \rangle$. Lưu ý rằng các thực thể và quan hệ trong đồ thị tri thức thường có các loại khác nhau. Do đó, đồ thị tri thức có thể được xem như là một ví dụ của đồ thị không đồng nhất.
-	
 \end{itemize}
 
 Biểu diễn tri thức đã từng có lịch sử phát triển suốt chiều dài lịch sử trong lĩnh vực logic và trí tuệ nhân tạo. Trên đồ thị tri thức, có 4 bốn nhóm nghiên cứu chính đã được phân loại và tổng hợp ở báo cáo \cite{ji2020survey} bao gồm : Học Biểu Diễn Tri Thức (Knowledge Representation Learning), Thu Nhận Tri Thức (Knowledge Acquisition), Đồ Thị Tri Thức Về Thời Gian (Temporal Knowledge Graphs), Ứng Dụng Nhận Biết Tri Thức (Knowledge-aware Applications). Tất cả các danh mục nghiên cứu được minh họa ở hình \ref{fig:categoriesResearch}.
 
 \begin{figure}[htp]
 	\centering
-	\includegraphics[width=\textwidth]{images/categories_research_knowledge_graph.png}
+	\tikzset{
+		category/.style  = {draw, font=\sffamily, thin, align=center},
+		subcat/.style={rectangle, rounded corners=6pt},
+		center/.style = {category, ellipse, fill=blue!60, text width=4em},
+		group/.style = {category, subcat, fill=blue!30, rounded corners=6pt, text width=6em},
+		yellowbox/.style = {category, subcat, fill=yellow!30},
+		greenbox/.style = {category, subcat, fill=green!30},
+		redbox/.style = {category, subcat, fill=red!30},
+		bluebox/.style = {category, subcat, fill=cyan!30},
+		leafbox/.style = {category, subcat, fill=black!10, rounded corners=0mm}
+	}
+	\resizebox{\textwidth}{!}{%
+	\begin{tikzpicture}
+	\node[center] (root) {Đồ thị tri thức};
+	\node[group][above left=1cm of root] (c1) {Học biểu diễn tri thức};
+	\node[group][above right=8mm of root] (c2) {Nhận biết tri thức};
+	\node[group][below left=5mm of root] (c3) {Thu nhận tri thức};
+	\node[group][below right=20mm of root, xshift=-2cm] (c4) {Đồ thị tri thức thời gian};
+	
+	\begin{scope}[every node/.style={yellowbox}]
+		\node[above=8mm of c1, xshift=-1cm] (c11) {Biểu diễn không gian};
+		\node[left=of c1, yshift=9mm, xshift=-10mm] (c12) {Hàm đánh giá};
+		\node[left=15mm of c1, yshift=-5mm] (c13) {Mã hóa mô hình};
+		\node[left=of c1, yshift=-20mm] (c14) {Thông tin tương tự};
+	\end{scope}
+	
+	\begin{scope}[every node/.style={redbox}]
+		\node[above left=of c2, text width=35mm, yshift=1mm, xshift=18mm] (c21) {Hiểu ngôn ngữ tự nhiên};
+		\node[above=1cm of c2, yshift=5mm, xshift=13mm] (c22) {Trả lời câu hỏi};
+		\node[right=of c2, yshift=15mm] (c23) {Hệ thống hội thoại};
+		\node[right=of c2, yshift=-2mm] (c24) {Hệ thống gợi ý};
+		\node[below=5mm of c2, xshift=5mm] (c25) {Ứng dụng khác};
+	\end{scope}
+	
+	\begin{scope}[every node/.style={greenbox}]
+		\node[left=1cm of c3, yshift=5mm] (c31) {Khai phá thực thể};
+		\node[below left=of c3, yshift=1cm, xshift=3mm] (c32) {Rút trích quan hệ};
+		\node[below right=5mm of c3, xshift=-4cm] (c33) {Hoàn thiện đồ thị};
+	\end{scope}
+	
+	\begin{scope}[every node/.style={bluebox}]
+	\node[below=of c4, xshift=-15mm, yshift=-35mm] (c41) {Lý giải logic thời gian};
+	\node[below=of c4, xshift=2cm, yshift=-23mm] (c42) {Quan hệ thời gian độc lập};
+	\node[below right=of c4,xshift=-2mm, yshift=-10mm] (c43) {Thực thể động};
+	\node[right=of c4, yshift=-2cm, xshift=15mm] (c44) {Nhúng thời gian};
+	\end{scope}
+	
+	\begin{scope}[every node/.style={leafbox}]
+	\node[above=5mm of c11] (c11x) {
+		\begin{tabular}{@{}l@{}@{}l@{}}
+		-Point-wise & -Đa tạp \\
+		-Số phức & -Gausian \\
+		-Rời rạc & \\
+		\end{tabular}
+	};
+	\node[above=5mm of c12, xshift=-5mm] (c12x) {
+		\begin{tabular}{@{}l@{}}
+		-Khoảng cách \\
+		-Ngữ nghĩa \\
+		-Khác \\
+		\end{tabular}
+	};
+	\node[left=of c13, yshift=5mm] (c13x) {
+		\begin{tabular}{@{}l@{}}
+		-Tuyến tính/ \\song tuyến tính \\
+		-Ma trận hóa \\
+		-Neural Nets \\
+		-CNN \\
+		-RNN \\
+		-Transformers \\
+		-GCN \\
+		\end{tabular}
+	};
+	\node[below left=5mm of c14, xshift=6mm, yshift=-7mm] (c14x) {
+		\begin{tabular}{@{}l@{}c@{}l@{}}
+		-Văn bản & -Kiểu & -Trực quan \\
+		\end{tabular}
+	};
+	%%%%%%%%%%%% 
+	\node[below left=of c31] (c31x) {
+		\begin{tabular}{@{}l@{}}
+		-Nhận dạng \\
+		-Định kiểu \\
+		-Phân biệt \\
+		-Sắp xếp \\
+		\end{tabular}
+	};
+	\node[below=of c32, xshift=-5mm] (c32x) {
+		\begin{tabular}{@{}l@{}}
+		-Neural Nets\\
+		-Chú ý \\
+		-GCN \\
+		-GAN \\
+		-RL \\
+		-Khác \\
+		\end{tabular}
+	};
+	\node[below=5mm of c33] (c33x) {
+		\begin{tabular}{@{}l@{}}
+		-Nhúng dựa trên xếp hạng\\
+		-Lý giải đựa trên đoạn \\
+		-Lý giải dựa trên luật \\
+		-Học siêu quan hệ \\
+		-Phân loại bộ ba \\
+		\end{tabular}
+	};
+	%%%%%%%%%%%%%%%%%
+	\node[above=5mm of c22] (c22x) {
+		\begin{tabular}{@{}l@{}}
+		-Single-fact QA\\
+		-Lý giải nhiều bước \\
+		\end{tabular}
+	};
+	\node[below right=5mm of c25, yshift=15mm] (c25x) {
+		\begin{tabular}{@{}l@{}}
+		-Sinh câu hỏi\\
+		-Công cụ tìm kiếm \\
+		-Ứng dụng y khoa \\
+		-Hồi phục sức khỏe \\
+		-Phân loại ảnh zero-shot\\
+		-Sinh văn bản\\
+		-Phân tích ngữ nghĩa\\
+		\end{tabular}
+	};
+
+	\end{scope}
+	
+	\foreach \value in {1,...,4}
+	\draw[->, line width=0.8mm] (root) -> (c\value);
+	
+	\foreach \value in {1,...,4}
+	\draw[->, ultra thick] (c1) -> (c1\value);
+	\foreach \value in {1,...,4}
+	\draw[->, thick] (c1\value) -> (c1\value x);
+
+	\foreach \value in {1,...,5}
+	\draw[->, ultra thick] (c2) -> (c2\value);
+	\foreach \value in {2,5}
+	\draw[->, thick] (c2\value) -> (c2\value x);
+	
+	\foreach \value in {1,...,3}
+	\draw[->, ultra thick] (c3) -> (c3\value);
+	\foreach \value in {1,...,3}
+	\draw[->, ultra thick] (c3\value) -> (c3\value x);
+	
+	\foreach \value in {1,...,4}
+	\draw[->, ultra thick] (c4) -> (c4\value);
+	
+	\end{tikzpicture}}
 	\caption{
 		Danh mục các lĩnh vực nghiên cứu trên đồ thị tri thức}
 	\label{fig:categoriesResearch}
@@ -110,45 +257,41 @@ Nhúng đồ thị là quá trình biến đổi các đặc trưng của đồ 
 
 \begin{figure}[htp]
 	\centering
-	\scalebox{0.6}{
-		\tikzstyle{every node}=[draw=black,thick,anchor=west]
-		\begin{tikzpicture}[%
-		grow via three points={one child at (0.5,-0.73) and
-			two children at (0.5,-0.73) and (0.5,-1.35)},
-		edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
-		\node {Nhúng đồ thị}
-		child [missing] {}
-		child { node {Đầu vào nhúng đồ thị}
-			child [missing] {}
-			child { node {Đồ thị đồng nhất} }
-			child [missing] {}
-			child { node {Đồ thị không đồng nhất} }
-			child [missing] {}
-			child { node {Đồ thị với thông tin phụ trợ} }
-			child [missing] {}
-			child { node {Đồ thị cấu trúc từ dữ liệu phi-quan hệ} }
-		}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child { node {Đầu ra nhúng đồ thị}
-			child [missing] {}
-			child { node {Nhúng đỉnh} }
-			child [missing] {}
-			child { node {Nhúng cạnh} }
-			child [missing] {}
-			child { node {Nhúng kết hợp} }
-			child [missing] {}
-			child { node {Nhúng toàn bộ đồ thị} }
-		};
-		\end{tikzpicture}}
-	\caption{Phương pháp thiết lập bài toán nhúng đồ thị}
+	\begin{tikzpicture}[
+	rec/.style  = {draw, text width=2cm, font=\sffamily, rectangle, thin},
+	root/.style = {rec, rounded corners=6pt, align=center, fill=green!60, text width=10em},
+	level 1/.style={sibling distance=8cm},
+	level 2/.style={rec, rounded corners=6pt, fill=green!30,align=center, text width=10em},
+	level 3/.style = {rec, align=left, fill=pink!30, text width=9.5em, yshift=-20pt},
+	edge from parent/.style={->,draw, very thick},
+	>=latex]
+	
+	% root of the the initial tree, level 1
+	\node[root] {Nhúng đồ thị}
+	child {node[level 2] (c1) {Đầu vào nhúng đồ thị}}
+	child {node[level 2] (c2) {Đầu ra nhúng đồ thị}};
+	
+	% The second level, relatively positioned nodes
+	\begin{scope}[every node/.style={level 3}]
+	\node [below of = c1, xshift=30pt, yshift=15pt, xshift=15pt] (c11) {Đồ thị đồng nhất};
+	\node [below of = c11, yshift=5pt] (c12) {Đồ thị không đồng nhất};
+	\node [below of = c12, yshift=-5pt] (c13) {Đồ thị với thông tin phụ trợ};
+	\node [below of = c13, yshift=-13pt] (c14) {Đồ thị cấu trúc từ dữ liệu phi quan hệ};
+	
+	\node [below of = c2, xshift=30pt, yshift=15pt, xshift=15pt] (c21) {Nhúng đỉnh};
+	\node [below of = c21, yshift=15pt] (c22) {Nhúng cạnh};
+	\node [below of = c22, yshift=15pt] (c23) {Nhúng kết hợp};
+	\node [below of = c23, yshift=5pt] (c24) {Nhúng toàn bộ đồ thị};
+	\end{scope}
+	
+	% lines from each level 1 node to every one of its "children"
+	\foreach \value in {1,...,4}
+	\draw[->] (c1.195) |- (c1\value.west);
+	
+	\foreach \value in {1,...,4}
+	\draw[->] (c2.195) |- (c2\value.west);
+	\end{tikzpicture}
+	\caption{Các kỹ thuật nhúng đồ thị}
 	\label{fig:graphEmbeddingSettingTree}
 \end{figure}
 
@@ -223,72 +366,62 @@ Nhúng toàn bộ đồ thị (whole-graph embedding) thường dành cho các �
 
 \begin{figure}[htp]
 	\centering
-	\scalebox{0.6}{
-		\tikzstyle{every node}=[draw=black,thick,anchor=west]
-		\begin{tikzpicture}[%
-		grow via three points={one child at (0.5,-0.7) and
-			two children at (0.5,-0.73) and (0.5,-1.35)},
-		edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
-		\node {Kỹ thuật nhúng đồ thị}
-		child { node {Học sâu}
-			child [missing] {}
-			child { node {Sử dụng bước ngẫu nhiên} }
-			child [missing] {}
-			child { node {Không sử dụng bước ngẫu nhiên} }
-		}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child { node {Phân rã ma trận}
-			child [missing] {}
-			child { node {Đồ thị toán tử Laplace Eigenmaps} }
-			child [missing] {}
-			child { node {Phân rã ma trận bằng xấp xỉ đỉnh} }
-		}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child { node {Tái cấu trúc cạnh}
-			child [missing] {}
-			child { node {Cực đại hóa xác xuất tái cấu trúc cạnh} }
-			child [missing] {}
-			child { node {Tối thiểu hóa mất mát dựa trên khoảng cách} }
-			child [missing] {}
-			child { node {Tối thiểu hóa xếp hạng mất mát dựa trên lề} }
-		}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child { node {Đồ thị lõi}
-			child [missing] {}
-			child { node {Dựa trên graphlet} }
-			child [missing] {}
-			child { node {Dựa trên mẫu nhánh cây} }
-			child [missing] {}
-			child { node {Dựa trên bước nhảy ngẫu nhiên} }
-		}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child [missing] {}
-		child { node {Mô hình sinh}
-			child [missing] {}
-			child { node {Nhúng đồ thị dựa trên không gian ẩn} }
-			child [missing] {}
-			child { node {Nhúng kết hợp ngữ nghĩa} }
-		};
-		\end{tikzpicture}}
+	\resizebox{\textwidth}{!}{
+		\begin{tikzpicture}[
+		rec/.style  = {draw, text width=2cm, font=\sffamily, rectangle, thin},
+		root/.style = {rec, rounded corners=6pt, align=center, fill=green!60, text width=10em},
+		level 1/.style={sibling distance=50mm},
+		level 2/.style={rec, rounded corners=6pt, fill=green!30,align=center, text width=8em},
+		level 3/.style = {rec, align=left, fill=pink!30, text width=8em, yshift=-20pt},
+		edge from parent/.style={->,draw, very thick},
+		>=latex]
+		
+		% root of the the initial tree, level 1
+		\node[root] {Kỹ thuật nhúng đồ thị}
+		% The first level, as children of the initial tree
+		child {node[level 2] (c1) {Học sâu}}
+		child {node[level 2] (c2) {Phân rã ma trận}}
+		child {node[level 2] (c3) {Tái cấu trúc cạnh}}
+		child {node[level 2] (c4) {Đồ thị lõi}}
+		child {node[level 2] (c5) {Mô hình sinh}};
+		
+		% The second level, relatively positioned nodes
+		\begin{scope}[every node/.style={level 3}]
+		\node [below of = c1, xshift=30pt] (c11) {Sử dụng bước ngẫu nhiên};
+		\node [below of = c11] (c12) {Không sử dụng bước ngẫu nhiên};
+		
+		\node [below of = c2, xshift=30pt] (c21) {Đồ thị toán tử Laplace Eigenmaps};
+		\node [below of = c21] (c22) {Phân rã ma trận bằng xấp xỉ đỉnh};
+		
+		\node [below of = c3, xshift=25pt] (c31) {Cực đại hóa xác xuất tái cấu trúc cạnh};
+		\node [below of = c31, yshift=-20pt] (c32) {Tối thiểu hóa mất mát dựa trên khoảng cách};
+		\node [below of = c32, yshift=-20pt] (c33) {Tối thiểu hóa xếp hạng mất mát dựa trên lề};
+		
+		\node [below of = c4, xshift=25pt] (c41) {Dựa trên graphlet};
+		\node [below of = c41] (c42) {Dựa trên mẫu nhánh cây};
+		\node [below of = c42] (c43) {Dựa trên bước nhảy ngẫu nhiên};
+		
+		\node [below of = c5, xshift=30pt] (c51) {Nhúng đồ thị dựa trên không gian ẩn};
+		\node [below of = c51] (c52) {Nhúng kết hợp ngữ nghĩa};
+		\end{scope}
+		
+		% lines from each level 1 node to every one of its "children"
+		\foreach \value in {1,2}
+		\draw[->, very thick] (c1.195) |- (c1\value.west);
+		
+		\foreach \value in {1, 2}
+		\draw[->, very thick] (c2.195) |- (c2\value.west);
+		
+		\foreach \value in {1,...,3}
+		\draw[->, very thick] (c3.195) |- (c3\value.west);
+		
+		\foreach \value in {1,...,3}
+		\draw[->, very thick] (c4.195) |- (c4\value.west);
+		
+		\foreach \value in {1,...,2}
+		\draw[->, very thick] (c5.195) |- (c5\value.west);
+		\end{tikzpicture}
+	}
 	\caption{Các kỹ thuật nhúng đồ thị}
 	\label{fig:graphEmbeddingTechniquesTree}
 \end{figure}
@@ -384,36 +517,36 @@ Mô hình sinh có thể được dùng cho cả nhúng đỉnh và nhúng cạn
 \end{itemize}
 
 \textbf{Tổng kết} : Các phương pháp nhúng đồ thị đều có ưu nhược điểm riêng được nhóm tác giả \cite{cai2018comprehensive} tổng hợp và trình bày lại ở bảng \ref{tab:graphEmbeddingTechCompare}. Với nhóm phương pháp \textit{phân rã ma trận} dựa trên đồ thị nhúng sẽ học những đại diện dựa trên việc phân tích sự tương đồng các cặp toàn cục. Với nhóm phương pháp \textit{học sâu}, những mô hình này đạt được kết quả hứa hẹn so với những phương pháp khác và phù hợp cho việc nhúng đồ thị vì nó có khả năng học được các biểu diễn phức tạp từ các cấu trúc đồ thị phức tạp. Các phương pháp sử dụng kỹ thuật bước nhảy ngẫu nhiễn trong học sâu có chi phí tính toán thấp hơn so với các phương pháp sử dụng kỹ thuật học sâu. Các phương pháp truyền thống coi đồ thị như một lưới, tuy nhiên nó không giống với bản chất của đồ thị. Với nhóm phương pháp \textit{tái cấu trúc cạnh} sẽ tối ưu hàm mục tiêu dựa trên các cạnh quan sát hoặc xếp hạng các bộ ba. Nhóm phương pháp này hiệu quả hơn nhưng vector nhúng kết quả lại không quan tâm đến cấu trúc toàn cục của đồ thị. Nhóm phương pháp \textit{đồ thị lõi} chuyển đồ thị vào một vector để dễ dàng thực hiện các nhiệm vụ phân tích đồ thị như phân loại đồ thị. Vì vậy nó chỉ hiệu quả khi liệt kê những nhánh cấu trúc đơn vị mong muốn trong một đồ thị. Với nhóm phương pháp \textit{mô hình sinh}, nó tận dụng thông tin một cách tự nhiên từ nhiều nguồn khác nhau trong một mô hình duy nhất. Việc nhúng đồ thị vào không gian ngữ nghĩa ẩn tạo ra những vector nhúng có thể được diễn giải bằng cách sử dụng ngữ nghĩa. Nhưng giả định về việc lập mô hình quan sát bằng cách sử dụng các phân bố nhất định là khó có thể biện minh. Hơn nữa, phương pháp sinh cần một lượng lớn dữ liệu huấn luyện để ước tính mô hình kết quả phù hợp với dữ liệu. Vì thế nó có thể không đạt kết quả tốt cho những đồ thị nhỏ hoặc số lượng nhỏ đồ thị.
-
+\newcolumntype{L}{>{\arraybackslash}m{5cm}}
 \begin{table}[htbp]
 	\begin{center}
-		\scalebox{0.5}{
-			\begin{tabular}{|l|l|l|l|}
+		\resizebox{\textwidth}{!}{
+			\begin{tabular}{|p{2cm}|L|L|L|}
 				\hline
-				Nhóm phương pháp & Danh mục con & Ưu điểm & Nhược điểm \\
+				Phương pháp & Danh mục con & Ưu điểm & Nhược điểm \\
 				\hline \hline
-				\multirow{2}{*}{Phân rã ma trận} & Đồ thị toán tử Laplace Eigenmap            & \multirow{2}{*}{Xem xét toàn cục các đỉnh lân cận} &
-				\multirow{2}{*}{Sử dụng không gian và thời gian tính toán lớn}\\
+				Phân rã ma trận & Đồ thị toán tử Laplace Eigenmap            & Xem xét toàn cục các đỉnh lân cận &
+				Sử dụng không gian và thời gian tính toán lớn\\
 				\cline{2-2}
 				& Phân rã ma trận bằng xấp xỉ đỉnh & & \\
 				\hline
-				\multirow{3}{*}{Tái cấu trúc cạnh} & Cực đại hóa xác xuất tái cấu trúc cạnh & \multirow{3}{*}{Huấn luyện tương đối hiệu quả} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Tối ưu chỉ sử dụng thông tin cục bộ. \\ Ví dụ như các cạnh (hàng xóm 1 nước) \\ hoặc cặp đỉnh xếp hạng\end{tabular}} \\ \cline{2-2}
+				\multirow{3}{2cm}{Tái cấu trúc cạnh} & Cực đại hóa xác xuất tái cấu trúc cạnh & \multirow{3}{5cm}{Huấn luyện tương đối hiệu quả} & \multirow{3}{5cm}{Tối ưu chỉ sử dụng thông tin cục bộ. Ví dụ như các cạnh (hàng xóm 1 nước) hoặc cặp đỉnh xếp hạng } \\ \cline{2-2}
 				& Tối thiểu hóa mất mát dựa trên khoảng cách & & \\ \cline{2-2}
 				& Tối thiểu hóa xếp hạng mất mát dựa trên lề & & \\ \hline
-				\multirow{3}{*}{Đồ thị lõi} & Dựa trên graphlet & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Hiệu quả, chỉ tính những nhánh\\ \\ cấu trúc đơn vị mong muốn\end{tabular}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Nhánh cấu trúc thì không độc lập\\ \\ Số chiều nhúng tăng lên theo hàm mũ\end{tabular}} \\ \cline{2-2}
+				\multirow{3}{2cm}{Đồ thị lõi} & Dựa trên graphlet & Hiệu quả, chỉ tính những nhánh cấu trúc đơn vị mong muốn & \multirow{3}{5cm}{Nhánh cấu trúc thì không độc lập. Số chiều nhúng tăng lên theo hàm mũ} \\ \cline{2-2}
 				& Dựa trên mẫu nhánh cây   & & \\ \cline{2-2}
 				& Dựa trên bước nhảy ngẫu nhiên & & \\ \hline
 				
-				\multirow{3}{*}{Mô hình sinh} & Nhúng đồ thị dựa trên không gian ẩn & Phép nhúng có thể giải thích được & Khó điều chỉnh lựa chọn phân bố \\ \cline{2-3}
+				Mô hình sinh & Nhúng đồ thị dựa trên không gian ẩn & Phép nhúng có thể giải thích được & Khó điều chỉnh lựa chọn phân bố \\ \cline{2-3}
 				
 				& Nhúng kết hợp ngữ nghĩa & Tận dụng nhiều thông tin nguồn & Yêu cầu một lượng lớn dữ liệu huấn luyện\\
 				& & một cách tự nhiên & \\ \hline
 				
-				\multirow{3}{*}{Học sâu} & Sử dụng bước ngẫu nhiên & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}Hiệu quả và nhanh chóng\\ \\ Không phải trích đặc trưng\end{tabular}}& \begin{tabular}[c]{@{}l@{}}Chỉ xem xét đến nội dung cục bộ trong\\ một đường đi\\ Khó để tìm kiếm chiến lược lấy mẫu tối ưu\end{tabular} \\ \cline{2-2} \cline{4-4} 
+				Học sâu & Sử dụng bước ngẫu nhiên & \multirow{2}{5cm}{Hiệu quả và nhanh chóng Không phải trích đặc trưng} & Chỉ xem xét đến nội dung cục bộ trong một đường đi. Khó để tìm kiếm chiến lược lấy mẫu tối ưu \\ \cline{2-2} \cline{4-4} 
 				& Không sử dụng bước ngẫu nhiên &  & Chi phí tính toán cao \\ \hline
 			\end{tabular}
 		}
-		\caption{Bảng so sánh ưu và nhược điểm của các kỹ thuật nhúng đồ thị}
+		\caption{Bảng so sánh ưu và nhược điểm của kỹ thuật nhúng đồ thị}
 		\label{tab:graphEmbeddingTechCompare}
 	\end{center}
 \end{table}
@@ -468,10 +601,52 @@ Trong đó các ma trận trọng số $\mathbf{W}_Q^{(h)}$, $\mathbf{W}_K^{(h)}
 
 \subsection{Mạng đồ thị chú ý}
 \label{sec:GAT}
-
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{azure}{rgb}{0.0, 0.5, 1.0}
+\definecolor{awesome}{rgb}{1.0, 0.13, 0.32}
 \begin{figure}[htp]
 	\centering
-	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{images/graph_example.png}
+	\resizebox{\textwidth}{!}{%
+		\begin{tikzpicture}[
+		entityStyle/.style={draw, color=white, font=\sffamily, thin, align=center, circle, text width=20mm},
+		us/.style = {entityStyle, fill=amber},
+		entity/.style={entityStyle, fill=azure},
+		arrowStyle/.style={-latex', font=\sffamily}]
+		
+		\node[us] (us) {\textbf{U.S}};
+		
+		\begin{scope}[every node/.style={entity}]
+		\node[above left=2cm of us, xshift=-20mm] (c1) {\textbf{Donald Trump}};
+		\node[above right=2cm of us, xshift=1cm] (c2) {\textbf{Jeff Bezos}};
+		\node[below left=2cm of us, xshift=-20mm] (c3) {\textbf{New York}};
+		\node[below right=2cm of us, xshift=1cm] (c4) {\textbf{Tesla Inc.}};
+		
+		\node[below left=3cm of c1, yshift=25mm, xshift=-15mm] (c1x) {\textbf{Melania Trump}};
+		\node[above left=3cm of c3, yshift=-25mm, xshift=-15mm] (c3x) {\textbf{Tom Cruise}};
+		\end{scope}
+		\foreach \value in {1,...,4}
+		\draw[->, line width=0.8mm, azure] (c\value) -> (us);
+		\foreach \value in {1,3}
+		\draw[->, line width=0.8mm, azure] (c\value x) -> (c\value);
+		
+		\foreach \value in {1,3}
+		\draw[->, line width=0.8mm, azure!60, dash pattern=on 3mm off 1mm, postaction={decorate}] (c\value x) -> (us);
+		
+		\path[arrowStyle] (c1)--node[rotate=-31, yshift=4mm]{president\_of} node[rotate=-31, yshift=-3mm]{$\alpha_{i4}$} (us);
+		
+		\path[arrowStyle] (c3)--node[rotate=30, yshift=4mm]{state\_of} node[rotate=30, yshift=-4mm]{$\alpha_{i3}$} (us);
+		
+		\path[arrowStyle] (c2)--node[rotate=41, yshift=4mm]{richest\_of} node[rotate=41, yshift=-4mm]{$\alpha_{i1}$} (us);
+		
+		\path[arrowStyle] (c4)--node[rotate=-41, yshift=4mm]{founded\_in} node[rotate=-41, yshift=-4mm]{$\alpha_{i2}$} (us);
+		
+		\path[arrowStyle] (c1x)--node[rotate=15, yshift=4mm]{wife\_of} (c1);
+		\path[arrowStyle] (c3x)--node[rotate=-15, yshift=4mm]{born\_in} (c3);
+		
+		\path[arrowStyle] (c1x)--node[rotate=-8, yshift=4mm]{\textbf{first\_lady}} node[rotate=-8, yshift=-3mm]{$\alpha_{i5}$} (us);
+		\path[arrowStyle] (c3x)--node[rotate=8, yshift=4mm]{\textbf{native\_of}} node[rotate=8, yshift=-3mm]{$\alpha_{i6}$} (us);
+		\end{tikzpicture}
+	}
 	\caption{Đồ thị tri thức và các hệ số chú ý chuẩn hóa của thực thể}
 	\label{fig:graphExample}
 \end{figure}

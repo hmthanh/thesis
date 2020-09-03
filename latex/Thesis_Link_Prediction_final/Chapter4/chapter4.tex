@@ -65,16 +65,16 @@ Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật to
 \cline{2-9}
                                        & \multicolumn{4}{c|}{\textbf{FB15k}}                   & \multicolumn{4}{c|}{\textbf{FB15k-237}}                   \\ \cline{2-9} 
                                        & \textbf{H@1} & \textbf{H@10} & \textbf{MR} & \textbf{MRR} & \textbf{H@1} & \textbf{H@10} & \textbf{MR} & \textbf{MRR} \\ \hline
-\multicolumn{1}{|l|}{\textbf{ComplEx}} & 81.56        & 90.53         & 34          & 0.848        & 25.72        & 52.97         & 202        & 0.349        \\ \hline
-\multicolumn{1}{|l|}{\textbf{TuckER}}  & 72.89        & 88.88         & 39          & 0.788        & 25.90        & 53.61         & 162         & 0.352        \\ \hline
-\multicolumn{1}{|l|}{\textbf{TransE}}  & 49.36        & 84.73         & 45          & 0.628        & 21.72        & 49.65         & 209         & 0.31        \\ \hline
-\multicolumn{1}{|l|}{\textbf{RoteE}}   & 73.93        & 88.10         & 42          & 0.791        & 23.83        & 53.06         & 178         & 0.336        \\ \hline
-\multicolumn{1}{|l|}{\textbf{ConvKb}}  & 59.46        & 84.94         & 51         & 0.688        & 21.90        & 47.62         & 281         &0.305        \\ \hline
-\multicolumn{1}{|l|}{\textbf{GAT}}     &              &               &             &              &              &               &             &              \\ \hline
-\multicolumn{1}{|l|}{\textbf{BURL}}    & \textbf{79.13}        & \textbf{82.30}         & \textbf{285}         & \textbf{0.824}        & \textbf{20.85}        & \textbf{42.40}         & \textbf{490}         & \textbf{0.311}        \\ \hline
+\multicolumn{1}{|l|}{ComplEx} & 81.56        & 90.53         & 34          & 0.848        & 25.72        & 52.97         & 202        & 0.349        \\ \hline
+\multicolumn{1}{|l|}{TuckER}  & 72.89        & 88.88         & 39          & 0.788        & 25.90        & 53.61         & 162         & 0.352        \\ \hline
+\multicolumn{1}{|l|}{TransE}  & 49.36        & 84.73         & 45          & 0.628        & 21.72        & 49.65         & 209         & 0.31        \\ \hline
+\multicolumn{1}{|l|}{RoteE}   & 73.93        & 88.10         & 42          & 0.791        & 23.83        & 53.06         & 178         & 0.336        \\ \hline
+\multicolumn{1}{|l|}{ConvKB}  & 59.46        & 84.94         & 51         & 0.688        & 21.90        & 47.62         & 281         &0.305        \\ \hline
+\multicolumn{1}{|l|}{\textbf{KBGAT}}     &              &               &             &              & 36.06     &    58.32   &  211  &    0.4353  \\ \hline
+\multicolumn{1}{|l|}{\textbf{AnyBURL}}    & \textbf{79.13}        & \textbf{82.30}         & \textbf{285}         & \textbf{0.824}        & \textbf{20.85}        & \textbf{42.40}         & \textbf{490}         & \textbf{0.311}        \\ \hline
 \end{tabular}
 }
-\caption{Kết quả phương pháp AnyBURL trên FB15k, FB15k-237}
+\caption{Kết quả phương pháp đề xuất trên FB15k, FB15k-237}
 \label{tab:tab1}%
 \end{center}
 \end{table}
@@ -86,13 +86,13 @@ Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật to
 \cline{2-9}
                                        & \multicolumn{4}{c|}{\textbf{WN18}}                              & \multicolumn{4}{c|}{\textbf{WN18RR}}                            \\ \cline{2-9} 
                                        & \textbf{H@1}   & \textbf{H@10}  & \textbf{MR}  & \textbf{MRR}   & \textbf{H@1}   & \textbf{H@10}  & \textbf{MR}  & \textbf{MRR}   \\ \hline
-\multicolumn{1}{|l|}{\textbf{ComplEx}} & 94.53          & 95.50          & 3623         & 0.349          & 42.55          & 52.12          & 4909         & 0.458          \\ \hline
-\multicolumn{1}{|l|}{\textbf{TuckER}}  & 94.64          & 95.80          & 510          & 0.951          & 42.95          & 51.40          & 6239         & 0.459          \\ \hline
-\multicolumn{1}{|l|}{\textbf{TransE}}  & 40.56          & 94.87          & 279          & 0.646          & 2.79           & 94.87          & 279          & 0.646          \\ \hline
-\multicolumn{1}{|l|}{\textbf{RoteE}}   & 94.30          & 96.02          & 274          & 0.949          & 42.60          & 57.35          & 3318         & 0.475          \\ \hline
-\multicolumn{1}{|l|}{\textbf{ConvKb}}  & 93.89          & 95.68          & 413          & 0.945          & 38.99          & 50.75          & 4944         & 0.427          \\ \hline
-\multicolumn{1}{|l|}{\textbf{GAT}}     &                &                &              &                &                &                &              &                \\ \hline
-\multicolumn{1}{|l|}{\textbf{BURL}}    & \textbf{93.96} & \textbf{95.07} & \textbf{230} & \textbf{0.955} & \textbf{44.22} & \textbf{54.40} & \textbf{490} & \textbf{0.490} \\ \hline
+\multicolumn{1}{|l|}{ComplEx} & 94.53          & 95.50          & 3623         & 0.349          & 42.55          & 52.12          & 4909         & 0.458          \\ \hline
+\multicolumn{1}{|l|}{TuckER}  & 94.64          & 95.80          & 510          & 0.951          & 42.95          & 51.40          & 6239         & 0.459          \\ \hline
+\multicolumn{1}{|l|}{TransE}  & 40.56          & 94.87          & 279          & 0.646          & 2.79           & 94.87          & 279          & 0.646          \\ \hline
+\multicolumn{1}{|l|}{RoteE}   & 94.30          & 96.02          & 274          & 0.949          & 42.60          & 57.35          & 3318         & 0.475          \\ \hline
+\multicolumn{1}{|l|}{ConvKB}  & 93.89          & 95.68          & 413          & 0.945          & 38.99          & 50.75          & 4944         & 0.427          \\ \hline
+\multicolumn{1}{|l|}{\textbf{KBGAT}}     &                &        &        &                &       25.74         &        52.34         &      2773       &  35.24           \\ \hline
+\multicolumn{1}{|l|}{\textbf{AnyBURL}}    & \textbf{93.96} & \textbf{95.07} & \textbf{230} & \textbf{0.955} & \textbf{44.22} & \textbf{54.40} & \textbf{490} & \textbf{0.490} \\ \hline
 \end{tabular}
 }
 \caption{Kết quả phương pháp AnyBURL trên WN18, WN18RR}
@@ -103,7 +103,6 @@ Như mô tả ở phần \hyperref[algorithm2]{thuật toán AnyBURL} thuật to
 Bảng \hyperref[tab:tab3]{4.3} bên dưới mô tả các kết quả thực nghiệm của chúng tôi với hai chiến lược thêm tri thức mới vào đồ thị. Chúng tôi đánh giá trên tổng số luật được sinh ra, và số luật có độ tin cậy \(>= 50\%\) và \(>= 80\%\).
 \begin{table}[ht]
 \begin{center}
-\resizebox{\textwidth}{!}{%
 \begin{tabular}{ll|l|l|}
 \cline{3-4}
                                                           &                 & \textbf{online-to-offline} & \textbf{online-to-online} \\ \hline
@@ -120,7 +119,6 @@ Bảng \hyperref[tab:tab3]{4.3} bên dưới mô tả các kết quả thực ng
 \multicolumn{1}{|l|}{}                                    & confidence 50\% & 110 (25,05\%)              & 102 (96,22\%)             \\ \cline{2-4} 
 \multicolumn{1}{|l|}{}                                    & confidence 80\% & 83 (18,91\%)               & 85 (81,19\%)              \\ \hline
 \end{tabular}
-}
 \caption{Kết quả hai chiến lược thêm tri thức mới}
 \label{tab:tab3}%
 \end{center}
