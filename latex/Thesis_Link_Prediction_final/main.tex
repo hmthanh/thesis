@@ -15,6 +15,7 @@
 \usepackage{amssymb}
 \DeclareTextSymbolDefault{\DH}{T1}
 
+
 % Tài liệu tham khảo
 \usepackage[
 	sorting=nty,
@@ -22,6 +23,9 @@
 	defernumbers=true]{biblatex}
 \usepackage[unicode]{hyperref} % Bookmark tiếng Việt
 \addbibresource{References/references.bib}
+
+% Coordinate
+%\usepackage{pgfplots}
 
 \makeatletter
 \def\blx@maxline{77}
@@ -112,6 +116,7 @@
 \usepackage[strings]{underscore}
 \usepackage{url}
 
+
 % Math
 \usepackage{amsfonts}
 
@@ -127,13 +132,25 @@
 \usepackage[justification=centering]{caption}
 
 % Bảng thuật ngữ
-\usepackage[acronym,nomain]{glossaries}
+%\usepackage[acronym]{glossaries}
+\usepackage[acronym]{glossaries}
+
+\makeglossaries
+
+\newacronym{DCD}{DCD}{Double Crystal Diffractometer}
+
+\newglossaryentry{utc}{name=UTC, description={Coordinated Universal Time}}
+\newglossaryentry{adt}{name=ADT, description={Atlantic Daylight Time}}
+\newglossaryentry{est}{name=EST, description={Eastern Standard Time}}
 
 % Bảng ký hiệu
 \usepackage{tabularx}
 \usepackage{booktabs}
 \newcolumntype{b}{X}
 \newcolumntype{s}{>{\hsize=.5\hsize}X}
+
+% Abstract
+\usepackage{changepage}
 
 
 % ========================================================================================= %
@@ -158,7 +175,7 @@
 \addcontentsline{toc}{chapter}{Lời cảm ơn}
 \include{Appendix/thanks}
 
-\addcontentsline{toc}{chapter}{Đề cương chi tiết}
+%\addcontentsline{toc}{chapter}{Đề cương chi tiết}
 %\include{Appendix/decuong}
 
 % Mục lục, danh sách hình, danh sách bảng
@@ -167,10 +184,11 @@
 \listoffigures
 \listoftables
 
-\include{notation}
+\addcontentsline{toc}{chapter}{Bảng ký hiệu}
+\include{Appendix/notation}
 
 \addcontentsline{toc}{chapter}{Tóm tắt}
-\include{Appendix/tomtat}
+\include{Appendix/abstract}
 
 \clearpage
 
@@ -178,20 +196,26 @@
 
 % Các chương nội dung
 % Giới thiệu
-\include{Chapter1/chapter1}
+\include{Chapter1/Introduction}
 
 % Các công trình liên quan
-\include{Chapter2/chapter2}
+\include{Chapter2/RelatedWork}
 % \include{Chapter2/chapter_burl}
 
+% Phương pháp dựa trên luật
+\include{Chapter3/RuleBase}
+
+% Phương pháp dựa trên học sâu
+\include{Chapter4/DeepLearning}
+
 % Phương pháp đề xuất
-\include{Chapter3/chapter3}
+\include{Chapter5/Proposal}
 
 % Kết quả thí nghiệm
-\include{Chapter4/chapter4}
+\include{Chapter6/Experiment}
 
 % Kêt luận
-\include{Chapter5/chapter5}
+\include{Chapter7/Conclution}
 
 % Công trình của tác giả (nếu không có thì comment 02 dòng dưới)
 \addcontentsline{toc}{chapter}{Danh mục công trình của tác giả}
