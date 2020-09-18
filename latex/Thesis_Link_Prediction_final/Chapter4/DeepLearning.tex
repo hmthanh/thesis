@@ -391,9 +391,7 @@ Trong đó các ma trận trọng số $\mathbf{W}_Q^{(h)}$, $\mathbf{W}_K^{(h)}
 \section{Mạng đồ thị chú ý}
 \label{sec:GAT}
 
-\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
-\definecolor{azure}{rgb}{0.0, 0.5, 1.0}
-\definecolor{awesome}{rgb}{1.0, 0.13, 0.32}
+
 \begin{figure}[htp]
 	\centering
 	\resizebox{\textwidth}{!}{%
@@ -532,11 +530,43 @@ Các bước của mô hình KBGAT được minh họa ở \ref{eq:KBGATProcess}
 \subsection{Khởi tạo vector nhúng}
 \label{sec:initTransE}
 
-\definecolor{darkpastelgreen}{rgb}{0.01, 0.75, 0.24}
-\definecolor{deepskyblue}{rgb}{0.0, 0.75, 1.0}
-\definecolor{awesome}{rgb}{1.0, 0.13, 0.32}
-\definecolor{azure}{rgb}{0.0, 0.5, 1.0}
-\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+Tương tự như phương pháp Word2Vec\cite{mikolov2013efficient}, mô hình \textit{Biến đổi vector nhúng để mô hình hóa dữ liệu đa-quan hệ} (TransE \cite{bordes2013translating}) thuộc nhóm các phương pháp nhúng hình học để biến đổi các thực thể thể và quan hệ trong đồ thị tri thức thành các vector nhúng đầu ra sao cho :
+\begin{equation}
+\label{eq:conditionTransE}
+\overrightarrow{\text{entity}_{\text{head}}} + \overrightarrow{relation} \approx \overrightarrow{\text{entity}_{\text{tail}}}
+\end{equation}
+
+Đầu tiên, các vector nhúng thực thể và quan hệ được khởi tạo ngẫu nhiên bằng phân phối chuẩn theo số chiều của vector khởi tạo $D_{\text{in}}$, sau đó được chuẩn hóa theo kích thước của tập thực thể nhúng, và quan hệ nhúng.
+Sau đó, ta lấy mẫu (sampling) từ tập dữ liệu huấn luyện để có được một \textit{lô bộ ba hợp lệ} ($S_{\text{batch}}$). Với mỗi bộ ba như vậy, chúng ta lấy mẫu bộ ba không hợp lệ bằng cách thay thực thể đầu hoặc thực thể đuôi bằng một thực thể ngẫu nhiên trong tập thực thể để được \textit{lô bộ ba không hợp lệ} ($S'_{\text{batch}}$). Sau đó ta nhóm từng bộ ba hợp lệ với không hợp lệ để tạo ra \textit{lô huấn luyện} ($T_{\text{batch}}$). Cuối cùng, ta cập nhật giá trị các vector nhúng để đảm bảo điều kiện \ref{eq:conditionTransE}.
+
+\begin{algorithm}
+	\caption{Thuật toán học vector nhúng TransE}\label{alg:TransE}
+	\begin{algorithmic}[1]
+		\Statex \textbf{Input} : 
+		Tập huấn luyện $S = {(h, r, t)}$, tập thực thể E, tập quan hệ R, biên lề $\gamma$, số chiều nhúng $D_{\text{in}}$
+		\Statex \textbf{Initialize}
+		\State $\overrightarrow{r} \leftarrow \text{uniform}(-\frac{6}{\sqrt{D_{\text{in}}}}, \frac{6}{\sqrt{D_{\text{in}}}})$ với mỗi quan hệ $r \in R$
+		\State $\overrightarrow{r} \leftarrow \overrightarrow{r}/\|\overrightarrow{r}\|$ với mỗi $r \in R$
+		\State $\overrightarrow{e} \leftarrow \text{uniform}(-\frac{6}{\sqrt{D_{\text{in}}}}, \frac{6}{\sqrt{D_{\text{in}}}})$ với mỗi thực thể $e \in E$
+		\Loop
+		\State $\overrightarrow{e} \leftarrow \overrightarrow{e}/\|\overrightarrow{e}\|$ với mỗi $e \in E$
+		\State $S_{\text{batch}} \leftarrow \text{sample}(S, b)$  // lấy mẫu minibatch kích thước $b$
+		\State $T_{\text{batch}} \leftarrow \varnothing $
+		\For {$(h, r, t) \in S_{\text{batch}}$}
+		\State $(h', r, t') \leftarrow \text{sample}(S'_{(h, r, t)})$ // lấy mẫu từ bộ ba không hơp lệ
+		\State $T_{\text{batch}} \leftarrow T_{\text{batch}} \cup \Big\{ \Big( (h, r, t), (h', r, t') \Big) \Big\}$
+		\EndFor
+		\Statex Cập nhật nhúng
+		\State $\sum_{\Big( (h, r, t), (h', r, t')\Big) \in T_{\text{batch}}} \nabla [\gamma + d(\overrightarrow{h} + \overrightarrow{r}, \overrightarrow{t}) - d(\overrightarrow{h'} + \overrightarrow{r}, \overrightarrow{t'})]_{+}$
+		\EndLoop
+	\end{algorithmic}
+\end{algorithm}
+
+Mô hình TransE của nhóm tác giả Bordes, Antoine\cite{bordes2013translating} được trình bày ở thuật toán \ref{alg:TransE} như thuật toán \ref{alg:TransE}
+
+Trong đó, đầu vào của mô hình TransE là tập dữ liệu huấn luyện với mỗi phần tử là một bộ ba $(h, r, t)$. $h, t \in E$ là các thực thể đầu và thực thể đuôi, $r \in R$ là các quan hệ.$\overrightarrow{e}$ và $\overrightarrow{r}$ lần lượt là các vector nhúng của thực thể và quan hệ, và $\|\overrightarrow{e}\|$ và $\|\overrightarrow{r}\|$ lần lượt là độ lớn của tập thực thể và tập quan hệ. $S$ và $S_{\text{batch}}$ tương ứng là tập dữ liệu huấn luyện, và một lô (batch) lấy ra từ tập dữ liệu huấn luyện.
+$T_{\text{batch}}$ là một lô bao gồm cả bộ ba hợp lệ và bộ ba không hợp lệ để tính hàm mất mát \ref{eq:lossTransE}
+
 \begin{figure}[htp]
 	\centering
 	\begin{tikzpicture}[
@@ -572,44 +602,7 @@ Các bước của mô hình KBGAT được minh họa ở \ref{eq:KBGATProcess}
 	\label{fig:TransEAnimation}
 \end{figure}
 
-Tương tự như phương pháp Word2Vec\cite{mikolov2013efficient}, mô hình \textit{Biến đổi vector nhúng để mô hình hóa dữ liệu đa-quan hệ} (TransE \cite{bordes2013translating}) thuộc nhóm các phương pháp nhúng hình học để biến đổi các thực thể thể và quan hệ trong đồ thị tri thức thành các vector nhúng đầu ra sao cho :
-\begin{equation}
-\label{eq:conditionTransE}
-\overrightarrow{\text{entity}_{\text{head}}} + \overrightarrow{relation} \approx \overrightarrow{\text{entity}_{\text{tail}}}
-\end{equation}
-
-Đầu tiên, các vector nhúng thực thể và quan hệ được khởi tạo ngẫu nhiên bằng phân phối chuẩn theo số chiều của vector khởi tạo $D_{\text{in}}$, sau đó được chuẩn hóa theo kích thước của tập thực thể nhúng, và quan hệ nhúng.
-Sau đó, ta lấy mẫu (sampling) từ tập dữ liệu huấn luyện để có được một \textit{lô bộ ba hợp lệ} ($S_{\text{batch}}$). Với mỗi bộ ba như vậy, chúng ta lấy mẫu bộ ba không hợp lệ bằng cách thay thực thể đầu hoặc thực thể đuôi bằng một thực thể ngẫu nhiên trong tập thực thể để được \textit{lô bộ ba không hợp lệ} ($S'_{\text{batch}}$). Sau đó ta nhóm từng bộ ba hợp lệ với không hợp lệ để tạo ra \textit{lô huấn luyện} ($T_{\text{batch}}$). Cuối cùng, ta cập nhật giá trị các vector nhúng để đảm bảo điều kiện \ref{eq:conditionTransE}.
-
-Mô hình TransE của nhóm tác giả Bordes, Antoine\cite{bordes2013translating} được trình bày ở thuật toán \ref{alg:TransE} như sau :
-
-\begin{algorithm}
-	\caption{Thuật toán học vector nhúng TransE}\label{alg:TransE}
-	\begin{algorithmic}[1]
-		\Statex \textbf{Input} : 
-		Tập huấn luyện $S = {(h, r, t)}$, tập thực thể E, tập quan hệ R, biên lề $\gamma$, số chiều nhúng $D_{\text{in}}$
-		\Statex \textbf{Initialize}
-		\State $\overrightarrow{r} \leftarrow \text{uniform}(-\frac{6}{\sqrt{D_{\text{in}}}}, \frac{6}{\sqrt{D_{\text{in}}}})$ với mỗi quan hệ $r \in R$
-		\State $\overrightarrow{r} \leftarrow \overrightarrow{r}/\|\overrightarrow{r}\|$ với mỗi $r \in R$
-		\State $\overrightarrow{e} \leftarrow \text{uniform}(-\frac{6}{\sqrt{D_{\text{in}}}}, \frac{6}{\sqrt{D_{\text{in}}}})$ với mỗi thực thể $e \in E$
-		\Loop
-		\State $\overrightarrow{e} \leftarrow \overrightarrow{e}/\|\overrightarrow{e}\|$ với mỗi $e \in E$
-		\State $S_{\text{batch}} \leftarrow \text{sample}(S, b)$  // lấy mẫu minibatch kích thước $b$
-		\State $T_{\text{batch}} \leftarrow \varnothing $
-		\For {$(h, r, t) \in S_{\text{batch}}$}
-		\State $(h', r, t') \leftarrow \text{sample}(S'_{(h, r, t)})$ // lấy mẫu từ bộ ba không hơp lệ
-		\State $T_{\text{batch}} \leftarrow T_{\text{batch}} \cup \Big\{ \Big( (h, r, t), (h', r, t') \Big) \Big\}$
-		\EndFor
-		\Statex Cập nhật nhúng
-		\State $\sum_{\Big( (h, r, t), (h', r, t')\Big) \in T_{\text{batch}}} \nabla [\gamma + d(\overrightarrow{h} + \overrightarrow{r}, \overrightarrow{t}) - d(\overrightarrow{h'} + \overrightarrow{r}, \overrightarrow{t'})]_{+}$
-		\EndLoop
-	\end{algorithmic}
-\end{algorithm}
-
-Trong đó, đầu vào của mô hình TransE là tập dữ liệu huấn luyện với mỗi phần tử là một bộ ba $(h, r, t)$. $h, t \in E$ là các thực thể đầu và thực thể đuôi, $r \in R$ là các quan hệ.$\overrightarrow{e}$ và $\overrightarrow{r}$ lần lượt là các vector nhúng của thực thể và quan hệ, và $\|\overrightarrow{e}\|$ và $\|\overrightarrow{r}\|$ lần lượt là độ lớn của tập thực thể và tập quan hệ. $S$ và $S_{\text{batch}}$ tương ứng là tập dữ liệu huấn luyện, và một lô (batch) lấy ra từ tập dữ liệu huấn luyện.
-$T_{\text{batch}}$ là một lô bao gồm cả bộ ba hợp lệ và bộ ba không hợp lệ để tính hàm mất mát \ref{eq:lossTransE}
-
-Trong đó \textit{bộ ba hợp lệ} (valid triple) là bộ ba lấy từ lô huấn luyện ($S_{\text{batch}}$), \textit{bộ ba không hợp lệ} (invalid triple) là bộ ba lấy từ lô huấn luyện lỗi ($S'_{\text{batch}}$) được bỏ đi thực thể đầu hoặc thực thể đuôi và thay thế các thực thể đó bằng cách chọn một thực thể ngẫu nhiên trong tập thực thể :
+\textit{Bộ ba hợp lệ} (valid triple) là bộ ba lấy từ lô huấn luyện ($S_{\text{batch}}$), \textit{bộ ba không hợp lệ} (invalid triple) là bộ ba lấy từ lô huấn luyện lỗi ($S'_{\text{batch}}$) được bỏ đi thực thể đầu hoặc thực thể đuôi và thay thế các thực thể đó bằng cách chọn một thực thể ngẫu nhiên trong tập thực thể :
 
 \begin{equation}
 	\label{eq:lossTransE}
@@ -625,6 +618,7 @@ Trong đó \textit{bộ ba hợp lệ} (valid triple) là bộ ba lấy từ lô
 	\mathcal{L} = \sum_{(h, r, t) \in S} \sum_{(h', r, t') \in S'_{(h, r, t)}} [\gamma + d(\overrightarrow{h}+ \overrightarrow{r}, \overrightarrow{t}) - d(\overrightarrow{h'}+ \overrightarrow{r}, \overrightarrow{t'})]_{+}
 \end{equation}
 
+
 Với $\gamma > 0$ là biên lề, và $[x]_{+}$ là lấy phần dương của $x$. $d$ là đo giá trị sai khác của các thực thể nhúng trong lô hợp lệ và lô không hợp lệ :
 
 $$d(\overrightarrow{h} + \overrightarrow{r}, \overrightarrow{t}) = \big\| \overrightarrow{h} + \overrightarrow{r} - \overrightarrow{t}\big\|_{p}$$
@@ -636,13 +630,6 @@ Hàm $\|\|_{p}$ là hàm chuẩn hóa có thể là L1-norm (p = 1) hoặc L2-no
 
 Sau khi có được các vector nhúng học được các đặc trưng không gian ở trên của đồ thị. Các vector nhúng tiếp tục được đi qua lớp nhúng tiếp theo để tổng hợp thêm thông tin lân cận của một thực thể.
 
-\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
-\definecolor{azure}{rgb}{0.0, 0.5, 1.0}
-\definecolor{awesome}{rgb}{1.0, 0.13, 0.32}
-\definecolor{deepskyblue}{rgb}{0.0, 0.75, 1.0}
-\definecolor{deepmagenta}{rgb}{0.8, 0.0, 0.8}
-\definecolor{deepcarminepink}{rgb}{0.94, 0.19, 0.22}
-\definecolor{gray}{rgb}{0.5, 0.5, 0.5}
 \begin{figure}[htp]
 	\centering
 	\resizebox{\textwidth}{!}{%
@@ -965,8 +952,222 @@ trong đó $\gamma > 0$ là tham số lề, $S$ là tập hợp bộ ba chuẩn 
 {S'} ={\underbrace{\{ t^k_{i'j} | e'_i \in \mathcal{E}\setminus e_i\}}_{\text{thay thế thực thể đầu}}\cup \underbrace{\{ t^k_{ij'} | e'_j \in \mathcal{E}\setminus e_j\}}_{\text{thay thế thực thể đuôi}}}
 \end{equation}
 
-\subsection{Dự đoán}
+\subsection{Dự đoán bằng mô hình ConvKB}
 \label{sec:predictionConvKB}
+
+\begin{figure}[htp]
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\begin{tikzpicture}[
+			emb/.style={draw, circle,minimum width=.1em, thin, anchor=center},
+			entityInit/.style={emb, fill=amber},
+			relationInit/.style={emb, fill=azure},
+			entityEmb/.style={emb, fill=gray},
+			relationEmb/.style={emb, fill=deepcarminepink},
+			entityPretrain/.style={emb, fill=deepmagenta},
+			entityOut/.style={emb, fill=deepskyblue},
+			box/.style={draw,rectangle, fill=none},
+			embBox/.style={box ,rounded corners=0.2em, minimum width=1.3em},
+			layerBox/.style={color=azure!80, box ,very thick,rounded corners=0.2em, minimum width=1.3em},
+			textbox/.style={box,rounded corners=0.3em, fill=none,font=\sffamily, align=center},
+			arrowStrong/.style={thick,->,>=stealth},
+			arrowDash/.style={thick, ->,>=stealth, dash pattern=on 1.5mm off 0.7mm, postaction={decorate}},
+			row/.style={draw, rectangle, font=\fontsize{0.6em}{1}\sffamily, align=center, text width=3.9em},
+			arrowStyle/.style={-latex', font=\sffamily},
+			mydot/.style={draw, circle, minimum size=0.1em, scale=0.2},
+			]
+			% 5
+			% Root
+			\draw node[textbox][text width=5.7em] (graphAttention2) {\small Graph Attention Layer $2_{\ref{eq:graphAttention2}}$};
+			
+			\draw node[textbox][minimum width=9.5em, minimum height=21em, left=1.5em of graphAttention2] (layer3) {};
+			
+			\draw node[embBox][minimum height=20.3em, left=2em of graphAttention2] (box10) {};
+			\begin{scope}[every node/.style={below=0mm of box10.center}]
+				\foreach \x in {1,...,12}
+				{\draw node[entityEmb][yshift=(\x-4)*1.1em+0.55em] (ex10\x) {};}
+				
+				\foreach \x in {1,...,6}
+				{\draw node[relationEmb](ey10\x)[yshift=-(\x+3)*1.1em+0.55em]{};}
+			\end{scope}
+			
+			\draw node[embBox][minimum height=7em, left=2em of box10, yshift=5em] (box7) {};
+			\draw node[embBox][minimum height=7em, left=2em of box10, yshift=-5em] (box9) {};
+			\begin{scope}
+				\foreach \x in {1,...,6}
+				{\draw node[entityEmb](e7\x)[yshift=(\x-3)*1.1em, below=0mm of box7.center]{};}
+				
+				\foreach \x in {1,...,6}
+				{\draw node[relationEmb](e9\x)[yshift=(\x-3)*1.1em, below=0mm of box9.center]{};}
+			\end{scope}
+			
+			\draw node[embBox][minimum height=4em, left=2em of box7, yshift=2.5em] (box5) {};
+			\draw node[embBox][minimum height=4em, left=2em of box7, yshift=-2.5em] (box6) {};
+			\draw node[embBox][minimum height=5em, left=2em of box9] (box8) {};
+			\begin{scope}
+				\foreach \x in {1,...,3}
+				{\draw node[entityEmb](e5\x)[yshift=(\x-2)*1.1em+0.55em, below=0mm of box5.center]{};}
+				
+				\foreach \x in {1,...,3}
+				{\draw node[entityEmb](e6\x)[yshift=-(\x-2)*1.1em+0.55em, below=0mm of box6.center]{};}
+				
+				\foreach \x in {1,...,4}
+				{\draw node[relationInit](e8\x)[yshift=(\x-2)*1.1em, below=0mm of box8.center]{};}
+			\end{scope}
+			\draw node[layerBox][minimum height=8em,minimum width=5.5em, left=1.5em of box10, yshift=-5em] (fc1) {};
+			
+			% Left
+			\begin{scope}[every node/.style={left=2em of layer3}]
+				\draw node[textbox][yshift=3em, text width=3em] (attentionHead1) {\small Attention Head 1};
+				\draw node[textbox][yshift=-3em, text width=3em] (attentionHead2) {\small Attention Head 2};
+			\end{scope}
+			\draw node[textbox][left=1.5em of layer3, text width=4em, minimum width=4em, minimum height=10em] (graphAttention1) {\small Graph Attention Layer $1_{\ref{eq:graphAttention1}}$ };
+			
+			\draw node[textbox][minimum width=12.3em, minimum height=21em, left=1.5em of graphAttention1] (layer1) {};
+			% Layer 1
+			\draw node[embBox][minimum height=10.5em, yshift=1em,right=3em of layer1.center, left=2em of graphAttention1] (box4) {};
+			\begin{scope}
+				\foreach \x in {1,...,6}
+				{\draw node[entityInit](ex4\x)[yshift=(\x-2)*1.1em-0.4em, above=0em of box4.center]{};}
+				
+				\foreach \x in {1,...,3}
+				{\draw node[relationInit](e4y\x)[yshift=-(\x)*1.1em-0.6em, below=0mm of box4.center]{};}
+			\end{scope}
+			
+			% Start Initial
+			\draw node[embBox][minimum height=4em, yshift=4.5em, left=2em of box4] (box1) {};
+			\foreach \x in {1,...,3}
+			{\draw node[entityInit](e1\x)[yshift=(\x-2)*1.1em+0.5em, below=0mm of box1.center]{};}
+			
+			\draw node[embBox][minimum height=4em, left=2em of box4] (box2) {};
+			\foreach \x in {1,...,3}
+			{\draw node[relationInit](e2\x)[yshift=(\x-2)*1.1em+0.5em, below=0mm of box2.center]{};}
+			
+			\draw node[embBox][minimum height=4em, yshift=-4.5em, left=2em of box4] (box3) {};
+			\foreach \x in {1,...,3}
+			{\draw node[entityInit](e3\x)[yshift=(\x-2)*1.1em+0.5em, below=0mm of box3.center]{};}
+			% Start Initial
+			
+			\begin{scope}[every node/.style={left=of box2, row}]
+				\draw node (relation1) {president\_of};
+				\draw node[above=0mm of relation1] (entity1) {Donald Trump};
+				\draw node[above=0mm of entity1] (triple1) {Triple 1};
+				\draw node[below=0mm of relation1] (entity2) {United States};	
+			\end{scope}
+			
+			\begin{scope}[every node/.style={row}]
+				\draw node[below=3em of entity2] (triple2) {Triple N};
+				\draw node[below=0mm of triple2] (entity3) {Tom Cruise};
+				\draw node[below=0mm of entity3] (relation2) {born\_in};
+				\draw node[below=0mm of relation2] (entity4) {New York};	
+			\end{scope}
+			
+			% Right
+			\draw node[textbox][minimum height=16em, minimum width=2.3em, yshift=-4em, right=1.5em of graphAttention2] (layer4){};
+			\draw node[embBox][minimum height=7em, right=2em of graphAttention2] (box11) {};
+			\begin{scope}
+				\foreach \x in {1,...,6}
+				{\draw node[entityEmb](e11\x)[yshift=(\x-3)*1.1em, below=0mm of box11.center]{};}
+			\end{scope}
+			
+			\draw node[embBox][minimum height=7em, below=0.7em of box11] (box12) {};
+			\begin{scope}
+				\foreach \x in {1,...,6}
+				{\draw node[relationEmb](e12\x)[yshift=(\x-3)*1.1em, below=0mm of box12.center]{};}
+			\end{scope}
+			
+			\draw node[embBox][minimum height=7em, above=1.5em of box11] (box13) {};
+			\begin{scope}
+				\foreach \x in {1,...,6}
+				{\draw node[entityPretrain](e13\x)[yshift=(\x-3)*1.1em, below=0mm of box13.center]{};}
+			\end{scope}
+			
+			\draw node[embBox][minimum height=5em, left=1.7em of box13] (box14) {};
+			\begin{scope}
+				\foreach \x in {1,...,4}
+				{\draw node[entityInit](e14\x)[yshift=(\x-2)*1.1em, below=0mm of box14.center]{};}
+			\end{scope}
+			\draw node[layerBox][minimum height=8em, minimum width=5.5em, above=1.5em of box11, yshift=-0.5em, xshift=-1.5em] (fc2) {};
+			
+			\draw node[right=2em of box11, yshift=3.7em] (bigOTimes) {$\bigotimes^{\ref{eq:reInitEmbedding}}$};
+			
+			\draw node[textbox][minimum height=16em, minimum width=2.3em, yshift=-3.95em, right=1.5em of bigOTimes] (layer5) {};
+			\draw node[embBox][minimum height=7em, above=1em of layer5.center, yshift=-0.5em] (box15) {};
+			\begin{scope}
+				\foreach \x in {1,...,6}
+				{\draw node[entityOut](e15\x)[yshift=(\x-3)*1.1em, below=0mm of box15.center]{};}
+			\end{scope}
+			
+			\draw node[embBox][minimum height=7em, below=1em of layer5.center, yshift=0.5em] (box16) {};
+			\begin{scope}
+				\foreach \x in {1,...,6}
+				{\draw node[relationEmb](e16\x)[yshift=(\x-3)*1.1em, below=0mm of box16.center]{};}
+			\end{scope}
+			
+			\draw node[textbox][right=1.5em of layer5] (final) {$\mathcal{L}_{\ref{eq:KBGATLoss}}$};
+			%16
+			% Arrow
+			\draw [arrowStrong] (box10) -- (graphAttention2.west);
+			
+			\draw [arrowStrong] (entity1.east) -- (box1.west);
+			\draw [arrowStrong] (relation1) -- (box2.west);
+			\draw [arrowStrong] (entity2.east) -- (box3.west);
+			
+			\draw [arrowStrong] (graphAttention2.east) -- (box11.west);
+			\draw [arrowStrong] (graphAttention2.east) -- (box12.west);
+			
+			\draw [arrowStrong] (box11.east) to ([xshift=0.35em] bigOTimes.west);
+			\draw [arrowStrong] (box13.east) to ([xshift=0.35em] bigOTimes.west);
+			
+			\draw [arrowStrong] ([xshift=-1.7em] bigOTimes.east) -- (box15.west);
+			
+			\draw [arrowStrong] (box16.east) -- (final.west);
+			\draw [arrowStrong] (box15.east) -- (final.west);
+			
+			\foreach \x in {1,2}
+			\draw [arrowStrong] (layer1.east) -- (attentionHead\x.west);
+			
+			\foreach \x in {1,2}
+			\draw [arrowStrong] (attentionHead\x.east) -- (layer3.west);
+			
+			\foreach \x in {1,2,3}
+			\draw [arrowDash] (box\x.east) -- (box4.west);
+			
+			\foreach \x in {7,9}
+			{\draw [arrowDash] (box\x) -- (box10.west);}
+			
+			\foreach \x in {5,6}
+			{\draw [arrowDash] (box\x) -- (box7.west);}
+			
+			\foreach \x in {1, ..., 6}
+			{\draw [thick] (e81) -- (e9\x);}
+			\foreach \x in {1, ..., 6}
+			{\draw [thick] (e82) -- (e9\x);}
+			\foreach \x in {1, ..., 6}
+			{\draw [thick] (e83) -- (e9\x);}
+			\foreach \x in {1, ..., 6}
+			{\draw [thick] (e84) -- (e9\x);}
+			
+			\foreach \x in {1, ..., 6}
+			{\draw [thick] (e141) -- (e13\x);}
+			\foreach \x in {1, ..., 6}
+			{\draw [thick] (e142) -- (e13\x);}
+			\foreach \x in {1, ..., 6}
+			{\draw [thick] (e143) -- (e13\x);}
+			\foreach \x in {1, ..., 6}
+			{\draw [thick] (e144) -- (e13\x);}
+			
+			%		\foreach \x in {1, ..., 6}
+			%		{\draw [thick] (r34) -- (r1\x);}
+			
+			\draw node[mydot][below=1.1em of entity2] (dot1) {};
+			\draw node[mydot][below=1.4em of entity2] (dot2) {};
+			\draw node[mydot][below=1.7em of entity2] (dot3) {};
+		\end{tikzpicture}
+	}
+	\caption{Minh họa các lớp giải mã của mô hình ConvKB}
+	\label{fig:decoderConvKB}
+\end{figure}
 
 Sau khi chúng ta biểu diễn các thực thể và quan hệ lên không gian số chiều thấp, mô hình sẽ sử dụng \cite{nguyen2017novel} làm mô hình để phân tích các đặc trưng toàn cục của một bộ ba $t_{ijk}$ qua mỗi chiều để khái quát hóa các đặc trưng biến đổi của mô hình bằng các lớp tính tích chập. Hàm tính điểm số với những ánh xạ đặc trưng được tính theo công thức sau :
 

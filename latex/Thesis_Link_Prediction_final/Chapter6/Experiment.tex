@@ -1,22 +1,47 @@
 \chapter{Thực nghiệm}
 \label{chap:Experiment}
 
+\begin{center}
 \begin{tikzpicture}
-	\begin{axis}[
+	[every axis/.style={
 		ybar,
-		legend style={at={(0.5,-0.15)}, anchor=north},
-		symbolic x coords={FB15k,FB15k-237,WN18, WN18RR},
+		scale only axis,
+		ymin=0, ymax= 50000,
+		width=0.5\textwidth,
+		height=0.4\textwidth,
+		legend style={at={(20em,5em)}, anchor=east},
+		bar width=1em,
+		scaled y ticks=false,
 		xtick=data,
+		font=\scriptsize\sffamily,
+		symbolic x coords={Dataset,FB15k,FB15k-237,WN18,WN18RR},
 		nodes near coords,
 		nodes near coords align={vertical},
-		]
-		\addplot coordinates {(FB15k, 14951) (FB15k-237,14541) (WN18,40943) (WN18RR,40559)};
-		\addplot coordinates {(FB15k,1345) (FB15k-237,237) (WN18,18) (WN18RR,11)};
-		\addplot coordinates {(FB15k,483142) (FB15k-237,272115) (WN18,141442) (WN18RR, 86835)};
-		\addplot coordinates {(FB15k,2) (FB15k-237,1) (WN18,1) (WN18RR,4)};
-		\legend{\#Entities,\#Relations,not understood}
+	}]
+	\pgfplotsset{
+		compat=newest,
+		major grid style=blue,
+		xlabel near ticks,
+		ylabel near ticks
+	}
+	
+	\begin{axis}[]
+		\addplot [fill=awesome] coordinates {
+			(FB15k,14951)
+			(FB15k-237,14541)
+			(WN18,40943)
+			(WN18RR,40559)
+		};
+		\addplot [fill=azure] coordinates {
+			(FB15k,1345)
+			(FB15k-237,237)
+			(WN18,18)
+			(WN18RR,11)
+		};
+		\legend{Entities, Relations}
 	\end{axis}
 \end{tikzpicture}
+\end{center}
 
 Trong phần này chúng tôi mô tả lại các bộ dữ liệu mà chúng tôi dùng để thực nghiệm đánh giá phương pháp của chúng tôi cùng với so sánh với các kết quả khác của các công trình nổi bật khác được báo cáo trong \hyperref[tab:tab1]{bảng 2.1}. Ngoài ra chúng tôi cũng cố gắng đánh giá hai đề xuất của chúng tôi trong việc thêm một lượng tri thức mới vào đồ thị bằng cách chúng tôi xem tập test là một lượng tri thức mới cần thêm vào và dùng tập vadidation để đánh giá lại phương pháp của chúng tôi. Kết quả chi tiết được báo cáo ở \hyperref[tab:tab1]{bảng 2.2}
 
@@ -40,9 +65,50 @@ Trong phần này chúng tôi mô tả lại các bộ dữ liệu mà chúng t�
 	\end{center}
 \end{table}
 
-
 \section{Các tập dữ liệu huấn luyện}
 \label{sec:DataTraining}
+\pgfplotstableread[row sep=\\,col sep=&]{
+	Dataset & Entities & Relations & Training & Validation & Test\\
+	FB15k & 14951 & 1345 & 483142 & 50000 & 59071  \\
+	FB15k-237 & 14541 & 237 & 272115 & 17535 & 20466  \\
+	WN18 & 40943 & 18 & 141442 & 5000 & 5000  \\
+	WN18RR & 40559 & 11 & 86835 & 3034 & 3134  \\
+}\mydata
+\resizebox{\textwidth}{!}{%
+	\begin{tikzpicture}
+\begin{axis}[
+	xbar stacked,
+	tick align = outside, xtick pos = left,
+	scale only axis,
+	scaled x ticks=false,
+	every node near coord/.style={/pgf/number format/fixed},
+	xticklabel style={/pgf/number format/fixed},
+	width=\textwidth,
+	height=0.3\textwidth,
+	font=\scriptsize\sffamily,
+	legend style={at={(0.5,-0.15)}, anchor=north, legend columns=-1},
+	bar width=1.5em,
+	ytick=data,
+	y dir = reverse,
+	yticklabels from table={\mydata}{Dataset},
+	]
+	\addplot[fill=azure] table [y expr=\coordindex,x=Training]{\mydata};
+	\addplot+[fill=awesome] table [y expr=\coordindex,x=Validation]{\mydata};
+	\addplot+[fill=amber,
+	point meta=x,
+	nodes near coords = {\pgfmathprintnumber[precision=1]{\pgfplotspointmeta}},
+	nodes near coords align={anchor=west},
+	every node near coord/.append style={
+		black,
+		fill=white,
+		fill opacity=0.75,
+		text opacity=1,
+		outer sep=\pgflinewidth
+	}] table [y expr=\coordindex,x=Test]{\mydata};
+	\legend{Training, Validation, Test};
+\end{axis}
+	\end{tikzpicture}
+}
 
 Trong thí nghiệm của chúng tôi, chúng tôi thực hiện trên bốn tập dữ liệu phổ biến là FB15k, FB15-237, WN18 và WN18RR.Các bộ dữ liệu này là tập hợp các bộ ba (triple) \(\langle head, relation, tail \rangle\) biểu thị cho thực thể đầu có một mối quan hệ với thực thể cuối.
 
@@ -55,6 +121,75 @@ Bộ dữ liệu này được tạo bởi nhóm nghiên cứu A. Bordes, N. Usu
 Bộ dữ liệu này là một tập hợp con của FB15k được xây dựng bởi Toutanova và Chen \cite{toutanova2015observed} lấy cảm hứng từ quan sát rằng FB15k bao gồm dữ liệu thử nghiệm được các mô hình nhìn thấy tại thời điểm đào tạo (test leekage). Trong FB15k, vấn đề này là do sự hiện diện của các quan hệ gần giống nhau hoặc nghịch đảo của nhau.FB15k-237 được xây dựng để trở thành một tập dữ liệu thách thức hơn: các tác giả đã chọn các dữ kiện liên quan đến 401 quan hệ xuất hiện nhiều nhất và loại bỏ tất cả các quan hệ tương đương hoặc nghịch đảo. Họ cũng đảm bảo rằng không có thực thể nào được kết nối trong tập huấn luyện cũng được liên kết trực tiếp trong tập test và validation.Tập training gồm 237 relations, 13781 head entities, và 13379 tail entities, tập test gồm 223 relations, 7652 head entities, và 5804 tail entities, tập vadition gồm 224 relations, 8171 head entities, and 6376 tail entities.
 
 \subsection{Bộ dữ liệu WN18}
+
+\begin{center}
+	\resizebox{\textwidth}{!}{%
+	\begin{tikzpicture}
+		[every axis/.style={
+			ybar,
+			scale only axis,
+			width=\textwidth,
+			height=0.4\textwidth,
+			xtick=data,
+			x tick label style={rotate=45, anchor=east},
+			legend style={at={(20em,5em)}, anchor=east},
+			bar width=1em,
+			scaled y ticks=false,
+			font=\scriptsize\sffamily,
+			symbolic x coords={
+				_also_see,
+				_derivationally_related_form,
+				_has_part,
+				_hypernym,
+				_hyponym,
+				_instance_hypernym,
+				_instance_hyponym,
+				_member_holonym,
+				_member_meronym,
+				_member_of_domain_region,
+				_member_of_domain_topic,
+				_member_of_domain_usage,
+				_part_of,
+				_similar_to,
+				_synset_domain_region_of,
+				_synset_domain_topic_of,
+				_synset_domain_usage_of,
+				_verb_group},
+			nodes near coords,
+			nodes near coords align={vertical},
+		}]
+		\pgfplotsset{
+			compat=newest,
+			major grid style=blue,
+			xlabel near ticks,
+			ylabel near ticks
+		}
+		
+		\begin{axis}[]
+			\addplot [fill=awesome] coordinates {
+				(_also_see,1299)
+				(_derivationally_related_form,29715)
+				(_has_part,4816)
+				(_hypernym,34796)
+				(_hyponym,34832)
+				(_instance_hypernym,2921)
+				(_instance_hyponym,2935)
+				(_member_holonym,7382)
+				(_member_meronym,7402)
+				(_member_of_domain_region,923)
+				(_member_of_domain_topic,3118)
+				(_member_of_domain_usage,629)
+				(_part_of,4805)
+				(_similar_to,80)
+				(_synset_domain_region_of,903)
+				(_synset_domain_topic_of,3116)
+				(_synset_domain_usage_of,632)
+				(_verb_group,1138)
+			};
+		\end{axis}
+	\end{tikzpicture}
+}
+\end{center}
 
 Bộ dữ liệu này được giới thiệu bởi các tác giả của TransE \cite{bordes2013translating}, được trích xuất từ WordNet\footnote{https://wordnet.princeton.edu/}, một bản thể học ngôn ngữ KG có nghĩa là cung cấp một từ điển/từ đồng nghĩa để hỗ trợ NLP và phân tích văn bản tự động. Trong WordNet, các thực thể tương ứng với các tập hợp (\textit{word senses}) và các quan hệ đại diện cho các kết nối từ vựng của chúng (ví dụ: “hypernym”). Để xây dựng WN18, các tác giả đã sử dụng WordNet làm điểm bắt đầu và sau đó lặp đi lặp lại lọc ra các thực thể và mối quan hệ với quá ít lần được đề cập. Tập dữ liệu được chia ngẫu nhiên thành 3 tập: tập training với 18 relations, 40504 head entities, và 40551 tail entities, tập test gồm 18 relations, 4262 head entities, and 4338 tail entities, tập vadiation gồm 18 relations, 4349 head entities, and 4263 tail entities.
 
@@ -166,3 +301,6 @@ Bảng \hyperref[tab:tab3]{4.3} bên dưới mô tả các kết quả thực ng
 		\label{tab:tab3}%
 	\end{center}
 \end{table}
+
+
+
