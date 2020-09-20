@@ -44,6 +44,7 @@ Nhúng đồ thị là quá trình biến đổi các đặc trưng của đồ 
 
 \begin{figure}[htp]
 	\centering
+	\resizebox{\textwidth}{!}{%
 	\begin{tikzpicture}[
 	rec/.style  = {draw, text width=2cm, font=\sffamily, rectangle, thin},
 	root/.style = {rec, rounded corners=6pt, align=center, fill=green!60, text width=10em},
@@ -78,6 +79,7 @@ Nhúng đồ thị là quá trình biến đổi các đặc trưng của đồ 
 	\foreach \value in {1,...,4}
 	\draw[->] (c2.195) |- (c2\value.west);
 	\end{tikzpicture}
+	}
 	\caption{Các kỹ thuật nhúng đồ thị}
 	\label{fig:graphEmbeddingSettingTree}
 \end{figure}
@@ -307,6 +309,8 @@ Mô hình sinh có thể được dùng cho cả nhúng đỉnh và nhúng cạn
 \newcolumntype{L}{>{\arraybackslash}m{5cm}}
 \begin{table}[htbp]
 	\begin{center}
+		\caption{Bảng so sánh ưu và nhược điểm của kỹ thuật nhúng đồ thị}
+		\label{tab:graphEmbeddingTechCompare}
 		\resizebox{\textwidth}{!}{
 			\begin{tabular}{|p{2cm}|L|L|L|}
 				\hline
@@ -333,16 +337,12 @@ Mô hình sinh có thể được dùng cho cả nhúng đỉnh và nhúng cạn
 				& Không sử dụng bước ngẫu nhiên &  & Chi phí tính toán cao \\ \hline
 			\end{tabular}
 		}
-		\caption{Bảng so sánh ưu và nhược điểm của kỹ thuật nhúng đồ thị}
-		\label{tab:graphEmbeddingTechCompare}
+		
 	\end{center}
 \end{table}
 
 Trong các phương pháp trên, nhóm phương pháp nhúng đồ thị bằng học sâu giúp học được các biểu diễn phức tạp và đạt được kết quả hứa hẹn nhất hiện nay. Tuy nhiên, nhược điểm của nhóm phương pháp học sâu đối với nhúng đồ thị là nếu coi các đỉnh và cạnh trong đồ thị như một lưới để thực hiện tích chập thì sẽ không đúng với bản chất của đồ thị vì không đảm bảo cấu trúc không gian của đồ thị. Mô hình mạng chú ý trên đồ thị dựa trên cơ chế chú ý giúp tổng hợp thông tin của một thực thể dựa vào các trọng số chú ý của các thực thể lân cận đối với thực thể gốc. Chúng tôi cho rằng đây là hướng nghiên cứu tương tự như quan hệ giữa chú ý và ghi nhớ \cite{memoryandattention:2020}, sự phân bố của chú ý sẽ quyết định trọng số hay sự quan trọng của một thực thể này đối với một thực thể khác. Cũng như vector nhúng biểu diễn cho một thực thể sẽ bị ảnh hưởng bởi sự chú ý hay sự quan trọng của các vector nhúng lân cận. Vì vậy đây là hướng nghiên cứu chúng tôi chọn trong các nhóm phương pháp trên.
 
-%
-%Trong cơ chế chú ý, khi nhân các vector
-%
 
 \section{Cơ chế chú ý đa đỉnh}
 
@@ -354,7 +354,7 @@ Năm 2014, cơ chế chú ý đa đỉnh (multi-head attention) được phát m
 \label{sec:attentionMechanism}
 
 Ta gọi $\mathbf{X} = \Big\{\overrightarrow{x_1}, \overrightarrow{x_2}, ...,  \overrightarrow{x_{N_x}}\Big\}$ và $\mathbf{Y} = \Big\{\overrightarrow{y_1}, \overrightarrow{y_2}, ...,  \overrightarrow{y_{N_y}}\Big\}$ là các ma trận nhúng đầu vào, với mỗi dòng $i^{\text{th}}$ hay $j^{\text{th}}$ trong ma trận $\mathbf{X}$ hay $\mathbf{Y}$ là một vector nhúng $\overrightarrow{x_i} \in \mathbb{R}^{1 \times D_{\text{in}}}$, $\overrightarrow{y_j} \in \mathbb{R}^{1 \times D_{\text{in}}}$.
-Cơ chế chú ý là quá trình biến đổi vector có $D_{\text{in}}$ chiều thành vector đầu ra có $D_{\text{attention}}$ chiều để thể hiện sự quan trọng của từng $N_x$ phần tử $x$ so với tất cả $N_y$ các phần tử $y$. Với $\mathbf{X} \in \mathbb{R}^{N_x \times D_\text{in}}$ và $\mathbf{Y} \in \mathbb{R}^{N_y \times D_\text{in}}$ là các ma trận nhúng đầu vào, và $\mathbf{H} \in \mathbb{R}^{N_x \times D_\text{attention}}$ là ma trận nhúng đầu ra như công thức sau :
+Cơ chế chú ý là quá trình biến đổi vector có $D_{\text{in}}$ chiều thành vector đầu ra có $D_{\text{attention}}$ chiều để thể hiện sự quan trọng của từng $N_x$ phần tử $x$ so với tất cả $N_y$ các phần tử $y$. Với $\mathbf{X} \in \mathbb{R}^{N_x \times D_\text{in}}$ và $\mathbf{Y} \in \mathbb{R}^{N_y \times D_\text{in}}$ là các ma trận nhúng đầu vào, và $\mathbf{H} \in \mathbb{R}^{N_x \times D_\text{attention}}$ là ma trận nhúng đầu ra của cơ chế chú ý của nhóm tác giả Vaswani, Ashish\cite{vaswani2017attention} theo công thức sau :
 
 \begin{equation}
 \label{attention}
@@ -460,7 +460,7 @@ Trong mô hình GAT, mô hình sẽ đi qua hai quá trình biến đổi vector
 \label{gatProcess}
 \overrightarrow{e_i} \xrightarrow{f_{\text{mask attention}}^{(1)}} \overrightarrow{e'_i} \xrightarrow{f_{\text{mask attention}}^{(2)}} \overrightarrow{e''_i}
 \end{equation}
-
+	
 Ở quá trình chú ý đa đỉnh đầu tiên ($f_{\text{mask attention}}^{(1)}$), mô hình sẽ tổng hợp thông tin từ các thực thể lân cận và ghép chồng lên nhau để tạo ra vector $\overrightarrow{e'_i}$, với $\overrightarrow{e'_i} \in \mathbb{R}^{1 \times D'}$ . Ở bước thứ hai ($f_{\text{mask attention}}^{(2)}$), lớp chú ý đa đỉnh đã đỉnh không còn nhạy cảm với quá trình tự-chú ý nên kết quả sẽ được tính \textit{trung bình} thay vì ghép các đỉnh chú ý lại với nhau, vector $\overrightarrow{e'_i}$ tiếp tục được xem là vector nhúng đầu vào để biến đổi thành vector nhúng $\overrightarrow{e''_i}$ cuối cùng với $\overrightarrow{e''_i} \in \mathbb{R}^{1 \times D''}$.
 
 Đầu tiên, giống như cơ chế chú ý \ref{attention}, mỗi vector nhúng sẽ được nhân với một ma trận trọng số $\mathbf{W}_1 \in \mathbb{R}^{D_k \times D_{\text{in}}}$ để thể tham số hóa quá trình biến đổi tuyến tính từng vector nhúng của thực thể từ số chiều $D_{\text{in}}$ lên số chiều $D_k$ có đặc trưng cao hơn :
@@ -929,7 +929,7 @@ Tương tự như các vector nhúng thực thể, các vector nhúng quan hệ 
 
 Với $\alpha'^{(h)}_{ijk}$ và $t'^{(h)}_{ijk}$ tương ứng là hệ số chú ý đã chuẩn hóa và vector nhúng đại diện cho một bộ ba $(e_i, r_k, e_j)$ thuộc các lớp $(h)$ khác nhau.
 
-Đến đây, mô hình KBGAT đã áp dụng giống như mô hình GAT \ref{sec:GAT} nhưng ta bổ sung thêm thông tin vector nhúng thực thể và thông tin các đỉnh hàng xóm cách $n_{\text{hop}}$ bậc, ta đã thu được ma trận nhúng thực thể $\mathbf{E}'' \in \mathbb{R}^{N_e \times D''}$, và ma trận nhúng quan hệ $\mathbf{R}'' \in \mathbb{R}^{N_r \times P''}$. Tuy nhiên, sau khi trải qua quá trình học ma trận nhúng mới, ma trận nhúng thực thể $\mathbf{E}''$ mất đi thông tin nhúng khởi tạo ban đầu. Để giải quyết vấn đề này, mô hình sẽ cho nhân ma trận nhúng khởi tạo ban đầu $\mathbf{E}$ với một ma trận trọng số $\mathbf{W}^E \in \mathbb{R}^{D_{\text{in}} \times D''}$ để tạo thành ma trận nhúng mới rồi cộng trực tiếp ma trận nhúng đó vào để đảm bảo thông tin nhúng khởi tạo trong quá trình huấn luyện :
+Đến đây, mô hình KBGAT đã áp dụng giống như mô hình GAT \ref{sec:GAT} nhưng ta bổ sung thêm thông tin vector nhúng thực thể và thông tin các đỉnh hàng xóm cách $n_{\text{hop}}$ bậc, ta đã thu được ma trận nhúng thực thể $\mathbf{E}'' \in \mathbb{R}^{N_e \times D''}$, và ma trận nhúng quan hệ $\mathbf{R}'' \in \mathbb{R}^{N_r \times P''}$. Tuy nhiên, sau khi trải qua quá trình học ma trận nhúng mới, ma trận nhúng thực thể $\mathbf{E}''$ mất đi thông tin nhúng khởi tạo ban đầu do xảy ra hiện tượng \textbf{biến mất đạo hàm} (vanishing gradients). Để giải quyết vấn đề này, mô hình sử dụng kỹ thuật học còn sót (residual learning) sẽ cho nhân ma trận nhúng khởi tạo ban đầu $\mathbf{E}$ với một ma trận trọng số $\mathbf{W}^E \in \mathbb{R}^{D_{\text{in}} \times D''}$ để tạo thành ma trận nhúng mới rồi cộng trực tiếp ma trận nhúng đó vào để đảm bảo thông tin nhúng khởi tạo trong quá trình huấn luyện :
 
 \begin{equation}
 \label{eq:reInitEmbedding}
