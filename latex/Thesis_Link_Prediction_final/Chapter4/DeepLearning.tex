@@ -622,7 +622,7 @@ Sau đó, ta lấy mẫu (sampling) từ tập dữ liệu huấn luyện để 
 	\caption{Thuật toán học vector nhúng TransE \protect\cite{bordes2013translating}}\label{alg:TransE}
 	\begin{algorithmic}[1]
 		\Statex \textbf{Input} :
-		Tập huấn luyện $S = {(h, r, t)}$, tập thực thể E, tập quan hệ R, biên lề $\gamma$, số chiều nhúng $D_{\text{in}}$
+		Tập huấn luyện $S = {(h, r, t)}$, tập thực thể E, tập quan hệ R, biên lề $\gamma$, số chiều nhúng $D_{\text{in}}$	
 		\Statex \textbf{Initialize}
 		\State $\overrightarrow{r} \leftarrow \text{uniform}(-\frac{6}{\sqrt{D_{\text{in}}}}, \frac{6}{\sqrt{D_{\text{in}}}})$ với mỗi quan hệ $r \in R$
 		\State $\overrightarrow{r} \leftarrow \frac{\overrightarrow{r}}{\|\overrightarrow{r}\|}$ với mỗi $r \in R$
@@ -638,6 +638,8 @@ Sau đó, ta lấy mẫu (sampling) từ tập dữ liệu huấn luyện để 
 		\Statex Cập nhật nhúng
 		\State $\sum_{\Big( (h, r, t), (h', r, t')\Big) \in T_{\text{batch}}} \nabla [\gamma + d(\overrightarrow{h} + \overrightarrow{r}, \overrightarrow{t}) - d(\overrightarrow{h'} + \overrightarrow{r}, \overrightarrow{t'})]_{+}$
 		\EndLoop
+		\Statex \textbf{Output} :
+		tập các vector có số chiều là $D_{\text{in}}$ đại điện cho các thực thể và quan hệ
 	\end{algorithmic}
 \end{algorithm}
 
@@ -1029,6 +1031,8 @@ trong đó $\gamma > 0$ là tham số lề, $S$ là tập hợp bộ ba chuẩn 
 	{S'} ={\underbrace{\{ t^k_{i'j} | e'_i \in \mathcal{E}\setminus e_i\}}_{\text{thay thế thực thể đầu}}\cup \underbrace{\{ t^k_{ij'} | e'_j \in \mathcal{E}\setminus e_j\}}_{\text{thay thế thực thể đuôi}}}
 \end{equation}
 
+Đầu ra của mô hình KBGAT là các vector nhúng thực thể và các vector nhúng quan hệ, sau đó các vector nhúng này tiếp tục đi qua mô hình ConvKB để tiến hành dự đoán.
+
 \subsection{Mô hình dự đoán ConvKB}
 \label{sec:predictionConvKB}
 
@@ -1153,3 +1157,4 @@ trong đó $l_{t^k_{ij}} = \begin{cases}
 	-1 &\text{for } t^k_{ij} \in S' \\
 \end{cases}$
 
+Đầu ra cuối cùng của mô hình ConvKB là điểm số xếp hạng của từng dự đoán.
