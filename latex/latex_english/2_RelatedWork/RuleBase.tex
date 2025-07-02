@@ -41,7 +41,8 @@ We define a rule as \(h(c_0, c_n) \gets b_1(c_0, c_1), \dots, b_n(c_{n}, c_{n + 
 %\[U_c \hspace{1cm} h(A_0,c) \gets  \bigwedge^{n-1}_{i=1} b_i(A_{i-1}, A_i) \wedge b_n(A_{n-1}, c^{\prime})\]
 
 
-We refer to rules of these types as path rules because the body atoms (the part after the \(\gets\) symbol) form a path. Note that this also includes variants of rules where the variables are reversed within the atoms. Given a knowledge graph \(\mathcal{G}_{\text{know}}\), a path of length \(n\) is a sequence of \(n\) triples \(p_i(c_i, c_{i+1})\) where either \(p_i(c_i, c_{i+1}) \in \mathcal{G}_{\text{know}}\) or \(p_i(c_{i+1}, c_i) \in \mathcal{G}_{\text{know}}\), with \(0 \leq i \leq n\). The abstract rule patterns presented above are considered to have length \(n\), as their body atoms can be instantiated into a path of length \(n - 1\). For example, in \autoref{fig:burl}\footnote{http://web.informatik.uni-mannheim.de/AnyBURL/2019-05/meilicke19anyburl.pdf},  
+
+We refer to rules of these types as path rules because the body atoms (the part after the \(\gets\) symbol) form a path. Note that this also includes variants of rules where the variables are reversed within the atoms. Given a knowledge graph \(\mathcal{G}_{\text{know}}\), a path of length \(n\) is a sequence of \(n\) triples \(p_i(c_i, c_{i+1})\) where either \(p_i(c_i, c_{i+1}) \in \mathcal{G}_{\text{know}}\) or \(p_i(c_{i+1}, c_i) \in \mathcal{G}_{\text{know}}\), with \(0 \leq i \leq n\). The abstract rule patterns presented above are considered to have length \(n\), as their body atoms can be instantiated into a path of length \(n - 1\). For example, in \autoref{fig:burl} \footnote{http://web.informatik.uni-mannheim.de/AnyBURL/2019-05/meilicke19anyburl.pdf},  
 when sampling paths of length 3, we can obtain the following two rules: the rule marked in green and the rule marked in red.
 
 \begin{equation*}
@@ -51,12 +52,12 @@ when sampling paths of length 3, we can obtain the following two rules: the rule
 	\end{aligned}
 \end{equation*}
 
-\begin{figure*}[htp]
+\begin{figure*}[h]
 	\centering
 	\includegraphics[width=12cm]{images/burl-ago.png}
-	\caption{Example of a knowledge graph} 
-	\textit{Source: adapted from \href{http://web.informatik.uni-mannheim.de/AnyBURL/2019-05/meilicke19anyburl.pdf}{meilicke19anyburl.pdf}}
+	\caption{Example of a knowledge graph}
 	\label{fig:burl}
+	\textit{Source: adapted from \href{http://web.informatik.uni-mannheim.de/AnyBURL/2019-05/meilicke19anyburl.pdf}{Anytime Bottom-Up Rule Learning}}
 \end{figure*}
 
 In addition, rules of type \(B\) and \(U_c\) are also referred to as closed-path rules. These are utilized by the AMIE model, described in \cite{AMIE,galarraga2015fast}. Rule \(U_d\) is considered an open rule or an acyclic path rule, since \(A_n\) is a variable that appears only once. For example:
@@ -90,7 +91,7 @@ In this section, we describe the core algorithm of the AnyBURL method, as origin
 
 
 \subsection{AnyBURL}
-\begin{algorithm}
+\begin{algorithm}[H]
 	\caption{Anytime Bottom-up Rule Learning}\label{algorithm1}
 	\begin{algorithmic}[1]
 		\Procedure{AnyBURL($\mathcal{G}_{\text{know}}$, s, sat, Q, ts)}{}
@@ -128,7 +129,7 @@ We start with \(n = 2\), which corresponds to rules of path length 2, since a va
 \subsection{Generate Rules}
 \label{subsec:CreateRule}
 
-\begin{algorithm}
+\begin{algorithm}[H]
 	\caption{Generate Rules(p)}
 	\label{alg:GenerateRules}
 	\begin{algorithmic}[1]
@@ -158,7 +159,7 @@ When making predictions for rule candidates, we recompute confidence by incorpor
 \subsection{Algorithm 3: Offline-to-Online Learning}
 
 
-\begin{algorithm}
+\begin{algorithm}[H]
 	\caption{BatchAnyBURL Learning batch size}
 	\label{alg:BatchAnyBURL}
 	\begin{algorithmic}[1]
@@ -198,13 +199,12 @@ When making predictions for rule candidates, we recompute confidence by incorpor
 This algorithm is our proposed extension to avoid retraining the entire model when a new set of knowledge is added to the graph. When new knowledge is added, we first check whether it is connected to the existing knowledge in the graph (i.e., connectivity). If it is, we perform the \(\oplus\) operation by combining all elements in \(batch\_edge\) with the connected components in the graph, up to a path length of 5. If there is no connectivity, we use all elements in \(batch\_edge\) and repeat the steps of the Anytime Bottom-up Rule Learning algorithm.
 
 
-\pagebreak
 
 \subsection{Algorithm 4: Online-to-Online Learning}
 
 
 
-\begin{algorithm}
+\begin{algorithm}[H]
 	\caption{EdgeAnyBURL}
 	\label{alg:EdgeAnyBURL}
 	\begin{algorithmic}[1]

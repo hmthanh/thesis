@@ -1,93 +1,97 @@
-\documentclass[12pt,a4paper]{extreport} % Lớp tài liệu: báo cáo mở rộng, khổ giấy A4, cỡ chữ 12pt
-\usepackage[utf8]{inputenc} % Mã hóa đầu vào UTF-8
-%\usepackage[T5]{fontenc} % Mã hóa font T5 (hỗ trợ tiếng Việt - thường dùng khi không dùng gói vietnam)
-%\usepackage[utf8]{vietnam} % Gói hỗ trợ tiếng Việt với mã UTF-8
-%\usepackage{times} % Font Times New Roman
-\usepackage{enumerate} % Hỗ trợ liệt kê theo số thứ tự
-\usepackage{enumitem} % Tùy chỉnh danh sách liệt kê
-\usepackage{multicol} % Gói hỗ trợ chia nhiều cột
-\usepackage{listings} % Gói hiển thị mã nguồn
-\usepackage[a4paper, top=3.5cm,bottom=3cm,left=3.5cm,right=2cm]{geometry} % Cài đặt lề trang
-\usepackage{verbatim} % Cho phép chèn đoạn văn bản giữ nguyên định dạng
-\usepackage{graphicx} % Hỗ trợ chèn hình ảnh
-\usepackage{url} % Hiển thị URL
-\usepackage{fancyhdr} % Tùy chỉnh header và footer
-\usepackage{fancybox,framed} % Tạo khung hộp cho nội dung
-\linespread{1.3} % Giãn dòng 1.3
-\usepackage{lastpage} % Để biết số trang cuối cùng
-\usepackage{floatrow} % Gói hỗ trợ bố trí hình và bảng
-\usepackage{array} % Gói hỗ trợ bảng nâng cao
-\usepackage{longtable} % Hỗ trợ bảng kéo dài nhiều trang
+\documentclass[12pt,a4paper]{extreport}
+\usepackage[utf8]{inputenc}
+%\usepackage[T5]{fontenc}
+%\usepackage[utf8]{vietnam}
+%\usepackage{times}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage[a4paper, top=3.5cm,bottom=3cm,left=3.5cm,right=2cm]{geometry}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{fancybox,framed}
+\linespread{1.3}
+\usepackage{lastpage}
+\usepackage{floatrow}
+\usepackage{floatrow}
+\usepackage{array}
+\usepackage{longtable}
 
-\pagenumbering{arabic} % Đánh số trang bằng số tự nhiên
-%\pagestyle{fancy} % (Đang tắt) Kiểu trang fancy
-\newfloatcommand{capbtabbox}{table}[][\FBwidth] % Tạo môi trường bảng đặc biệt với floatrow
-\usepackage{caption} % Tùy chỉnh caption của hình và bảng
-%\captionsetup[figure]{font=normalsize} % (Đang tắt) Thiết lập cỡ chữ cho caption hình
-\usepackage{blindtext} % Tạo văn bản mẫu (dummy text)
-\usepackage{titlesec} % Tùy chỉnh tiêu đề chương, mục
-\usepackage[nottoc]{tocbibind} % Cho phép hiện danh mục tài liệu tham khảo trong mục lục nhưng không hiện mục lục chính
-\usepackage{bookmark} % Quản lý bookmark PDF
-%\usepackage[backend=bibtex,style=numeric,defernumbers=true,sorting=none]{biblatex} % (Đang tắt) Cấu hình trích dẫn BibLaTeX
-% \usepackage[backend=biber]{biblatex} % (Đang tắt) Cấu hình dùng biber cho biblatex
-%\bibliographystyle{plain} % (Đang tắt) Kiểu hiển thị tài liệu tham khảo
-%\bibliography{References/references.bib} % (Đang tắt) Nguồn tài liệu tham khảo
+\pagenumbering{arabic}
+%\pagestyle{fancy}
+\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+\usepackage{caption}
+%\captionsetup[figure]{font=normalsize}
+\usepackage{blindtext}
+\usepackage{titlesec}
+\usepackage[nottoc]{tocbibind}
+\usepackage{bookmark}
+%\usepackage[backend=bibtex,style=numeric,defernumbers=true,sorting=none]{biblatex}
+% \usepackage[backend=biber]{biblatex}
+%\bibliographystyle{plain}
+%\bibliography{References/references.bib}
 
 % ******************************************************************************
-%\setlength{\topmargin}{-0.5cm} % (Đang tắt) Lề trên
-%\setlength{\oddsidemargin}{-0.5cm} % (Đang tắt) Lề trái
-%\setlength{\evensidemargin}{-0.5cm} % (Đang tắt) Lề phải
-\setlength{\textwidth}{15.5cm} % Chiều rộng vùng văn bản
-\setlength{\textheight}{24cm} % Chiều cao vùng văn bản
-\setlength{\footskip}{1cm} % Khoảng cách từ nội dung đến footer (số trang)
+%\setlength{\topmargin}{-0.5cm} % Lề trên
+%\setlength{\oddsidemargin}{-0.5cm} % Lề trái
+%\setlength{\evensidemargin}{-0.5cm} % Lề phải
+\setlength{\textwidth}{15.5cm} % Chiều rộng văn bản
+\setlength{\textheight}{24cm} % Chiều cao văn bản
+\setlength{\footskip}{1cm} % Khoảng cách giữa nội dung và số trang
 
-% Giãn dòng 1.5 (tùy chọn)
+% For line spacing 1.5
 %\usepackage{setspace}
 %\renewcommand{\baselinestretch}{1.5}
 
 % ******************************************************************************
-\usepackage{hyperref} % Hỗ trợ liên kết siêu văn bản (hyperlink)
+\usepackage{hyperref}
+% \usepackage{hyperref}
 
-% Cấu hình cho \paragraph để nó xuống dòng sau tiêu đề
+% Cấu hình cho \paragraph để nó xuống hàng sau tiêu đề
 \titleformat{\paragraph}[block]
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
 
 \titlespacing*{\paragraph}
 {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
-\setcounter{secnumdepth}{4} % Đánh số đến cấp độ subsubsubsection
-\setcounter{tocdepth}{4} % Hiển thị mục lục đến cấp độ subsubsubsection
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
 
-\usepackage{array} % Gói cần thiết cho cột m{} trong bảng
+\usepackage{array} % Gói cần thiết cho kiểu cột m{}
 
-% Định dạng tiêu đề các cấp
 \titleformat*{\section}{\LARGE\bfseries}
 \titleformat*{\subsection}{\Large\bfseries}
 \titleformat*{\subsubsection}{\large\bfseries}
 
-\usepackage{mdframed} % Hộp khung có thể đổ bóng
 
-\usepackage{alltt} % Hiển thị văn bản định dạng có thể lồng lệnh LaTeX
-\usepackage{color} % Hỗ trợ màu sắc
-\usepackage{tocloft} % Tùy chỉnh mục lục
+\usepackage{mdframed}
 
-\usepackage{tikz} % Gói vẽ hình
-\usetikzlibrary{calc} % Thư viện con hỗ trợ tính toán vị trí vẽ trong TikZ
-\newcommand\HRule{\rule{\textwidth}{1pt}} % Định nghĩa dòng kẻ ngang
-\fancyfoot[C]{\thepage} % Hiển thị số trang ở giữa footer
+\usepackage{alltt}
+\usepackage{color}
+\usepackage{tocloft}
 
-% Toán học
-\usepackage{amsfonts} % Gói font toán học (ví dụ: \mathbb)
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\newcommand\HRule{\rule{\textwidth}{1pt}}
+\fancyfoot[C]{\thepage}
 
-\usepackage[numbers]{natbib} % Gói trích dẫn tài liệu theo số (vd: [1], [2])
+% Math
+\usepackage{amsfonts}
 
-% Chèn thêm các tệp cấu hình:
-\input{Preamble/meta.tex} % Metadata: tên tác giả, luận văn,...
-\input{Preamble/packages.tex} % Gói mở rộng tùy chọn bổ sung (nếu có)
-\input{Preamble/config.tex} % Cấu hình riêng (tiêu đề, định dạng trang,...)
-\input{Preamble/commands.tex} % Định nghĩa các lệnh tùy chỉnh
+\usepackage[numbers]{natbib}
 
-\graphicspath{ {images/} } % Thư mục chứa hình ảnh
+%\newcommand{\tenSV}{Hoàng~Minh~Thanh} % Dấu ~ là khoảng trắng không được tách (các chữ nối với nhau bằng dấu ~ sẽ nằm cùng 1 dòng
+%\newcommand{\mssv}{21C11029}
+%\newcommand{\tenKL}{OPENHUMAN: HỆ THỐNG} % Chú ý dấu ~ trong tên khóa luận
+\input{Preamble/meta.tex}
+\input{Preamble/packages.tex}
+\input{Preamble/config.tex}
+\input{Preamble/commands.tex}
+
+\graphicspath{ {images/} }
 
 
 \begin{document}

@@ -117,7 +117,8 @@ For example, when embedding a graph with only structural information, the connec
 
 For instance, the most common embedding output is \textbf{node embedding}, which represents each node as a vector that reflects similarity between nodes. Node embeddings are beneficial for node-related tasks such as node classification, node clustering, etc.
 
-However, in some cases, the tasks may involve more fine-grained graph components such as node pairs, subgraphs, or the entire graph. Therefore, the first challenge of embedding is to determine the appropriate type of embedding output for the application of interest. Four types of embedding outputs are illustrated in \autoref{fig:graphInput}, including: **Node Embedding** (\ref{fig:nodeEmbedding}), **Edge Embedding** (\ref{fig:edgeEmbedding}), **Hybrid Embedding** (\ref{fig:substructureEmbedding}), and **Whole-Graph Embedding** (\ref{fig:wholeGraphEmbedding}). Different output granularities have distinct criteria and present different challenges. For example, a good node embedding retains similarity with its neighbors in the embedding space. Conversely, a good whole-graph embedding represents the entire graph as a vector that preserves graph-level similarity.
+However, in some cases, the tasks may involve more fine-grained graph components such as node pairs, subgraphs, or the entire graph. Therefore, the first challenge of embedding is to determine the appropriate type of embedding output for the application of interest. Four types of embedding outputs are illustrated in \autoref{fig:graphInput}, including: \textbf{Node Embedding} (\ref{fig:nodeEmbedding}), \textbf{Edge Embedding} (\ref{fig:edgeEmbedding}), \textbf{Hybrid Embedding} (\ref{fig:substructureEmbedding}), and \textbf{Whole-Graph Embedding} (\ref{fig:wholeGraphEmbedding}). Different output granularities have distinct criteria and present different challenges. For example, a good node embedding retains similarity with its neighbors in the embedding space. Conversely, a good whole-graph embedding represents the entire graph as a vector that preserves graph-level similarity.
+
 
 \subsection{Graph Embedding Problem Settings}
 
@@ -134,7 +135,7 @@ While the input is determined by the type of information to be preserved, the ou
 	\label{fig:nodeEmbedding}
 \end{figure}
 
-Node embedding represents each node as a low-dimensional vector. Nodes that are *close* in the graph have similar vector representations. The difference among graph embedding methods lies in how they define the *closeness* between two nodes. First-order proximity (Definition \ref{def:firstOrderProximity}) and second-order proximity (Definition \ref{def:secondOrderProximity}) are two commonly used metrics to measure pairwise node similarity. Higher-order proximity has also been explored to some extent. For example, capturing k-step (k = 1, 2, 3, ···) neighborhood relationships during embedding is discussed in the study by Cao, Shaosheng \cite{cao2015grarep}.
+Node embedding represents each node as a low-dimensional vector. Nodes that are \textit{close} in the graph have similar vector representations. The difference among graph embedding methods lies in how they define the \textit{closeness} between two nodes. First-order proximity (Definition \ref{def:firstOrderProximity}) and second-order proximity (Definition \ref{def:secondOrderProximity}) are two commonly used metrics to measure pairwise node similarity. Higher-order proximity has also been explored to some extent. For example, capturing k-step (k = 1, 2, 3, ···) neighborhood relationships during embedding is discussed in the study by Cao, Shaosheng \cite{cao2015grarep}.
 
 \textbf{Edge Embedding}
 \label{sec:edgeEmbedding}
@@ -161,7 +162,7 @@ Second, some methods embed a pair of nodes as a vector to compare it with other 
 	\label{fig:substructureEmbedding}
 \end{figure}
 
-Hybrid embedding refers to embedding combinations of different graph components, e.g., node + edge (i.e., substructure), or node + parts. Substructure or part embeddings can also be derived by aggregating individual node and edge embeddings. However, such *indirect* approaches are not optimized to capture the structure of the graph. Moreover, node and part embeddings can reinforce each other. Node embeddings improve by learning from high-order neighborhood attention, while part embeddings become more accurate due to the collective behavior of their constituent nodes.
+Hybrid embedding refers to embedding combinations of different graph components, e.g., node + edge (i.e., substructure), or node + parts. Substructure or part embeddings can also be derived by aggregating individual node and edge embeddings. However, such \textit{indirect} approaches are not optimized to capture the structure of the graph. Moreover, node and part embeddings can reinforce each other. Node embeddings improve by learning from high-order neighborhood attention, while part embeddings become more accurate due to the collective behavior of their constituent nodes.
 
 \textbf{Whole-Graph Embedding}
 
@@ -172,7 +173,7 @@ Hybrid embedding refers to embedding combinations of different graph components,
 	\label{fig:wholeGraphEmbedding}
 \end{figure}
 
-Whole-graph embedding is typically used for small graphs such as proteins, molecules, etc. In this case, an entire graph is represented as a vector, and similar graphs are embedded close to each other. Whole-graph embedding is useful for graph classification tasks by providing a simple and effective solution for computing graph similarity. To balance embedding time (efficiency) and information retention (expressiveness), **hierarchical graph embedding** \cite{mousavi2017hierarchical} introduces a hierarchical embedding framework. It argues that accurate understanding of global graph information requires processing substructures at multiple scales. A graph pyramid is formed where each level is a coarsened graph at a different scale. The graph is embedded at all levels and then concatenated into a single vector. Whole-graph embedding requires collecting features from the entire graph, thus is generally more time-consuming than other settings.
+Whole-graph embedding is typically used for small graphs such as proteins, molecules, etc. In this case, an entire graph is represented as a vector, and similar graphs are embedded close to each other. Whole-graph embedding is useful for graph classification tasks by providing a simple and effective solution for computing graph similarity. To balance embedding time (efficiency) and information retention (expressiveness), \textbf{hierarchical graph embedding} \cite{mousavi2017hierarchical} introduces a hierarchical embedding framework. It argues that accurate understanding of global graph information requires processing substructures at multiple scales. A graph pyramid is formed where each level is a coarsened graph at a different scale. The graph is embedded at all levels and then concatenated into a single vector. Whole-graph embedding requires collecting features from the entire graph, thus is generally more time-consuming than other settings.
 
 
 \subsection{Graph Embedding Techniques}
@@ -467,7 +468,89 @@ At this point, we have presented the attention mechanism for computing attention
 
 \begin{figure}[htp]
 	\centering
-	% (TikZ content unchanged)
+	\resizebox{\textwidth}{!}{%
+		\begin{tikzpicture}[
+			entityStyle/.style={draw, color=white, font=\sffamily, thin, align=center, circle, text width=20mm},
+			us/.style = {entityStyle, fill=amber},
+			entity/.style={entityStyle, fill=azure},
+			arrowStyle/.style={-latex', >=stealth, font=\sffamily},
+			entityId/.style={draw, color=white, font=\sffamily, thin, align=center, circle},]
+			
+			\node[us] (us) {\textbf{U.S}};
+			
+			\begin{scope}[every node/.style={entity}]
+				\node[above left=2cm of us, xshift=-20mm] (c1) {\textbf{Donald Trump}};
+				\node[above right=2cm of us, xshift=1cm] (c2) {\textbf{Jeff Bezos}};
+				\node[below left=2cm of us, xshift=-20mm] (c3) {\textbf{New York}};
+				\node[below right=2cm of us, xshift=1cm] (c4) {\textbf{Tesla Inc.}};
+				
+				\node[below left=3cm of c1, yshift=25mm, xshift=-15mm] (c1x) {\textbf{Melania Trump}};
+				\node[above left=3cm of c3, yshift=-25mm, xshift=-15mm] (c3x) {\textbf{Tom Cruise}};
+				
+				%\node[left=1cm of c1x, yshift=25mm, xshift=-15mm] (c8) {\textbf{Thanh}};
+			\end{scope}
+			
+			%\draw[->, line width=0.8mm, azure] (c8) -> (c1x);
+			%\path[arrowStyle] (c8)--node[rotate=-31, yshift=4mm]{friend\_of} %node[rotate=-31, yshift=-3mm]{} (c1x);
+			
+			\foreach \value in {1,...,4}
+			\draw[->, line width=0.8mm, azure] (c\value) -> (us);
+			\foreach \value in {1,3}
+			\draw[->, line width=0.8mm, azure] (c\value x) -> (c\value);
+			
+			\foreach \value in {1,3}
+			\draw[->, line width=0.8mm, azure!60, dash pattern=on 3mm off 1mm, postaction={decorate}] (c\value x) -> (us);
+			
+			\path[arrowStyle] (c1)--node[rotate=-31, yshift=4mm]{president\_of} node[rotate=-31, yshift=-3mm]{$\alpha_{i4}$} (us);
+			
+			\path[arrowStyle] (c3)--node[rotate=30, yshift=4mm]{state\_of} node[rotate=30, yshift=-4mm]{$\alpha_{i3}$} (us);
+			
+			\path[arrowStyle] (c2)--node[rotate=41, yshift=4mm]{richest\_of} node[rotate=41, yshift=-4mm]{$\alpha_{i1}$} (us);
+			
+			\path[arrowStyle] (c4)--node[rotate=-41, yshift=4mm]{founded\_in} node[rotate=-41, yshift=-4mm]{$\alpha_{i2}$} (us);
+			
+			\path[arrowStyle] (c1x)--node[rotate=15, yshift=4mm]{wife\_of} (c1);
+			\path[arrowStyle] (c3x)--node[rotate=-15, yshift=4mm]{born\_in} (c3);
+			
+			\path[arrowStyle] (c1x)--node[rotate=-8, yshift=4mm]{\textbf{first\_lady}} node[rotate=-8, yshift=-3mm]{$\alpha_{i5}$} (us);
+			\path[arrowStyle] (c3x)--node[rotate=8, yshift=4mm]{\textbf{native\_of}} node[rotate=8, yshift=-3mm]{$\alpha_{i6}$} (us);
+			
+			%%%%%%%%%%%
+			\node[entityId][fill=amber][right=11cm of us] (country) {$e_3$};
+			\path[arrowStyle] (us)--node[yshift=2mm]{\LARGE $\rightarrow$} (country);
+			
+			\begin{scope}[every node/.style={entityId, fill=azure}]
+				\node[above left=1cm of country, xshift=-5mm] (c1s) {$e_2$};
+				\node[above right=1cm of country, xshift=5mm] (c2s) {$e_4$};
+				\node[below left=1cm of country, xshift=-5mm] (c3s) {$e_6$};
+				\node[below right=1cm of country, xshift=5mm] (c4s) {$e_7$};
+				
+				\node[below left=1.5cm of c1s, yshift=15mm, xshift=-5mm] (c1xs) {$e_1$};
+				\node[above left=1.5cm of c3s, yshift=-15mm, xshift=-5mm] (c3xs) {$e_5$};
+			\end{scope}
+			\foreach \value in {1,...,4}
+			\draw[->, line width=0.8mm, azure] (c\value s) -> (country);
+			\foreach \value in {1,3}
+			\draw[->, line width=0.8mm, azure] (c\value xs) -> (c\value s);
+			
+			\foreach \value in {1,3}
+			\draw[->, line width=0.8mm, azure!60, dash pattern=on 3mm off 1mm, postaction={decorate}] (c\value xs) -> (country);
+			
+			\path[arrowStyle] (c1s)--node[rotate=-31, yshift=2mm]{$r_2$} (country);
+			
+			\path[arrowStyle] (c3s)--node[rotate=30, yshift=2mm]{$r_5$} (country);
+			
+			\path[arrowStyle] (c2s)--node[rotate=41, yshift=2mm]{$r_3$} (country);
+			
+			\path[arrowStyle] (c4s)--node[rotate=-41, yshift=2mm]{$r_6$} (country);
+			
+			\path[arrowStyle] (c1xs)--node[rotate=15, yshift=2mm]{$r_1$} (c1s);
+			\path[arrowStyle] (c3xs)--node[rotate=-15, yshift=2mm]{$r_4$} (c3s);
+			
+			\path[arrowStyle] (c1xs)--node[rotate=-8, yshift=2mm]{$r_7$} (country);
+			\path[arrowStyle] (c3xs)--node[rotate=8, yshift=2mm]{$r_8$} (country);
+		\end{tikzpicture}
+	}
 	\caption{Knowledge graph and normalized attention coefficients of the entity}
 	\label{fig:graphExample}
 \end{figure}
@@ -624,7 +707,7 @@ Initially, the entity and relation embedding vectors are randomly initialized us
 
 Next, we perform sampling from the training dataset to obtain a batch of valid triples ($S_{\text{batch}}$). For each such triple, we sample an invalid triple by replacing either the head or the tail entity with a random entity from the entity set, yielding a batch of invalid triples ($S'_{\text{batch}}$). We then pair each valid triple with an invalid one to form the training batch ($T_{\text{batch}}$). Finally, we update the embedding vectors to satisfy the condition in \ref{eq:conditionTransE}.
 
-\begin{algorithm}
+\begin{algorithm}[H]
 	\caption{TransE Embedding Learning Algorithm \protect\cite{bordes2013translating}}\label{alg:TransE}
 	\begin{algorithmic}[1]
 		\Statex \textbf{Input} :
@@ -1181,7 +1264,7 @@ The output of the KBGAT model is the set of entity and relation embedding vector
 	\caption{Illustration of the decoder layers of the ConvKB model with 3 filters}
 	\label{fig:decoderConvKB}
 \end{figure}
-s
+
 
 After mapping entities and relations into a low-dimensional space, the model employs ConvKB \cite{nguyen2017novel} to analyze the global features of a triple $t_{ijk}$ across each dimension, thereby generalizing transformation patterns through convolutional layers. The scoring function with the learned feature mappings is defined as follows:
 
