@@ -1,22 +1,31 @@
-\chapter{Phương pháp dựa trên luật}
+\chapter{RULE-BASED METHOD}
 \label{chap:RuleBase}
 
-Trong phần này chúng tôi mô tả lại cách mô hình hóa lại bài toán theo phương pháp dựa trên luật AnyBURL,thuật toán lấy mẫu luật (đường đẫn) và thuật toán khái quát hóa một luật để lưu trữ trở thành tri thức của mô hình. Cùng với những cải tiến của chúng tôi trong quá trình đào tạo khi có một tri thức mới được thêm vào đồ thị(thêm cạnh).
+In this chapter, we describe how the problem is reformulated using the rule-based approach AnyBURL, including the rule (path) sampling algorithm and the rule generalization algorithm used to store learned knowledge in the model. We also present our improvements to the training process when new knowledge (edges) is added to the graph.
 
-\section{Luật Horn}
-Trong logic toán học, một công thức nguyên tử (\textbf{atomic formula})\cite{wiki:Atomic} còn được gọi đơn giản là một (nguyên tử-\textbf{atom}) là một công thức không có cấu trúc mệnh đề, nghĩa là một công thức không chứa các liên kết logic nối liền hoặc nối rời (\(\vee, ~ \wedge\)) hoặc tương đương (\(\Leftrightarrow\)) là một công thức không có các mẫu con nghiêm ngặt (tức là atom không thể chia nhỏ ra thành các atom con nữa). Do đó, các công thức nguyên tử là công thức đơn giản nhất để hình thành luật của logic. Các công thức hợp được hình thành bằng cách kết hợp các công thức nguyên tử bằng cách sử dụng các liên kết logic.
+\section{Horn Clauses}
+In mathematical logic, an \textbf{atomic formula} \cite{wiki:Atomic}, also simply called an \textbf{atom}, is a formula that contains no logical connectives such as conjunction (\(\wedge\)), disjunction (\(\vee\)), or biconditional (\(\Leftrightarrow\)). It is a formula with no proper subformulas—meaning that an atom cannot be decomposed into smaller atoms. Thus, atomic formulas are the simplest expressions used to construct logical rules. Compound formulas are formed by combining atomic formulas using logical connectives.
 
-Một \textbf{literal}\cite{wiki:Literal} là một công thức nguyên tử (atom) hoặc phủ định của nó. Định nghĩa chủ yếu xuất hiện trong lý thuyết logic cổ điển. \textbf{Literal} có thể được chia thành hai loại: Một \textbf{positive literal} chỉ là một nguyên tử (ví dụ: \(x\)). Một \textbf{negative literal} là phủ định của một nguyên tử (ví dụ: \(\neg x\)). Sự phân chia của \textbf{literal} là \textbf{positive literal} hay \textbf{negative literal} tùy thuộc vào việc \textbf{literal} được định nghĩa.
+A \textbf{literal} \cite{wiki:Literal} is either an atomic formula or the negation of one. This concept primarily arises in classical logic theory. Literals are classified into two types: A \textbf{positive literal} is simply an atomic formula (e.g., \(x\)). A \textbf{negative literal} is the negation of an atomic formula (e.g., \(\neg x\)). Whether a literal is considered positive or negative depends on its defined form.
 
-Một mệnh đề (clause) là một literal hoặc nối rời của hai hoặc nhiều literal. Ở dạng \textbf{Horn} một mệnh đề có nhiều nhất một positive literal. Lưu ý: Không phải mọi công thức trong logic mệnh đề đều có thể đưa về dạng Horn. Mệnh đề xác định không có literal đôi khi được gọi là mệnh đề đơn vị (unit clause) và một mệnh đề đơn vị không có biến đôi khi được gọi là \textit{facts}\cite{wiki:Horn}. Một công thức nguyên tử được gọi là \textit{ground} hoặc \textit{ground atoms} nếu nó được xây dựng hoàn toàn từ các mệnh đề đơn vị; tất cả các \textit{ground atoms} có thể ghép lại từ một tập hợp hàm và các ký hiệu vị từ nhất định tạo nên cơ sở Herbrand cho các bộ ký hiệu này\cite{wiki:Term}.
+A clause is either a single literal or a disjunction of two or more literals. In \textbf{Horn form}, a clause contains at most one positive literal. Note: Not all propositional logic formulas can be converted into Horn form. A clause with no literals is sometimes referred to as a \textit{unit clause}, and a unit clause without variables is often called a \textit{fact} \cite{wiki:Horn}. An atomic formula is referred to as a \textit{ground} or \textit{ground atom} if it is constructed entirely from unit clauses. All possible ground atoms that can be formed from a set of function and predicate symbols make up the Herbrand base for those symbols \cite{wiki:Term}.
 
-\section{Định nghĩa ngôn ngữ đồ thị logic}\label{kg}
 
-Khác với các định nghĩa về đồ thị tri thức tổng quát được đùng cho các phương pháp nhúng đồ thị. Trong phương pháp dựa trên luật của chúng tôi. Chúng tôi xem đồ thị như là một ngôn ngữ hình thức. Dưới đây là các định nghĩa theo ngôn ngữ hình thức của đồ thị tri thức.
 
-Một đồ thị tri thức \(\mathcal{G}_{\text{know}}\) được định nghĩa trên một bộ từ vựng \(\langle \mathbb{C}, \mathbb{R} \rangle\) trong đó \(\mathbb{C}\) là tập hợp các hằng số và \(\mathbb{R}\) là tập hợp các vị từ nhị phân.Khi đó, \(\mathcal{G}_{\text{know}} = \{r (a, b) \mid r \in \mathbb{R}, a, b \in \mathbb{C}\}\) là tập hợp các \textit{ground atoms} hoặc \textit{facts}. Một vị từ nhị phân được gọi là quan hệ và hằng số (hoặc hằng số được đề cập đến) được gọi là thực thể (entity) tương ứng với một dòng dữ liệu trong tập huấn luyện. Sau đây chúng tôi sử dụng các chữ cái viết thường cho các hằng và chữ in hoa cho các biến cho các thảo luận dưới đây. Vì chúng ta không học các quy tắc Horn tùy ý, và chỉ học đối với loại quy tắc nào có thể được khái quát hóa như được thảo luận dưới đây.
 
-Chúng ta định nghĩa một quy tắc là \(h(c_0, c_n) \gets b_1(c_0, c_1) ,\dots ,b_n(c_{n}, c_{n + 1})\) là một đường dẫn ground atoms có chiều dài \(n\). Trong đó \(h(\dots)\) được gọi là \textit{head atoms} và \( b_1(c_0, c_1) ,\dots ,b_n(c_{n}, c_{n + 1})\) được gọi là \textit{body atoms}. Chúng tôi sẽ phân biệt dưới đây ba loại quy tắc mà chúng tôi gọi là: \textit{quy tắc nhị phân} \((\mathbf{B})\) là quy tắc trong head atoms chứa 2 biến, quy tắc đơn nguyên kết thúc bằng một đỉnh treo  và atom này chỉ chứa biến không chứa hằng số\((\mathbf{U_d})\) và head atoms chỉ chứa 1 biến. Còn quy tắc đơn nguyên kết thúc bằng một atom \((\mathbf{U_c)}\) và head atoms cũng chỉ chứa 1 biến.\((\mathbf{U_c)}\)  có thể là một đỉnh treo tới một hằng số bất kì nếu hằng số này trùng mới hằng số trong head atom thì tạo thành một đường đẫn có chu trình.
+
+\section{Definition of Logical Graph Language} \label{kg}
+
+Unlike general definitions of knowledge graphs commonly used in graph embedding methods, our rule-based approach treats the graph as a formal language. Below are the formal language definitions of the knowledge graph.
+
+A knowledge graph \(\mathcal{G}_{\text{know}}\) is defined over a vocabulary \(\langle \mathbb{C}, \mathbb{R} \rangle\), where \(\mathbb{C}\) is the set of constants and \(\mathbb{R}\) is the set of binary predicates. Then, \(\mathcal{G}_{\text{know}} = \{r(a, b) \mid r \in \mathbb{R}, a, b \in \mathbb{C}\}\) is the set of \textit{ground atoms} or \textit{facts}. A binary predicate is referred to as a relation, and a constant (or referenced constant) is referred to as an entity, corresponding to a data entry in the training set. In what follows, we use lowercase letters for constants and uppercase letters for variables. This is because we do not learn arbitrary Horn rules; instead, we focus only on those rule types that can be generalized as discussed below.
+
+We define a rule as \(h(c_0, c_n) \gets b_1(c_0, c_1), \dots, b_n(c_{n}, c_{n + 1})\), which is a path of ground atoms of length \(n\). Here, \(h(\dots)\) is referred to as the \textit{head atom}, and \(b_1(c_0, c_1), \dots, b_n(c_{n}, c_{n + 1})\) are referred to as the \textit{body atoms}. We distinguish the following three types of rules:
+
+- \textit{Binary rules} \((\mathbf{B})\): Rules in which the head atom contains two variables.
+- \textit{Unary rules ending in a dangling node} \((\mathbf{U_d})\): Rules where the head atom contains only one variable, and the rule ends in a body atom that contains only variables (no constants).
+- \textit{Unary rules ending in a constant} \((\mathbf{U_c})\): Rules where the head atom also contains only one variable, but the rule ends with an atom that may link to an arbitrary constant. If that constant matches the constant in the head atom, the rule forms a cyclic path.
+
 
 \begin{equation}
 	\begin{aligned}
@@ -31,28 +40,28 @@ Chúng ta định nghĩa một quy tắc là \(h(c_0, c_n) \gets b_1(c_0, c_1) ,
 %\[U_d \hspace{3.8cm} h(A_0,c) \gets  \bigwedge^n_{i=1} b_i(A_{i-1}, A_i)\]
 %\[U_c \hspace{1cm} h(A_0,c) \gets  \bigwedge^{n-1}_{i=1} b_i(A_{i-1}, A_i) \wedge b_n(A_{n-1}, c^{\prime})\]
 
-Chúng tôi gọi các quy tắc của các loại này là quy tắc đường đi (path rules), bởi vì các body atoms (phần sau đấu \(\gets\)) tạo thành một đường đi. Lưu ý rằng nó cũng bao gồm các biến thể quy tắc với các biến được đảo ngược trong các nguyên tử: được đưa ra trong đồ thị tri thức \(\mathcal{G}_{\text{know}}\), đường dẫn có độ dài \(n\) là một chuỗi gồm \(n\) bộ ba \(p_i (c_i, c_i + 1)\) với \(p_i (c_i, c_i + 1) \in \mathcal{G}_{\text{know}}\) hoặc \(p_i (c_i + 1, c_i) \in \mathcal{G}_{\text{know}}\) với \(0 \geq i \leq n\). Các mẫu quy tắc trừu tượng (abstract rule patterns) được cho ở trên có độ dài \(n\) vì body atoms của chúng có thể được khởi tạo thành một đường dẫn có độ dài \(n - 1\). Ví dụ như \autoref{fig:burl} \footnote{http://web.informatik.uni-mannheim.de/AnyBURL/2019-05/meilicke19anyburl.pdf}
-%{hình 3.1}\footnote
-. Khi lấy mẫy đường đãn với độ dài bằng 3 chúng ta có thể có hai quy tắc sau: Quy tắc được đánh đấu màu xanh lá cây và quy tắc được đánh dấu màu đỏ
 
+We refer to rules of these types as path rules because the body atoms (the part after the \(\gets\) symbol) form a path. Note that this also includes variants of rules where the variables are reversed within the atoms. Given a knowledge graph \(\mathcal{G}_{\text{know}}\), a path of length \(n\) is a sequence of \(n\) triples \(p_i(c_i, c_{i+1})\) where either \(p_i(c_i, c_{i+1}) \in \mathcal{G}_{\text{know}}\) or \(p_i(c_{i+1}, c_i) \in \mathcal{G}_{\text{know}}\), with \(0 \leq i \leq n\). The abstract rule patterns presented above are considered to have length \(n\), as their body atoms can be instantiated into a path of length \(n - 1\). For example, in \autoref{fig:burl}\footnote{http://web.informatik.uni-mannheim.de/AnyBURL/2019-05/meilicke19anyburl.pdf},  
+when sampling paths of length 3, we can obtain the following two rules: the rule marked in green and the rule marked in red.
 
 \begin{equation*}
 	\begin{aligned}
-		\text{(xanh lá cây)} \quad & speaks(ed, d) \gets married(ed, lisa) \wedge born(lisa, a) \\
-		\text{(đỏ)} \quad & speaks(ed, d) \gets lives(ed, nl) \wedge lang(nl, d)
+		\text{(green)} \quad & speaks(ed, d) \gets married(ed, lisa) \wedge born(lisa, a) \\
+		\text{(red)} \quad & speaks(ed, d) \gets lives(ed, nl) \wedge lang(nl, d)
 	\end{aligned}
 \end{equation*}
-
 
 \begin{figure*}[htp]
 	\centering
 	\includegraphics[width=12cm]{images/burl-ago.png}
-	\caption{Ví dụ đồ thị tri thức} 
-	\textit{Nguồn: tham khảo \href{http://web.informatik.uni-mannheim.de/AnyBURL/2019-05/meilicke19anyburl.pdf}{meilicke19anyburl.pdf}}
+	\caption{Example of a knowledge graph} 
+	\textit{Source: adapted from \href{http://web.informatik.uni-mannheim.de/AnyBURL/2019-05/meilicke19anyburl.pdf}{meilicke19anyburl.pdf}}
 	\label{fig:burl}
 \end{figure*}
 
-Ngoài ra Quy tắc \(B\) và quy tắc \(U_c\) cũng được gọi là quy tắc kết nối kín. Chúng được khai thác bởi mô hình  AMIE được mô tả trong \cite{AMIE,galarraga2015fast}. Quy tắc \(U_d\) là quy tắc không đóng hay đường đi không tạo thành chu trình vì \(A_n\) là biến chỉ xuất hiện một lần. Ví dụ:
+In addition, rules of type \(B\) and \(U_c\) are also referred to as closed-path rules. These are utilized by the AMIE model, described in \cite{AMIE,galarraga2015fast}. Rule \(U_d\) is considered an open rule or an acyclic path rule, since \(A_n\) is a variable that appears only once. For example:
+
+
 
 \begin{equation*}
 \begin{matrix}
@@ -64,13 +73,22 @@ Ngoài ra Quy tắc \(B\) và quy tắc \(U_c\) cũng được gọi là quy t�
 \end{equation*}
 
 
-Quy tắc (1) là quy tắc \textbf{B}(quy tắc nhị phân) quy tắc này nói rằng nếu một người (thực thể) \(X\) nói nguôn ngữ \(Y\) nếu người \(X\) sống  ở đất nước \(Y\).Rõ ràng quy tắc này là một quy tắc khái quát miễn khi nào thực thể \(X\) có cạnh nối với thực thể \(Y\) với nhãn là \textit{lives} thì có thể kết thêm 1 cạnh với nhãn \textit{speaks} giữa \(X\) và \(Y\). Quy tắc (2), (3) điều là quy tắc \(U_c\) ,quy tắc (2) nói rằng người \(X\) sống ở thành phố \(Y\) nếu người \(X\) sống ở quốc gia \(A\) và thành phố \(Y\) nằm trong quốc gia \(A\), quy tắc (3) nói rằng nếu một người \(X\) là nữ nếu họ kết hôn với một người \(A\) và người \(A\) có giới tính nam. Ở quy tắc (3) không tạo thành chu trình trên đồ thị như quy tắc (2) đỉnh (Y) lặp lại  ở \textit{head atom} và đỉnh cuối cùng trong \textit{body atoms}. Quy tắc (4) là quy tắc \(U_d\) nói rằng người \(X\) là một điễn viên nếu người \(X\) đóng trong một bộ phim \(A\).
+Rule (1) is a \textbf{B}-type rule (binary rule). This rule states that a person (entity) \(X\) speaks language \(Y\) if person \(X\) lives in country \(Y\). Clearly, this is a general rule: whenever entity \(X\) has an edge to entity \(Y\) labeled \textit{lives}, we can infer the existence of another edge labeled \textit{speaks} between \(X\) and \(Y\).
 
-Tất cả các quy tắc được xem xét sẽ được lọc lại đựa trên điểm được gọi là độ tin cậy của quy tắc là được đo trên tập dữ liệu huấn luyện. Độ tin cậy này được đo bằng tỷ lệ body atoms dẫn đến head atoms chia cho tất cả các đường đẫn chứa body atoms.Ví dụ khi ta có quy tắc sau:
-\(\textit{gen}(X, female) \gets \textit{married}(X, A), \textit{gen}(A, male) \). Khi đó chúng ta thực hiện đếm tất cả các cặp thực thể có quan hệ  \(\textit{married}(X, A), \textit{gen}(A, male) \) được gọi là số đường dẫn chứa body atoms, sau đó thực hiện đếm tất cả các  thực thể thỏa quan hệ \(\textit{gen}(X, female) \gets \textit{married}(X, A), \textit{gen}(A, male) \) được gọi là số body atoms dẫn đến head atoms. Sau đó chia số body atoms dẫn đến head atoms cho  đường dẫn chứa body atoms được gọi là độ tin cậy của quy tắc.
+Rules (2) and (3) are both \(U_c\)-type rules. Rule (2) states that a person \(X\) lives in city \(Y\) if person \(X\) lives in country \(A\) and city \(Y\) is located in country \(A\). Rule (3) states that a person \(X\) is female if they are married to person \(A\) and person \(A\) is male. In rule (3), there is no cycle formed in the graph, unlike in rule (2), where node \(Y\) is repeated both in the \textit{head atom} and as the final node in the \textit{body atoms}.
 
-\section{Thuật toán AnyBURL} \label{myalgorithm}
-Trong phần này chúng tôi mô tả lại thuật toán chính của phương pháp AnyBURL nó cũng được mô tả trong \cite{burl} cũng như hai thuật toán mở rộng của chúng tôi để giải quyết vấn đề khi đồ thị được thêm một hoặc một lượng tri thức mới (thêm cạnh). Ngoài ra chúng tôi cũng mô tả sơ lược lại cách khởi tạo một luật cũng như cách thức tính toán độ tin cậy bằng cách lấy mẫu trên tập huấn luyện và vấn đề độ tin cậy khi dự đoán một luật khi tính toán độ tin cậy bằng việc lấy mẫu.
+Rule (4) is a \(U_d\)-type rule, which states that a person \(X\) is an actor if they acted in a movie \(A\).
+
+All rules under consideration are filtered based on a score called the rule's confidence, which is computed on the training dataset. This confidence score is defined as the number of \textit{body atom} paths that lead to the \textit{head atom}, divided by the total number of paths that contain only the body atoms.
+
+For example, consider the following rule:  
+\(\textit{gen}(X, female) \gets \textit{married}(X, A), \textit{gen}(A, male)\).  
+We first count all entity pairs that satisfy the relations \(\textit{married}(X, A), \textit{gen}(A, male)\)—this is the number of paths containing the body atoms. Then we count how many of those pairs also satisfy the inferred relation \(\textit{gen}(X, female)\); this is the number of body atom paths that lead to the head atom. The confidence score of the rule is the ratio of the latter to the former.
+
+\section{AnyBURL Algorithm} \label{myalgorithm}
+In this section, we describe the core algorithm of the AnyBURL method, as originally introduced in \cite{burl}, as well as our two extended algorithms designed to handle situations where the graph is incrementally updated with one or more new facts (edges). Additionally, we briefly describe how rules are initialized and how rule confidence is computed using sampling on the training set, including the issue of confidence estimation during prediction when sampling is used.
+
+
 \subsection{AnyBURL}
 \begin{algorithm}
 	\caption{Anytime Bottom-up Rule Learning}\label{algorithm1}
@@ -102,9 +120,12 @@ Trong phần này chúng tôi mô tả lại thuật toán chính của phương
 	\end{algorithmic}
 \end{algorithm}
 
-Đầu vào của thuật toán \(\mathcal{G}_{\text{know}}, S, SAT, Q, TS\). Đầu ra là tập hợp \(R\) các luật học được. Trong đó \(\mathcal{G}_{\text{know}}\) là một đồ thị tri thức được cho từ tập dữ liệu đào tạo. \(S\) là tham số cho biết kích thước của một lần lấy mẫu trên dữ liệu đào tạo để tính toán độ tin cậy. \(SAT\) cho biết độ bão hòa(saturation) của các luật được sinh ra trong 1 lần lặp độ bão hòa này được tính bằng số luật \textbf{mới} học được ở lần lặp hiện tại so với số luật đã học được. Nếu nhỏ hơn độ bão hòa thì chúng tôi cho rằng vẫn còn tiềm năng để khai thác các luật với độ dài \(n\). Ngược lại chúng tôi tăng độ dài của luật sau đó tiếp tục khai thác. \(Q\) là một ngưỡng để xác định xem luật mới được sinh ra có được thêm vào kết quả trả về hay không. Còn \(TS\) cho biết thời gian học của thuật toán. Chúng tôi bắt đầu với \(n\) bằng \(2\) tức là các luật có độ dài đường đẫn bằng 2 vì trong path rule yêu cầu ít nhất 1 literal trong head atom và 1 trong body atoms. Ở phần lấy mẫu 1 luật(\textit{samplePath}) chỉ đơn giản là chúng ta chọn một đỉnh bất kì trong đồ thị duyệt qua tất cả các đường đẫn từ đỉnh đó đi qua \(n\) đỉnh khác, sau đó chọn ngẫu nhiên một đường đẫn trong số các trường đẫn duyệt được.
+The input of the algorithm consists of \(\mathcal{G}_{\text{know}}, S, SAT, Q, TS\). The output is the set \(R\) of learned rules. Here, \(\mathcal{G}_{\text{know}}\) is a knowledge graph derived from the training dataset. \(S\) is a parameter indicating the sample size used during each sampling iteration on the training data for confidence computation. \(SAT\) denotes the saturation level of the rules generated in each iteration; this saturation is calculated based on the number of \textbf{new} rules learned in the current iteration relative to the total number of rules already learned. If this value is below the saturation threshold, we consider that there is still potential to discover rules of length \(n\). Otherwise, we increase the rule length and continue the rule mining process. \(Q\) is a threshold used to determine whether a newly generated rule should be added to the result set. \(TS\) indicates the total learning time of the algorithm.
 
-\subsection{Tạo luật}
+We start with \(n = 2\), which corresponds to rules of path length 2, since a valid path rule requires at least one literal in the head atom and one in the body atoms. In the rule sampling step (\textit{samplePath}), we simply select a random node in the graph, traverse all possible paths from that node with length \(n\), and then randomly select one of the traversed paths.
+
+
+\subsection{Generate Rules}
 \label{subsec:CreateRule}
 
 \begin{algorithm}
@@ -129,9 +150,13 @@ Trong phần này chúng tôi mô tả lại thuật toán chính của phương
 	\end{algorithmic}
 \end{algorithm}
 
-Ở thuật toán này chúng tôi thay các hằng số vào các head và tail trong toàn bộ path rule  của luật được lấy mẫu ở bước trước nếu luật cần học là luật nhị phân ngược lại chúng tôi chỉ thay hoặc head hoặc tail rồi thêm vào luật trả về sau đó chúng tôi lấy mẫu trên tập huấn luyện 1 tập hợp các luật sau đó tính toán độ tin cây như được mô tả trong \autoref{subsec:CreateRule}. Để giảm chi phí tính toán chúng tôi chọn cách lấy mẫu trên tập huấn luyện để tính toán. Khi đưa ra dự đoán các ứng cử viên của một luật chúng tôi sẽ tính toán lại bằng cách thêm vào một lượng biểu diễn số luật bị sai mà chúng tôi chưa nhìn thấy trong quá trình lấy mẫu để tính toán độ tin cậy. Đối với mô hình của chúng thôi sau khi thử nghiệm tham số trong khoảng \([5, 10]\) cho kết quả tốt nhất.
-\section{Thuật toán AnyBURL mở rộng}
-\subsection{Thuật toán 3 học offline-to-online}
+In this algorithm, we substitute constants into the head and tail of all path rules from the sampled rule in the previous step if the rule to be learned is a binary rule. Otherwise, we substitute either the head or the tail and then add the rule to the return set. We then sample a set of rules from the training set and compute their confidence scores as described in \autoref{subsec:CreateRule}. To reduce computational cost, we choose to sample from the training set for this calculation. 
+
+When making predictions for rule candidates, we recompute confidence by incorporating an estimated number of incorrect rules not observed during sampling. For our model, after experimenting with the parameter in the range \([5, 10]\), we found that this yields the best results.
+
+\section{Extended AnyBURL Algorithm}
+\subsection{Algorithm 3: Offline-to-Online Learning}
+
 
 \begin{algorithm}
 	\caption{BatchAnyBURL Learning batch size}
@@ -170,11 +195,13 @@ Trong phần này chúng tôi mô tả lại thuật toán chính của phương
 	\end{algorithmic}
 \end{algorithm}
 
-Thuật toán này là phần bổ xung của chúng tôi để tránh việc phải đào tạo lại toàn bộ mô hình khi có một lượng tri thức mới được thêm vào đồ thị. Khi thêm vào đồ thị chúng tôi kiểm trả xem phần tri thức mới có kết nối với tri thức cũ hay không (tính liên thông) nếu có chúng tôi thực hiện phép toán \(\oplus\) lấy  tất cả các phần trong \(batch\_edge\) thêm với 1 phần liên thông với những cạnh liên thông với đồ thị với dộ dài là \(5\), Nếu không chúng tôi lấy tất cả các phần trong \(batch\_edge\) sau đó thực hiện lại các bước như thuật toán Anytime Bottom-up Rule Learning.
+This algorithm is our proposed extension to avoid retraining the entire model when a new set of knowledge is added to the graph. When new knowledge is added, we first check whether it is connected to the existing knowledge in the graph (i.e., connectivity). If it is, we perform the \(\oplus\) operation by combining all elements in \(batch\_edge\) with the connected components in the graph, up to a path length of 5. If there is no connectivity, we use all elements in \(batch\_edge\) and repeat the steps of the Anytime Bottom-up Rule Learning algorithm.
+
 
 \pagebreak
 
-\subsection{Thuật toán 4 học online-to-online}
+\subsection{Algorithm 4: Online-to-Online Learning}
+
 
 
 \begin{algorithm}
@@ -208,4 +235,4 @@ Thuật toán này là phần bổ xung của chúng tôi để tránh việc ph
 	\end{algorithmic}
 \end{algorithm}
 
-Thuật toán này là một phần bổ xung cho \autoref{alg:BatchAnyBURL}. Sở dĩ chúng tôi gọi là online-to-online là vì khi có một cạnh mới(tri thức mới) được thêm vào đồ thị chúng tôi sẽ thực hiện việc học ngay tức khắc trên các path rule liên quan tới cạnh đó không giống như ở \autoref{alg:BatchAnyBURL} khi có đủ 1 lượng tri thức mới được thêm vào.
+This algorithm is a complementary component to \autoref{alg:BatchAnyBURL}. We refer to it as online-to-online because when a new edge (i.e., new knowledge) is added to the graph, we immediately perform learning on the path rules related to that edge—unlike in \autoref{alg:BatchAnyBURL}, where learning is triggered only after a sufficient amount of new knowledge has been added.

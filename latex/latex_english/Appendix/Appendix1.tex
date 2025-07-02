@@ -1,12 +1,13 @@
 \appendix
-\renewcommand{\chaptername}{Phụ lục}
+\renewcommand{\chaptername}{Appendix}
 %\chapter{Parameters in Diffusion}
 %\label{appendix:Appendix1}
 
-\chapter{Các siêu tham số tối ưu}
+\chapter{Optimal Hyperparameters}
 \label{appendix:Appendix1}
 
-Trong phần này, chúng tôi trình bày tập hợp các siêu tham số tối ưu được sử dụng cho cả hai mô hình: mô hình dựa trên cơ chế chú ý và mô hình ConvKB. Quá trình tối ưu siêu tham số được thực hiện thông qua phương pháp tìm kiếm lưới (grid search) dựa trên chỉ số đánh giá Hits@10. Đối với mô hình chú ý, chúng tôi huấn luyện trên toàn bộ tập dữ liệu mà không thực hiện chia nhỏ. Trong khi đó, đối với mô hình ConvKB, chúng tôi áp dụng cùng một kích thước siêu tham số cho tất cả các tập dữ liệu. Chi tiết các siêu tham số được thể hiện trong bảng sau:
+In this section, we present the set of optimal hyperparameters used for both models: the attention-based model and the ConvKB model. The hyperparameter optimization process was conducted using grid search based on the Hits@10 evaluation metric. For the attention-based model, we trained on the entire dataset without any data splitting. In contrast, for the ConvKB model, we applied the same hyperparameter configuration across all datasets. The detailed hyperparameters are shown in the following table:
+
 
 \begin{table}[htbp]
 	\begin{center}

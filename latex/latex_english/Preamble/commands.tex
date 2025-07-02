@@ -54,16 +54,6 @@
 \newcommand{\bSigma}{{\boldsymbol{\Sigma}}}
 
 
-% \renewcommand{\chaptername}{Chương}
-% \renewcommand{\figurename}{Hình}
-% \renewcommand{\tablename}{Bảng}
-% \renewcommand{\contentsname}{Mục lục}
-% \renewcommand{\listfigurename}{Danh sách hình}
-% \renewcommand{\listtablename}{Danh sách bảng}
-% \renewcommand{\listalgorithmname}{Danh sách thuật toán}
-% \renewcommand{\appendixname}{Phụ lục}
-% \renewcommand{\algorithmname}{Thuật toán}
-
 % Định nghĩa
 \newtheorem{definition}{Definition}
 
@@ -77,64 +67,66 @@
 \renewcommand{\appendixname}{Appendix}
 \renewcommand{\algorithmname}{Algorithm}
 
-% ******************************************************************************
-% Cấu trúc chương và mục
-\renewcommand{\thechapter}{\arabic{chapter}} % Số chương bằng số tự nhiên
-\renewcommand{\thesection}{\thechapter.\arabic{section}} % Số mục bằng số tự nhiên
-%\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}} % Số tiểu mục
-%\renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}} % Số tiểu tiểu mục
 
-% Đánh số hình, bảng, phương trình theo chương
-\renewcommand{\thefigure}{\thechapter.\arabic{figure}} % Đánh số hình
-\renewcommand{\thetable}{\thechapter.\arabic{table}} % Đánh số bảng
-\renewcommand{\theequation}{\thechapter.\arabic{equation}} % Đánh số phương trình
+% ******************************************************************************
+% Chapter and section structure
+\renewcommand{\thechapter}{\arabic{chapter}} % Use natural numbers for chapter numbering
+\renewcommand{\thesection}{\thechapter.\arabic{section}} % Use natural numbers for section numbering
+%\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}} % Use for subsection numbering
+%\renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}} % Use for subsubsection numbering
+
+% Number figures, tables, and equations by chapter
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}} % Number figures as Chapter.Figure
+\renewcommand{\thetable}{\thechapter.\arabic{table}}   % Number tables as Chapter.Table
+\renewcommand{\theequation}{\thechapter.\arabic{equation}} % Number equations as Chapter.Equation
 % \renewcommand{\thealgorithm}{\thealgorithm.\arabic{algorithm}}
 
-% \renewcommand{\thefigure}{\arabic{figure}}
-% \renewcommand{\theequation}{\arabic{equation}}
-\renewcommand{\thealgorithm}{\arabic{algorithm}}
+% \renewcommand{\thefigure}{\arabic{figure}} % Use flat numbering for figures
+% \renewcommand{\theequation}{\arabic{equation}} % Use flat numbering for equations
+\renewcommand{\thealgorithm}{\arabic{algorithm}} % Number algorithms with natural numbers
 % \thealgorithm.
 
-% Tạo danh mục viết tắt
+% Define acronym list command
 \newcommand{\acronym}[2]{\textbf{#1} (\textit{#2})}
 
-% Tùy chỉnh tiêu đề và khoảng cách trong danh mục hình ảnh
-\renewcommand{\cftfigpresnum}{Figure~} % Tiền tố trước số hình ảnh
-% \renewcommand{\cftfigpresnum}{Hình~} % Tiền tố trước số hình ảnh
-\renewcommand{\cftfigaftersnum}{:} % Ký tự sau số hình ảnh
-\addtolength{\cftfignumwidth}{3em} % Tăng khoảng cách giữa số và tiêu đề hình ảnh
+% Customize figure list title and spacing
+\renewcommand{\cftfigpresnum}{Figure~} % Prefix before figure number in list
+% \renewcommand{\cftfigpresnum}{Figure~} % Vietnamese: Hình~
+\renewcommand{\cftfigaftersnum}{:} % Character after figure number
+\addtolength{\cftfignumwidth}{3em} % Increase space between number and caption in figure list
 
-% Cấu hình để thêm từ "Bảng" trước mỗi mục trong danh mục bảng số liệu
+% Configure table list title and spacing
 \renewcommand{\cfttabpresnum}{Table~}
-% \renewcommand{\cfttabpresnum}{Bảng~}
+% \renewcommand{\cfttabpresnum}{Table~} % Vietnamese: Bảng~
 \renewcommand{\cfttabaftersnum}{:}
-\addtolength{\cfttabnumwidth}{3em} % Tăng khoảng cách giữa số và tiêu đề bảng
+\addtolength{\cfttabnumwidth}{3em} % Increase space between number and caption in table list
 
+% Create list of algorithms
 \makeatletter
 \begingroup
-  \let\newcounter\@gobble
-  \let\setcounter\@gobbletwo
-  \globaldefs\@ne
-  \let\c@loadepth\@ne
-  \newlistof{algorithms}{loa}{\listalgorithmname}
+\let\newcounter\@gobble
+\let\setcounter\@gobbletwo
+\globaldefs\@ne
+\let\c@loadepth\@ne
+\newlistof{algorithms}{loa}{\listalgorithmname}
 \endgroup
 \let\l@algorithm\l@algorithms
 \makeatother
 
+% Customize algorithm list
 \renewcommand\cftalgorithmsaftersnum{:}
-% \renewcommand\cftalgorithmspresnum{Algorithm~}
-\renewcommand\cftalgorithmspresnum{Thuật toán~}
+\renewcommand\cftalgorithmspresnum{Algorithm~}
+% \renewcommand\cftalgorithmspresnum{Algorithm~} % Vietnamese: Thuật toán~
 \cftsetindents{algorithms}{1.5em}{7em}
 
-
 % \settocstyle{algorithm}{%
-%   \tocstyle{list}[\textbf{Algorithms}]{\thealgorithm}%
-%   \contentsline{algorithm}{\ignorespaces\thealgorithm}{\thealgorithm}%
-% }
+	%   \tocstyle{list}[\textbf{Algorithms}]{\thealgorithm}%
+	%   \contentsline{algorithm}{\ignorespaces\thealgorithm}{\thealgorithm}%
+	% }
 % \tocstyle{algorithm}{\listofalgorithms}
 
-
 % ******************************************************************************
+% Autoreference labels (used by \autoref)
 \renewcommand{\figureautorefname}{Figure}
 \renewcommand{\tableautorefname}{Table}
 \renewcommand{\sectionautorefname}{Section}
@@ -146,20 +138,3 @@
 
 \providecommand{\algorithmautorefname}{Algorithm}
 \renewcommand{\algorithmautorefname}{Algorithm}
-
-% \renewcommand{\figureautorefname}{Hình}
-% \renewcommand{\tableautorefname}{Bảng}
-% \renewcommand{\sectionautorefname}{Mục}
-% \renewcommand{\chapterautorefname}{Chương}
-% \renewcommand{\subsectionautorefname}{Tiểu mục}
-% \renewcommand{\subsubsectionautorefname}{Mục con}
-% \renewcommand{\equationautorefname}{Phương trình}
-% \renewcommand{\appendixautorefname}{Phụ lục}
-
-% \providecommand{\algorithmautorefname}{Thuật toán}
-% \renewcommand{\algorithmautorefname}{Thuật toán}
-
-
-
-% \renewcommand{\thesection}{\arabic{section}}
-% \renewcommand\thesubsection{\alph{subsection}.}

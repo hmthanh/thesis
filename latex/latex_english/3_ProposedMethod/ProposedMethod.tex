@@ -1,6 +1,6 @@
 %\chapter{METHOD PROPOSAL}
 %\label{chap:Chapter3}
-\chapter{Deep Learning-Based Methods}
+\chapter{DEEP LEARNING-BASED METHODS}
 \label{chap:DeeLearning}
 
 In this chapter, we present Knowledge Graphs and describe the task of Graph Embedding, providing an overview of current graph embedding techniques. We will revisit the attention mechanism and explain how it is applied to knowledge graphs through the Graph Attention Network (GAT) model \cite{velivckovic2017graph}. Additionally, we present an improved method based on the graph attention model—KBGAT \cite{nathani2019learning}—which incorporates relation information and neighboring relations.
@@ -115,7 +115,7 @@ Homogeneous Graph, Heterogeneous Graph, Graph with Auxiliary Information, and Gr
 Different types of embedding inputs preserve different information in the embedding space and therefore pose different challenges for the graph embedding problem. 
 For example, when embedding a graph with only structural information, the connections between nodes are the primary target to preserve. However, for graphs with node labels or entity attribute information, auxiliary information provides additional context for the graph and can therefore also be considered during the embedding process. Unlike embedding input, which is fixed and provided by the dataset, the embedding output is task-specific.
 
-For instance, the most common embedding output is **node embedding**, which represents each node as a vector that reflects similarity between nodes. Node embeddings are beneficial for node-related tasks such as node classification, node clustering, etc.
+For instance, the most common embedding output is \textbf{node embedding}, which represents each node as a vector that reflects similarity between nodes. Node embeddings are beneficial for node-related tasks such as node classification, node clustering, etc.
 
 However, in some cases, the tasks may involve more fine-grained graph components such as node pairs, subgraphs, or the entire graph. Therefore, the first challenge of embedding is to determine the appropriate type of embedding output for the application of interest. Four types of embedding outputs are illustrated in \autoref{fig:graphInput}, including: **Node Embedding** (\ref{fig:nodeEmbedding}), **Edge Embedding** (\ref{fig:edgeEmbedding}), **Hybrid Embedding** (\ref{fig:substructureEmbedding}), and **Whole-Graph Embedding** (\ref{fig:wholeGraphEmbedding}). Different output granularities have distinct criteria and present different challenges. For example, a good node embedding retains similarity with its neighbors in the embedding space. Conversely, a good whole-graph embedding represents the entire graph as a vector that preserves graph-level similarity.
 
