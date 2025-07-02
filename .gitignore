@@ -10,20 +10,54 @@ venv/
 .ipynb_checkpoints/
 .idea/
 
-# LaTeX
-*.aux
-*.bbl
-*.blg
-*.fls
-*.lof
-*.lot
-*.out
-*.toc
-*.gz
-
 # Log
 *.log
 textbook/*
 .vscode/*
 graph_embedding_paper/*
 datasets_/*
+
+.DS_Store
+
+
+
+# LaTeX intermediate and output files
+*.aux
+*.bbl
+*.blg
+*.brf
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.fdb_latexmk
+*.fls
+*.run.xml
+*.synctex(busy)
+
+# Editor swap and backup files
+*~
+*.swp
+*.bak
+*.tmp
+
+# TeXShop
+*.pdfsync
+*.texpadtmp
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# MacOS system files
+.DS_Store
+
+# Output PDF (optional, if you want to exclude it)
+# *.pdf
