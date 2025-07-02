@@ -71,50 +71,52 @@ The attention mechanism is currently one of the most effective (state-of-the-art
 \begin{figure}[htp]
 	\centering
 	\tikzset{
-		category/.style  = {draw, font=\sffamily, thin, align=center},
+		category/.style  = {draw, thin, align=center},
 		subcat/.style={rectangle, rounded corners=6pt},
 		center/.style = {category, ellipse, fill=blue!60, text width=4em},
-		group/.style = {category, subcat, fill=blue!30, rounded corners=6pt, text width=6em},
+		group/.style = {category, subcat, fill=blue!30, rounded corners=3pt, text width=6em},
 		yellowbox/.style = {category, subcat, fill=yellow!30},
 		greenbox/.style = {category, subcat, fill=green!30},
 		redbox/.style = {category, subcat, fill=red!30},
 		bluebox/.style = {category, subcat, fill=cyan!30},
-		leafbox/.style = {category, subcat, fill=black!10, rounded corners=0mm}
+		leafbox/.style = {category, subcat, fill=black!10, rounded corners=3pt}
 	}
-	\resizebox{\textwidth}{!}{%
+	\makebox[\textwidth][l]{
+		\hspace{-2cm}
+	\resizebox{1.2\textwidth}{!}{%
 		\begin{tikzpicture}
-			\node[center] (root) {Knowledge Graph};
-			\node[group][above left=1cm of root] (c1) {Knowledge Representation Learning};
-			\node[group][above right=8mm of root] (c2) {Knowledge Inference};
-			\node[group][below left=5mm of root] (c3) {Knowledge Acquisition};
-			\node[group][below right=20mm of root, xshift=-2cm] (c4) {Temporal Knowledge Graph};
+			\node[center][execute at begin node=\setlength{\baselineskip}{0.9em}] (root) {Knowledge Graph};
+			\node[group][above left=1cm of root, execute at begin node=\setlength{\baselineskip}{1em}] (c1) {Knowledge Representation Learning};
+			\node[group][above right=8mm of root, execute at begin node=\setlength{\baselineskip}{1em}] (c2) {Knowledge Inference};
+			\node[group][below left=5mm of root, execute at begin node=\setlength{\baselineskip}{1em}] (c3) {Knowledge Acquisition};
+			\node[group][below right=20mm of root, xshift=-2cm, execute at begin node=\setlength{\baselineskip}{0.9em}] (c4) {Temporal Knowledge Graph};
 			
 			\begin{scope}[every node/.style={yellowbox}]
 				\node[above=8mm of c1, xshift=-1cm] (c11) {Embedding Space};
-				\node[left=of c1, yshift=9mm, xshift=-10mm] (c12) {Scoring Function};
+				\node[left=of c1, yshift=9mm, xshift=-7mm, yshift=10mm] (c12) {Scoring Function};
 				\node[left=15mm of c1, yshift=-5mm] (c13) {Model Encoding};
 				\node[left=of c1, yshift=-20mm] (c14) {Auxiliary Information};
 			\end{scope}
 			
 			\begin{scope}[every node/.style={redbox}]
-				\node[above left=of c2, text width=35mm, yshift=1mm, xshift=18mm] (c21) {Natural Language Understanding};
+				\node[above left=of c2, text width=35mm, yshift=1mm, xshift=14mm, execute at begin node=\setlength{\baselineskip}{0.9em}] (c21) {Natural Language Understanding};
 				\node[above=1cm of c2, yshift=5mm, xshift=13mm] (c22) {Question Answering};
 				\node[right=of c2, yshift=15mm] (c23) {Dialogue System};
-				\node[right=of c2, yshift=-2mm] (c24) {Recommendation System};
+				\node[right=of c2, yshift=4mm, xshift=7mm] (c24) {Recommendation System};
 				\node[below=5mm of c2, xshift=5mm] (c25) {Other Applications};
 			\end{scope}
 			
 			\begin{scope}[every node/.style={greenbox}]
 				\node[left=1cm of c3, yshift=5mm] (c31) {Entity Discovery};
-				\node[below left=of c3, yshift=1cm, xshift=3mm] (c32) {Relation Extraction};
-				\node[below right=5mm of c3, xshift=-4cm] (c33) {Graph Completion};
+				\node[below left=of c3, yshift=8mm, xshift=3mm] (c32) {Relation Extraction};
+				\node[below right=10mm of c3, xshift=-4cm] (c33) {Graph Completion};
 			\end{scope}
 			
 			\begin{scope}[every node/.style={bluebox}]
-				\node[below=of c4, xshift=-15mm, yshift=-35mm] (c41) {Temporal Logic Reasoning};
-				\node[below=of c4, xshift=2cm, yshift=-23mm] (c42) {Time-Independent Relations};
-				\node[below right=of c4,xshift=-2mm, yshift=-10mm] (c43) {Dynamic Entities};
-				\node[right=of c4, yshift=-2cm, xshift=15mm] (c44) {Temporal Embeddings};
+				\node[below=of c4, xshift=-15mm, yshift=-37mm] (c41) {Temporal Logic Reasoning};
+				\node[below=of c4, xshift=18mm, yshift=-25mm] (c42) {Time-Independent Relations};
+				\node[below right=of c4, xshift=0mm, yshift=-15mm] (c43) {Dynamic Entities};
+				\node[right=of c4, xshift=11mm, yshift=-22mm] (c44) {Temporal Embeddings};
 			\end{scope}
 			
 			\begin{scope}[every node/.style={leafbox}]
@@ -143,7 +145,7 @@ The attention mechanism is currently one of the most effective (state-of-the-art
 						- GCN \\
 					\end{tabular}
 				};
-				\node[below left=5mm of c14, xshift=6mm, yshift=-7mm] (c14x) {
+				\node[below left=5mm of c14, xshift=6mm, yshift=-3mm] (c14x) {
 					\begin{tabular}{@{}l@{}c@{}l@{}}
 						- Textual & - Type & - Visual \\
 					\end{tabular}
@@ -157,7 +159,7 @@ The attention mechanism is currently one of the most effective (state-of-the-art
 						- Ranking \\
 					\end{tabular}
 				};
-				\node[below=of c32, xshift=-5mm] (c32x) {
+				\node[below=of c32, xshift=-7mm] (c32x) {
 					\begin{tabular}{@{}l@{}}
 						- Neural Nets \\
 						- Attention \\
@@ -167,7 +169,7 @@ The attention mechanism is currently one of the most effective (state-of-the-art
 						- Others \\
 					\end{tabular}
 				};
-				\node[below=5mm of c33] (c33x) {
+				\node[below=5mm of c33, xshift=2mm] (c33x) {
 					\begin{tabular}{@{}l@{}}
 						- Ranking-based Embeddings \\
 						- Textual Reasoning \\
@@ -183,7 +185,7 @@ The attention mechanism is currently one of the most effective (state-of-the-art
 						- Multi-step Reasoning \\
 					\end{tabular}
 				};
-				\node[below right=5mm of c25, yshift=15mm] (c25x) {
+				\node[below right=5mm of c25, yshift=18mm] (c25x) {
 					\begin{tabular}{@{}l@{}}
 						- Question Generation \\
 						- Search Engines \\
@@ -202,12 +204,12 @@ The attention mechanism is currently one of the most effective (state-of-the-art
 			\foreach \value in {1,...,4}
 			\draw[->, ultra thick] (c1) -> (c1\value);
 			\foreach \value in {1,...,4}
-			\draw[->, thick] (c1\value) -> (c1\value x);
+			\draw[->, ultra thick] (c1\value) -> (c1\value x);
 			
 			\foreach \value in {1,...,5}
 			\draw[->, ultra thick] (c2) -> (c2\value);
 			\foreach \value in {2,5}
-			\draw[->, thick] (c2\value) -> (c2\value x);
+			\draw[->, ultra thick] (c2\value) -> (c2\value x);
 			
 			\foreach \value in {1,...,3}
 			\draw[->, ultra thick] (c3) -> (c3\value);
@@ -217,7 +219,8 @@ The attention mechanism is currently one of the most effective (state-of-the-art
 			\foreach \value in {1,...,4}
 			\draw[->, ultra thick] (c4) -> (c4\value);
 			
-	\end{tikzpicture}}
+	\end{tikzpicture}
+}}
 	\caption{
 		A taxonomy of research areas in knowledge graphs}
 	\label{fig:categoriesResearch}

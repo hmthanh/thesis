@@ -66,13 +66,14 @@ Graph embedding is the process of transforming graph features into vectors or se
 
 \begin{figure}[htp]
 	\centering
-	\resizebox{0.8\textwidth}{!}{%
+	\normalsize
+	\resizebox{0.95\textwidth}{!}{%
 		\begin{tikzpicture}[
-			rec/.style  = {draw, text width=2cm, font=\sffamily, rectangle, thin},
-			root/.style = {rec, rounded corners=6pt, align=center, fill=green!60, text width=10em},
+			rec/.style  = {draw, text width=10cm, rectangle, thin, execute at begin node=\setlength{\baselineskip}{1em}},
+			root/.style = {rec, rounded corners=3pt, align=center, fill=green!60, text width=10em},
 			level 1/.style={sibling distance=8cm},
-			level 2/.style={rec, rounded corners=6pt, fill=green!30,align=center, text width=10em},
-			level 3/.style = {rec, align=left, fill=pink!30, text width=9.5em, yshift=-20pt},
+			level 2/.style={rec, rounded corners=3pt, fill=green!30,align=center, text width=12em},
+			level 3/.style = {rec, rounded corners=3pt, align=left, fill=pink!30, text width=15em, yshift=-20pt},
 			edge from parent/.style={->,draw, very thick},
 			>=latex]
 			
@@ -83,15 +84,15 @@ Graph embedding is the process of transforming graph features into vectors or se
 			
 			% The second level, relatively positioned nodes
 			\begin{scope}[every node/.style={level 3}]
-				\node [below of = c1, xshift=30pt, yshift=15pt, xshift=15pt] (c11) {Homogeneous Graph};
-				\node [below of = c11, yshift=5pt] (c12) {Heterogeneous Graph};
-				\node [below of = c12, yshift=-5pt] (c13) {Graph with Auxiliary Information};
-				\node [below of = c13, yshift=-13pt] (c14) {Graph Structured from Non-relational Data};
+				\node [below of = c1, xshift=60pt, yshift=15pt, xshift=15pt] (c11) {Homogeneous Graph};
+				\node [below of = c11, yshift=15pt] (c12) {Heterogeneous Graph};
+				\node [below of = c12, yshift=15pt] (c13) {Graph with Auxiliary Information};
+				\node [below of = c13, yshift=10pt] (c14) {Graph Structured from Non-relational Data};
 				
-				\node [below of = c2, xshift=30pt, yshift=15pt, xshift=15pt] (c21) {Node Embedding};
+				\node [below of = c2, xshift=60pt, yshift=15pt, xshift=15pt] (c21) {Node Embedding};
 				\node [below of = c21, yshift=15pt] (c22) {Edge Embedding};
 				\node [below of = c22, yshift=15pt] (c23) {Joint Embedding};
-				\node [below of = c23, yshift=5pt] (c24) {Whole-Graph Embedding};
+				\node [below of = c23, yshift=15pt] (c24) {Whole-Graph Embedding};
 			\end{scope}
 			
 			% lines from each level 1 node to every one of its "children"
@@ -180,13 +181,15 @@ Whole-graph embedding is typically used for small graphs such as proteins, molec
 
 \begin{figure}[htp]
 	\centering
-	\resizebox{\textwidth}{!}{
+	\makebox[\textwidth][l]{
+		\hspace{-25mm}
+		\resizebox{1.2\textwidth}{!}{%
 		\begin{tikzpicture}[
-			rec/.style  = {draw, text width=2cm, font=\sffamily, rectangle, thin},
-			root/.style = {rec, rounded corners=6pt, align=center, fill=green!60, text width=10em},
-			level 1/.style={sibling distance=50mm},
-			level 2/.style={rec, rounded corners=6pt, fill=green!30,align=center, text width=8em},
-			level 3/.style = {rec, align=left, fill=pink!30, text width=8em, yshift=-20pt},
+			rec/.style  = {draw, text width=2.5cm, rectangle, thin, execute at begin node=\setlength{\baselineskip}{1.2em}},
+			root/.style = {rec, rounded corners=3pt, align=center, fill=green!60, text width=60mm},
+			level 1/.style={sibling distance=50mm, level distance=2cm, text width=60mm},
+			level 2/.style={rec, rounded corners=3pt, fill=green!30,align=center, text width=40mm},
+			level 3/.style = {rec, align=left, fill=pink!30, text width=35mm, yshift=-20pt, rounded corners=3pt},
 			edge from parent/.style={->,draw, very thick},
 			>=latex]
 			
@@ -198,21 +201,21 @@ Whole-graph embedding is typically used for small graphs such as proteins, molec
 			child {node[level 2] (c5) {Generative Models}};
 			
 			\begin{scope}[every node/.style={level 3}]
-				\node [below of = c1, xshift=30pt] (c11) {With random walk};
+				\node [below of = c1, xshift=35pt] (c11) {With random walk};
 				\node [below of = c11] (c12) {Without random walk};
 				
-				\node [below of = c2, xshift=30pt] (c21) {Laplacian Eigenmaps};
-				\node [below of = c21] (c22) {Matrix factorization via node approximation};
+				\node [below of = c2, xshift=35pt] (c21) {Laplacian Eigenmaps};
+				\node [below of = c21, yshift=-10pt] (c22) {Matrix factorization via node approximation};
 				
-				\node [below of = c3, xshift=25pt] (c31) {Maximizing edge reconstruction probability};
-				\node [below of = c31, yshift=-20pt] (c32) {Minimizing distance-based loss};
-				\node [below of = c32, yshift=-20pt] (c33) {Minimizing margin-based ranking loss};
+				\node [below of = c3, xshift=35pt] (c31) {Maximizing edge reconstruction probability};
+				\node [below of = c31, yshift=-10pt] (c32) {Minimizing distance-based loss};
+				\node [below of = c32, yshift=-10pt] (c33) {Minimizing margin-based ranking loss};
 				
-				\node [below of = c4, xshift=25pt] (c41) {Graphlet-based};
+				\node [below of = c4, xshift=35pt] (c41) {Graphlet-based};
 				\node [below of = c41] (c42) {Tree pattern-based};
 				\node [below of = c42] (c43) {Random walk-based};
 				
-				\node [below of = c5, xshift=30pt] (c51) {Latent space-based embedding};
+				\node [below of = c5, xshift=35pt] (c51) {Latent space-based embedding};
 				\node [below of = c51] (c52) {Semantic fusion embedding};
 			\end{scope}
 			
@@ -231,7 +234,7 @@ Whole-graph embedding is typically used for small graphs such as proteins, molec
 			\foreach \value in {1,...,2}
 			\draw[->, very thick] (c5.195) |- (c5\value.west);
 		\end{tikzpicture}
-	}
+	}}
 	\caption{Graph Embedding Techniques}
 	\label{fig:graphEmbeddingTechniquesTree}
 \end{figure}
@@ -334,6 +337,9 @@ A generative model is defined by specifying a joint distribution over input feat
 
 \newcolumntype{L}{>{\arraybackslash}m{0.25\textwidth}}
 \newcolumntype{M}{>{\arraybackslash}m{0.2\textwidth}}
+\begingroup
+\normalsize
+\setlength{\tabcolsep}{8pt}
 \begin{longtable}{|p{0.2\textwidth}|p{0.22\textwidth}|L|p{0.22\textwidth}|}
 	\caption{Comparison of Advantages and Disadvantages of Graph Embedding Techniques} \label{tab:graphEmbeddingTechCompare} \\
 	\hline
@@ -373,7 +379,7 @@ A generative model is defined by specifying a joint distribution over input feat
 	Deep Learning & With random walk & \multirow{2}{=}{Efficient and fast. No need for manual feature extraction} & Considers only local path content. Difficult to find optimal sampling strategy \\ \cline{2-2} \cline{4-4} 
 	& Without random walk & & High computational cost \\ \hline
 \end{longtable}
-
+\endgroup
 
 
 
@@ -470,11 +476,11 @@ At this point, we have presented the attention mechanism for computing attention
 	\centering
 	\resizebox{\textwidth}{!}{%
 		\begin{tikzpicture}[
-			entityStyle/.style={draw, color=white, font=\sffamily, thin, align=center, circle, text width=20mm},
+			entityStyle/.style={draw, color=white, thin, align=center, circle, text width=20mm},
 			us/.style = {entityStyle, fill=amber},
 			entity/.style={entityStyle, fill=azure},
-			arrowStyle/.style={-latex', >=stealth, font=\sffamily},
-			entityId/.style={draw, color=white, font=\sffamily, thin, align=center, circle},]
+			arrowStyle/.style={-latex', >=stealth },
+			entityId/.style={draw, color=white,  thin, align=center, circle},]
 			
 			\node[us] (us) {\textbf{U.S}};
 			
@@ -832,7 +838,7 @@ After obtaining the embedding vectors that capture spatial features of the knowl
 			box/.style={draw,rectangle, fill=none},
 			embBox/.style={box ,rounded corners=0.2em, minimum width=1.3em},
 			layerBox/.style={color=azure!80, box ,very thick,rounded corners=0.2em, minimum width=1.3em},
-			textbox/.style={box,rounded corners=0.3em, fill=none,font=\sffamily, align=center},
+			textbox/.style={box,rounded corners=0.3em, fill=none, align=center, execute at begin node=\setlength{\baselineskip}{1em}},
 			arrowStrong/.style={thick,->,>=stealth},
 			arrowDash/.style={thick, ->,>=stealth, dash pattern=on 1.5mm off 0.7mm, postaction={decorate}},
 			row/.style={draw, rectangle, font=\fontsize{0.6em}{1}\sffamily, align=center, text width=3.9em},
@@ -1177,11 +1183,11 @@ The output of the KBGAT model is the set of entity and relation embedding vector
 			convBox/.style={box, minimum height=1.3em, minimum width=4.8em,rounded corners=0.2em},
 			convolution/.style={box, minimum height=1.3em, minimum width=4.5em,rounded corners=0.2em},
 			convLayer/.style={box, minimum height=1.05em, minimum width=5em, rounded corners=0.2em},
-			textbox/.style={box,rounded corners=0.3em, fill=none,font=\sffamily, align=center},
-			title/.style={fill=none, font=\sffamily, align=center},
+			textbox/.style={box,rounded corners=0.3em, fill=none, align=center},
+			title/.style={fill=none, align=center},
 			arrow/.style={thick,>=stealth},
 			arrowStrong/.style={thick,->,>=stealth},
-			arrowStyle/.style={-latex', font=\sffamily},
+			arrowStyle/.style={-latex'},
 			mydot/.style={draw, circle, minimum size=0.1em, scale=0.2},
 			]
 			% 5
