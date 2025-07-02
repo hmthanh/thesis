@@ -1,0 +1,18 @@
+%\chapter{INTRODUCTION}
+%\label{Introduction}
+\chapter{Introduction}
+\label{chap:Introduction}
+
+Nowadays, graphs have been applied in all aspects of life. Social network graphs (e.g., Facebook \cite{ugander2011anatomy}) illustrate how individuals are connected to each other, the places we visit, and the information we interact with. Graphs are also used as core structures in video recommendation systems (e.g., YouTube \cite{baluja2008video}), flight networks, GPS navigation systems, scientific computations, and even brain connectivity analysis. Google’s Knowledge Graph \cite{googlekg:2020}, introduced in 2012 \cite{ji2020survey}, is a notable example of how information can be structured and utilized in knowledge graphs.
+
+Effectively exploiting knowledge graphs provides users with deeper insight into the underlying data, which can benefit many real-world applications. However, in practice, new knowledge is continuously generated, and the acquired information is often incomplete or missing. This leads to the problem of knowledge graph completion or link prediction in knowledge graphs.
+
+Most current approaches aim to predict a new edge connecting two existing nodes. Such methods help make the graph more complete—i.e., denser—by introducing additional connecting edges. However, these approaches primarily address the problem of completion rather than the challenge of integrating new knowledge into the graph, which remains an open question. Currently, research in knowledge graph completion follows two main directions: one is optimizing an objective function to make predictions with minimal error, as in RuDiK \cite{ortona2018robust}, AMIE \cite{galarraga2015fast}, and RuleN \cite{meilicke2018fine}, which are typically used in vertex or edge classification applications. The other approach generates a ranked list of \(k\) candidate triples, where the score reflects decreasing confidence, as seen in studies such as TransE \cite{bordes2013translating} and ConvKB \cite{vu2019capsule}, which are commonly used in recommendation systems. Our approach follows this second direction of producing a candidate list.
+
+Within these approaches, there are two main methodologies: rule-based systems such as AnyBURL \cite{burl}, and embedding-based methods such as ConvE \cite{dettmers2017convolutional}, TransE \cite{bordes2013translating}, and ComplEx \cite{trouillon2016complex}. With the goal of gaining a systematic understanding of these methods, we chose to explore both directions in this thesis. For the rule-based approach, we selected AnyBURL \cite{burl}, and for the graph embedding-based method, we chose KBAT \cite{nathani2019learning}, which employs attention mechanisms.
+
+Our contribution in the AnyBURL method includes a Python implementation \footnote{https://github.com/MinhTamPhan/mythesis}, along with two proposed strategies for adding new knowledge to the graph, which we term *online-to-offline* and *online-to-online*. The *online-to-offline* strategy extends AnyBURL by generating rules when a batch (set) of new knowledge is added. The *online-to-online* strategy generates rules immediately when a single new piece of knowledge (edge) is added.
+
+For the embedding-based method, we present a review of attention mechanisms \cite{vaswani2017attention}, their application in knowledge graphs via Graph Attention Networks (GATs) \cite{velivckovic2017graph}, and the KBAT model \cite{nathani2019learning}.
+
+Our contribution in the deep learning approach includes a publicly available implementation and training process on GitHub \footnote{https://github.com/hmthanh/GCAT}, with both training code and model results openly provided.

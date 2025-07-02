@@ -1,0 +1,57 @@
+\phantomsection
+\addcontentsline{toc}{section}{Trang thông tin luận văn tiếng Việt}
+\begin{center}
+{\centering \MakeUppercase \LARGE \fontsize{16.16}{19.26}\selectfont \bfseries TRANG THÔNG TIN LUẬN VĂN}
+\end{center}
+{
+\setlength{\parindent}{0pt}
+Tên đề tài luận văn: OpenHuman: Hệ thống tổng hợp cử chỉ hội thoại dựa trên cảm xúc và ngữ nghĩa \\
+Ngành: Khoa học máy tính \\
+Mã số ngành:  8480101 \\
+Họ tên học viên cao học: Hoàng Minh Thanh \\
+Khóa đào tạo: 31 \\
+Người hướng dẫn khoa học: PGS. TS. Lý Quốc Ngọc \\
+Cơ sở đào tạo: Trường Đại học Khoa học Tự nhiên, ĐHQG.HCM}
+
+\vspace{10pt}
+{\MakeUppercase \Large \bfseries 1. TÓM TẮT NỘI DUNG LUẬN VĂN:}
+%\subsection*{1 TÓM TẮT NỘI DUNG LUẬN VĂN}
+
+Cùng với sự bùng nổ của phần cứng, các mô hình ngôn ngữ lớn, sự bùng nổ của các hệ thống trí tuệ nhân tạo dựa trên văn bản như ChatGPT, CharacterAI, Gemini,..  và sự phát triển của đồ họa máy tính thì nút nghẽn cổ chai hiện nay để phát triển người kỹ thuật số (digital human) chính là khả năng tạo ra chuyển động của nhân vật tương ứng với văn bản hoặc giọng nói.
+Một trong những khó khăn trong quá trình sinh cử chỉ là dữ liệu cử chỉ không đủ nhiều và chất lượng, cũng như sự thiếu thông nhất về ngữ cảnh trong cử chỉ là một trong những khó khăn trong việc xây dựng các hệ thống. Trong các phương pháp hiện nay,  mô hình diffusion đạt kết quả tốt nhất do có khả năng tổng quát hóa và phủ được ở những vùng thiếu cân xứng giữa các đặc trưng, và các vùng có mật độ dữ liệu thấp.
+
+ Để có thể sinh cử chỉ tương ứng với giọng nói, và thông tin về cảm xúc cần học, luận văn sử dụng mô hình diffusion có điều kiện. Với điều kiện ở đây chính là cử chỉ khởi tạo, cảm xúc, giọng nói và văn bản tương ứng.
+Luận văn kế thừa từ mô hình DiffuseStyleGesture để xây dựng mô hình đề xuất \textbf{OHGesture}, trong luận văn giọng nói được chuyển thành văn bản, như một đặc trưng về ngữ nghĩa bổ sung trong quá trình học. Luận văn kế thừa mã nguồn Unity của mô hình DeepPhase để kết xuất, và trực quan hóa các chuyển động của nhân vật, cuối cùng các mã nguồn và mã nguồn chương trình được luận văn công khai để cộng đồng nghiên cứu về sinh cử chỉ tiếp tục phát triển các hệ thông sinh cử chỉ tối ưu hơn trong tương lai. 
+
+\vspace{5pt}
+{\MakeUppercase \Large \bfseries 2. NHỮNG KẾT QUẢ MỚI CỦA LUẬN VĂN:}
+
+%\subsection*{2 NHỮNG KẾT QUẢ MỚI CỦA LUẬN VĂN}
+
+Thứ nhất, qua kết quả sinh cử chỉ thực tế, luận văn có thể chứng minh được mô hình đề xuất OHGesture đạt kết quả sinh cử chỉ tốt và thể hiện sự độ đồng bộ giữa cử chỉ, giọng nói, và cảm xúc.
+Thứ hai, bằng việc tích hợp văn bản để bổ sung đặc trưng ngữ nghĩa, luận văn cung cấp thêm một hình học giúp mô hình có thể hiểu được từng ngữ cảnh cụ thể trong quá trình sinh cử chỉ.
+Thứ ba, nghiên cứu đóng góp một phương pháp mới trong việc xây dựng hệ thống đánh giá chuẩn hóa cho các mô hình sinh cử chỉ. Phương pháp kết hợp dữ liệu từ nhiều nguồn ngôn ngữ và sử dụng đánh giá của con người, tạo nên một nền tảng so sánh khách quan và toàn diện.
+Cuối cùng, luận văn sử dụng cộng minh họa chuyển động của nhân vật, mã nguồn trên github, mô hình pretrain trên Huggingface. Cũng như kết quả sinh cử mô hình đạt kết quả tốt với đầu vào nằm ngoài dữ liệu của quá trình huấn luyện.
+
+\vspace{5pt}
+{\MakeUppercase \Large \bfseries 3. CÁC ỨNG DỤNG/ KHẢ NĂNG ỨNG DỤNG TRONG THỰC TIỄN HAY NHỮNG VẤN ĐỀ CÒN BỎ NGỎ CẦN TIẾP TỤC NGHIÊN CỨU:}
+
+%\subsection*{3 CÁC ỨNG DỤNG/ KHẢ NĂNG ỨNG DỤNG TRONG THỰC TIỄN HAY NHỮNG VẤN ĐỀ CÒN BỎ NGỎ CẦN TIẾP TỤC NGHIÊN CỨU}
+
+Mô hình OHGesture đã có thể sinh cử chỉ từ nhãn cảm xúc, giọng nói và văn bản tương ứng.
+Từ đây, chúng tôi có thể phát triển các hệ thống tương tác với người bằng cách kết hợp với các agent chuyên xử lý thông tin bằng văn bản khác như Character.AI, ChatGPT API,.. Ngoài ra, chúng tôi cũng dự định làm một store tương tự như App Store nhưng chứa người ảo, với mỗi người ảo như một app được xây dựng từ nhiều người khác nhau có thể ứng dụng từ bạn gái ảo, giáo dục, trợ lý khách hàng...
+
+Mô hình hiện tại đang sử dụng các chuỗi cử chỉ như một bức ảnh để khử nhiễu, có thể cải tiến bằng các sử dụng Fast Fourier Transform để trích xuất các đặc trưng về pha của chuyển động, từ đó xây dựng hệ thống sinh cử chỉ tốt hơn.
+
+
+\begin{center}
+    \begin{tabular}{c c}
+        \textbf{TẬP THỂ CÁN BỘ HƯỚNG DẪN} & \textbf{HỌC VIÊN CAO HỌC} \\
+        (Ký tên, họ tên) & (Ký tên, họ tên) \\
+    \end{tabular}
+    
+    \vspace{3cm} % Điều chỉnh khoảng cách này nếu cần
+    
+    \textbf{XÁC NHẬN CỦA CƠ SỞ ĐÀO TẠO} \\
+    \textbf{HIỆU TRƯỞNG}
+\end{center}

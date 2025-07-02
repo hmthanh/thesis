@@ -1,0 +1,26 @@
+\appendix
+\renewcommand{\chaptername}{Phụ lục}
+%\chapter{Parameters in Diffusion}
+%\label{appendix:Appendix1}
+
+\chapter{Các siêu tham số tối ưu}
+\label{appendix:Appendix1}
+
+Trong phần này, chúng tôi trình bày tập hợp các siêu tham số tối ưu được sử dụng cho cả hai mô hình: mô hình dựa trên cơ chế chú ý và mô hình ConvKB. Quá trình tối ưu siêu tham số được thực hiện thông qua phương pháp tìm kiếm lưới (grid search) dựa trên chỉ số đánh giá Hits@10. Đối với mô hình chú ý, chúng tôi huấn luyện trên toàn bộ tập dữ liệu mà không thực hiện chia nhỏ. Trong khi đó, đối với mô hình ConvKB, chúng tôi áp dụng cùng một kích thước siêu tham số cho tất cả các tập dữ liệu. Chi tiết các siêu tham số được thể hiện trong bảng sau:
+
+\begin{table}[htbp]
+	\begin{center}
+		\resizebox{\textwidth}{!}{%
+			\begin{tabular}{llllllllll}
+				\hline
+				& $\mu$  & Weight decay & Epochs & negative ratio  & Dropouts  & $\alpha_{\text{LeakyRELU}}$ & $N_{\text{head}}$ & $D_{\text{final}}$ & $\gamma$ \\
+				\hline
+				FB15k     & 1e-3 & 1e-5 & 3000 & 2 & 0.3 & 0.2 & 2 & 200 & 1 \\
+				FB15k-237 & 1e-3 & 1e-5 & 3000 & 2 & 0.3 & 0.2 & 2 & 200 & 1 \\
+				WN18      & 1e-3 & 5e-6 & 3600 & 2 & 0.3 & 0.2 & 2 & 200 & 5 \\
+				WN18RR    & 1e-3 & 5e-6 & 3600 & 2 & 0.3 & 0.2 & 2 & 200 & 5 \\
+				\hline
+			\end{tabular}
+		}
+	\end{center}
+\end{table}

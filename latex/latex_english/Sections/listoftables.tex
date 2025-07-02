@@ -1,0 +1,15 @@
+% Manually add "List of Tables" to the table of contents without relying on \listoftables
+\phantomsection
+\addcontentsline{toc}{section}{List of Tables}
+
+% Temporarily disable adding entries to the table of contents
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
+
+% Use \listoftables without automatically adding it to the table of contents
+% LIST OF TABLES
+\renewcommand{\listtablename}{\makebox[\linewidth]{\Large LIST OF TABLES}}
+
+\listoftables
+
+% Restore table of contents depth for subsequent sections
+\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}

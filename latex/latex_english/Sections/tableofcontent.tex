@@ -1,0 +1,24 @@
+
+% Prevent the table of contents from including itself
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
+% Center the text "Table of Contents"
+% Remove the default heading of \tableofcontents
+\renewcommand{\contentsname}{}
+
+%\renewcommand{\cftchappresnum}{\chaptername222 \quad \ \MakeUppercase} 
+% Adjust chapter number formatting in TOC
+\renewcommand{\cftchappresnum}{\chaptername\ \MakeUppercase} 
+% Adjust spacing between chapter number and title in TOC
+\setlength{\cftchapnumwidth}{6em} % Set chapter number width
+\setlength{\cftchapindent}{0em}   % Set chapter indentation
+
+\begin{center}
+	\textbf{\huge Table of Contents}
+\end{center}
+%\addcontentsline{toc}{chapter}{Table of Contents}
+
+\tableofcontents
+% Restore TOC depth for following entries
+\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+
+\pagebreak
