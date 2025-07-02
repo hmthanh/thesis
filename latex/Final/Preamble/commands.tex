@@ -1,0 +1,165 @@
+\newcommand{\der}[2]{\frac{d#1}{d#2}}
+\newcommand{\nder}[3]{\frac{d^#1 #2}{d #3 ^ #1}}
+\newcommand{\pder}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\npder}[3]{\frac{\partial ^#1 #2}{\partial #3^#1}}
+\newcommand{\sentencelist}{def}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\lined}{\overbar}
+\newcommand{\perm}[2]{{}^{#1}\!P_{#2}}
+\newcommand{\comb}[2]{{}^{#1}C_{#2}}
+\newcommand{\intall}{\int_{-\infty}^{\infty}}
+\newcommand{\Var}[1]{\text{Var}\left(#1\right)}
+\newcommand{\E}[1]{\text{E}\left(#1\right)}
+\newcommand{\define}{\equiv}
+\newcommand{\diff}[1]{\mathrm{d}#1}
+\newcommand{\empy}[1]{{\color{darkorange}\emph{#1}}}
+\newcommand{\empr}[1]{{\color{cardinalred}\emph{#1}}}
+
+%********************* Custom ********************* 
+\newcommand{\vardbtilde}[1]{\tilde{\raisebox{0pt}[0.85\height]{$\tilde{#1}$}}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\grad}{\nabla}
+%\newcommand{\E}{\mathbb{E}}
+%\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Ea}[1]{\E\left[#1\right]}
+\newcommand{\Eb}[2]{\E_{#1}\!\left[#2\right]}
+\newcommand{\Vara}[1]{\Var\left[#1\right]}
+\newcommand{\Varb}[2]{\Var_{#1}\left[#2\right]}
+\newcommand{\kl}[2]{D_{\mathrm{KL}}\!\left(#1 ~ \| ~ #2\right)}
+\newcommand{\pdata}{{p_\mathrm{data}}}
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\bI}{\mathbf{I}}
+\newcommand{\bJ}{\mathbf{J}}
+\newcommand{\bH}{\mathbf{H}}
+\newcommand{\bL}{\mathbf{L}}
+\newcommand{\bM}{\mathbf{M}}
+\newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\bzero}{\mathbf{0}}
+\newcommand{\bone}{\mathbf{1}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\newcommand{\bxh}{\hat{\mathbf{x}}}
+\newcommand{\btheta}{{\boldsymbol{\theta}}}
+\newcommand{\bphi}{{\boldsymbol{\phi}}}
+\newcommand{\bepsilon}{{\boldsymbol{\epsilon}}}
+\newcommand{\bmu}{{\boldsymbol{\mu}}}
+\newcommand{\bnu}{{\boldsymbol{\nu}}}
+\newcommand{\bSigma}{{\boldsymbol{\Sigma}}}
+
+
+\renewcommand{\chaptername}{Chương}
+\renewcommand{\figurename}{Hình}
+\renewcommand{\tablename}{Bảng}
+\renewcommand{\contentsname}{Mục lục}
+\renewcommand{\listfigurename}{Danh sách hình}
+\renewcommand{\listtablename}{Danh sách bảng}
+\renewcommand{\listalgorithmname}{Danh sách thuật toán}
+\renewcommand{\appendixname}{Phụ lục}
+\renewcommand{\algorithmname}{Thuật toán}
+
+% Định nghĩa
+\newtheorem{definition}{Định nghĩa}
+
+% \renewcommand{\chaptername}{Chapter}
+% \renewcommand{\figurename}{Figure}
+% \renewcommand{\tablename}{Table}
+% \renewcommand{\contentsname}{Table of Contents}
+% \renewcommand{\listfigurename}{List of Figures}
+% \renewcommand{\listtablename}{List of Tables}
+% \renewcommand{\listalgorithmname}{List of Algorithms}
+% \renewcommand{\appendixname}{Appendix}
+% \renewcommand{\algorithmname}{Algorithm}
+
+% ******************************************************************************
+% Cấu trúc chương và mục
+\renewcommand{\thechapter}{\arabic{chapter}} % Số chương bằng số tự nhiên
+\renewcommand{\thesection}{\thechapter.\arabic{section}} % Số mục bằng số tự nhiên
+%\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}} % Số tiểu mục
+%\renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}} % Số tiểu tiểu mục
+
+% Đánh số hình, bảng, phương trình theo chương
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}} % Đánh số hình
+\renewcommand{\thetable}{\thechapter.\arabic{table}} % Đánh số bảng
+\renewcommand{\theequation}{\thechapter.\arabic{equation}} % Đánh số phương trình
+% \renewcommand{\thealgorithm}{\thealgorithm.\arabic{algorithm}}
+
+% \renewcommand{\thefigure}{\arabic{figure}}
+% \renewcommand{\theequation}{\arabic{equation}}
+\renewcommand{\thealgorithm}{\arabic{algorithm}}
+% \thealgorithm.
+
+% Tạo danh mục viết tắt
+\newcommand{\acronym}[2]{\textbf{#1} (\textit{#2})}
+
+% Tùy chỉnh tiêu đề và khoảng cách trong danh mục hình ảnh
+% \renewcommand{\cftfigpresnum}{Figure~} % Tiền tố trước số hình ảnh
+\renewcommand{\cftfigpresnum}{Hình~} % Tiền tố trước số hình ảnh
+\renewcommand{\cftfigaftersnum}{:} % Ký tự sau số hình ảnh
+\addtolength{\cftfignumwidth}{3em} % Tăng khoảng cách giữa số và tiêu đề hình ảnh
+
+% Cấu hình để thêm từ "Bảng" trước mỗi mục trong danh mục bảng số liệu
+% \renewcommand{\cfttabpresnum}{Table~}
+\renewcommand{\cfttabpresnum}{Bảng~}
+\renewcommand{\cfttabaftersnum}{:}
+\addtolength{\cfttabnumwidth}{3em} % Tăng khoảng cách giữa số và tiêu đề bảng
+
+\makeatletter
+\begingroup
+  \let\newcounter\@gobble
+  \let\setcounter\@gobbletwo
+  \globaldefs\@ne
+  \let\c@loadepth\@ne
+  \newlistof{algorithms}{loa}{\listalgorithmname}
+\endgroup
+\let\l@algorithm\l@algorithms
+\makeatother
+
+\renewcommand\cftalgorithmsaftersnum{:}
+% \renewcommand\cftalgorithmspresnum{Algorithm~}
+\renewcommand\cftalgorithmspresnum{Thuật toán~}
+\cftsetindents{algorithms}{1.5em}{7em}
+
+
+% \settocstyle{algorithm}{%
+%   \tocstyle{list}[\textbf{Algorithms}]{\thealgorithm}%
+%   \contentsline{algorithm}{\ignorespaces\thealgorithm}{\thealgorithm}%
+% }
+% \tocstyle{algorithm}{\listofalgorithms}
+
+
+% ******************************************************************************
+% \renewcommand{\figureautorefname}{Figure}
+% \renewcommand{\tableautorefname}{Table}
+% \renewcommand{\sectionautorefname}{Section}
+% \renewcommand{\chapterautorefname}{Chapter}
+% \renewcommand{\subsectionautorefname}{Subsection}
+% \renewcommand{\subsubsectionautorefname}{Subsubsection}
+% \renewcommand{\equationautorefname}{Equation}
+% \renewcommand{\appendixautorefname}{Appendix}
+
+% \providecommand{\algorithmautorefname}{Algorithm}
+% \renewcommand{\algorithmautorefname}{Algorithm}
+
+\renewcommand{\figureautorefname}{Hình}
+\renewcommand{\tableautorefname}{Bảng}
+\renewcommand{\sectionautorefname}{Mục}
+\renewcommand{\chapterautorefname}{Chương}
+\renewcommand{\subsectionautorefname}{Tiểu mục}
+\renewcommand{\subsubsectionautorefname}{Mục con}
+\renewcommand{\equationautorefname}{Phương trình}
+\renewcommand{\appendixautorefname}{Phụ lục}
+
+\providecommand{\algorithmautorefname}{Thuật toán}
+\renewcommand{\algorithmautorefname}{Thuật toán}
+
+
+
+% \renewcommand{\thesection}{\arabic{section}}
+% \renewcommand\thesubsection{\alph{subsection}.}

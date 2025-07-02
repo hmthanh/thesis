@@ -1,0 +1,27 @@
+
+
+% Ngắt việc thêm mục lục vào chính nó
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
+% Căn giữa chữ "Mục lục"
+% Bỏ qua tiêu đề tự động của \tableofcontents
+\renewcommand{\contentsname}{}
+
+
+%\renewcommand{\cftchappresnum}{\chaptername222 \quad \ \MakeUppercase} 
+% Điều chỉnh cách hiển thị số chương trong TOC
+\renewcommand{\cftchappresnum}{\chaptername\ \MakeUppercase} 
+% Điều chỉnh khoảng cách giữa số chương và tiêu đề trong TOC
+\setlength{\cftchapnumwidth}{6em} % Điều chỉnh độ rộng số chương
+\setlength{\cftchapindent}{0em}     % Điều chỉnh độ thụt đầu dòng
+
+\begin{center}
+\textbf{\huge Mục lục}
+\end{center}
+%\addcontentsline{toc}{chapter}{Mục lục}
+
+\tableofcontents
+% Khôi phục lại thêm các mục vào mục lục sau đó
+\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+
+
+\pagebreak

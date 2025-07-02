@@ -1,0 +1,23 @@
+
+\pagebreak
+% Add "List of Algorithms" to the table of contents manually (without using \listoftables)
+\phantomsection
+\addcontentsline{toc}{section}{Danh mục thuật toán}
+%List of Algorithms
+
+% Temporarily disable adding entries to the table of contents
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
+
+\pagebreak
+\phantomsection
+
+% Use \listofalgorithms without automatically adding it to the table of contents
+%LIST OF ALGORITHMS
+\renewcommand{\listalgorithmname}{\makebox[\linewidth]{\Large DANH MỤC THUẬT TOÁN}}
+
+\listofalgorithms
+
+% Restore table of contents depth for subsequent sections
+\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+
+\pagebreak

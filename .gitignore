@@ -23,6 +23,7 @@ datasets_/*
 
 # LaTeX intermediate and output files
 *.aux
+*.loa
 *.bbl
 *.blg
 *.brf

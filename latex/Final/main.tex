@@ -1,0 +1,133 @@
+\documentclass[12pt,a4paper]{extreport}
+\usepackage[utf8]{inputenc}
+%\usepackage[T5]{fontenc}
+\usepackage[utf8]{vietnam}
+%\usepackage{times}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage[a4paper, top=3.5cm,bottom=3cm,left=3.5cm,right=2cm]{geometry}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{fancybox,framed}
+\linespread{1.3}
+\usepackage{lastpage}
+\usepackage{floatrow}
+\usepackage{floatrow}
+\usepackage{array}
+\usepackage{longtable}
+
+\pagenumbering{arabic}
+%\pagestyle{fancy}
+\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+\usepackage{caption}
+%\captionsetup[figure]{font=normalsize}
+\usepackage{blindtext}
+\usepackage{titlesec}
+\usepackage[nottoc]{tocbibind}
+\usepackage{bookmark}
+%\usepackage[backend=bibtex,style=numeric,defernumbers=true,sorting=none]{biblatex}
+% \usepackage[backend=biber]{biblatex}
+%\bibliographystyle{plain}
+%\bibliography{References/references.bib}
+
+% ******************************************************************************
+%\setlength{\topmargin}{-0.5cm} % Lề trên
+%\setlength{\oddsidemargin}{-0.5cm} % Lề trái
+%\setlength{\evensidemargin}{-0.5cm} % Lề phải
+\setlength{\textwidth}{15.5cm} % Chiều rộng văn bản
+\setlength{\textheight}{24cm} % Chiều cao văn bản
+\setlength{\footskip}{1cm} % Khoảng cách giữa nội dung và số trang
+
+% For line spacing 1.5
+%\usepackage{setspace}
+%\renewcommand{\baselinestretch}{1.5}
+
+% ******************************************************************************
+\usepackage{hyperref}
+% \usepackage{hyperref}
+
+% Cấu hình cho \paragraph để nó xuống hàng sau tiêu đề
+\titleformat{\paragraph}[block]
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\usepackage{array} % Gói cần thiết cho kiểu cột m{}
+
+\titleformat*{\section}{\LARGE\bfseries}
+\titleformat*{\subsection}{\Large\bfseries}
+\titleformat*{\subsubsection}{\large\bfseries}
+
+
+\usepackage{mdframed}
+
+\usepackage{alltt}
+\usepackage{color}
+\usepackage{tocloft}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\newcommand\HRule{\rule{\textwidth}{1pt}}
+\fancyfoot[C]{\thepage}
+
+% Math
+\usepackage{amsfonts}
+
+\usepackage[numbers]{natbib}
+
+%\newcommand{\tenSV}{Hoàng~Minh~Thanh} % Dấu ~ là khoảng trắng không được tách (các chữ nối với nhau bằng dấu ~ sẽ nằm cùng 1 dòng
+%\newcommand{\mssv}{21C11029}
+%\newcommand{\tenKL}{OPENHUMAN: HỆ THỐNG} % Chú ý dấu ~ trong tên khóa luận
+\input{Preamble/meta.tex}
+\input{Preamble/packages.tex}
+\input{Preamble/config.tex}
+\input{Preamble/commands.tex}
+
+\graphicspath{ {images/} }
+
+\begin{document}
+
+\input{Sections/title.tex}
+
+\input{Sections/reassurances.tex}
+
+\input{Sections/thanks.tex}
+
+\input{Sections/tableofcontent.tex}
+
+\input{Sections/listoffigures.tex}
+\input{Sections/listoftables.tex}
+\input{Sections/listofalgorithm.tex}
+\input{Sections/listofsymbols.tex}
+\input{Sections/listofglossary.tex}
+
+\pagenumbering{arabic}
+
+\input{1_Introduction/Introduction.tex}
+
+\input{2_RelatedWork/RelatedWork.tex}
+\input{2_RelatedWork/RuleBase.tex}
+
+\input{3_ProposedMethod/ProposedMethod.tex}
+
+\input{4_Experiment/Experiment.tex}
+
+%\input{5_Evaluation/Evaluation.tex}
+
+\input{6_Conclusion/Conclusion.tex}
+
+\input{References/References.tex}
+%
+\input{Appendix/Appendix1}
+%\input{Appendix/Appendix2}
+%\input{Appendix/Appendix3}
+
+\end{document}

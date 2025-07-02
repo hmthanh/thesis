@@ -1,0 +1,17 @@
+% Manually add "List of Figures" to the table of contents without using \listoffigures
+\phantomsection
+\addcontentsline{toc}{section}{Danh mục hình ảnh}
+
+% Temporarily disable adding entries to the table of contents
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
+
+% Use \listoffigures without automatically adding it to the table of contents
+%LIST OF FIGURES
+\renewcommand{\listfigurename}{\makebox[\linewidth]{\Large DANH MỤC HÌNH ẢNH}}
+
+\listoffigures
+
+% Restore table of contents depth for subsequent sections
+\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+
+\pagebreak
