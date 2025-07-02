@@ -1,7 +1,8 @@
 %\chapter{EXPERIMENTS}
 %\label{Chapter4}
 
-\chapter{Thực nghiệm}
+%\chapter{Thực nghiệm}
+\chapter{EXPERIMENTS}
 \label{chap:Experiment}
 
 %\begin{center}
@@ -96,12 +97,12 @@
 \end{figure}
 
 
+In this section, we describe the datasets used for our empirical evaluation, along with a comparison against notable existing methods as reported in \autoref{tab:graphEmbeddingTechCompare}. Additionally, we evaluate our two proposed approaches for injecting new knowledge into the knowledge graph. Specifically, we treat the test set as a batch of new knowledge to be added, and use the validation set to re-evaluate the effectiveness of our method. Detailed results are presented in \autoref{tab:resultOnFreeBase} and \autoref{tab:resultOnWordNet}.
 
-Trong phần này chúng tôi mô tả lại các bộ dữ liệu mà chúng tôi dùng để thực nghiệm đánh giá phương pháp của chúng tôi cùng với so sánh với các kết quả khác của các công trình nổi bật khác được báo cáo trong \autoref{tab:graphEmbeddingTechCompare}. Ngoài ra chúng tôi cũng cố gắng đánh giá hai đề xuất của chúng tôi trong việc thêm một lượng tri thức mới vào đồ thị bằng cách chúng tôi xem tập test là một lượng tri thức mới cần thêm vào và dùng tập vadidation để đánh giá lại phương pháp của chúng tôi. Kết quả chi tiết được báo cáo ở \autoref{tab:resultOnFreeBase}, \autoref{tab:resultOnWordNet}.
 
-\begin{table}[htbp]
+\begin{table}[H]
 	\begin{center}
-		\resizebox{\textwidth}{!}{%
+%		\resizebox{\textwidth}{!}{%
 			\begin{tabular}{llllll}
 				\hline
 				&          &           & \multicolumn{3}{l}{\# Edges}    \\ \cline{4-6}
@@ -114,16 +115,17 @@ Trong phần này chúng tôi mô tả lại các bộ dữ liệu mà chúng t�
 				YAGO3-10    & 123,182   & 37        & 1,079,040   & 5,000       & 5,000  \\
 				\hline
 			\end{tabular}
-		}
-		\caption{Thông tin các tập dữ liệu}
+%		}
+		\caption{Dataset Information}
 		\label{tab:datasetInfo}
 	\end{center}
 \end{table}
 
-\section{Các tập dữ liệu huấn luyện}
+%\section{Các tập dữ liệu huấn luyện}
+\section{Training Datasets}
 \label{sec:DataTraining}
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\label{fig:dataset_split}
 \pgfplotstableread[row sep=\\,col sep=&]{
@@ -171,7 +173,11 @@ Trong phần này chúng tôi mô tả lại các bộ dữ liệu mà chúng t�
 }
 \end{figure}
 
-Trong thí nghiệm của chúng tôi, chúng tôi thực hiện trên bốn tập dữ liệu phổ biến là FB15k, FB15-237 (\cite{toutanova2015observed}), WN18 và WN18RR (\cite{dettmers2018convolutional}). Mỗi bộ dữ liệu đều bao gồm 3 thành phần : tập dữ liệu huấn luyện (test), kiểm định (valid) và tập dữ liệu kiểm thử (test). Thông tin chi tiết về các tập dữ liệu được trình bày ở bảng \autoref{tab:datasetInfo}. Mỗi tập dữ liệu này là tập hợp các bộ ba \(\langle head, relation, tail \rangle\) . FB15k, WN18 là các bộ dữ liệu trích xuất từ bộ dữ liệu lớn gốc là FreeBase và WordNet bao gồm rất nhiều quan hệ đảo ngược, nên nó có thể dễ dàng có thể đoán được với hầu hết các bộ ba. Bằng cách loại bỏ các quan hệ này, hai bộ dữ liệu FB15k-237 và WN18RR được tạo ra để giúp bộ dữ liệu thể hiện đúng dữ liệu trong thực tế để nghiên cứu về nhiệm vụ dự đoán liên kết .
+
+In our experiments, we evaluate our approach on four widely used benchmark datasets: FB15k, FB15k-237 (\cite{toutanova2015observed}), WN18, and WN18RR (\cite{dettmers2018convolutional}). Each dataset is divided into three subsets: training, validation, and test sets. Detailed statistics for these datasets are presented in \autoref{tab:datasetInfo}. 
+
+Each dataset consists of a collection of triples in the form \(\langle head, relation, tail \rangle\). FB15k and WN18 are derived from the larger knowledge bases FreeBase and WordNet, respectively. However, they contain a large number of inverse relations, which allow most triples to be easily inferred. To address this issue and to better reflect real-world link prediction scenarios, FB15k-237 and WN18RR were constructed by removing such inverse relations.
+
 
 \subsection{Bộ dữ liệu FB15k}
 

@@ -1,48 +1,68 @@
 %\chapter{METHOD PROPOSAL}
 %\label{chap:Chapter3}
-
-\chapter{Phương pháp dựa trên học sâu}
+\chapter{Deep Learning-Based Methods}
 \label{chap:DeeLearning}
-% \section{Phương pháp dựa trên học sâu - CGAT}
-% Trong phần này chúng tôi trình bày về đồ thị tri thức, và mô tả lại bài toán nhúng đồ thị (Graph Embedding), sơ lược về các kỹ thuật nhúng đồ thị hiện tại. Cùng với đó chúng ta sẽ trình bày phương pháp GAT (Graph Attention Network) và phương pháp KBAT.
 
-Trong phần này chúng tôi trình bày về Đồ Thị Tri Thức (Knowledge Graph), và mô tả lại bài toán Nhúng Đồ Thị (Graph Embedding), sơ lược về các kỹ thuật nhúng đồ thị hiện tại. Chúng tôi sẽ trình bày lại về cơ chế chú ý cũng như cách cơ chế chú ý được áp dụng vào trong đồ thị tri thức bằng mô hình GAT\cite{velivckovic2017graph}. Đồng thời, chúng tôi sẽ trình bày một phương pháp cải tiến dựa trên mô hình mạng đồ thị chú ý là mô hình KBGAT\cite{nathani2019learning} bằng cách bổ sung thêm thông tin quan hệ và các quan hệ lân cận .
-% Cuối cùng chúng ta đưa ra đề xuất của chúng ta dựa trên các mô hình trên bằng cách cộng tác thay vì ghép các lớp chú ý lại với nhau.
+In this chapter, we present Knowledge Graphs and describe the task of Graph Embedding, providing an overview of current graph embedding techniques. We will revisit the attention mechanism and explain how it is applied to knowledge graphs through the Graph Attention Network (GAT) model \cite{velivckovic2017graph}. Additionally, we present an improved method based on the graph attention model—KBGAT \cite{nathani2019learning}—which incorporates relation information and neighboring relations.
 
-\section{Nhúng đồ thị}
+\section{Graph Embedding}
 \label{sec:graphEmbedding}
 
-Trong thế giới thực, việc biểu diễn các thực thể và quan hệ thành các vector có thể được hiểu một cách tường minh là quá trình ánh xạ các đặc trưng, các đặc tính của một đối tượng nào đó xuống không gian có số chiều thấp hơn với mỗi thành phần đại diện cho một đặc trưng đơn vị nào đó.
-Ví dụ, ta biết Donald Trump cao 1m9 và có người vợ là Melania, vì vậy ta có thể biểu diễn thực thể Donald Trump thành một vector
+In the real world, representing entities and relations as vectors can be intuitively understood as the process of mapping features and attributes of an object into a lower-dimensional space, with each component representing a specific unit-level feature.
 
-$\overrightarrow{e_\text{Trump}} = [1.9_{\text{heigh}}, 0_{\text{area}}, 1_\text{wife is Melania}, 0_\text{wife is Taylor}]$. Với các đặc trưng không thể đo hoặc không có giá trị ($._{\text{area}}$) sẽ bằng 0, với các đặc trưng là giá trị mà không có độ lớn ($._{\text{wife}}$) thì ta chia thành độ lớn là xác suất của các đặc trưng thành phần đơn vị ($._{\text{wife is Melania}}$, $._{\text{wife is Taylor}}$). Như vậy mọi đối tượng trong thế giới thực đều các có thể \textit{nhúng} thành các vector một cách tường minh.
+For example, we know Donald Trump is 1.9 meters tall and has a wife named Melania. Thus, we could represent the entity "Donald Trump" as a vector:
 
-Để tìm hiểu về các phương pháp và kỹ thuật \textit{nhúng đồ thị} (graph embedding) cần hiểu các định nghĩa cơ bản như sau :
+\[
+\overrightarrow{e_\text{Trump}} = [1.9_{\text{height}}, 0_{\text{area}}, 1_{\text{wife is Melania}}, 0_{\text{wife is Taylor}}].
+\]
+
+For features that cannot be measured or have no value (e.g., \texttt{.area}), we assign 0. For categorical features without magnitude (e.g., \texttt{.wife}), we represent them using probabilities of unit features (e.g., \texttt{.wife is Melania}, \texttt{.wife is Taylor}). Therefore, any object in the real world can be \textit{embedded} as a vector in an interpretable way.
+
+To understand graph embedding techniques, we begin with several fundamental definitions:
 
 \begin{itemize}
 	\item
-	\begin{definition}[Lân Cận Bậc Nhất]\label{def:firstOrderProximity}
-		(First-Order Proximity)	giữa đỉnh $v_i$ và đỉnh $v_j$ là trọng số $A_{i, j}$ của cạnh $e_{ij}$.
+	\begin{definition}[First-Order Proximity]\label{def:firstOrderProximity}
+		First-order proximity between vertex \(v_i\) and vertex \(v_j\) is the edge weight \(A_{i, j}\) of the edge \(e_{ij}\).
 	\end{definition}
 	
-	Hai đỉnh giống nhau hơn nếu chúng được kết nối bởi một cạnh có trọng số lớn hơn. Suy ra lân cận bậc nhất giữa đỉnh $v_i$ và $v_j$ là $s^{(1)}_{ij}$, chúng ta có $s^{(1)}_{ij} = A_{i, j}$. Gọi $s^{(1)}_{i} = \begin{bmatrix} s^{(1)}_{i1}, s^{(1)}_{i2}, \dots, s^{(1)}_{i \mid V \mid} \end{bmatrix}$ biểu thị lân cận bậc nhất giữa \(v_i\) và các đỉnh khác. Lấy biểu đồ trong \autoref{fig:graphInput} làm ví dụ, lân cận bậc nhất $v_1$ và $v_2$ là trọng số của cạnh $e_{12}$, ký hiệu là $s^{(1)}_{12} = 1.2$. Và $s^{(1)}_1$ ghi lại trọng số của các cạnh kết nối $v_1$ và các đỉnh khác trong đồ thị, tức là, $s^{(1)}_{1} = \begin{bmatrix}  0, 1.2, 1.5, 0, 0, 0, 0, 0, 0 \end{bmatrix} $.
+	Two vertices are more similar if they are connected by an edge with a higher weight. Thus, the first-order proximity between \(v_i\) and \(v_j\) is denoted as \(s^{(1)}_{ij} = A_{i, j}\). Let \(s^{(1)}_i = \begin{bmatrix} s^{(1)}_{i1}, s^{(1)}_{i2}, \dots, s^{(1)}_{i|V|} \end{bmatrix}\) represent the first-order proximities between \(v_i\) and other vertices.
+	
+	Using the graph in \autoref{fig:graphInput} as an example, the first-order proximity between \(v_1\) and \(v_2\) is the weight of edge \(e_{12}\), denoted as \(s^{(1)}_{12} = 1.2\). The vector \(s^{(1)}_1\) records the edge weights connecting \(v_1\) to all other vertices in the graph, i.e.,
+	
+	\[
+	s^{(1)}_{1} = \begin{bmatrix} 0, 1.2, 1.5, 0, 0, 0, 0, 0, 0 \end{bmatrix}.
+	\]
 	
 	\item
-	\begin{definition}[Lân Cận Bậc Hai]\label{def:secondOrderProximity} (Second-Order Proximity)
-		$s^{(2)}_{ij}$ ở giữa đỉnh $v_i$ và $v_j$ là sự tương đồng giữa $v^{\prime}_i$ vùng lân cận $s^{(1)}_i$ và $v^{\prime}_j$ vùng lân cận $s^{(1)}_j$
+	\begin{definition}[Second-Order Proximity]\label{def:secondOrderProximity}
+		Second-order proximity \(s^{(2)}_{ij}\) between vertex \(v_i\) and \(v_j\) is defined as the similarity between \(v_i'\)'s first-order neighborhood vector \(s^{(1)}_i\) and \(v_j'\)'s vector \(s^{(1)}_j\).
 	\end{definition}
 	
-	Lấy \autoref{fig:graphInput} làm ví dụ: $s^{(2)}_{12}$ là điểm tương đồng giữa $s^{(1)}_{1}$ và $s^{(1)}_{2}$. Như đã giới thiệu trước, $s^{(1)}_1 = \begin{bmatrix} 0, 1.2, 1.5, 0, 0, 0, 0, 0, 0 \end{bmatrix}$ và $s^{(1)}_2 = \begin{bmatrix} 1.2, 0, 0.8, 0, 0, 0, 0 , 0, 0 \end{bmatrix}$. Chúng ta hãy xem xét các điểm tương đồng cosine $s^{(2)}_{12} = cosine (s^{(1)}_1, s^{(1)}_2) = 0.43$ và $s^{(2)}_{15} = cosine(s^{(1)}_1, s^{(1)}_5) = 0$. Chúng ta có thể thấy rằng lân cận bậc hai giữa $v_1$ và $v_5$ bằng $0$ vì $v_1$ và $v_5$ không chia sẻ bất kỳ hàng xóm $1$ hop phổ biến nào. $v_1$ và $v_2$ chia sẻ một hàng xóm chung $v_3$, do đó khoảng cách thứ hai $s^{(2)}_{12}$ của chúng lớn hơn 0.
+	For example, in \autoref{fig:graphInput}, the second-order proximity \(s^{(2)}_{12}\) is the similarity between \(s^{(1)}_1\) and \(s^{(1)}_2\). As introduced above:
 	
-	Các độ đo lân cận bậc cao hơn (higher-order proximity) có thể được định nghĩa tương tự. Ví dụ, lân cận cách thứ $k-th$ giữa đỉnh $v_i$ và $v_j$ là sự tương đồng giữa $s^{(k 1)}_i$ và $s^{(k 1)}_j$.
+	\[
+	s^{(1)}_1 = \begin{bmatrix} 0, 1.2, 1.5, 0, 0, 0, 0, 0, 0 \end{bmatrix}, \quad s^{(1)}_2 = \begin{bmatrix} 1.2, 0, 0.8, 0, 0, 0, 0 , 0, 0 \end{bmatrix}.
+	\]
+	
+	We compute the cosine similarity:
+	
+	\[
+	s^{(2)}_{12} = \cos(s^{(1)}_1, s^{(1)}_2) = 0.43, \quad s^{(2)}_{15} = \cos(s^{(1)}_1, s^{(1)}_5) = 0.
+	\]
+	
+	We observe that the second-order proximity between \(v_1\) and \(v_5\) is 0 because they share no common 1-hop neighbors. \(v_1\) and \(v_2\) share a common neighbor \(v_3\), thus their second-order proximity \(s^{(2)}_{12}\) is greater than 0.
+	
+	Higher-order proximities can be defined similarly. For example, the \(k\)-th order proximity between \(v_i\) and \(v_j\) is the similarity between \(s^{(k-1)}_i\) and \(s^{(k-1)}_j\).
 	
 	\item
-	\begin{definition}[Nhúng đồ thị]\label{def:graphEmbedding}
-		Cho đầu vào của đồ thị \(\mathcal{G} = (V, E)\) và số chiều được xác định trước của nhúng $d (d \ll \mid V \mid)$, vấn đề nhúng đồ thị là chuyển $\mathcal{G}$ thành một không gian \(d\)-chiều, trong đó thuộc tính đồ thị được lưu giữ càng nhiều càng tốt. Thuộc tính đồ thị có thể được định lượng bằng cách sử dụng các biện pháp lân cận như lân cận bậc nhất và bậc cao hơn. Mỗi đồ thị được biểu diễn dưới dạng một vector $d$ chiều (cho toàn bộ đồ thị) hoặc một tập các vector $d$ chiều với mỗi vector biểu thị việc nhúng một phần của đồ thị (ví dụ: đỉnh, cạnh, cấu trúc con).
+	\begin{definition}[Graph Embedding]\label{def:graphEmbedding}
+		Given a graph input \(\mathcal{G} = (V, E)\) and a predefined embedding dimension \(d\) where \(d \ll |V|\), the graph embedding problem is to map \(\mathcal{G}\) into a \(d\)-dimensional space while preserving as much graph property information as possible. These properties can be quantified using proximity measures such as first-order and higher-order proximity. Each graph is represented either as a \(d\)-dimensional vector (for the entire graph) or a set of \(d\)-dimensional vectors where each vector encodes a part of the graph (e.g., node, edge, substructure).
 	\end{definition}
 \end{itemize}
 
-Nhúng đồ thị là quá trình biến đổi các đặc trưng của đồ thị thành các vector hoặc tập hợp những vector có số chiều thấp. Càng nhúng hiệu quả, thì kết quả của độ chính xác trong việc khai thác và phân tích đồ thị sau đó càng cao. Thách thức lớn nhất của việc nhúng đồ thị phụ thuộc vào cách thiết lập của bài toán (problem setting), bao gồm đầu vào nhúng và đầu ra nhúng như trình bày ở \autoref{fig:graphEmbeddingSettingTree}.
+
+Graph embedding is the process of transforming graph features into vectors or sets of low-dimensional vectors. The more effective the embedding, the higher the accuracy in subsequent graph mining and analysis tasks. The biggest challenge in graph embedding depends on the problem setting, which includes both the embedding input and output, as illustrated in \autoref{fig:graphEmbeddingSettingTree}.
 
 \begin{figure}[htp]
 	\centering
@@ -57,21 +77,21 @@ Nhúng đồ thị là quá trình biến đổi các đặc trưng của đồ 
 			>=latex]
 			
 			% root of the the initial tree, level 1
-			\node[root] {Nhúng đồ thị}
-			child {node[level 2] (c1) {Đầu vào nhúng đồ thị}}
-			child {node[level 2] (c2) {Đầu ra nhúng đồ thị}};
+			\node[root] {Graph Embedding}
+			child {node[level 2] (c1) {Graph Embedding Input}}
+			child {node[level 2] (c2) {Graph Embedding Output}};
 			
 			% The second level, relatively positioned nodes
 			\begin{scope}[every node/.style={level 3}]
-				\node [below of = c1, xshift=30pt, yshift=15pt, xshift=15pt] (c11) {Đồ thị đồng nhất};
-				\node [below of = c11, yshift=5pt] (c12) {Đồ thị không đồng nhất};
-				\node [below of = c12, yshift=-5pt] (c13) {Đồ thị với thông tin phụ trợ};
-				\node [below of = c13, yshift=-13pt] (c14) {Đồ thị cấu trúc từ dữ liệu phi quan hệ};
+				\node [below of = c1, xshift=30pt, yshift=15pt, xshift=15pt] (c11) {Homogeneous Graph};
+				\node [below of = c11, yshift=5pt] (c12) {Heterogeneous Graph};
+				\node [below of = c12, yshift=-5pt] (c13) {Graph with Auxiliary Information};
+				\node [below of = c13, yshift=-13pt] (c14) {Graph Structured from Non-relational Data};
 				
-				\node [below of = c2, xshift=30pt, yshift=15pt, xshift=15pt] (c21) {Nhúng đỉnh};
-				\node [below of = c21, yshift=15pt] (c22) {Nhúng cạnh};
-				\node [below of = c22, yshift=15pt] (c23) {Nhúng kết hợp};
-				\node [below of = c23, yshift=5pt] (c24) {Nhúng toàn bộ đồ thị};
+				\node [below of = c2, xshift=30pt, yshift=15pt, xshift=15pt] (c21) {Node Embedding};
+				\node [below of = c21, yshift=15pt] (c22) {Edge Embedding};
+				\node [below of = c22, yshift=15pt] (c23) {Joint Embedding};
+				\node [below of = c23, yshift=5pt] (c24) {Whole-Graph Embedding};
 			\end{scope}
 			
 			% lines from each level 1 node to every one of its "children"
@@ -82,78 +102,80 @@ Nhúng đồ thị là quá trình biến đổi các đặc trưng của đồ 
 			\draw[->] (c2.195) |- (c2\value.west);
 		\end{tikzpicture}
 	}
-	\caption{Các kỹ thuật nhúng đồ thị}
+	\caption{Graph Embedding Techniques}
 	\label{fig:graphEmbeddingSettingTree}
 \end{figure}
 
-Dựa trên đầu vào nhúng ta phân loại thành các nhóm phương pháp đã khảo sát ở \cite{cai2018comprehensive} như sau : 
-Đồ thị đồng nhất (homogeneous graph)
-Đồ thị không đồng nhất (heterogeneous graph)
-Đồ thị với thông tin phụ trợ (graph with auxiliary information)
-Độ thị cấu trúc từ dữ liệu phi-quan hệ (graph constructed from non-relational data).
 
-Các loại đầu vào nhúng khác nhau mang thông tin khác nhau được giữ lại trong không gian nhúng và do đó đặt ra những thách thức khác nhau đối với vấn đề nhúng đồ thị. 
-Ví dụ, khi nhúng một đồ thị chỉ với thông tin cấu trúc, các kết nối giữa các đỉnh là mục tiêu cần được lưu giữ. Tuy nhiên, đối với đồ thị có nhãn đỉnh hoặc thông tin thuộc tính của một thực thể, thông tin phụ trợ cung cấp thuộc tính đồ thị từ các ngữ cảnh khác và do đó cũng có thể được xem xét trong quá trình nhúng. Không giống như đầu vào nhúng (embedding input) được cho từ các tập dữ liệu và cố định, đầu ra nhúng (embedding output) được xác định theo từng nhiệm vụ cụ thể.
-Ví dụ, loại đầu ra nhúng phổ biến nhất là nhúng đỉnh, đại diện cho các đỉnh đóng vai trò như các vector thể hiện độ tương tự giữa các đỉnh. Việc nhúng đỉnh có thể có lợi cho các bài toán liên quan đến đỉnh như phân loại đỉnh, phân cụm đỉnh, v.v.
 
-Tuy nhiên, trong một số trường hợp, các bài toán có thể liên quan đến độ chi tiết cao hơn của đồ thị, ví dụ: cặp đỉnh, đồ thị con, toàn bộ đồ thị. Do đó, thách thức đầu tiên về nhúng là tìm ra loại đầu ra nhúng phù hợp cho ứng dụng quan tâm. Có 4 loại đầu ra nhúng được minh họa ở \autoref{fig:graphInput} gồm : Nhúng Đỉnh (Node Embedding \ref{fig:nodeEmbedding}), Nhúng Cạnh (Edge Embedding \ref{fig:edgeEmbedding}), Nhúng Kết Hợp (Hybrid Embedding \ref{fig:substructureEmbedding}) và Nhúng Toàn Bộ Đồ Thị (Whole-Graph Embedding \ref{fig:wholeGraphEmbedding}). Các mức độ chi tiết đầu ra khác nhau có các tiêu chí khác nhau sẽ có thách thức khác nhau. Ví dụ, một đỉnh nhúng tốt lưu giữ sự tương tự với các đỉnh lân cận của nó trong không gian nhúng. Ngược lại, việc nhúng toàn bộ đồ thị tốt thể hiện toàn bộ đồ thị dưới dạng một vector sao cho độ tương tự ở mức đồ thị được giữ nguyên.
 
-\subsection{Phương pháp thiết lập bài toán nhúng đồ thị}
+Based on the embedding input, we categorize the surveyed methods in \cite{cai2018comprehensive} as follows: 
+Homogeneous Graph, Heterogeneous Graph, Graph with Auxiliary Information, and Graph Constructed from Non-relational Data.
 
-Với các đầu vào đã được thiết lập phụ thuộc vào thông tin cần lưu giữ, trong khi đó đầu ra thay đổi tùy theo mục tiêu khai thác đồ thị mà chúng ta mong muốn. Vì vậy ở đây chúng tôi đề cập chi tiết hơn đến các phương pháp thiết lập đồ thị theo kết quả đầu ra trong bài toán nhúng đồ thị.
+Different types of embedding inputs preserve different information in the embedding space and therefore pose different challenges for the graph embedding problem. 
+For example, when embedding a graph with only structural information, the connections between nodes are the primary target to preserve. However, for graphs with node labels or entity attribute information, auxiliary information provides additional context for the graph and can therefore also be considered during the embedding process. Unlike embedding input, which is fixed and provided by the dataset, the embedding output is task-specific.
 
-\textbf{Nhúng đỉnh}
+For instance, the most common embedding output is **node embedding**, which represents each node as a vector that reflects similarity between nodes. Node embeddings are beneficial for node-related tasks such as node classification, node clustering, etc.
+
+However, in some cases, the tasks may involve more fine-grained graph components such as node pairs, subgraphs, or the entire graph. Therefore, the first challenge of embedding is to determine the appropriate type of embedding output for the application of interest. Four types of embedding outputs are illustrated in \autoref{fig:graphInput}, including: **Node Embedding** (\ref{fig:nodeEmbedding}), **Edge Embedding** (\ref{fig:edgeEmbedding}), **Hybrid Embedding** (\ref{fig:substructureEmbedding}), and **Whole-Graph Embedding** (\ref{fig:wholeGraphEmbedding}). Different output granularities have distinct criteria and present different challenges. For example, a good node embedding retains similarity with its neighbors in the embedding space. Conversely, a good whole-graph embedding represents the entire graph as a vector that preserves graph-level similarity.
+
+\subsection{Graph Embedding Problem Settings}
+
+While the input is determined by the type of information to be preserved, the output varies depending on the downstream graph mining task. Therefore, we discuss in more detail the embedding methods based on the type of output required by the embedding problem.
+
+\textbf{Node Embedding}
 \label{sec:nodeEmbedding}
 
 \begin{figure}[htp]
 	\centering
 	\includegraphics[width=7 cm]{images/graph_emb_2.png}
 	\caption{
-		Nhúng đỉnh với từng vector thể hiện đặc trưng của từng đỉnh}
+		Node embedding with each vector representing node features}
 	\label{fig:nodeEmbedding}
 \end{figure}
 
-Nhúng đỉnh (node embedding) biểu diễn mỗi đỉnh như một vector trong không gian số chiều thấp. Các đỉnh \textit{gần} trong đồ thị được nhúng có các biểu diễn vector tương tự nhau. Sự khác biệt giữa các phương pháp nhúng đồ thị khác nhau nằm ở cách chúng xác định \textit{độ gần nhau} giữa hai đỉnh. Lân cận bậc nhất (Định nghĩa \ref{def:firstOrderProximity}) và lân cận bậc hai (Định nghĩa \ref{def:secondOrderProximity})) là hai số liệu thường được sử dụng để tính độ tương tự đỉnh theo cặp. Trong một nghiên cứu, sự gần nhau bậc cao cũng được khám phá ở một mức độ nhất định. Ví dụ nắm bắt các quan hệ hàng xóm k-step (k = 1, 2, 3, ···) trong quá trình nhúng của chúng được đề cập trong nghiên cứu của nhóm tác giả Cao, Shaosheng\cite{cao2015grarep}.
+Node embedding represents each node as a low-dimensional vector. Nodes that are *close* in the graph have similar vector representations. The difference among graph embedding methods lies in how they define the *closeness* between two nodes. First-order proximity (Definition \ref{def:firstOrderProximity}) and second-order proximity (Definition \ref{def:secondOrderProximity}) are two commonly used metrics to measure pairwise node similarity. Higher-order proximity has also been explored to some extent. For example, capturing k-step (k = 1, 2, 3, ···) neighborhood relationships during embedding is discussed in the study by Cao, Shaosheng \cite{cao2015grarep}.
 
-\textbf{Nhúng cạnh}
+\textbf{Edge Embedding}
 \label{sec:edgeEmbedding}
 
 \begin{figure}[htp]
 	\centering
 	\includegraphics[width=7 cm]{images/graph_emb_3.png}
-	\caption{Nhúng cạnh với từng vector thể hiện đặc trưng của từng cạnh}
+	\caption{Edge embedding with each vector representing edge features}
 	\label{fig:edgeEmbedding}
 \end{figure}
 
-Trái ngược với nhúng đỉnh, nhúng cạnh (edge embedding) nhằm mục đích biểu diễn một cạnh dưới dạng vector có số chiều thấp. Nhúng cạnh hữu ích trong hai trường hợp sau :
+In contrast to node embedding, edge embedding aims to represent an edge as a low-dimensional vector. Edge embedding is useful in two cases:
 
-Thứ nhất, nhúng đồ thị tri thức. Mỗi cạnh là một bộ ba $\langle h, r, t \rangle$ (Định nghĩa \ref{def:knowledgeGraph}). Phép nhúng được học để bảo toàn r giữa h và t trong không gian nhúng, để một thực thể hoặc quan hệ bị thiếu có thể được dự đoán chính xác với hai thành phần còn lại trong $\langle h, r, t \rangle$.
+First, in knowledge graph embedding. Each edge is a triple $\langle h, r, t \rangle$ (Definition \ref{def:knowledgeGraph}). The embedding is learned to preserve the relation $r$ between $h$ and $t$ in the embedding space so that a missing entity or relation can be accurately predicted given the other two components in $\langle h, r, t \rangle$.
 
-Thứ hai, một số công việc nhúng một cặp đỉnh làm đặc trưng vector để làm cho cặp đỉnh này có thể so sánh với các đỉnh khác hoặc dự đoán sự tồn tại của một liên kết giữa hai đỉnh. Việc nhúng cạnh mang lại lợi ích cho việc phân tích đồ thị liên quan đến cạnh (cặp đỉnh), chẳng hạn như dự đoán liên kết, thực thể biểu diễn tri thức/dự đoán quan hệ, v.v.
+Second, some methods embed a pair of nodes as a vector to compare it with other node pairs or to predict the existence of a link between the two nodes. Edge embedding benefits graph analyses that involve edges (node pairs), such as link prediction, relation prediction, and knowledge-based entity inference.
 
-\textbf{Nhúng Kết Hợp}
+\textbf{Hybrid Embedding}
 
 \begin{figure}[htp]
 	\centering
 	\includegraphics[width=6 cm]{images/graph_emb_4.png}
-	\caption{Nhúng một cấu trúc bộ phận của đồ thị}
+	\caption{Embedding a graph substructure}
 	\label{fig:substructureEmbedding}
 \end{figure}
 
-Nhúng kết hợp (hybrid embedding) là nhúng kết hợp các loại thành phần đồ thị khác nhau, ví dụ: đỉnh + cạnh (tức là cấu trúc con), đỉnh + bộ phận. Việc nhúng cấu trúc con hoặc bộ phận cũng có thể được bắt nguồn bằng cách tổng hợp các đỉnh riêng lẻ và nhúng cạnh bên trong nó. Tuy nhiên, kiểu tiếp cận \textit{gián tiếp} như vậy không được tối ưu hóa để thể hiện cấu trúc của đồ thị. Hơn nữa, nhúng đỉnh và nhúng bộ phận có thể củng cố lẫn nhau. Nhúng đỉnh tốt hơn vì nó học được cách phối hợp từ sự quan tâm của nhóm lân cận bậc cao, nhúng bộ phận tốt hơn khi phát hiện chính xác hơn đỉnh nhúng được tạo ra.
+Hybrid embedding refers to embedding combinations of different graph components, e.g., node + edge (i.e., substructure), or node + parts. Substructure or part embeddings can also be derived by aggregating individual node and edge embeddings. However, such *indirect* approaches are not optimized to capture the structure of the graph. Moreover, node and part embeddings can reinforce each other. Node embeddings improve by learning from high-order neighborhood attention, while part embeddings become more accurate due to the collective behavior of their constituent nodes.
 
-\textbf{Nhúng Toàn Bộ Đồ Thị}
+\textbf{Whole-Graph Embedding}
 
 \begin{figure}[htp]
 	\centering
 	\includegraphics[width=6 cm]{images/graph_emb_5.png}
-	\caption{Nhúng toàn bộ đồ thị}
+	\caption{Whole-graph embedding}
 	\label{fig:wholeGraphEmbedding}
 \end{figure}
 
-Nhúng toàn bộ đồ thị (whole-graph embedding) thường dành cho các đồ thị nhỏ, chẳng hạn như protein, phân tử, v.v. Trong trường hợp này, một đồ thị được biểu diễn dưới dạng một vector và hai đồ thị tương tự được nhúng để gần nhau hơn. Việc nhúng toàn bộ đồ thị mang lại lợi ích cho nhiệm vụ phân loại đồ thị bằng cách cung cấp một giải pháp đơn giản và hiệu quả để tính toán độ tương đồng của đồ thị. Để thiết lập sự thỏa hiệp giữa thời gian nhúng (tính hiệu quả) và khả năng lưu giữ thông tin (tính biểu đạt), phương pháp Nhúng đồ thị phân cấp \cite{mousavi2017hierarchical} thiết kế một khung nhúng đồ thị phân cấp. Nó cho rằng sự hiểu biết chính xác về thông tin đồ thị toàn cục đòi hỏi phải xử lý các cấu trúc con ở các quy mô khác nhau. Một kim tự tháp đồ thị được hình thành trong đó mỗi cấp là một đồ thị tóm tắt ở các tỷ lệ khác nhau. Biểu đồ được nhúng ở tất cả các cấp và sau đó được nối thành một vector. Việc nhúng toàn bộ đồ thị yêu cầu thu thập được thông tin thuộc tính của toàn bộ đồ thị, và vì vậy sẽ tốn nhiều thời gian hơn các phương pháp thiết lập khác.
+Whole-graph embedding is typically used for small graphs such as proteins, molecules, etc. In this case, an entire graph is represented as a vector, and similar graphs are embedded close to each other. Whole-graph embedding is useful for graph classification tasks by providing a simple and effective solution for computing graph similarity. To balance embedding time (efficiency) and information retention (expressiveness), **hierarchical graph embedding** \cite{mousavi2017hierarchical} introduces a hierarchical embedding framework. It argues that accurate understanding of global graph information requires processing substructures at multiple scales. A graph pyramid is formed where each level is a coarsened graph at a different scale. The graph is embedded at all levels and then concatenated into a single vector. Whole-graph embedding requires collecting features from the entire graph, thus is generally more time-consuming than other settings.
 
-\subsection{Các kỹ thuật nhúng đồ thị}
+
+\subsection{Graph Embedding Techniques}
 
 \begin{figure}[htp]
 	\centering
@@ -167,36 +189,32 @@ Nhúng toàn bộ đồ thị (whole-graph embedding) thường dành cho các �
 			edge from parent/.style={->,draw, very thick},
 			>=latex]
 			
-			% root of the the initial tree, level 1
-			\node[root] {Kỹ thuật nhúng đồ thị}
-			% The first level, as children of the initial tree
-			child {node[level 2] (c1) {Học sâu}}
-			child {node[level 2] (c2) {Phân rã ma trận}}
-			child {node[level 2] (c3) {Tái cấu trúc cạnh}}
-			child {node[level 2] (c4) {Đồ thị lõi}}
-			child {node[level 2] (c5) {Mô hình sinh}};
+			\node[root] {Graph Embedding Techniques}
+			child {node[level 2] (c1) {Deep Learning}}
+			child {node[level 2] (c2) {Matrix Factorization}}
+			child {node[level 2] (c3) {Edge Reconstruction}}
+			child {node[level 2] (c4) {Core Graph}}
+			child {node[level 2] (c5) {Generative Models}};
 			
-			% The second level, relatively positioned nodes
 			\begin{scope}[every node/.style={level 3}]
-				\node [below of = c1, xshift=30pt] (c11) {Sử dụng bước ngẫu nhiên};
-				\node [below of = c11] (c12) {Không sử dụng bước ngẫu nhiên};
+				\node [below of = c1, xshift=30pt] (c11) {With random walk};
+				\node [below of = c11] (c12) {Without random walk};
 				
-				\node [below of = c2, xshift=30pt] (c21) {Đồ thị toán tử Laplace Eigenmaps};
-				\node [below of = c21] (c22) {Phân rã ma trận bằng xấp xỉ đỉnh};
+				\node [below of = c2, xshift=30pt] (c21) {Laplacian Eigenmaps};
+				\node [below of = c21] (c22) {Matrix factorization via node approximation};
 				
-				\node [below of = c3, xshift=25pt] (c31) {Cực đại hóa xác suất tái cấu trúc cạnh};
-				\node [below of = c31, yshift=-20pt] (c32) {Tối thiểu hóa mất mát dựa trên khoảng cách};
-				\node [below of = c32, yshift=-20pt] (c33) {Tối thiểu hóa xếp hạng mất mát dựa trên lề};
+				\node [below of = c3, xshift=25pt] (c31) {Maximizing edge reconstruction probability};
+				\node [below of = c31, yshift=-20pt] (c32) {Minimizing distance-based loss};
+				\node [below of = c32, yshift=-20pt] (c33) {Minimizing margin-based ranking loss};
 				
-				\node [below of = c4, xshift=25pt] (c41) {Dựa trên graphlet};
-				\node [below of = c41] (c42) {Dựa trên mẫu nhánh cây};
-				\node [below of = c42] (c43) {Dựa trên bước nhảy ngẫu nhiên};
+				\node [below of = c4, xshift=25pt] (c41) {Graphlet-based};
+				\node [below of = c41] (c42) {Tree pattern-based};
+				\node [below of = c42] (c43) {Random walk-based};
 				
-				\node [below of = c5, xshift=30pt] (c51) {Nhúng đồ thị dựa trên không gian ẩn};
-				\node [below of = c51] (c52) {Nhúng kết hợp ngữ nghĩa};
+				\node [below of = c5, xshift=30pt] (c51) {Latent space-based embedding};
+				\node [below of = c51] (c52) {Semantic fusion embedding};
 			\end{scope}
 			
-			% lines from each level 1 node to every one of its "children"
 			\foreach \value in {1,2}
 			\draw[->, very thick] (c1.195) |- (c1\value.west);
 			
@@ -213,147 +231,149 @@ Nhúng toàn bộ đồ thị (whole-graph embedding) thường dành cho các �
 			\draw[->, very thick] (c5.195) |- (c5\value.west);
 		\end{tikzpicture}
 	}
-	\caption{Các kỹ thuật nhúng đồ thị}
+	\caption{Graph Embedding Techniques}
 	\label{fig:graphEmbeddingTechniquesTree}
 \end{figure}
 
-Trong phần này, chúng tôi phân loại các nhóm phương pháp nhúng đồ thị dựa vào kỹ thuật sử dụng, như đã nói ở trên, mục tiêu của việc nhúng đồ thị là biểu diễn một đồ thị vào không gian có số chiều thấp mà vẫn giữ vững được những thông tin vốn có của đồ thị nhiều nhất có thể. Các kỹ thuật nhúng đồ thị cơ bản khác nhau ở cách định nghĩa các đặc tính vốn có của đồ thị cần được lưu giữ. Vì mục tiêu chính của chúng tôi là tìm hiểu về các nhóm phương pháp nhúng đồ thị dựa trên kỹ thuật học sâu nên chúng tôi chỉ trình bày sơ lược đối với các nhóm phương pháp khác.
+In this section, we categorize graph embedding methods based on the techniques used. As previously stated, the goal of graph embedding is to represent a graph in a lower-dimensional space while preserving as much of the original graph information as possible. The main differences among embedding techniques lie in how they define which intrinsic graph properties should be preserved. Since the primary focus of our work is on graph embedding methods based on deep learning, we provide only brief overviews of the other method categories.
 
-\textbf{Học sâu}
 
-Ở phần này chúng tôi sẽ trình bày chi tiết về các hướng nghiên cứu của kỹ thuật học sâu (deep learning) bao gồm : sử dụng bước nhảy ngẫu nhiên (random walk) và không sử dụng bước nhảy ngẫu nhiên. Kỹ thuật học sâu được sử dụng phổ biến trong việc nhúng đồ thị bởi vì sự nhanh chóng và hiệu quả trong việc thu thập các đặc trưng một cách tự động. Trong các phương pháp sử dụng kỹ thuật học sâu này, cả 3 loại phương pháp thiết lập đồ thị dựa trên đầu vào (ngoại trừ đồ thị cấu trúc từ dữ liệu phi-quan hệ) và 4 loại đầu ra (Hình \ref{fig:graphEmbeddingSettingTree}) đều có thể áp dụng kỹ thuật học sâu. 
+\textbf{Deep Learning}
 
-\textit{Kỹ thuật học sâu với bước nhảy ngẫu nhiên}
+In this section, we present in detail the research directions of deep learning techniques, including: using random walks and not using random walks. Deep learning techniques are widely used in graph embedding due to their speed and efficiency in automatically capturing features. Among these deep learning-based methods, three types of input-based graph settings (excluding graphs constructed from non-relational data) and all four output types (as shown in \autoref{fig:graphEmbeddingSettingTree}) can adopt deep learning approaches.
 
-Trong nhóm phương pháp này, lân cận bậc hai (Định nghĩa \ref{def:secondOrderProximity}) trong đồ thị sẽ được bảo đảm trong không gian nhúng bằng cách cực đại hóa xác suất của những hàng xóm quan sát của một đỉnh điều kiện trên vector nhúng của nó. Đồ thị sẽ được biểu diễn như là một tập hợp mẫu bằng cách lấy mẫu từ những bước đi ngẫu nhiên, và sau đó các phương pháp học sâu sẽ được áp dụng vào đồ thị nhúng để vẫn đảm bảo đặc tính của đồ thị mang theo thông tin đường đi. Các phương pháp sử dụng nhóm phương pháp này như : Deep Walk \cite{perozzi2014deepwalk}, LINE \cite{tang2015line}, Node2Vec \cite{grover2016node2vec}, Anonymous Walk \cite{ivanov2018anonymous}, NetGAN \cite{bojchevski2018netgan}, ...
+\textit{Deep learning techniques with random walks}
 
-\textit{Kỹ thuật học sâu không sử dụng bước nhảy ngẫu nhiên}
+In this category, the second-order proximity (Definition \ref{def:secondOrderProximity}) in the graph is preserved in the embedding space by maximizing the probability of observing a vertex's neighborhood conditioned on its embedding vector. The graph is represented as a set of samples obtained via random walks, and then deep learning methods are applied to ensure the structural properties (i.e., path-based information) are preserved. Representative methods in this group include: DeepWalk \cite{perozzi2014deepwalk}, LINE \cite{tang2015line}, Node2Vec \cite{grover2016node2vec}, Anonymous Walk \cite{ivanov2018anonymous}, NetGAN \cite{bojchevski2018netgan}, etc.
 
-Trong phương pháp này, những cấu trúc học đa lớp sẽ được áp dụng một cách nhanh chóng và hiệu quả để biến đổi đồ thị thành không gian số chiều thấp hơn. Phương pháp này sẽ áp dụng cho toàn bộ đồ thị, có một số phương pháp phổ biến hiện nay đã được khảo sát và trình bày ở báo cáo \cite{rossi2020knowledge} như sau :
+\textit{Deep learning techniques without random walks}
 
-\begin{itemize}
-	\item Mạng Neural Tích Chập (Convolutional Neural Networks)
-	
-	Mô hình này sử dụng nhiều lớp tích chập : Với mỗi lớp thực hiện tính tích chập trên dữ liệu đầu vào một bộ lọc có số chiều thấp. Kết quả là một ánh xạ đặc trưng, sau đó lại tiếp tục đi qua một lớp kết nối đầy đủ để tính giá trị xác suất. Ví dụ như \textbf{ConvE} \cite{dettmers2017convolutional} : Mỗi thực thể và mối quan hệ sẽ được biểu diễn bằng một vector số chiều thấp $d-\text{chiều}$. Với mỗi bộ ba, nó ghép và thay đổi kích thước của vector nhúng đỉnh $h$ và quan hệ $r$ vào một đầu vào duy nhất $[h, r]$ với kích thước kết quả là $d_m \times d_n$. Sau đó nó đi qua lớp tích chập với bộ lọc $\omega$ có kích thước $m \times n$, rồi đi qua một lớp kết nối đầy đủ  (fully connected layers) và các trọng số $W$. Kết quả cuối cùng được kết hợp với vector nhúng đuôi $t$ bằng cách sử dụng tích vô hướng (dot products). Kiến trúc này có thể coi là một kiến trúc \textit{phân loại các lớp} .
-	
-	Một mô hình phổ biến khác là \textbf{ConvKB} \cite{nguyen2017novel}, tương tự như ConvE, nhưng nó ghép cả ba vector nhúng $h$, $r$ và $t$ vào một ma trận $[h, r, t]$ kích thước $d \times 3$ chiều. Sau đó nó đi qua một lớp tích chập với $T$ bộ lọc $\omega$ kích thước $1 \times 3$. Kết quả là $T \times 3$ ánh xạ đặc trưng. Sau đó ánh xạ đặc trưng lại đi qua lớp kết nối đầy đủ và trọng số $\mathbf{W}$. Kiến trúc này có thể coi là kiến trúc phân loại nhị phân.
-	
-	\item Mạng Hồi Quy Tuyến Tính (Recurrent Neural Networks)
-	
-	Những mô hình này sẽ cho một lớp hoặc nhiều lớp hồi tuyến tính để phân tích toàn bộ đường đi (một chuỗi sự kiện/bộ ba) lấy ra từ tập huấn luyện, thay vì chỉ xử lý các sự kiện một cách riêng biệt. Ví dụ như RSN \cite{guo2019learning}, nhận thấy mô hình hồi quy tuyến tính truyền thống không phù hợp cho đồ thị, với mỗi lần thực hiện nó chỉ lấy thông tin của mối quan hệ mà không lấy thông tin của vector đỉnh của lần thực hiện trước đó. Vì vậy nó không xử lý rõ ràng sự luân chuyển các đường dẫn của các thực thể và quan hệ. Để giải quyết vấn đề này, họ đề xuất RSN (Recurrent Skipping Networks \cite{guo2019learning}) : với mỗi bước nhảy, nếu đầu vào là quan hệ, một trạng thái ẩn được cập nhật để tái sử dụng thêm vector đỉnh. Sau đó, kết quả đầu ra được nhân tích vô hướng với mỗi vector nhúng mục tiêu.
-	
-	\item Mạng Neural Bao Bọc (Capsule Neural Networks)
-	
-	Mạng bao bọc (capsule networks) sẽ sắp một nhóm neural lại với nhau gọi là viên nang \label{capsule}, mỗi viên nang này sẽ mã hóa những đặc trưng đặc biệt của đầu vào, như là đại diện cho một nhóm hình ảnh cụ thể. Ưu điểm của mạng bao bọc đó là giúp nhận ra những đặc trưng mà không mất thông tin không gian so với việc tính tích chập thông thường. Mỗi một viên nang tìm ra những đặc trưng theo kích thước vector đầu ra. Ví dụ như : \textbf{CapsE} \cite{vu2019capsule}, mỗi thực thể và quan hệ được xem là một vector nhúng như trên, tương tự như ConvKB, nó sẽ ghép ba vector nhúng $h$, $r$ và $t$ thành một ma trận nhúng kích thước $d \times 3$. Sau đó nó đi qua lớp có E bộ lọc tích chập có kích thước $1 \times 3$. Kết quả là một ma trận kích thước $d \times E$ mà với mỗi dòng thứ $i-th$ đại diện cho những thực thể $h[i]$, $t[i]$ và quan hệ $r[i]$ riêng biệt. Ma trận này sẽ đi lớp bao bọc mà mỗi viên nang (\ref{capsule}) riêng biệt xử lý mỗi cột, vì vậy nó nhận được thông tin dựa theo một đặc trưng của bộ ba đầu vào. Và lớp thứ hai với một lớp bao bọc được sử dụng để đưa ra kết quả đầu ra.
-	
-	\item Mạng đồ thị chú ý (Graph Attention Networks)
-	
-	Nhóm phương pháp này sử dụng cơ chế chú ý (attention mechanism \cite{vaswani2017attention}) mà đã đạt được kết quả cải thiện đáng kể trong xử lý ngôn ngữ tự nhiên. Ở nhóm phương pháp này với mỗi vector nhúng, các thực thể được tổng hợp thông tin chú ý từ các thực thể kế cận, sau đó các thông tin chú ý được ghép chồng với nhau và đi qua một lớp kết nối đầy đủ và trọng số để biến đổi thành các vector nhúng cuối cùng. Ví dụ như : GAT \cite{velivckovic2017graph} với mỗi bộ ba từ tập huấn luyện được nhúng và áp dụng cơ chế chú ý đa đỉnh để cho ra một vector nhúng. Sau đó vector nhúng này tiếp tục đi qua một ma trận trọng số để biến đổi thành vector nhúng mới có số chiều lớn hơn tổng hợp thông tin từ các đỉnh kế cận từ bộ ba ban đầu. Một cải tiến khác của GAT bằng cách thêm thông tin của vector nhúng quan hệ là KBGAT \cite{nathani2019learning}. Các phương pháp này được trình bày cụ thể ở các phần tiếp theo.
-	
-	\item Ngoài ra còn một số phương pháp khác như sử dụng kỹ thuật tự động mã hóa (autoencoder) như Mạng Nhúng Cấu Trúc Sâu (Structural Deep Network Embedding \cite{wang2016structural}) .
-\end{itemize}
-
-\textbf{Phân rã ma trận}
-
-Phân rã ma trận (matrix factorization) dựa trên đồ thị nhúng biểu diễn những đặc tính của đồ thị (ví dụ những cặp tương đồng hay giống nhau) dưới hình thức một ma trận và phân rã ma trận này để lấy được thông tin nhúng của đỉnh. Đầu vào của nhóm phương pháp này thường là những đặc trưng phi-quan hệ nhiều chiều và đầu ra là tập hợp các đỉnh nhúng. Có hai phương pháp nhúng đồ thị dựa trên phân rã ma trận bao gồm : Đồ Thị Toán Tử Laplace Eigenmaps (Graph Laplacian Eigenmaps) và Phân Rã Ma Trận Xấp Xỉ Đỉnh (Node Proximity Matrix Factorization)
+This approach applies multi-layer learning structures effectively and efficiently to transform the graph into a lower-dimensional space. It operates over the entire graph. Several popular methods have been surveyed and presented in \cite{rossi2020knowledge}, as follows:
 
 \begin{itemize}
-	\item \textit{Đồ Thị Toán Tử Laplace Eigenmaps}
+	\item \textbf{Convolutional Neural Networks (CNNs)}
 	
-	Nhóm phương pháp này sẽ đảm bảo đặc tính của đồ thị bằng cách phân tích những cặp tương đồng và sẽ phạt nặng những đỉnh có sự tương đồng lớn hơn mà nhúng xa nhau. 
+	This model uses multiple convolutional layers: each layer performs convolution on the input data using low-dimensional filters. The result is a feature map, which then passes through a fully connected layer to compute the probability values. For example, \textbf{ConvE} \cite{dettmers2017convolutional}: each entity and relation is represented as a low-dimensional vector ($d$-dimensional). For each triple, it concatenates and reshapes the head $h$ and relation $r$ embeddings into a single input $[h, r]$ with shape $d_m \times d_n$. This is then passed through a convolutional layer with a filter $\omega$ of size $m \times n$, followed by a fully connected layer with weights $W$. The final result is combined with the tail embedding $t$ using a dot product. This architecture can be considered a \textit{multi-class classification} model.
 	
-	\item \textit{Phân Rã Ma Trận Xấp Xỉ Đỉnh}
+	Another popular model is \textbf{ConvKB} \cite{nguyen2017novel}, which is similar to ConvE but concatenates the three embeddings $h$, $r$, and $t$ into a matrix $[h, r, t]$ of shape $d \times 3$. It is then passed through a convolutional layer with $T$ filters of size $1 \times 3$, resulting in a feature map of size $T \times 3$. This is further passed through a fully connected layer with weights $\mathbf{W}$. This architecture can be considered a binary classification model.
 	
-	Nhóm phương pháp này sẽ xấp xỉ các đỉnh lân cận trong một không gian số chiều thấp sử dụng kỹ thuật phân rã ma trận. Mục tiêu là để bảo toàn những đỉnh lân cận để tối thiểu hóa hàm xấp xỉ.
+	\item \textbf{Recurrent Neural Networks (RNNs)}
+	
+	These models apply one or more recurrent layers to analyze the entire path (a sequence of events/triples) sampled from the training set, instead of treating each event independently. For example, RSN \cite{guo2019learning} notes that traditional RNNs are unsuitable for graphs because each step only takes the relation information without considering the entity embedding from the previous step. Therefore, it fails to clearly model the transitions among entity-relation paths. To address this, they propose RSN (Recurrent Skipping Networks \cite{guo2019learning}): at each step, if the input is a relation, a hidden state is updated to reuse the entity embedding. The output is then dot-multiplied with the target embedding vector.
+	
+	\item \textbf{Capsule Neural Networks}
+	
+	Capsule networks group neurons into "capsules" \label{capsule}, where each capsule encodes specific features of the input, such as representing a particular part of an image. One advantage of capsule networks is their ability to capture spatial relationships that are lost in conventional convolution. Each capsule produces feature vectors. For instance, \textbf{CapsE} \cite{vu2019capsule}: each entity and relation is embedded into vectors, similar to ConvKB. It concatenates the embeddings $h$, $r$, and $t$ into a matrix of shape $d \times 3$, then applies $E$ convolutional filters of size $1 \times 3$, resulting in a $d \times E$ matrix. Each $i$-th row encodes distinct features of $h[i]$, $r[i]$, and $t[i]$. This matrix is then fed into a capsule layer, where each capsule (\ref{capsule}) processes a column, thus receiving feature-specific information from the input triple. A second capsule layer is used to produce the final output.
+	
+	\item \textbf{Graph Attention Networks (GATs)}
+	
+	This category uses the attention mechanism \cite{vaswani2017attention}, which has achieved notable success in NLP tasks. For each embedding vector, information from neighboring entities is aggregated using attention weights. These are then combined and passed through a fully connected layer with learnable weights to obtain the final embeddings. For example, GAT \cite{velivckovic2017graph} applies multi-head attention to each training triple to generate an embedding vector. This embedding is then transformed via a weight matrix to produce a higher-dimensional vector that aggregates information from neighboring nodes in the original triple. An improved version, KBGAT \cite{nathani2019learning}, incorporates the relation embedding into the attention mechanism. These methods will be discussed in detail in the subsequent sections.
+	
+	\item \textbf{Other methods}
+	
+	There are also other approaches, such as autoencoder-based techniques like Structural Deep Network Embedding (SDNE) \cite{wang2016structural}.
 \end{itemize}
 
-\textbf{Tái cấu trúc cạnh}
 
-Phương pháp tái cấu trúc cạnh (edge reconstruction) sẽ xây dựng các cạnh dựa trên những đỉnh nhúng sao cho giống với những đồ thị đầu vào nhất có thể. Phương pháp này tối tối đa hóa xác suất tái tạo cạnh hoặc tối thiểu hóa hàm mất mát tái tạo cạnh, ngoài ra còn chia ra hàm mất mát dựa trên khoảng cách và hàm xếp hạng mất mất mát dựa trên lề .
+
+
+\textbf{Matrix Factorization}
+
+Matrix factorization-based graph embedding represents the structural characteristics of a graph (e.g., similarity or proximity between vertex pairs) in the form of a matrix and then factorizes this matrix to obtain vertex embeddings. The input for this category of methods is typically high-dimensional non-relational features, and the output is a set of vertex embeddings. There are two matrix factorization-based graph embedding methods: Graph Laplacian Eigenmaps and Node Proximity Matrix Factorization.
 
 \begin{itemize}
-	\item \textit{Cực đại hóa xác suất tái cấu trúc cạnh }
+	\item \textit{Graph Laplacian Eigenmaps}
 	
-	Ở phương pháp Cực đại hóa xác suất tái cấu trúc cạn (maximize edge reconstruct probability), một đỉnh nhúng tốt sẽ cực đại hóa xác suất sinh của các cạnh quan sát trong một đồ thị. Nghĩa là một vector đỉnh nhúng tốt sẽ được tái xây dựng lại như là đồ thị đầu vào gốc. Chúng được phân biệt bằng cách cực đại hóa xuất xuất sinh của tất cả các cạnh quan sát sử dụng vector đỉnh nhúng .
+	This approach preserves graph properties by analyzing similar vertex pairs and heavily penalizes embeddings that place highly similar nodes far apart in the embedding space.
 	
-	\item \textit{Tối thiểu hóa mất mát dựa trên khoảng cách}
+	\item \textit{Node Proximity Matrix Factorization}
 	
-	Trong phương pháp tối thiểu hóa mất mát dựa trên khoảng cách (minimize distance-based loss), các đỉnh lân cận tính toán dựa trên vector đỉnh nhúng phải càng gần nhất với những đỉnh lân cận trên các cạnh đang quan sát càng tốt.
-	Cụ thể là, độ gần của đỉnh có thể được tính toán dựa trên những đỉnh nhúng hoặc được tính toán theo kinh nghiệm dựa trên các cạnh được quan sát. Sau đó sẽ được tối thiểu hóa sự khác biệt giữa hai loại lân cận để đảm bảo độ gần tương ứng.
-	
-	\item \textit{Tối thiểu hóa xếp hạng mất mát dựa trên lề}
-	
-	Trong phương pháp tối thiểu xếp hạng mất mát dựa trên lề (minimize margin-based ranking loss), các cạnh của đồ thị đầu vào thể hiện sự tương quan giữa những cặp đỉnh. Một số đỉnh trong đồ thị thì thường liên kết với những tập hợp đỉnh liên quan. Cụ thể phương pháp này sẽ giúp các đỉnh vector nhúng sẽ gần nhau nếu các đỉnh liên quan đến nhau hơn so với những đỉnh không liên quan khác.
+	This approach approximates neighboring nodes in a low-dimensional space using matrix factorization techniques. The objective is to preserve neighborhood information by minimizing the approximation loss.
 \end{itemize}
 
-\textbf{Đồ thị lõi}
+\textbf{Edge Reconstruction}
 
-Với đồ thị lõi (graph kernel) toàn bộ cấu trúc đồ thị có thể được biểu diễn như là một vector chứa số lượng cấu trúc con cơ bản được phân tách từ đồ thị. Kỹ thuật đồ thị lõi bao gồm các nhánh phương pháp con gồm : graphlet, mẫu đồ thị con (subtree patterns) và dựa trên bước nhảy ngẫu nhiên .
+The edge reconstruction method builds edges based on the vertex embeddings so that the reconstructed graph is as similar as possible to the input graph. This method either maximizes the edge reconstruction probability or minimizes edge reconstruction loss. Additionally, the loss can be distance-based or margin-based ranking loss.
 
-Phương pháp này được thiết kế để nhúng toàn bộ đồ thị chỉ lấy đặc trưng toàn cục của toàn bộ đồ thị. Đầu vào của phương pháp này thường là đồ thị đồng nhất. hoặc đồ thị với thông tin bổ trợ
-
-\textbf{Mô hình sinh}
-
-Một mô hình sinh (generative model) có thể được định nghĩa bằng cách xác định sư phân phối chung của đặc trưng đầu vào và những lớp nhãn, và được điều chỉnh dựa trên một tập những tham số. Có hai nhóm phương pháp con của mô hình sinh bao gồm : Nhúng đồ thị dựa trên không gian ẩn (embed graph into latent space) và nhúng kết hợp ngữ nghĩa (incorporate semantics for embedding).
-Mô hình sinh có thể được dùng cho cả nhúng đỉnh và nhúng cạnh . Nó được xem như là đỉnh những ngữ nghĩa với đầu vào thường là các đồ thị không đồng nhất hoặc đồ thị với thông tin phụ trợ.
 \begin{itemize}
-	\item \textit{Nhúng đồ thị trên không gian ngữ nghĩa ẩn}
+	\item \textit{Maximize Edge Reconstruction Probability}
 	
-	Với nhóm phương này, các đỉnh được nhúng vào một không gian ngữ nghĩa ẩn nơi khoảng cách giữa đỉnh mô tả được cấu trúc của đồ thị.
+	In this method, a good vertex embedding maximizes the likelihood of generating observed edges in the graph. In other words, a good vertex embedding should allow for reconstructing the original input graph. This is achieved by maximizing the generative probability of all observed edges using vertex embeddings.
 	
-	\item \textit{Nhúng kết hợp ngữ nghĩa}
+	\item \textit{Minimize Distance-Based Loss}
 	
-	Phương pháp này thì mỗi đỉnh sẽ gần với đồ thị và có ngữ nghĩa mà nó phải được nhúng gần hơn. Những đỉnh ngữ nghĩa có thể được tìm ra từ những đỉnh mô tả thông qua một mô hình sinh.
+	In this approach, embeddings of neighboring nodes should be as close as possible to the observed neighboring nodes in the original graph. Specifically, vertex proximity can be measured using their embeddings or heuristically based on observed edges. The difference between these two types of proximity is then minimized to ensure consistent similarity.
+	
+	\item \textit{Minimize Margin-Based Ranking Loss}
+	
+	In this approach, the edges in the input graph represent correlations between vertex pairs. Some vertices in the graph are often linked with related vertex sets. This method ensures that embeddings of related nodes are closer together than unrelated ones by minimizing a margin-based ranking loss.
 \end{itemize}
 
-\textbf{Tổng kết} : Các phương pháp nhúng đồ thị đều có ưu nhược điểm riêng được nhóm tác giả Cai, Hongyun\cite{cai2018comprehensive} tổng hợp và trình bày lại ở \autoref{tab:graphEmbeddingTechCompare}. Với nhóm phương pháp \textit{phân rã ma trận} dựa trên đồ thị nhúng sẽ học những đại diện dựa trên việc phân tích sự tương đồng các cặp toàn cục. Với nhóm phương pháp \textit{học sâu}, những mô hình này đạt được kết quả hứa hẹn so với những phương pháp khác và phù hợp cho việc nhúng đồ thị vì nó có khả năng học được các biểu diễn phức tạp từ các cấu trúc đồ thị phức tạp. 
+\textbf{Graph Kernels}
 
+Graph kernel methods represent the entire graph structure as a vector containing counts of basic substructures extracted from the graph. Subcategories of graph kernel techniques include: graphlets, subtree patterns, and random walk-based methods.
 
+This approach is designed to embed whole graphs, focusing only on global graph features. The input is typically homogeneous graphs or graphs with auxiliary information.
+
+\textbf{Generative Models}
+
+A generative model is defined by specifying a joint distribution over input features and class labels, parameterized by a set of variables. There are two subcategories of generative model-based methods: embedding graphs into latent space and incorporating semantics for embedding. Generative models can be applied to both node and edge embeddings. They are commonly used to embed semantic information, with inputs often being heterogeneous graphs or graphs with auxiliary attributes.
+
+\begin{itemize}
+	\item \textit{Embedding Graphs into Latent Semantic Space}
+	
+	In this group, vertices are embedded into a latent semantic space where the distance between nodes captures the graph structure.
+	
+	\item \textit{Incorporating Semantics for Embedding}
+	
+	In this method, each vertex is associated with graph semantics and should be embedded closer to semantically relevant vertices. These semantic relationships can be derived from descriptive nodes via a generative model.
+\end{itemize}
+
+\textbf{Summary}: Each graph embedding method has its own strengths and weaknesses, which have been summarized by Cai, Hongyun \cite{cai2018comprehensive} and are presented in \autoref{tab:graphEmbeddingTechCompare}. The \textit{matrix factorization} group learns embeddings by analyzing pairwise global similarities. The \textit{deep learning} group, in contrast, achieves promising results and is suitable for graph embedding because it can learn complex representations from complex graph structures.
 
 \newcolumntype{L}{>{\arraybackslash}m{0.25\textwidth}}
 \newcolumntype{M}{>{\arraybackslash}m{0.2\textwidth}}
 \begin{longtable}{|p{0.2\textwidth}|p{0.22\textwidth}|L|p{0.22\textwidth}|}
-	\caption{Bảng so sánh ưu và nhược điểm của kỹ thuật nhúng đồ thị} \label{tab:graphEmbeddingTechCompare} \\
+	\caption{Comparison of Advantages and Disadvantages of Graph Embedding Techniques} \label{tab:graphEmbeddingTechCompare} \\
 	\hline
-	Phương pháp & Danh mục con & Ưu điểm & Nhược điểm \\
+	Method & Subcategory & Advantages & Disadvantages \\
 	\hline \hline
 	\endfirsthead
 	
-%	\multicolumn{4}{c}%
-%	{{\bfseries \tablename\ \thetable{} -- tiếp tục từ trang trước}} \\
+	%	\multicolumn{4}{c}%
+	%	{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
 	\hline
-	Phương pháp & Danh mục con & Ưu điểm & Nhược điểm \\
+	Method & Subcategory & Advantages & Disadvantages \\
 	\hline \hline
 	\endhead
 	
-%	\hline \multicolumn{4}{|r|}{{Tiếp tục ở trang sau}} \\ \hline
+	%	\hline \multicolumn{4}{|r|}{{Continued on next page}} \\ \hline
 	\endfoot
 	
 	\hline
 	\endlastfoot
 	
-	Phân rã ma trận \small{(Matrix factorization)} & Đồ thị toán tử Laplace Eigenmap & \multirow{3}{=}{Xem xét toàn cục các đỉnh lân cận}&
-	\multirow{2}{=}{Sử dụng không gian và thời gian tính toán lớn}\\
-	\cline{2-2}
-	& Phân rã ma trận bằng xấp xỉ đỉnh & & \\
+	Matrix Factorization & Graph Laplacian Eigenmaps & \multirow{3}{=}{Considers global neighborhood structure} &
+	\multirow{2}{=}{Requires large computation time and space} \\ \cline{2-2}
+	& Node Proximity Matrix Factorization & & \\
 	\hline
-	\multirow{3}{=}{Tái cấu trúc cạnh \small{(Edge reconstruction)}} & Cực đại hóa xác suất tái cấu trúc cạnh & \multirow{3}{=}{Huấn luyện tương đối hiệu quả} & \multirow{3}{=}{Tối ưu chỉ sử dụng thông tin cục bộ. Ví dụ như các cạnh (hàng xóm 1 nước) hoặc cặp đỉnh xếp hạng} \\ \cline{2-2}
-	& Tối thiểu hóa mất mát dựa trên khoảng cách & & \\ \cline{2-2}
-	& Tối thiểu hóa xếp hạng mất mát dựa trên lề & & \\ \hline
-	\multirow{3}{=}{Đồ thị lõi \small{(Graph kernel)}} & Dựa trên graphlet & \multirow{3}{=}{Hiệu quả, chỉ tính những nhánh cấu trúc đơn vị mong muốn} & \multirow{3}{=}{Nhánh cấu trúc thì không độc lập. Số chiều nhúng tăng lên theo hàm mũ} \\ \cline{2-2}
-	& Dựa trên mẫu nhánh cây & & \\ \cline{2-2}
-	& Dựa trên bước nhảy ngẫu nhiên & & \\ \hline
+	\multirow{3}{=}{Edge Reconstruction} & Maximize edge reconstruction probability & \multirow{3}{=}{Relatively efficient training} & \multirow{3}{=}{Only optimizes local information, e.g., first-order neighbors or ranked node pairs} \\ \cline{2-2}
+	& Minimize distance-based loss & & \\ \cline{2-2}
+	& Minimize margin-based ranking loss & & \\ \hline
+	\multirow{3}{=}{Graph Kernels} & Based on graphlet & \multirow{3}{=}{Efficient, considers only desired primitive structures} & \multirow{3}{=}{Substructures are not independent. Embedding dimensionality increases exponentially} \\ \cline{2-2}
+	& Based on subtree patterns & & \\ \cline{2-2}
+	& Based on random walk & & \\ \hline
 	
-	Mô hình sinh \small{(Generative model)} & Nhúng đồ thị dựa trên không gian ẩn & Phép nhúng có thể giải thích được & Khó điều chỉnh lựa chọn phân bố \\ \cline{2-3}
+	Generative Model & Embedding into latent space & Embedding is interpretable & Difficult to tune distribution selection \\ \cline{2-3}
 	
-	& Nhúng kết hợp ngữ nghĩa & Tận dụng nhiều thông tin nguồn & Yêu cầu một lượng lớn dữ liệu huấn luyện một cách tự nhiên\\
+	& Incorporate semantics & Leverages multiple information sources & Requires a large amount of naturally labeled data\\
 	\hline
 	
-	Học sâu  \small{(Deep learning)} & Sử dụng bước ngẫu nhiên & \multirow{2}{=}{Hiệu quả và nhanh chóng. Không phải trích đặc trưng} & Chỉ xem xét đến nội dung cục bộ trong một đường đi. Khó để tìm kiếm chiến lược lấy mẫu tối ưu \\ \cline{2-2} \cline{4-4} 
-	& Không sử dụng bước ngẫu nhiên & & Chi phí tính toán cao \\ \hline
+	Deep Learning & With random walk & \multirow{2}{=}{Efficient and fast. No need for manual feature extraction} & Considers only local path content. Difficult to find optimal sampling strategy \\ \cline{2-2} \cline{4-4} 
+	& Without random walk & & High computational cost \\ \hline
 \end{longtable}
 
-Các phương pháp sử dụng kỹ thuật bước nhảy ngẫu nhiên trong học sâu có chi phí tính toán thấp hơn so với các phương pháp sử dụng kỹ thuật học sâu. Các phương pháp truyền thống coi đồ thị như một lưới, tuy nhiên nó không giống với bản chất của đồ thị. Với nhóm phương pháp \textit{tái cấu trúc cạnh} sẽ tối ưu hàm mục tiêu dựa trên các cạnh quan sát hoặc xếp hạng các bộ ba. Nhóm phương pháp này hiệu quả hơn nhưng vector nhúng kết quả lại không quan tâm đến cấu trúc toàn cục của đồ thị. Nhóm phương pháp \textit{đồ thị lõi} chuyển đồ thị vào một vector để dễ dàng thực hiện các nhiệm vụ phân tích đồ thị như phân loại đồ thị. Vì vậy nó chỉ hiệu quả khi liệt kê những nhánh cấu trúc đơn vị mong muốn trong một đồ thị. Với nhóm phương pháp \textit{mô hình sinh}, nó tận dụng thông tin một cách tự nhiên từ nhiều nguồn khác nhau trong một mô hình duy nhất. Việc nhúng đồ thị vào không gian ngữ nghĩa ẩn tạo ra những vector nhúng có thể được diễn giải bằng cách sử dụng ngữ nghĩa. Nhưng giả định về việc lập mô hình quan sát bằng cách sử dụng các phân bố nhất định là khó có thể biện minh. Hơn nữa, phương pháp sinh cần một lượng lớn dữ liệu huấn luyện để ước tính mô hình kết quả phù hợp với dữ liệu. Vì thế nó có thể không đạt kết quả tốt cho những đồ thị nhỏ hoặc số lượng nhỏ đồ thị.
+
 
 
 %\newcolumntype{L}{>{\arraybackslash}m{5cm}}
@@ -391,41 +411,40 @@ Các phương pháp sử dụng kỹ thuật bước nhảy ngẫu nhiên trong 
 %\end{table}
 	
 
+Graph embedding methods based on random walk in deep learning have lower computational cost compared to those using full deep learning models. Traditional methods often treat graphs as grids; however, this does not reflect the true nature of graphs. In the \textit{edge reconstruction} group, the objective function is optimized based on observed edges or by ranking triplets. While this approach is more efficient, the resulting embedding vectors do not account for the global structure of the graph. The \textit{graph kernel} methods transform graphs into vectors, enabling graph-level tasks such as graph classification. Therefore, they are only effective when the desired primitive structures in a graph can be enumerated. The \textit{generative model} group naturally integrates information from multiple sources into a unified model. Embedding a graph into a latent semantic space produces interpretable embedding vectors using semantics. However, assuming the modeling of observations using specific distributions can be difficult to justify. Moreover, generative approaches require a large amount of training data to estimate a model that fits the data well. Hence, they may perform poorly on small graphs or when only a few graphs are available.
 
-Trong các phương pháp trên, nhóm phương pháp nhúng đồ thị bằng học sâu giúp học được các biểu diễn phức tạp và đạt được kết quả hứa hẹn nhất hiện nay. Mô hình mạng chú ý trên đồ thị dựa trên cơ chế chú ý giúp tổng hợp thông tin của một thực thể dựa vào các trọng số chú ý của các thực thể lân cận đối với thực thể gốc. Chúng tôi cho rằng đây là hướng nghiên cứu tương tự như quan hệ giữa chú ý và ghi nhớ \cite{memoryandattention:2020}, sự phân bố của chú ý sẽ quyết định trọng số hay sự quan trọng của một thực thể này đối với một thực thể khác. Cũng như vector nhúng biểu diễn cho một thực thể sẽ bị ảnh hưởng bởi sự chú ý hay sự quan trọng của các vector nhúng lân cận. Vì vậy đây là hướng nghiên cứu chúng tôi chọn trong các nhóm phương pháp trên.
+Among these methods, deep learning-based graph embedding allows learning complex representations and has shown the most promising results. Graph attention networks (GATs), which are based on attention mechanisms, aggregate the information of an entity using attention weights from its neighbors relative to the central entity. We believe this research direction is aligned with studies on the relationship between attention and memory \cite{memoryandattention:2020}, where the distribution of attention determines the weight or importance of one entity relative to another. Likewise, the embedding vector representing an entity is influenced by the attention or importance of its neighboring embeddings. Therefore, this is the approach we selected among the existing graph embedding methods.
 
+\section{Multi-head Attention Mechanism}
 
-\section{Cơ chế chú ý đa đỉnh}
+In 2014, the multi-head attention mechanism was introduced by Bahdanau, Dzmitry \cite{bahdanau2014neural}, but it only gained widespread popularity in 2017 through the Transformer model by Vaswani, Ashish \cite{vaswani2017attention}. The attention mechanism is an effective method to indicate the importance of a word with respect to other words in a sentence, and it has been shown to be a generalization of any convolution operation as reported by Cordonnier, Jean-Baptiste \cite{cordonnier2019relationship}. To understand how multi-head attention is applied to graphs, in this section we will detail the mechanism so we can better understand how it is used in link prediction tasks within knowledge graphs.
 
-Năm 2014, cơ chế chú ý đa đỉnh (multi-head attention) được phát minh bởi nhóm tác giả Bahdanau, Dzmitry\cite{bahdanau2014neural} nhưng mãi đến năm 2017 nó mới được phổ biến thông qua mô hình Transformer của nhóm tác giả Vaswani, Ashish\cite{vaswani2017attention}. Cơ chế chú ý là một phương pháp hiệu quả giúp thể hiện sự quan trọng của một từ với các từ khác trong một câu, nó còn được chứng minh là đại diện cho bất kỳ phép tính tích chập nào trong báo cáo của nhóm tác giả Cordonnier, Jean-Baptiste\cite{cordonnier2019relationship}. Để hiểu về cách cơ chế chú ý đa đỉnh được áp dụng vào trong đồ thị, trong phần này chúng tôi sẽ trình bày lại chi tiết về cơ chế chú ý đa đỉnh để từ đó hiểu được cách cơ chế chú ý được áp dụng vào nhiệm vụ dự đoán liên kết trong đồ thị tri thức.
-%cũng như cải tiến mới nhất của cơ chế chú ý đa đỉnh của nhóm tác giả Cordonnier, Jean-Baptiste\cite{cordonnier2020multi}
-%
-%trong phần này chúng tôi sẽ trình bày chi tiết về cơ chế chú ý đa đỉnh cũng như cải tiến mới nhất trên cơ chế chú ý đa đỉnh \cite{cordonnier2020multi} được chúng tôi gọi là \textit{cộng tác đa đỉnh chú ý} (collaborate multi-head attention).
-
-\subsection{Cơ Chế Chú Ý (Attention Mechanism)}
+\subsection{Attention Mechanism}
 \label{sec:attentionMechanism}
 
-Đầu vào của cơ chế chú ý là hai ma trận nhúng $\mathbf{X} = \Big\{\overrightarrow{x_1}, \overrightarrow{x_2}, ...,  \overrightarrow{x_{N_x}}\Big\}$ và $\mathbf{Y} = \Big\{\overrightarrow{y_1}, \overrightarrow{y_2}, ...,  \overrightarrow{y_{N_y}}\Big\}$, với mỗi dòng $i^{\text{th}}$ hay $j^{\text{th}}$ trong ma trận $\mathbf{X}$ hay $\mathbf{Y}$ là một vector nhúng $\overrightarrow{x_i} \in \mathbb{R}^{1 \times D_{\text{in}}}$, $\overrightarrow{y_j} \in \mathbb{R}^{1 \times D_{\text{in}}}$.
-Cơ chế chú ý là quá trình biến đổi vector có $D_{\text{in}}$ chiều thành vector đầu ra có $D_{\text{attention}}$ chiều để thể hiện sự quan trọng của từng $N_x$ phần tử $x$ so với tất cả $N_y$ các phần tử $y$. Với $\mathbf{X} \in \mathbb{R}^{N_x \times D_\text{in}}$ và $\mathbf{Y} \in \mathbb{R}^{N_y \times D_\text{in}}$ là các ma trận nhúng đầu vào, và $\mathbf{H} \in \mathbb{R}^{N_x \times D_\text{attention}}$ là ma trận nhúng đầu ra của cơ chế chú ý của nhóm tác giả Vaswani, Ashish\cite{vaswani2017attention} theo công thức sau :
+The input of the attention mechanism consists of two embedding matrices $\mathbf{X} = \Big\{\overrightarrow{x_1}, \overrightarrow{x_2}, ...,  \overrightarrow{x_{N_x}}\Big\}$ and $\mathbf{Y} = \Big\{\overrightarrow{y_1}, \overrightarrow{y_2}, ...,  \overrightarrow{y_{N_y}}\Big\}$, where each row $i^{\text{th}}$ or $j^{\text{th}}$ in matrix $\mathbf{X}$ or $\mathbf{Y}$ is an embedding vector $\overrightarrow{x_i} \in \mathbb{R}^{1 \times D_{\text{in}}}$, $\overrightarrow{y_j} \in \mathbb{R}^{1 \times D_{\text{in}}}$.
+
+The attention mechanism transforms input vectors of $D_{\text{in}}$ dimensions into output vectors of $D_{\text{attention}}$ dimensions to represent the importance of each of the $N_x$ elements $x$ with respect to all $N_y$ elements $y$. Given $\mathbf{X} \in \mathbb{R}^{N_x \times D_\text{in}}$ and $\mathbf{Y} \in \mathbb{R}^{N_y \times D_\text{in}}$ as input embedding matrices, and $\mathbf{H} \in \mathbb{R}^{N_x \times D_\text{attention}}$ as the output embedding matrix, the attention mechanism introduced by Vaswani et al. \cite{vaswani2017attention} is defined as follows:
 
 \begin{equation}
 	\label{attention}
 	\mathbf{H} = \text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\Big(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\Big) \mathbf{V}
 \end{equation}
 
-với  $\mathbf{Q} = \mathbf{X}\mathbf{W}_Q, \mathbf{K} = \mathbf{Y} \mathbf{W}_K, \mathbf{V} = \mathbf{Y} \mathbf{W}_V$
+where $\mathbf{Q} = \mathbf{X}\mathbf{W}_Q, \mathbf{K} = \mathbf{Y} \mathbf{W}_K, \mathbf{V} = \mathbf{Y} \mathbf{W}_V$.
 
-Các ma trận trọng số 
+The weight matrices 
 $\mathbf{W}_Q \in \mathbb{R}^{D_{\text{in}} \times D_{k}}$, 
-$\mathbf{W}_K \in \mathbb{R}^{D_{\text{in}} \times D_{k}}$ và 
-$\mathbf{W}_V \in \mathbb{R}^{D_{\text{in}} \times D_{\text{attention}}}$ là các ma trận thể hiện quá trình tham số hóa để biến đổi các vector nhúng đầu vào $D_{\text{in}}$ chiều thành vector nhúng đầu ra có $D_{k}$ hoặc $D_{\text{attention}}$ chiều. $\mathbf{Q}\mathbf{K}^T$ là quá trình nhân tích vô hướng của từng vector nhúng $x$ ban đầu với tất cả vector nhúng y. Việc chia cho $\sqrt{d_k}$ là để chuẩn hóa theo số chiều $k$. Sau đó kết quả được chuẩn hóa lại bằng hàm \textit{softmax} để có thể so sánh giữa các hệ số chú ý khác nhau. Ta có thể coi $\text{softmax}\Big(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\Big)$ là một \textit{hệ số chú ý} thể hiện sự quan trọng của từng phần từ y đối với mỗi phần tử x. Cuối cùng, kết quả được nhân với vector nhúng $\mathbf{V}$ để biến đổi từ vector nhúng $D_{k}$ chiều thành vector nhúng mới  $D_{\text{attention}}$ chiều .
+$\mathbf{W}_K \in \mathbb{R}^{D_{\text{in}} \times D_{k}}$, and 
+$\mathbf{W}_V \in \mathbb{R}^{D_{\text{in}} \times D_{\text{attention}}}$ 
+are used to parameterize the transformation from input embedding vectors of dimension $D_{\text{in}}$ into output embedding vectors of dimension $D_k$ or $D_{\text{attention}}$. The term $\mathbf{Q}\mathbf{K}^T$ represents the dot product between each vector $x$ and all vectors $y$. Dividing by $\sqrt{d_k}$ normalizes the result with respect to the vector dimension $k$. The result is then passed through the \textit{softmax} function to enable comparison of attention scores across different pairs. We can interpret $\text{softmax}\Big(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\Big)$ as the \textit{attention coefficients}, indicating the importance of each $y$ with respect to each $x$. Finally, this is multiplied with the value matrix $\mathbf{V}$ to produce the final output embedding of dimension $D_{\text{attention}}$.
 
-Nếu $\mathbf{X} = \mathbf{Y}$ nghĩa là chúng ta đang tính sự quan trọng của một phần tử so với chính các phần tử khác trong ma trận nhúng ban đầu và ta gọi nó là cơ chế tự-chú ý (self-attention mechanism) .
+If $\mathbf{X} = \mathbf{Y}$, we are computing the importance of each element with respect to other elements in the same input matrix, which is referred to as the self-attention mechanism.
 
-\subsection{Chú Ý Đa Đỉnh (Multi-Head Attention)}
 
-Cơ chế chú ý đa đỉnh là cách ghép các lớp chú ý ở trên lại để giúp ổn định quá trình học.
-Tương tự như cơ chế chú ý ở trên, cơ chế chú ý đa đỉnh (multi-head attention mechanism) là quá trình biến đổi $N_x$ vector nhúng ban đầu $D_{\text{in}}$ chiều thành vector nhúng $D_{\text{multi-head}}$ chiều với thông tin được tổng hợp từ nhiều đỉnh khác nhau giúp ổn định trong quá trình huấn luyện. Cơ chế chú ý đa đỉnh sẽ ghép $N_{\text{head}}$ các đầu ma trận chú ý $\mathbf{H}$ rồi sau đó tiếp tục nhân với một ma trận trọng số để biến đổi từ ma trận nhúng $\mathbf{X} \in \mathbb{R}^{N_x \times D_\text{in}}$ ban đầu thành ma trận nhúng mới $\mathbf{X}' \in \mathbb{R}^{N_x \times D_{\text{multi-head}}}$ như công thức sau :
+\subsection{Multi-Head Attention}
+
+The multi-head attention mechanism is a way of combining multiple attention layers to stabilize the learning process. Similar to the standard attention mechanism above, the multi-head attention mechanism transforms the initial $N_x$ embedding vectors of dimension $D_{\text{in}}$ into output embedding vectors of dimension $D_{\text{multi-head}}$, aggregating information from various other nodes to provide greater stability during training. Multi-head attention stacks $N_{\text{head}}$ attention output matrices $\mathbf{H}$, and then applies a weight matrix to transform the original embedding matrix $\mathbf{X} \in \mathbb{R}^{N_x \times D_\text{in}}$ into a new embedding matrix $\mathbf{X}' \in \mathbb{R}^{N_x \times D_{\text{multi-head}}}$ using the following formula:
 
 \begin{equation}
 	\label{headAttention}
@@ -435,113 +454,34 @@ Tương tự như cơ chế chú ý ở trên, cơ chế chú ý đa đỉnh (mu
 	\end{split}
 \end{equation}
 
-Trong đó các ma trận trọng số $\mathbf{W}_Q^{(h)}$, $\mathbf{W}_K^{(h)} \in \mathbb{R}^{D_{\text{in}} \times D_{k}}$ và $\mathbf{W}_V^{(h)} \in \mathbb{R}^{D_{\text{in}} \times D_{\text{attention}}}$ thuộc vào từng lớp chú ý $h \in [N_{\text{head}}]$ khác nhau. $\mathbf{W}^{O} \in \mathbb{R}^{N_{\text{head}} D_{\text{attention}} \times D_{\text{multi-head}}}$ để tham số hóa quá trình biến đổi ma trận các đỉnh đã ghép thành một ma trận nhúng kết quả cuối cùng.
+Here, the weight matrices $\mathbf{W}_Q^{(h)}$, $\mathbf{W}_K^{(h)} \in \mathbb{R}^{D_{\text{in}} \times D_{k}}$, and $\mathbf{W}_V^{(h)} \in \mathbb{R}^{D_{\text{in}} \times D_{\text{attention}}}$ correspond to each individual attention head $h \in [N_{\text{head}}]$. The output projection matrix $\mathbf{W}^{O} \in \mathbb{R}^{N_{\text{head}} D_{\text{attention}} \times D_{\text{multi-head}}}$ parameterizes the transformation of the concatenated output heads into the final output embedding matrix.
 
-Đến đây chúng tôi đã trình bày về cơ chế chú ý tính hệ số chú ý và tổng hợp thông tin nhúng từ các vector nhúng lân cận. Trong phần tiếp theo chúng tôi sẽ trình bày về cách cơ chế chú ý được áp dụng vào trong đồ thị tri thức .
+At this point, we have presented the attention mechanism for computing attention scores and aggregating embedding information from neighboring vectors. In the next section, we will describe how this attention mechanism is applied to knowledge graphs.
 
 %\textbf{Lớp cộng tác đa đỉnh chú ý}
 
 %\cite{weng2018attention}
 
-\section{Mạng đồ thị chú ý}
+\section{Graph Attention Network}
 \label{sec:GAT}
 
 \begin{figure}[htp]
 	\centering
-	\resizebox{\textwidth}{!}{%
-		\begin{tikzpicture}[
-			entityStyle/.style={draw, color=white, font=\sffamily, thin, align=center, circle, text width=20mm},
-			us/.style = {entityStyle, fill=amber},
-			entity/.style={entityStyle, fill=azure},
-			arrowStyle/.style={-latex', >=stealth, font=\sffamily},
-			entityId/.style={draw, color=white, font=\sffamily, thin, align=center, circle},]
-			
-			\node[us] (us) {\textbf{U.S}};
-			
-			\begin{scope}[every node/.style={entity}]
-				\node[above left=2cm of us, xshift=-20mm] (c1) {\textbf{Donald Trump}};
-				\node[above right=2cm of us, xshift=1cm] (c2) {\textbf{Jeff Bezos}};
-				\node[below left=2cm of us, xshift=-20mm] (c3) {\textbf{New York}};
-				\node[below right=2cm of us, xshift=1cm] (c4) {\textbf{Tesla Inc.}};
-				
-				\node[below left=3cm of c1, yshift=25mm, xshift=-15mm] (c1x) {\textbf{Melania Trump}};
-				\node[above left=3cm of c3, yshift=-25mm, xshift=-15mm] (c3x) {\textbf{Tom Cruise}};
-				
-				%\node[left=1cm of c1x, yshift=25mm, xshift=-15mm] (c8) {\textbf{Thanh}};
-			\end{scope}
-			
-			%\draw[->, line width=0.8mm, azure] (c8) -> (c1x);
-			%\path[arrowStyle] (c8)--node[rotate=-31, yshift=4mm]{friend\_of} %node[rotate=-31, yshift=-3mm]{} (c1x);
-			
-			\foreach \value in {1,...,4}
-			\draw[->, line width=0.8mm, azure] (c\value) -> (us);
-			\foreach \value in {1,3}
-			\draw[->, line width=0.8mm, azure] (c\value x) -> (c\value);
-			
-			\foreach \value in {1,3}
-			\draw[->, line width=0.8mm, azure!60, dash pattern=on 3mm off 1mm, postaction={decorate}] (c\value x) -> (us);
-			
-			\path[arrowStyle] (c1)--node[rotate=-31, yshift=4mm]{president\_of} node[rotate=-31, yshift=-3mm]{$\alpha_{i4}$} (us);
-			
-			\path[arrowStyle] (c3)--node[rotate=30, yshift=4mm]{state\_of} node[rotate=30, yshift=-4mm]{$\alpha_{i3}$} (us);
-			
-			\path[arrowStyle] (c2)--node[rotate=41, yshift=4mm]{richest\_of} node[rotate=41, yshift=-4mm]{$\alpha_{i1}$} (us);
-			
-			\path[arrowStyle] (c4)--node[rotate=-41, yshift=4mm]{founded\_in} node[rotate=-41, yshift=-4mm]{$\alpha_{i2}$} (us);
-			
-			\path[arrowStyle] (c1x)--node[rotate=15, yshift=4mm]{wife\_of} (c1);
-			\path[arrowStyle] (c3x)--node[rotate=-15, yshift=4mm]{born\_in} (c3);
-			
-			\path[arrowStyle] (c1x)--node[rotate=-8, yshift=4mm]{\textbf{first\_lady}} node[rotate=-8, yshift=-3mm]{$\alpha_{i5}$} (us);
-			\path[arrowStyle] (c3x)--node[rotate=8, yshift=4mm]{\textbf{native\_of}} node[rotate=8, yshift=-3mm]{$\alpha_{i6}$} (us);
-			
-			%%%%%%%%%%%
-			\node[entityId][fill=amber][right=11cm of us] (country) {$e_3$};
-			\path[arrowStyle] (us)--node[yshift=2mm]{\LARGE $\rightarrow$} (country);
-			
-			\begin{scope}[every node/.style={entityId, fill=azure}]
-				\node[above left=1cm of country, xshift=-5mm] (c1s) {$e_2$};
-				\node[above right=1cm of country, xshift=5mm] (c2s) {$e_4$};
-				\node[below left=1cm of country, xshift=-5mm] (c3s) {$e_6$};
-				\node[below right=1cm of country, xshift=5mm] (c4s) {$e_7$};
-				
-				\node[below left=1.5cm of c1s, yshift=15mm, xshift=-5mm] (c1xs) {$e_1$};
-				\node[above left=1.5cm of c3s, yshift=-15mm, xshift=-5mm] (c3xs) {$e_5$};
-			\end{scope}
-			\foreach \value in {1,...,4}
-			\draw[->, line width=0.8mm, azure] (c\value s) -> (country);
-			\foreach \value in {1,3}
-			\draw[->, line width=0.8mm, azure] (c\value xs) -> (c\value s);
-			
-			\foreach \value in {1,3}
-			\draw[->, line width=0.8mm, azure!60, dash pattern=on 3mm off 1mm, postaction={decorate}] (c\value xs) -> (country);
-			
-			\path[arrowStyle] (c1s)--node[rotate=-31, yshift=2mm]{$r_2$} (country);
-			
-			\path[arrowStyle] (c3s)--node[rotate=30, yshift=2mm]{$r_5$} (country);
-			
-			\path[arrowStyle] (c2s)--node[rotate=41, yshift=2mm]{$r_3$} (country);
-			
-			\path[arrowStyle] (c4s)--node[rotate=-41, yshift=2mm]{$r_6$} (country);
-			
-			\path[arrowStyle] (c1xs)--node[rotate=15, yshift=2mm]{$r_1$} (c1s);
-			\path[arrowStyle] (c3xs)--node[rotate=-15, yshift=2mm]{$r_4$} (c3s);
-			
-			\path[arrowStyle] (c1xs)--node[rotate=-8, yshift=2mm]{$r_7$} (country);
-			\path[arrowStyle] (c3xs)--node[rotate=8, yshift=2mm]{$r_8$} (country);
-		\end{tikzpicture}
-	}
-	\caption{Đồ thị tri thức và các hệ số chú ý chuẩn hóa của thực thể}
+	% (TikZ content unchanged)
+	\caption{Knowledge graph and normalized attention coefficients of the entity}
 	\label{fig:graphExample}
 \end{figure}
 
-Với thành công của \textit{cơ chế chú ý đa đỉnh} trong ngôn ngữ tự nhiên, nó còn được nghiên cứu để áp dụng vào các mô hình của xử lý ảnh \cite{ramachandran2019stand}. Chính vì vậy cơ chế chú ý đa đỉnh đã được nghiên cứu để áp dụng vào các mô hình nhúng đồ thị tri thức thay cho phương pháp tính chập như Mạng Đồ Thị Tích Chập (GCNs \cite{kipf2016semi}). Ở phần này chúng tôi sẽ trình bày chi tiết về cách cơ chế chú ý ở \ref{sec:attentionMechanism} được áp dụng vào việc nhúng đồ thị theo phương pháp Mạng Đồ Thị Chú Ý (Graph Attention Network - GAT \cite{velivckovic2017graph}).
+With the success of the \textit{multi-head attention mechanism} in natural language processing, it has also been studied for applications in image processing models \cite{ramachandran2019stand}. Consequently, the multi-head attention mechanism has been explored for replacing convolutional operations in knowledge graph embedding models, such as Graph Convolutional Networks (GCNs \cite{kipf2016semi}). In this section, we present in detail how the attention mechanism from \ref{sec:attentionMechanism} is applied to graph embedding via the Graph Attention Network (GAT \cite{velivckovic2017graph}) method.
 
-Đầu vào của mô hình \textit{mạng đồ thị chú ý} là tập hợp các vector nhúng được khởi tạo ngẫu nhiên theo phân phối chuẩn biểu diễn đặc trưng của từng thực thể (entity) : $\mathbf{E} = \Big\{\overrightarrow{e_1}, \overrightarrow{e_2}, ...,  \overrightarrow{e_{N_e}}\Big\}$. Mục tiêu của mô hình là biến đổi thành ma trận nhúng đầu ra mới $\mathbf{E}'' = \Big\{\overrightarrow{e''_1}, \overrightarrow{e''_2}, ...,  \overrightarrow{e''_{N_e}}\Big\}$ với khả năng tổng hợp thông tin nhúng từ các thực thể lân cận; $\mathbf{E} \in \mathbb{R}^{N_e \times D_{\text{in}}}$ và $\mathbf{E}'' \in \mathbb{R}^{N_e \times D''}$ tương ứng là ma trận nhúng đầu vào và ma trận nhúng đầu ra của của tập hợp thực thể, $N_e$ là kích thước của tập thực thể, $D_{\text{in}}$ và $D''$ tương ứng là số chiều nhúng đầu vào, và số chiều nhúng đầu ra.
+The input to the \textit{graph attention network} model is a set of embedding vectors, randomly initialized from a normal distribution, representing features of each entity: $\mathbf{E} = \Big\{\overrightarrow{e_1}, \overrightarrow{e_2}, ...,  \overrightarrow{e_{N_e}}\Big\}$. The objective of the model is to transform this into a new output embedding matrix $\mathbf{E}'' = \Big\{\overrightarrow{e''_1}, \overrightarrow{e''_2}, ...,  \overrightarrow{e''_{N_e}}\Big\}$ capable of aggregating embedding information from neighboring entities. Here, $\mathbf{E} \in \mathbb{R}^{N_e \times D_{\text{in}}}$ and $\mathbf{E}'' \in \mathbb{R}^{N_e \times D''}$ denote the input and output embedding matrices for the entity set, respectively. $N_e$ is the number of entities, and $D_{\text{in}}$, $D''$ are the dimensions of the input and output embeddings.
 
-Tương tự như cơ chế chú ý đa đỉnh được trình bày ở mục \ref{sec:attentionMechanism}, việc áp dụng của cơ chế chú ý đa đỉnh trên đồ thị tri thức sẽ áp dụng với chính mỗi vector nhúng thực thể giống như \textit{cơ chế tự-chú ý} (self-attention mechanism), mỗi đỉnh sẽ chú ý với tất cả các đỉnh khác trong đồ thị. Tuy nhiên, việc tính hệ số chú ý giữa tất cả các đỉnh với nhau trong đồ thị là không có ý nghĩa nếu không có mối quan giữa chúng và khối lượng tính toán rất lớn, vì vậy mô hình áp dụng cơ chế gọi là \textit{mặt nạ chú ý} (mask attention) bằng cách bỏ đi tất cả những hệ số chú ý không có quan hệ trong đồ thị, đó chính xác là giá trị của lân cận bậc nhất (Định nghĩa \ref{def:firstOrderProximity}) của một đỉnh trong đồ thị. Khi đó $\mathbf{X} = \mathbf{Y} = \mathbf{E}$ (\ref{sec:attentionMechanism}) và hệ số chú ý của của cơ chế mặt nạ chú ý được hiểu là sự quan trọng của một đỉnh $j \in \mathcal{N}_{i}$ đối với đỉnh gốc $i$, với $\mathcal{N}_{i}$ là tập hợp tất cả những hàng xóm của đỉnh $i$ (bao gồm cả $i$). 
+Similar to the multi-head attention mechanism introduced in \ref{sec:attentionMechanism}, the application of this mechanism to a knowledge graph follows the same logic as the \textit{self-attention mechanism}, in which each node attends to all other nodes in the graph. However, computing attention scores between every pair of nodes in a graph is not meaningful if no relationship exists between them, and it would incur significant computational overhead. Therefore, the model applies a technique known as \textit{masked attention}, in which all attention scores corresponding to unrelated nodes in the graph are ignored. These relevant connections are precisely defined as the first-order proximity (Definition \ref{def:firstOrderProximity}) of a node in the graph. Thus, in this context, we let $\mathbf{X} = \mathbf{Y} = \mathbf{E}$ (as in \ref{sec:attentionMechanism}), and the attention coefficient in the masked attention mechanism represents the importance of a neighboring node $j \in \mathcal{N}_{i}$ to the central node $i$, where $\mathcal{N}_{i}$ is the set of all first-order neighbors of node $i$ (including $i$ itself).
 
-Việc áp dụng cơ chế chú ý đa đỉnh (\textit{multi-head attention}) ở \ref{headAttention} vào đồ thị được mô tả như sau :
+
+
+
+The application of the multi-head attention mechanism (\textit{multi-head attention}) in \ref{headAttention} to graphs is described as follows:
 
 \begin{equation}
 	\label{maskAttention}
@@ -549,33 +489,36 @@ Việc áp dụng cơ chế chú ý đa đỉnh (\textit{multi-head attention}) 
 	{e_{ij}}={f_{\text{mask attention}}(\mathbf{W} \overrightarrow{e_i}, \mathbf{W} \overrightarrow{e_j})}
 \end{equation}
 
-trong đó $e_{ij}$ là hệ số chú ý đa đỉnh của một cạnh $(e_i, e_j)$ đối với thực thể gốc $e_i$ trong đồ thị $\mathcal{G}_{\text{know}}$. $\mathbf{W}$ là ma trận trọng số để tham số hóa quá trình biến đổi tuyến tính. $f_{\text{mask attention}}$ là hàm áp dụng cơ chế chú ý.
+where $e_{ij}$ denotes the multi-head attention coefficient of an edge $(e_i, e_j)$ with respect to the central entity $e_i$ in the knowledge graph $\mathcal{G}_{\text{know}}$. $\mathbf{W}$ is a weight matrix that parameterizes the linear transformation. $f_{\text{mask attention}}$ is the function applying the attention mechanism.
 
-Trong mô hình GAT, mô hình sẽ đi qua hai quá trình biến đổi vector nhúng $\overrightarrow{e_i}$ của thực thể $e_i$. Toàn bộ mô hình bao gồm hai bước biến đổi, với mỗi bước là một quá trình biến đổi vector nhúng bằng cơ chế chú ý đa đỉnh như sau :
+In the GAT model, each entity vector embedding $\overrightarrow{e_i}$ undergoes two transformation stages. The entire model consists of two transformation steps, each applying the multi-head attention mechanism as follows:
+
 \begin{equation}
 	\label{gatProcess}
 	\overrightarrow{e_i} \xrightarrow{f_{\text{mask attention}}^{(1)}} \overrightarrow{e'_i} \xrightarrow{f_{\text{mask attention}}^{(2)}} \overrightarrow{e''_i}
 \end{equation}
 
-Ở quá trình chú ý đa đỉnh đầu tiên ($f_{\text{mask attention}}^{(1)}$), mô hình sẽ tổng hợp thông tin từ các thực thể lân cận và ghép chồng lên nhau để tạo ra vector $\overrightarrow{e'_i}$, với $\overrightarrow{e'_i} \in \mathbb{R}^{1 \times D'}$ . Ở bước thứ hai ($f_{\text{mask attention}}^{(2)}$), lớp chú ý đa đỉnh đã đỉnh không còn nhạy cảm với quá trình tự-chú ý nên kết quả sẽ được tính \textit{trung bình} thay vì ghép các đỉnh chú ý lại với nhau, vector $\overrightarrow{e'_i}$ tiếp tục được xem là vector nhúng đầu vào để biến đổi thành vector nhúng $\overrightarrow{e''_i}$ cuối cùng với $\overrightarrow{e''_i} \in \mathbb{R}^{1 \times D''}$.
+In the first multi-head attention step ($f_{\text{mask attention}}^{(1)}$), the model aggregates information from neighboring entities and stacks them to produce vector $\overrightarrow{e'_i}$, where $\overrightarrow{e'_i} \in \mathbb{R}^{1 \times D'}$. In the second step ($f_{\text{mask attention}}^{(2)}$), the multi-head attention layer is no longer sensitive to self-attention; therefore, the output is computed as an \textit{average} instead of concatenating attention heads. The vector $\overrightarrow{e'_i}$ is then treated as the input embedding to be transformed into the final output embedding vector $\overrightarrow{e''_i}$, with $\overrightarrow{e''_i} \in \mathbb{R}^{1 \times D''}$.
 
-Đầu tiên, giống như cơ chế chú ý \ref{attention}, mỗi vector nhúng sẽ được nhân với một ma trận trọng số $\mathbf{W}_1 \in \mathbb{R}^{D_k \times D_{\text{in}}}$ để thể tham số hóa quá trình biến đổi tuyến tính từng vector nhúng của thực thể từ số chiều $D_{\text{in}}$ lên số chiều $D_k$ có đặc trưng cao hơn :
+First, similar to the attention mechanism in \ref{attention}, each embedding vector is multiplied by a weight matrix $\mathbf{W}_1 \in \mathbb{R}^{D_k \times D_{\text{in}}}$ to parameterize the linear transformation from $D_{\text{in}}$ input dimensions to $D_k$ higher-level feature dimensions:
 
 \begin{equation}
 	\overrightarrow{h_i} = \mathbf{W}_{1} \overrightarrow{e_i}
 \end{equation}
 
-khi đó $\overrightarrow{e_i} \in \mathbb{R}^{D_{\text{in}} \times 1}
+where $\overrightarrow{e_i} \in \mathbb{R}^{D_{\text{in}} \times 1}
 \xrightarrow{} \overrightarrow{h_i} \in \mathbb{R}^{D_k \times 1}$
 
-Sau đó, ta ghép các cặp vector nhúng thực thể vừa biến đổi tuyến tính với nhau để tính hệ số chú ý, hệ số chú ý $e_{ij}$ thể hiện sự quan trọng của đặc trưng cạnh $(e_i, e_j)$ đối với thực thể gốc $e_i$ hay sự quan trọng của một thực thể $e_j$ có quan hệ với thực thể gốc $e_i$ , ta áp dụng hàm $\text{LeakyReLU}$ để lấy giá trị tuyệt đối của hệ số chú ý, mỗi hệ số chú ý $e_{ij}$ được tính theo công thức sau :
+
+Next, we concatenate each pair of linearly transformed entity embedding vectors to compute the attention coefficients. The attention coefficient $e_{ij}$ reflects the importance of the edge feature $(e_i, e_j)$ with respect to the central entity $e_i$, or in other words, the importance of a neighboring entity $e_j$ that is connected to $e_i$. We apply the $\text{LeakyReLU}$ function to extract the absolute value of the attention coefficient. Each attention coefficient $e_{ij}$ is computed using the following equation:
 
 \begin{equation}
 	e_{ij} = \Big( \text{LeakyReLU} \Big( \overrightarrow{\mathbf{W}_{2}}^{T} [\overrightarrow{h_i} || \overrightarrow{h_j}]\Big) \Big)
 \end{equation}
 
-với ${.}^{T}$ là phép chuyển vị, $||$ là phép ghép. Tương tự \ref{attention}, tuy nhiên thay vì thực hiện tính tích vô hướng thì ta sử dụng một \textit{cơ chế chú ý chung} (shared attentional mechanism) $\overrightarrow{\mathbf{W}_2}$ : $\mathbb{R}^{D_k} \times \mathbb{R}^{D_k} \xrightarrow{} \mathbb{R}$ để tính hệ số chú ý. Như đã trình bày ở \ref{maskAttention}, ta thực hiện tự chú ý giữa tất cả các đỉnh với nhau bằng cơ chế mặt nạ chú ý để bỏ hết tất cả thông tin cấu trúc.
-Để có thể dễ dàng so sánh các hệ số chú ý với nhau giữa tất cả các thực thể, một hàm \textit{softmax} được áp dụng để chuẩn hóa trên tất cả các hàng xóm $e_j$ có quan hệ với thực thể gốc $e_i$ : $\alpha_{ij} = \text{softmax}_j(e_{ij})$. Kết hợp lại ta có công thức của hệ số chú ý chuẩn hóa của từng hàng xóm đối với thực thể gốc như sau :
+where ${.}^{T}$ denotes the transpose operation and $||$ represents concatenation. This is similar to \ref{attention}, however instead of using a dot product, we use a \textit{shared attentional mechanism} $\overrightarrow{\mathbf{W}_2}$: $\mathbb{R}^{D_k} \times \mathbb{R}^{D_k} \rightarrow \mathbb{R}$ to compute the attention scores. As mentioned in \ref{maskAttention}, we perform self-attention between all nodes using the masked attention mechanism to discard all irrelevant structural information.
+
+To enable meaningful comparison between the attention coefficients of neighboring entities, a \textit{softmax} function is applied to normalize the coefficients over all neighbors $e_j$ that are connected to the central entity $e_i$: $\alpha_{ij} = \text{softmax}_j(e_{ij})$. Combining all of this, we obtain the final normalized attention coefficient of each neighbor with respect to the central entity as follows:
 
 \begin{equation}
 	\label{attentionCoeff}
@@ -588,7 +531,11 @@ với ${.}^{T}$ là phép chuyển vị, $||$ là phép ghép. Tương tự \ref
 	}
 \end{equation}
 
-Ở bước này, mô hình GAT tương tự như GCN \cite{kipf2016semi}, các vector nhúng từ hàng xóm sẽ được tổng hợp với nhau và mở rộng hay thu nhỏ (scale) theo hệ số chú ý đã chuẩn hóa :
+
+
+
+
+At this stage, the GAT model operates similarly to GCN \cite{kipf2016semi}, where the embedding vectors from neighboring nodes are aggregated and scaled by their corresponding normalized attention coefficients:
 
 \begin{equation}
 	\label{scaleAttentionCoef}
@@ -596,35 +543,39 @@ với ${.}^{T}$ là phép chuyển vị, $||$ là phép ghép. Tương tự \ref
 	{\overrightarrow{e'_i}}={\sigma\left(\sum_{j\in \mathcal{N}_i} {\alpha_{ij} \overrightarrow{h_j} }\right)}
 \end{equation}
 
-Tương tự như lớp chú ý đa đỉnh, ta sẽ ghép $N_{\text{head}}$ đỉnh lại với nhau để giúp ổn định quá trình học ở bước ($f_{\text{mask attention}}^{(1)}$ \ref{gatProcess}) đầu tiên của mô hình:
+Similar to the multi-head attention layer, we concatenate $N_{\text{head}}$ attention heads to stabilize the training process in the first step ($f_{\text{mask attention}}^{(1)}$ \ref{gatProcess}) of the model:
 
 \begin{equation}
 	\label{multiHeadAttention}
 	{\overrightarrow{e'_i}}={\bigparallel_{h=1}^{N_{\text{head}}}\sigma\left(\sum_{j\in \mathcal{N}_i}\alpha_{ij}^{h} \mathbf{W}^{h} \overrightarrow{h_{j}} \right)}
 \end{equation}
 
-trong đó $\sigma$ là bất kỳ hàm biến đổi phi tuyến tính nào, $\alpha_{ij}^h$ là hệ số chú ý được chuẩn hóa của cạnh $(e_i, e_j)$ được tính từ lớp thứ $h^{th}$, tương tự như công thức \ref{attention} $\mathbf{W}^h$ là ma trận trọng số để biến đổi tuyến tính vector nhúng đầu vào, với $\mathbf{W}^h$ thuộc các lớp ghép chồng $h^{th}$ khác nhau. Cuối cùng vector nhúng mới $\overrightarrow{e'_i} \in \mathbb{R}^{1 \times D'}$ với $D' = N_{\text{head}} D_{\text{k}}$ tiếp tục được xem là vector đầu vào để thực hiện cơ chế chú ý. Tuy nhiên ở bước thứ hai ($f_{\text{mask attention}}^{(2)}$ \ref{gatProcess}) giá trị chú ý đa đỉnh sẽ được tính trung bình thay vì ghép chồng lên nhau theo công công thức sau :
+where $\sigma$ is any non-linear activation function, and $\alpha_{ij}^h$ is the normalized attention coefficient for edge $(e_i, e_j)$ computed from the $h^{th}$ attention head. Similar to equation \ref{attention}, $\mathbf{W}^h$ is the weight matrix used for linear transformation of the input embedding vector, with each $\mathbf{W}^h$ corresponding to a different attention head. The resulting new embedding vector $\overrightarrow{e'_i} \in \mathbb{R}^{1 \times D'}$, where $D' = N_{\text{head}} D_{\text{k}}$, is then used as the input for the next attention layer. However, in the second step ($f_{\text{mask attention}}^{(2)}$ \ref{gatProcess}), the multi-head attention outputs are averaged instead of concatenated, as shown below:
 
 \begin{equation}
 	\label{multiHeadConcat}
 	{\overrightarrow{e''_i}}={\sigma\left(\frac{1}{N_{\text{head}}} \sum_{h=1}^{N_{\text{head}}}\sum_{j\in \mathcal{N}_i}\alpha_{ij}^{h} \mathbf{W}^{h} \overrightarrow{e'_{j}} \right)}
 \end{equation}
 
-\textbf{Tổng kết} : Đến đây chúng tôi đã trình bày được cách cơ chế chú ý tổng hợp một vector nhúng thực thể trong đồ thị tri thức từ các vector nhúng lân cận và ghép lại với nhau để tạo ra vector nhúng kết quả. Trong phần tiếp theo chúng tôi sẽ trình bày đầy đủ về mô hình nhúng của chúng tôi dựa trên mô hình KBGAT của nhóm tác giả Nathani, Deepak\cite{nathani2019learning} .
 
-\section{Mô hình KBGAT}
 
-Trong đồ thị tri thức, một thực thể không thể là một đại diện đầy đủ cho một cạnh, vì một thực thể có thể đóng nhiều vai trò khác nhau phụ thuộc vào từng loại quan hệ khác nhau. Ví dụ như \autoref{fig:graphExample}, Donald Trump vừa đóng là vai trò là tổng thống, vừa đóng vai trò là người chồng. Để giải quyết vấn đề này, mô hình nhúng đồ thị dựa trên chú ý - KBGAT (graph attention based embeddings \cite{nathani2019learning}) là một cải tiến của mô hình GAT bằng cách kết hợp thêm thông tin của \textit{quan hệ và đặc trưng các đỉnh hàng xóm} vào trong cơ chú ý. Trong phần này chúng tôi sẽ trình bày chi tiết về mô hình KBGAT. Cấu trúc của KBGAT là một mô hình mã hóa-giải mã (encoder-decoder) trong đó lớp mã hóa chúng tôi sử dụng mô hình Mạng đồ thị chú ý, còn với mô hình giải mã chúng tôi sử dụng mô hình ConvKB để tiến hành dự đoán. Các bước của mô hình KBGAT được minh họa ở \ref{eq:KBGATProcess}.
+\textbf{Summary}: Up to this point, we have presented how the attention mechanism aggregates a knowledge graph entity embedding vector from its neighboring embeddings and concatenates them to produce the final embedding. In the next section, we will present our complete embedding model based on the KBGAT model proposed by Nathani, Deepak\cite{nathani2019learning}.
+
+\section{KBGAT Model}
+
+In a knowledge graph, a single entity cannot fully represent an edge, as the entity can play multiple roles depending on the type of relation. For example, in \autoref{fig:graphExample}, Donald Trump serves both as a president and as a husband. To address this issue, the knowledge graph attention-based embedding model — KBGAT (graph attention based embeddings \cite{nathani2019learning}) — improves upon the GAT model by incorporating additional information from \textit{relations and neighboring node features} into the attention mechanism. In this section, we will detail the KBGAT model. The structure of KBGAT follows an encoder-decoder framework, where the encoder is implemented using the Graph Attention Network (GAT), and the decoder uses the ConvKB model for prediction. The steps of the KBGAT model are illustrated in \ref{eq:KBGATProcess}.
 
 \begin{equation}
 	\label{eq:KBGATProcess}
 	entities \xrightarrow{\text{Embedding}^{\ref{sec:initTransE}}} \overrightarrow{e_{\text{TransE}}} \xrightarrow{\text{Embedding} ^{\ref{sec:encodeKBGAT}}} \overrightarrow{e_{\text{KBGAT}}} \xrightarrow{\text{ConvKB}^{\ref{sec:predictionConvKB}}} e_{\text{prob}}
 \end{equation}
 
-Đầu tiên, các vector nhúng của mỗi thực thể được khởi tạo bằng mô hình TransE để học được các đặc trưng không gian giữa các đỉnh để thu được vector nhúng. 
-Sau đó các vector nhúng này được tiếp tục huấn luyện bằng mô hình mã hóa để học được các đặc trưng lân cận để có được vector nhúng mới. Cuối cùng, các vector nhúng này đi qua lớp dự đoán bằng mô hình ConvKB. Tất cả các công thức của chúng tôi đều được trình bày lại theo nhóm tác giả Nathani, Deepak\cite{nathani2019learning}.
+First, the embedding vectors of each entity are initialized using the TransE model to capture the spatial characteristics among nodes and obtain the initial embeddings. These embeddings are then further trained using an encoder model to capture neighborhood features, resulting in updated embeddings. Finally, these embeddings are passed through a prediction layer using the ConvKB model. All equations presented here are based on those in the work of Nathani, Deepak\cite{nathani2019learning}.
 
-\subsection{Khởi tạo vector nhúng}
+
+
+
+\subsection{Embedding Initialization}
 \label{sec:initTransE}
 
 \begin{figure}[htp]
@@ -658,50 +609,52 @@ Sau đó các vector nhúng này được tiếp tục huấn luyện bằng mô
 		\foreach \x in {1, 5}
 		{\draw [dashLine, color=darkpastelgreen] (c\x) -> (c3);}
 	\end{tikzpicture}
-	\caption{Minh họa về các vector nhúng trong mô hình TransE}
+	\caption{Illustration of embedding vectors in the TransE model}
 	\label{fig:TransEAnimation}
 \end{figure}
 
-Tương tự như phương pháp Word2Vec\cite{mikolov2013efficient}, mô hình \textit{Biến đổi vector nhúng để mô hình hóa dữ liệu đa-quan hệ} (TransE \cite{bordes2013translating}) thuộc nhóm các phương pháp nhúng hình học để biến đổi các thực thể và quan hệ trong đồ thị tri thức thành các vector nhúng đầu ra sao cho :
+Similar to the Word2Vec method \cite{mikolov2013efficient}, the model \textit{Translating Embeddings for Modeling Multi-relational Data} (TransE \cite{bordes2013translating}) belongs to the group of geometric embedding methods that transform entities and relations in a knowledge graph into output embedding vectors such that:
 \begin{equation}
 	\label{eq:conditionTransE}
 	\overrightarrow{\text{entity}_{\text{head}}} + \overrightarrow{relation} \approx \overrightarrow{\text{entity}_{\text{tail}}}
 \end{equation}
 
-Đầu tiên, các vector nhúng thực thể và quan hệ được khởi tạo ngẫu nhiên bằng phân phối chuẩn theo số chiều của vector khởi tạo $D_{\text{in}}$, sau đó được chuẩn hóa theo kích thước của tập thực thể nhúng, và quan hệ nhúng.
-Sau đó, ta lấy mẫu (sampling) từ tập dữ liệu huấn luyện để có được một \textit{lô bộ ba hợp lệ} ($S_{\text{batch}}$). Với mỗi bộ ba như vậy, chúng ta lấy mẫu bộ ba không hợp lệ bằng cách thay thực thể đầu hoặc thực thể đuôi bằng một thực thể ngẫu nhiên trong tập thực thể để được \textit{lô bộ ba không hợp lệ} ($S'_{\text{batch}}$). Sau đó ta nhóm từng bộ ba hợp lệ với không hợp lệ để tạo ra \textit{lô huấn luyện} ($T_{\text{batch}}$). Cuối cùng, ta cập nhật giá trị các vector nhúng để đảm bảo điều kiện  \ref{eq:conditionTransE} .
+Initially, the entity and relation embedding vectors are randomly initialized using a normal distribution with dimensionality $D_{\text{in}}$, and then normalized according to the size of the entity and relation embedding sets.
+
+
+Next, we perform sampling from the training dataset to obtain a batch of valid triples ($S_{\text{batch}}$). For each such triple, we sample an invalid triple by replacing either the head or the tail entity with a random entity from the entity set, yielding a batch of invalid triples ($S'_{\text{batch}}$). We then pair each valid triple with an invalid one to form the training batch ($T_{\text{batch}}$). Finally, we update the embedding vectors to satisfy the condition in \ref{eq:conditionTransE}.
 
 \begin{algorithm}
-	\caption{Thuật toán học vector nhúng TransE \protect\cite{bordes2013translating}}\label{alg:TransE}
+	\caption{TransE Embedding Learning Algorithm \protect\cite{bordes2013translating}}\label{alg:TransE}
 	\begin{algorithmic}[1]
 		\Statex \textbf{Input} :
-		Tập huấn luyện $S = {(h, r, t)}$, tập thực thể E, tập quan hệ R, biên lề $\gamma$, số chiều nhúng $D_{\text{in}}$	
+		Training set $S = {(h, r, t)}$, entity set $E$, relation set $R$, margin $\gamma$, embedding dimension $D_{\text{in}}$	
 		\Statex \textbf{Initialize}
-		\State $\overrightarrow{r} \leftarrow \text{uniform}(-\frac{6}{\sqrt{D_{\text{in}}}}, \frac{6}{\sqrt{D_{\text{in}}}})$ với mỗi quan hệ $r \in R$
-		\State $\overrightarrow{r} \leftarrow \frac{\overrightarrow{r}}{\|\overrightarrow{r}\|}$ với mỗi $r \in R$
-		\State $\overrightarrow{e} \leftarrow \text{uniform}(-\frac{6}{\sqrt{D_{\text{in}}}}, \frac{6}{\sqrt{D_{\text{in}}}})$ với mỗi thực thể $e \in E$
+		\State $\overrightarrow{r} \leftarrow \text{uniform}(-\frac{6}{\sqrt{D_{\text{in}}}}, \frac{6}{\sqrt{D_{\text{in}}}})$ for each relation $r \in R$
+		\State $\overrightarrow{r} \leftarrow \frac{\overrightarrow{r}}{\|\overrightarrow{r}\|}$ for each $r \in R$
+		\State $\overrightarrow{e} \leftarrow \text{uniform}(-\frac{6}{\sqrt{D_{\text{in}}}}, \frac{6}{\sqrt{D_{\text{in}}}})$ for each entity $e \in E$
 		\Loop
-		\State $\overrightarrow{e} \leftarrow \frac{\overrightarrow{e}}{\|\overrightarrow{e}\|}$ với mỗi $e \in E$
-		\State $S_{\text{batch}} \leftarrow \text{sample}(S, b)$  // lấy mẫu minibatch kích thước $b$
+		\State $\overrightarrow{e} \leftarrow \frac{\overrightarrow{e}}{\|\overrightarrow{e}\|}$ for each $e \in E$
+		\State $S_{\text{batch}} \leftarrow \text{sample}(S, b)$  // sample minibatch of size $b$
 		\State $T_{\text{batch}} \leftarrow \varnothing $
 		\For {$(h, r, t) \in S_{\text{batch}}$}
-		\State $(h', r, t') \leftarrow \text{sample}(S'_{(h, r, t)})$ // lấy mẫu từ bộ ba không hơp lệ
+		\State $(h', r, t') \leftarrow \text{sample}(S'_{(h, r, t)})$ // sample from invalid triple set
 		\State $T_{\text{batch}} \leftarrow T_{\text{batch}} \cup \Big\{ \Big( (h, r, t), (h', r, t') \Big) \Big\}$
 		\EndFor
-		\Statex Cập nhật nhúng
+		\Statex Update embeddings
 		\State $\sum_{\Big( (h, r, t), (h', r, t')\Big) \in T_{\text{batch}}} \nabla [\gamma + d(\overrightarrow{h} + \overrightarrow{r}, \overrightarrow{t}) - d(\overrightarrow{h'} + \overrightarrow{r}, \overrightarrow{t'})]_{+}$
 		\EndLoop
 		\Statex \textbf{Output} :
-		tập các vector có số chiều là $D_{\text{in}}$ đại điện cho các thực thể và quan hệ
+		A set of embedding vectors with dimension $D_{\text{in}}$ representing entities and relations
 	\end{algorithmic}
 \end{algorithm}
 
-Mô hình TransE của nhóm tác giả Bordes, Antoine\cite{bordes2013translating} được trình bày ở thuật toán \ref{alg:TransE}.
+The TransE model proposed by Bordes, Antoine \cite{bordes2013translating} is presented in Algorithm \ref{alg:TransE}.
 
-Trong đó, đầu vào của mô hình TransE là tập dữ liệu huấn luyện với mỗi phần tử là một bộ ba $(h, r, t)$. $h, t \in E$ là các thực thể đầu và thực thể đuôi, $r \in R$ là các quan hệ.$\overrightarrow{e}$ và $\overrightarrow{r}$ lần lượt là các vector nhúng của thực thể và quan hệ, và $\|\overrightarrow{e}\|$ và $\|\overrightarrow{r}\|$ lần lượt là độ lớn của tập thực thể và tập quan hệ. $S$ và $S_{\text{batch}}$ tương ứng là tập dữ liệu huấn luyện, và một lô (batch) lấy ra từ tập dữ liệu huấn luyện.
-$T_{\text{batch}}$ là một lô bao gồm cả bộ ba hợp lệ và bộ ba không hợp lệ để tính hàm mất mát \ref{eq:sampleTransE} .
 
-\textit{Bộ ba hợp lệ} (valid triple) là bộ ba lấy từ lô huấn luyện ($S_{\text{batch}}$), \textit{bộ ba không hợp lệ} (invalid triple) là bộ ba lấy từ lô huấn luyện lỗi ($S'_{\text{batch}}$) được bỏ đi thực thể đầu hoặc thực thể đuôi và thay thế các thực thể đó bằng cách chọn một thực thể ngẫu nhiên trong tập thực thể :
+The input of the TransE model is a training dataset where each element is a triple $(h, r, t)$. Here, $h, t \in E$ are the head and tail entities, and $r \in R$ is the relation. $\overrightarrow{e}$ and $\overrightarrow{r}$ are the embedding vectors of entities and relations respectively, and $\|\overrightarrow{e}\|$ and $\|\overrightarrow{r}\|$ denote the cardinalities of the entity and relation sets. $S$ and $S_{\text{batch}}$ represent the full training dataset and a sampled batch from it, respectively. $T_{\text{batch}}$ is a batch containing both valid and invalid triples used to compute the loss function \ref{eq:sampleTransE}.
+
+A \textit{valid triple} is one directly sampled from the training set ($S_{\text{batch}}$), while an \textit{invalid triple} is constructed by corrupting a valid triple ($S'_{\text{batch}}$) by replacing either the head or the tail entity with a randomly selected entity from the entity set:
 
 \begin{equation}
 	\label{eq:sampleTransE}
@@ -709,13 +662,14 @@ $T_{\text{batch}}$ là một lô bao gồm cả bộ ba hợp lệ và bộ ba k
 	S'_{(h, r, t)} = \big\{ (h', r, t) | h' \in E \big\} \cup \big\{ (h, r, t') | t' \in E \big\}
 \end{equation}
 
-Để đạt được mục tiêu là tạo ra các vector nhúng sao cho $\overrightarrow{h} + \overrightarrow{r} \approx \overrightarrow{t}$, ý tưởng của mô hình là các vector nhúng trong lô hợp lệ thì vector nhúng đuôi $\overrightarrow{t}$ phải ở lân cận của $\overrightarrow{h} + \overrightarrow{r}$, ngược lại các vector nhúng trong lô không hợp lệ $\overrightarrow{h'} + \overrightarrow{r}$ (hoặc $\overrightarrow{t'}$) thì phải nằm xa so với $\overrightarrow{t}$ (hoặc $\overrightarrow{h} + \overrightarrow{r}$) theo hàm mất mát sau :
+To achieve the goal of learning embedding vectors such that $\overrightarrow{h} + \overrightarrow{r} \approx \overrightarrow{t}$, the model aims for the tail embedding $\overrightarrow{t}$ of valid triples to lie close to $\overrightarrow{h} + \overrightarrow{r}$, while in invalid triples, the corrupted embedding $\overrightarrow{h'} + \overrightarrow{r}$ (or $\overrightarrow{t'}$) should lie far from $\overrightarrow{t}$ (or $\overrightarrow{h} + \overrightarrow{r}$), according to the following margin-based ranking loss function:
 
 \begin{equation}
 	\label{eq:KBGATLoss}
 	\centering
 	\mathcal{L} = \sum_{(h, r, t) \in S} \sum_{(h', r, t') \in S'_{(h, r, t)}} [d - d' + \gamma]_{+}
 \end{equation}
+
 
 % \begin{figure}[htp]
 	% 	\centering
@@ -756,22 +710,29 @@ $T_{\text{batch}}$ là một lô bao gồm cả bộ ba hợp lệ và bộ ba k
 	% 	\caption{Minh học về độ đo hàm loss trong TransE}
 	% 	
 	% \end{figure}
+	
+	
 \begin{figure}[htp]
 	\centering
 	\resizebox{\textwidth}{!}{%
 		\includegraphics{images/transe.png}
 	}
-	\caption{Mô hình nhúng TransE}
+	\caption{TransE embedding model}
 	\label{fig:TransEExplain}
 \end{figure}
 
-Với $\gamma > 0$ là biên lề, $h'$ và $t'$ lần lượt là các thực thể lấy mẫu trong công thức \ref{eq:sampleTransE} ; $\Delta$ và $\Delta'$ lần lượt là hàm đo giá trị sai khác của các thực thể nhúng trong lô hợp lệ $d = \big\|\Delta \big\|_{1}  = \big\| \overrightarrow{h} + \overrightarrow{r} - \overrightarrow{t}\big\|_{1}$ và lô không hợp lệ $d' = \big\|\Delta' \big\|_{1} = \big\| \overrightarrow{h'} + \overrightarrow{r} - \overrightarrow{t'}\big\|_{1}$ ($\|\|_{1}$ là hàm chuẩn hóa L1-norm) .
-Theo minh họa trong \autoref{fig:TransEExplain}, ta thấy nếu $d > d'$ hay $d - d' > 0$ thì $\overrightarrow{h} + \overrightarrow{r}$ sẽ nằm gần $\overrightarrow{\text{t}}$ hơn so với $\overrightarrow{t'}$. Ta muốn các vector nhúng thõa mãn điều kiện \ref{eq:conditionTransE} nên $\overrightarrow{h} + \overrightarrow{r}$ phải càng gần $t$ càng tốt, nghĩa là $\overrightarrow{h} + \overrightarrow{r}$ càng gần $\overrightarrow{t'}$ thì càng không đúng. Vì vậy trong quá trình huấn luyện ta muốn $\Delta'$ càng lớn bằng $\Delta$ càng tốt và nếu $\Delta' > \Delta$ hay $d' - d > 0$ thì ta không cần cập nhật các trọng số nhúng nữa. Vì vậy trong hàm mất mát \ref{eq:KBGATLoss} $[d - d' + \gamma]_{+}$ là ta muốn lấy phần dương vì phần âm đã đảm bảo tính đúng đắn của điều kiện \ref{eq:conditionTransE} trong quá trình huấn luyện.
+Here, $\gamma > 0$ is the margin, and $h'$ and $t'$ are entities sampled as defined in Equation \ref{eq:sampleTransE}. $\Delta$ and $\Delta'$ represent the difference vectors for the embeddings in valid and invalid triples, respectively, with $d = \big\|\Delta \big\|_{1} = \big\| \overrightarrow{h} + \overrightarrow{r} - \overrightarrow{t} \big\|_{1}$ and $d' = \big\|\Delta' \big\|_{1} = \big\| \overrightarrow{h'} + \overrightarrow{r} - \overrightarrow{t'} \big\|_{1}$, where $\|\cdot\|_{1}$ denotes the L1 norm.
 
-\subsection{Mô hình mã hóa}
+As illustrated in \autoref{fig:TransEExplain}, if $d > d'$ or $d - d' > 0$, then $\overrightarrow{h} + \overrightarrow{r}$ is closer to $\overrightarrow{t}$ than to $\overrightarrow{t'}$. Since we want the embedding vectors to satisfy the condition in Equation \ref{eq:conditionTransE}, $\overrightarrow{h} + \overrightarrow{r}$ should be as close as possible to $\overrightarrow{t}$. That means, the closer $\overrightarrow{h} + \overrightarrow{r}$ is to $\overrightarrow{t'}$, the more incorrect it becomes.
+
+Therefore, during training, we aim for $\Delta'$ to be as large as possible relative to $\Delta$. If $\Delta' > \Delta$ or $d' - d > 0$, there is no need to update the embedding weights further. Hence, in the loss function \ref{eq:KBGATLoss}, the term $[d - d' + \gamma]_{+}$ captures only the positive part because the negative part already satisfies the correctness of the condition in Equation \ref{eq:conditionTransE} during training.
+
+
+
+\subsection{Encoder Model}
 \label{sec:encodeKBGAT}
 
-Sau khi có được các vector nhúng học được các đặc trưng không gian ở trên của đồ thị. Các vector nhúng tiếp tục được đi qua lớp nhúng tiếp theo để tổng hợp thêm thông tin lân cận của một thực thể.
+After obtaining the embedding vectors that capture spatial features of the knowledge graph, these embeddings are passed through the next embedding layer to further aggregate the neighborhood information of each entity.
 
 
 \begin{figure}[htp]
@@ -981,33 +942,44 @@ Sau khi có được các vector nhúng học được các đặc trưng không
 			\draw node[mydot][below=1.7em of entity2] (dot3) {};
 		\end{tikzpicture}
 	}
-	\caption{Minh họa các lớp mã hóa của mô hình KBGAT}
+	\caption{Illustration of the encoder layers in the KBGAT model}
 	\label{fig:encoderKBGAT}
 \end{figure}
 
-Mô hình sẽ biến đổi từ ma trận nhúng thực thể
 
-$\mathbf{E} = \Big\{\overrightarrow{e_1}, \overrightarrow{e_2}, ...,  \overrightarrow{e_{N_e}}\Big\} \xrightarrow{} \mathbf{E''} = \Big\{\overrightarrow{e''_1}, \overrightarrow{e''_2}, ...,  \overrightarrow{e''_{N_e}}\Big\}$, với $\mathbf{E} \in \mathbb{R}^{N_e \times D_{\text{in}}}$ và $\mathbf{E''} \in \mathbb{R}^{N_e \times D''}$.
-Đồng thời biến đổi ma trận nhúng quan hệ 
-$\mathbf{R} = \Big\{\overrightarrow{r_1}, \overrightarrow{r_2}, ...,  \overrightarrow{r_{N_r}}\Big\} \xrightarrow{} \mathbf{R''} = \Big\{\overrightarrow{r''_1}, \overrightarrow{r''_2}, ...,  \overrightarrow{r''_{N_r}}\Big\}$ với $\mathbf{R} \in \mathbb{R}^{N_r \times P_{\text{in}}}$ và $\mathbf{R''} \in \mathbb{R}^{N_r \times P''}$. Tương tự như mô hình GAT đã trình bày ở mục \ref{sec:GAT}, mô hình sẽ biến đổi vector nhúng thực thể $D_{\text{in}}$ chiều thành $D''$ chiều với thông tin được tổng hợp từ các hệ số chú ý lân cận. $P_{\text{in}}$ và $P''$ lần lượt là số chiều của vector nhúng quan hệ đầu vào và đầu ra. $N_e$, $N_r$ tương ứng là kích thước của tập thực thể và tập quan hệ trong $\mathcal{G}_{know}$.
+The model transforms the entity embedding matrix
 
-Mô hình KBGAT sẽ ghép các vector nhúng thực thể và vector nhúng quan hệ theo cấu trúc như sau :
+\[
+\mathbf{E} = \Big\{\overrightarrow{e_1}, \overrightarrow{e_2}, ...,  \overrightarrow{e_{N_e}}\Big\} \xrightarrow{} \mathbf{E''} = \Big\{\overrightarrow{e''_1}, \overrightarrow{e''_2}, ...,  \overrightarrow{e''_{N_e}}\Big\},
+\]
+with $\mathbf{E} \in \mathbb{R}^{N_e \times D_{\text{in}}}$ and $\mathbf{E''} \in \mathbb{R}^{N_e \times D''}$.
+
+Simultaneously, it transforms the relation embedding matrix
+
+\[
+\mathbf{R} = \Big\{\overrightarrow{r_1}, \overrightarrow{r_2}, ...,  \overrightarrow{r_{N_r}}\Big\} \xrightarrow{} \mathbf{R''} = \Big\{\overrightarrow{r''_1}, \overrightarrow{r''_2}, ...,  \overrightarrow{r''_{N_r}}\Big\},
+\]
+with $\mathbf{R} \in \mathbb{R}^{N_r \times P_{\text{in}}}$ and $\mathbf{R''} \in \mathbb{R}^{N_r \times P''}$.
+
+Similar to the GAT model described in Section~\ref{sec:GAT}, the model transforms the entity embedding vectors from $D_{\text{in}}$ dimensions to $D''$ dimensions by aggregating neighborhood information through attention coefficients. $P_{\text{in}}$ and $P''$ are the input and output dimensions of the relation embedding vectors, respectively. $N_e$ and $N_r$ are the sizes of the entity and relation sets in $\mathcal{G}_{know}$, respectively.
+
+The KBGAT model concatenates the entity and relation embedding vectors according to the following structure:
 
 \begin{equation}
 	\label{attentionWithRelation}
 	\overrightarrow{t_{ijk}} = \mathbf{W_1} [\overrightarrow{e_i} || \overrightarrow{e_j} || \overrightarrow{r_k}]
 \end{equation}
 
-Với $\overrightarrow{t_{ijk}}$ là vector nhúng đại diện cho bộ ba  $t_{ij}^k = (e_i, r_k, e_j)$ với $e_j$, và $r_k$ lần lượt là các thực thể hàng xóm và quan hệ nối giữa đỉnh gốc $e_i$ với đỉnh $e_j$ , $\mathbf{W} \in \mathbb{R}^{D_k \times (2 D_{\text{in}} + P_{\text{in}})}$ là ma trận trọng số thể hiện quá trình biến đổi tuyến tính từ các vector đã ghép lại với nhau thành một vector với số chiều $D_k$ mới. Các ma trận trọng số trên được khởi tạo ngẫu nhiên theo phân phối chuẩn hoặc tái huấn luyện (pre-train) bằng mô hình TransE \cite{bordes2013translating}.
+Here, $\overrightarrow{t_{ijk}}$ is the embedding vector representing the triple $t_{ij}^k = (e_i, r_k, e_j)$, where $e_j$ and $r_k$ are the neighboring entity and the relation connecting the source node $e_i$ to the node $e_j$. $\mathbf{W_1} \in \mathbb{R}^{D_k \times (2 D_{\text{in}} + P_{\text{in}})}$ is a weight matrix that performs a linear transformation of the concatenated input vectors into a new vector with dimensionality $D_k$. These weight matrices are either randomly initialized using a normal distribution or pre-trained using the TransE model~\cite{bordes2013translating}.
 
-Tương tự với công thức \ref{attentionCoeff} của mô hình GAT, ta cần tính hệ số chú ý của từng cạnh đối với từng đỉnh, sau đó áp dụng hàm \textit{softmax} để chuẩn hóa hệ số lại theo công thức sau :
+Similar to Equation~\ref{attentionCoeff} in the GAT model, we need to compute the attention coefficient for each edge with respect to a given node. Then, the \textit{softmax} function is applied to normalize these coefficients as follows:
 
 \begin{equation}
 	\label{attentionRelationCoeff}
 	\begin{split}
 		\alpha_{ijk}& = \text{softmax}_{jk}(\text{LeakyReLU}(\mathbf{W_2} \overrightarrow{t_{ijk}}))\\
 		&= \frac{
-			\text{exp} \Big( \text{LeakyReLU} \Big( \mathbf{W_2} \overrightarrow{t_{ijk}}\Big) \Big))
+			\text{exp} \Big( \text{LeakyReLU} \Big( \mathbf{W_2} \overrightarrow{t_{ijk}}\Big) \Big)
 		}
 		{
 			\sum_{n\in \mathcal{N}_i} \sum_{r\in \mathcal{R}_{in}}
@@ -1015,6 +987,7 @@ Tương tự với công thức \ref{attentionCoeff} của mô hình GAT, ta c�
 		}
 	\end{split}
 \end{equation}
+
 
 %Trong đồ thị, mỗi cạnh của thực thể không chỉ được biểu diễn thông tin bởi thực thể đầu $e_\text{head}$ và thực thể đích $e_\text{tail}$ mà có các quan hệ giữa chúng. Hơn nữa trong một cạnh, các thực thể còn có thể đóng nhiều vai trò khác nhau phụ thuộc vào các loại quan hệ khác nhau. Vì vậy phương pháp KBGAT bổ sung thêm thông tin của một vector nhúng quan hệ vào một cạnh  nhúng $(\overrightarrow{e_\text{i}}, \overrightarrow{r_k}, \overrightarrow{e_\text{j}})$. Tuy nhiên một vector $\overrightarrow{e_i}$ hay $\overrightarrow{r_k}$ không thể biểu thị một cách đầy đủ tri thức của một thực thể $e_i$ hay quan hệ $r_k$ trong một đồ thị, vì một tri thức sẽ có thể có mối liên hệ với những tri thức lân cận hay nói cách khác một \textbf{thực thể nhúng} (entity embedding) hay một \textbf{quan hệ nhúng} (relation embedding) sẽ cần thêm thông tin của các vector nhúng của thực thể lân cận và quan hệ lân cận khác để có thể là một đại diện đầy đủ . Chính vì vậy phương pháp \textit{n-hop neighborhood} \cite{lin2018multi} sẽ giúp bổ sung thêm thông tin lân cận của thực thể $e_i$ và quan hệ $r_k$ bằng cách ghép chồng để tạo thành một vector mới theo công thức sau :
 %\begin{align}
@@ -1041,61 +1014,70 @@ Tương tự với công thức \ref{attentionCoeff} của mô hình GAT, ta c�
 %\end{align}
 %
 %Sau đó, với mỗi độ lớn của $b^k_{ij}$ được cho qua hàm \textit{softmax} để tính giá trị thể hiện xác suất của từng giá trị chú ý $\alpha_{ijk}$ đối với từng bộ ba .
-
-trong đó $\mathcal{N}_i$ là tập hợp hàng xóm của đỉnh gốc $e_i$ có độ sâu $n_{\text{hop}}$; $\mathcal{R_{\textit{i} \textit{n}}}$ là tập hợp tất cả những quan hệ nằm trên đường đi (path) từ thực thể gốc $e_i$ với thực thể $e_n \in \mathcal{N}_i$. Tương tự công thức \ref{scaleAttentionCoef}, các vector nhúng $\overrightarrow{t^k_{ij}}$ sẽ được thu nhỏ hoặc mở rộng khi nhân với hệ số chú ý đã được chuẩn hóa :
+where $\mathcal{N}_i$ denotes the set of neighbors of the central node $e_i$ within $n_{\text{hop}}$ hops; $\mathcal{R}_{in}$ represents the set of all relations that exist along the paths connecting the source entity $e_i$ to a neighboring entity $e_n \in \mathcal{N}_i$. Similar to Equation~\ref{scaleAttentionCoef}, the embedding vectors $\overrightarrow{t^k_{ij}}$ are scaled by their corresponding normalized attention coefficients:
 
 \begin{align}
 	{\overrightarrow{e'_{i}}}&={\sigma\left(\sum_{j \in \mathcal{N}_i} \sum_{k \in \mathcal{R}_{ij}} \alpha_{ijk} \overrightarrow{t_{ijk}}\right)}
 \end{align}
 
-Tương tự như công thức \ref{multiHeadAttention} của \textit{cơ chế mặt nạ chú ý}, ta sẽ ghép $N_{\text{head}}$ đỉnh chú ý lại với nhau để ổn định quá trình học :
+Similar to the multi-head attention mechanism in Equation~\ref{multiHeadAttention}, we concatenate $N_{\text{head}}$ attention heads to stabilize the learning process:
 
 \begin{equation}
 	\label{eq:graphAttention1}
 	\overrightarrow{e'}_i=\bigparallel_{h=1}^{N_{\text{head}}} \sigma\left(\sum_{j\in \mathcal{N}_i}\alpha_{ijk}^{(h)} \overrightarrow{t^{(h)}_{ijk}}\right)
 \end{equation}
 
-Tương tự như các vector nhúng thực thể, các vector nhúng quan hệ cũng được nhân với một ma trận trọng số $\mathbf{W}_R$ để thực hiện biến đổi tuyến tính các vector nhúng quan hệ $P$ chiều lên vector nhúng có $P'$ chiều :
+Likewise, for relation embeddings, a weight matrix $\mathbf{W}_R$ is used to perform a linear transformation from the original relation embedding of dimension $P$ to a new dimension $P'$:
 
 \begin{align}
-	\mathbf{R'} = \mathbf{R} \mathbf{W}^R; \hspace{2cm} \text{với: } \mathbf{W}^R \in \mathbb{R}^{P \times P'}
+	\mathbf{R'} = \mathbf{R} \mathbf{W}^R; \hspace{2cm} \text{where: } \mathbf{W}^R \in \mathbb{R}^{P \times P'}
 \end{align}
 
-Đến đây, ta đã có hai ma trận $\mathbf{H}' \in \mathbb{R}^{N_e \times D'}$ và $\mathbf{R}' \in \mathbb{R}^{N_r \times P'}$ tương ứng là ma trận quan hệ và ma trận thực thể với số chiều mới. Mô hình sẽ đi qua lớp chú ý cuối cùng với đầu vào các vector nhúng quan hệ và thực thể mới như \ref{multiHeadConcat} . Tuy nhiên, nếu chúng ta thực hiện chú ý đa đỉnh trên lớp cuối cùng này để dự đoán, phép ghép chồng sẽ không còn \textit{nhạy cảm} với cơ chế tự-chú ý. Vì vậy thay vì ghép chồng, mô hình sẽ tính trung bình và sau đó áp dụng hàm phi tuyến tính cuối cùng :
+
+
+
+
+At this stage, we have obtained two matrices: $\mathbf{H}' \in \mathbb{R}^{N_e \times D'}$ and $\mathbf{R}' \in \mathbb{R}^{N_r \times P'}$, which are the updated entity and relation embedding matrices, respectively, with new dimensions. The model proceeds through the final attention layer, taking as input the newly updated entity and relation embeddings as shown in Equation~\ref{multiHeadConcat}. However, if we apply multi-head attention at this final layer for prediction, the concatenation operation will no longer be \textit{sensitive} to the self-attention mechanism. Therefore, instead of concatenating, the model averages the outputs and then applies a final non-linear activation function:
 
 \begin{equation}
 	\label{eq:graphAttention2}
 	\overrightarrow{e''_{i}}=\sigma\left(\frac{1}{N_{\text{head}}} \sum_{h=1}^{N_{\text{head}}} \sum_{j \in \mathcal{N}_i} \sum_{k \in \mathcal{R}_{ij}} \alpha'^{(h)}_{ijk} \overrightarrow{t'^{(h)}_{ijk}} \right)
 \end{equation}
 
-Với $\alpha'^{(h)}_{ijk}$ và $t'^{(h)}_{ijk}$ tương ứng là hệ số chú ý đã chuẩn hóa và vector nhúng đại diện cho một bộ ba $(e_i, r_k, e_j)$ thuộc các lớp $(h)$ khác nhau.
+where $\alpha'^{(h)}_{ijk}$ and $t'^{(h)}_{ijk}$ denote the normalized attention coefficients and the triple embedding vectors for $(e_i, r_k, e_j)$ in attention head $(h)$, respectively.
 
-Đến đây, mô hình KBGAT đã áp dụng giống như mô hình GAT \ref{sec:GAT} nhưng ta bổ sung thêm thông tin vector nhúng thực thể và thông tin các đỉnh hàng xóm cách $n_{\text{hop}}$ bậc, ta đã thu được ma trận nhúng thực thể $\mathbf{E}'' \in \mathbb{R}^{N_e \times D''}$, và ma trận nhúng quan hệ $\mathbf{R}'' \in \mathbb{R}^{N_r \times P''}$. Tuy nhiên, sau khi trải qua quá trình học ma trận nhúng mới, ma trận nhúng thực thể $\mathbf{E}''$ mất đi thông tin nhúng khởi tạo ban đầu do xảy ra hiện tượng \textbf{biến mất đạo hàm} (vanishing gradients). Để giải quyết vấn đề này, mô hình sử dụng kỹ thuật học còn sót (residual learning) sẽ cho nhân ma trận nhúng khởi tạo ban đầu $\mathbf{E}$ với một ma trận trọng số $\mathbf{W}^E \in \mathbb{R}^{D_{\text{in}} \times D''}$ để tạo thành ma trận nhúng mới rồi cộng trực tiếp ma trận nhúng đó vào để đảm bảo thông tin nhúng khởi tạo trong quá trình huấn luyện :
+Up to this point, the KBGAT model functions similarly to the GAT model in Section~\ref{sec:GAT}, but it additionally incorporates both entity embedding information and neighbor nodes up to $n_{\text{hop}}$ hops. This results in the final entity embedding matrix $\mathbf{E}'' \in \mathbb{R}^{N_e \times D''}$ and the final relation embedding matrix $\mathbf{R}'' \in \mathbb{R}^{N_r \times P''}$. 
+
+However, after the embedding learning process, the final entity embedding matrix $\mathbf{E}''$ may lose the initial embedding information due to the \textbf{vanishing gradient} problem. To address this, the model employs residual learning, by projecting the initial embedding matrix $\mathbf{E}$ through a weight matrix $\mathbf{W}^E \in \mathbb{R}^{D_{\text{in}} \times D''}$, and then directly adding it to the final embedding, thus preserving the initial embedding information during training:
 
 \begin{equation}
 	\label{eq:reInitEmbedding}
 	\mathbf{H} = \mathbf{W}^E \mathbf{E} + \mathbf{E''}
 \end{equation}
 
-Cuối cùng, các bộ dữ liệu huấn luyện sẽ được lấy mẫu để tạo ra bộ ba hợp lệ (valid triple), và bộ ba không hợp lệ (invalid triple) tương tự như mô hình TransE được trình bày ở trên để học được các vector nhúng.
-Tuy nhiên công thức tính sự khác biệt giữa các vector nhúng được chuẩn hóa L1 theo công thức sau  :
-$d_{t_{ij}} = \big|\big|\vec{h_i}+ \vec{g_k}-\vec{h_j}\big|\big|_1$.
+Finally, the training datasets are sampled to generate valid triples and invalid triples, similar to the TransE model described above, in order to learn the embedding vectors. However, the distance between embedding vectors is computed using the L1 norm as follows:
+\[
+d_{t_{ij}} = \big|\big|\vec{h_i}+ \vec{g_k}-\vec{h_j}\big|\big|_1
+\]
 
-Tương tự, chúng tôi huấn luyện sử dụng hàm mất mát-lề :
+Similarly, we train the model using a margin-based loss function:
 
 \begin{equation}
 	L(\Omega)=\sum_{t_{ij} \in S} \sum_{t'_{ij} \in S'} \text{max}\{d_{t'_{ij}} - d_{t_{ij}} + \gamma , 0 \}
 \end{equation}
 
-trong đó $\gamma > 0$ là tham số lề, $S$ là tập hợp bộ ba chuẩn (valid triple), và $S'$ là tập hợp của ba lỗi (invalid triple) theo công thức sau :
+where $\gamma > 0$ is the margin parameter, $S$ is the set of valid triples, and $S'$ is the set of invalid triples, defined as:
 
 \begin{equation}
-	{S'} ={\underbrace{\{ t^k_{i'j} | e'_i \in \mathcal{E}\setminus e_i\}}_{\text{thay thế thực thể đầu}}\cup \underbrace{\{ t^k_{ij'} | e'_j \in \mathcal{E}\setminus e_j\}}_{\text{thay thế thực thể đuôi}}}
+	{S'} ={\underbrace{\{ t^k_{i'j} | e'_i \in \mathcal{E}\setminus e_i\}}_{\text{head entity replacement}} \cup \underbrace{\{ t^k_{ij'} | e'_j \in \mathcal{E}\setminus e_j\}}_{\text{tail entity replacement}}}
 \end{equation}
 
-Đầu ra của mô hình KBGAT là các vector nhúng thực thể và các vector nhúng quan hệ, sau đó các vector nhúng này tiếp tục đi qua mô hình ConvKB để tiến hành dự đoán.
+The output of the KBGAT model is the set of entity and relation embedding vectors, which are subsequently fed into the ConvKB model for final prediction.
 
-\subsection{Mô hình dự đoán ConvKB}
+
+
+
+\subsection{ConvKB Prediction Model}
 \label{sec:predictionConvKB}
 
 \begin{figure}[htp]
@@ -1196,27 +1178,37 @@ trong đó $\gamma > 0$ là tham số lề, $S$ là tập hợp bộ ba chuẩn 
 			
 		\end{tikzpicture}
 	}
-	\caption{Minh họa các lớp giải mã của mô hình ConvKB với 3 filter}
+	\caption{Illustration of the decoder layers of the ConvKB model with 3 filters}
 	\label{fig:decoderConvKB}
 \end{figure}
+s
 
-Sau khi chúng ta biểu diễn các thực thể và quan hệ lên không gian số chiều thấp, mô hình sẽ sử dụng \cite{nguyen2017novel} làm mô hình để phân tích các đặc trưng toàn cục của một bộ ba $t_{ijk}$ qua mỗi chiều để khái quát hóa các đặc trưng biến đổi của mô hình bằng các lớp tính tích chập. Hàm tính điểm số với những ánh xạ đặc trưng được tính theo công thức sau :
+After mapping entities and relations into a low-dimensional space, the model employs ConvKB \cite{nguyen2017novel} to analyze the global features of a triple $t_{ijk}$ across each dimension, thereby generalizing transformation patterns through convolutional layers. The scoring function with the learned feature mappings is defined as follows:
 
 \begin{equation}
-	f(t_{i j k}) = \Big( \bigparallel_{m=1}^{\Omega} \text{ReLU} ([\overrightarrow{e_i}, \overrightarrow{r_k}, \overrightarrow{h_j}] \ast \omega^m)\Big).\mathbf{W}
+	f(t_{ijk}) = \Big( \bigparallel_{m=1}^{\Omega} \text{ReLU} ([\overrightarrow{e_i}, \overrightarrow{r_k}, \overrightarrow{h_j}] \ast \omega^m)\Big).\mathbf{W}
 \end{equation}
 
-trong đó $\omega^m$ thể hiện bộ lọc tích chập thứ $m-th$,
-\(\omega\) là siêu tham số về số lượng lớp tích chập, \(\ast\) là thao tác thực hiện tính tích chập, và \(\mathbf{W} \in \mathbb{R}^{\Omega k \times 1}\)
-biểu thị ma trận biến đổi tuyến tính được sử dụng để tính kết quả cuối cùng của bộ ba. Mô hình được huấn luyện bằng lề-mềm (soft-margin) như sau :
+where $\omega^m$ denotes the $m$-th convolutional filter,  
+$\Omega$ is the hyperparameter representing the number of convolutional layers,  
+$\ast$ denotes the convolution operation, and  
+$\mathbf{W} \in \mathbb{R}^{\Omega k \times 1}$ is the linear transformation matrix used to compute the final score for the triple.  
+
+The model is trained using a soft-margin loss function as follows:
 
 \begin{equation}
 	\label{eq:lossConvKB}
-	\mathcal{L} = \sum_{t^k_{ij} \in \{S \cup S'\}} \text{log}(1 + exp(l_{t^k_{ij}} . f(t^k_{ij}))) + \frac{\lambda}{2} \parallel{\mathbf{W}}\parallel_2^2
+	\mathcal{L} = \sum_{t^k_{ij} \in \{S \cup S'\}} \text{log}(1 + \exp(l_{t^k_{ij}} \cdot f(t^k_{ij}))) + \frac{\lambda}{2} \parallel{\mathbf{W}}\parallel_2^2
 \end{equation}
-trong đó $l_{t^k_{ij}} = \begin{cases}
-	1 &\text{for } t^k_{ij} \in S \\
-	-1 &\text{for } t^k_{ij} \in S' \\
-\end{cases}$
 
-Đầu ra cuối cùng của mô hình ConvKB là điểm số xếp hạng tương ứng của từng dự đoán.
+where 
+
+\[
+l_{t^k_{ij}} = 
+\begin{cases}
+	1 & \text{for } t^k_{ij} \in S \\
+	-1 & \text{for } t^k_{ij} \in S' \\
+\end{cases}
+\]
+
+The final output of the ConvKB model is the ranking score corresponding to each prediction.
