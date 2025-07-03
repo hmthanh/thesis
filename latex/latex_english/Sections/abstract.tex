@@ -1,0 +1,21 @@
+\renewcommand{\abstractname}{\Large \textbf{Abstract}}
+
+\addcontentsline{toc}{chapter}{Abstract}
+% Abstract
+\begin{abstract}
+	%	\begingroup
+	\begin{adjustwidth}{1.5cm}{1.5cm}
+		A knowledge graph is a structure used to represent real-world information, which has been successfully researched and developed by Google for its search engine \cite{googlekg:2020}. The exploitation of knowledge graphs not only involves querying and analysis, but also completing missing information and predicting links based on the available data within the graph. Therefore, in this report, we present an overview of knowledge graphs and two methods for link prediction in graphs: rule-based methods and deep learning-based methods.
+		
+		For the rule-based method, we rely on the AnyBURL model and propose two additional strategies for inserting new knowledge into the graph.
+		
+		For the deep learning-based method, we review the attention mechanism in natural language processing, which is then applied to knowledge graphs, and present a fully detailed improved model called KBGAT. By stacking layers, nodes can attend to their neighboring features without incurring additional computational cost or relying on prior knowledge of the graph structure.
+		
+		Our two models achieved significantly better results compared to other link prediction methods applied on four standard datasets.
+	\end{adjustwidth}
+	%	\endgroup
+\end{abstract}
+
+%\end{center}
+
+\clearpage

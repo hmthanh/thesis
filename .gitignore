@@ -25,6 +25,9 @@ datasets_/*
 *.aux
 *.loa
 *.bbl
+*.glo
+*.ist
+*.acn
 *.blg
 *.brf
 *.idx
