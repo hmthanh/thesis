@@ -130,6 +130,8 @@ Trong phần này chúng tôi mô tả lại thuật toán chính của phương
 \end{algorithm}
 
 Ở thuật toán này chúng tôi thay các hằng số vào các head và tail trong toàn bộ path rule  của luật được lấy mẫu ở bước trước nếu luật cần học là luật nhị phân ngược lại chúng tôi chỉ thay hoặc head hoặc tail rồi thêm vào luật trả về sau đó chúng tôi lấy mẫu trên tập huấn luyện 1 tập hợp các luật sau đó tính toán độ tin cây như được mô tả trong \autoref{subsec:CreateRule}. Để giảm chi phí tính toán chúng tôi chọn cách lấy mẫu trên tập huấn luyện để tính toán. Khi đưa ra dự đoán các ứng cử viên của một luật chúng tôi sẽ tính toán lại bằng cách thêm vào một lượng biểu diễn số luật bị sai mà chúng tôi chưa nhìn thấy trong quá trình lấy mẫu để tính toán độ tin cậy. Đối với mô hình của chúng thôi sau khi thử nghiệm tham số trong khoảng \([5, 10]\) cho kết quả tốt nhất.
+
+
 \section{Thuật toán AnyBURL mở rộng}
 \subsection{Thuật toán 3 học offline-to-online}
 
@@ -172,12 +174,10 @@ Trong phần này chúng tôi mô tả lại thuật toán chính của phương
 
 Thuật toán này là phần bổ xung của chúng tôi để tránh việc phải đào tạo lại toàn bộ mô hình khi có một lượng tri thức mới được thêm vào đồ thị. Khi thêm vào đồ thị chúng tôi kiểm trả xem phần tri thức mới có kết nối với tri thức cũ hay không (tính liên thông) nếu có chúng tôi thực hiện phép toán \(\oplus\) lấy  tất cả các phần trong \(batch\_edge\) thêm với 1 phần liên thông với những cạnh liên thông với đồ thị với dộ dài là \(5\), Nếu không chúng tôi lấy tất cả các phần trong \(batch\_edge\) sau đó thực hiện lại các bước như thuật toán Anytime Bottom-up Rule Learning.
 
-\pagebreak
-
 \subsection{Thuật toán 4 học online-to-online}
 
 
-\begin{algorithm}
+\begin{algorithm}[H]
 	\caption{EdgeAnyBURL}
 	\label{alg:EdgeAnyBURL}
 	\begin{algorithmic}[1]

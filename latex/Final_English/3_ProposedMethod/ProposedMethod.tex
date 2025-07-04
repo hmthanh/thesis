@@ -128,9 +128,64 @@ While the input is determined by the type of information to be preserved, the ou
 \textbf{Node Embedding}
 \label{sec:nodeEmbedding}
 
-\begin{figure}[htp]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=7 cm]{images/graph_emb_2.png}
+	\begin{tikzpicture}
+		\begin{axis}[
+			axis lines=box,
+			xmin=0, xmax=3,
+			ymin=-3, ymax=3,
+			xtick={0, 0.75, 1.5, 2.25, 3},
+			ytick={-3, -1.5, 0, 1.5, 3},
+			grid=both,
+			grid style={line width=0.3pt, draw=gray!30},
+			major grid style={line width=0.4pt, draw=gray!50},
+			ticklabel style={font=\small},
+			width=8cm, height=8cm,
+			enlargelimits=false,
+			scatter/classes={
+				a={mark=*,draw=black,fill=green!50},
+				b={mark=*,draw=black,fill=orange!60},
+				c={mark=*,draw=black,fill=blue!60}
+			},
+			axis on top,
+			clip=false
+			]
+			
+			% Plot points
+			\addplot[
+			scatter, only marks, scatter src=explicit symbolic, mark size=2.8pt
+			] table[meta=class] {
+				x     y     label  class
+				0.4   1.8   1       a
+				0.6   1.2   3       a
+				0.8   2.2   2       a
+				
+				0.9   0.5   4       b
+				1.0   0.0   5       b
+				1.3   0.2   6       b
+				
+				1.7   0.3   7       c
+				1.6  -0.3   8       c
+				2.0  -0.2   9       c
+			};
+			
+			% Labels placed further above the nodes
+			\node[font=\bfseries] at (axis cs:0.4,2.1) {1};
+			\node[font=\bfseries] at (axis cs:0.6,1.5) {3};
+			\node[font=\bfseries] at (axis cs:0.8,2.5) {2};
+			
+			\node[font=\bfseries] at (axis cs:0.9,0.8) {4};
+			\node[font=\bfseries] at (axis cs:1.0,0.3) {5};
+			\node[font=\bfseries] at (axis cs:1.3,0.5) {6};
+			
+			\node[font=\bfseries] at (axis cs:1.7,0.6) {7};
+			\node[font=\bfseries] at (axis cs:1.6,-0.0) {8};
+			\node[font=\bfseries] at (axis cs:2.0,0.1) {9};
+			
+		\end{axis}
+	\end{tikzpicture}
+	
 	\caption{
 		Node embedding with each vector representing node features}
 	\label{fig:nodeEmbedding}
@@ -141,12 +196,74 @@ Node embedding represents each node as a low-dimensional vector. Nodes that are 
 \textbf{Edge Embedding}
 \label{sec:edgeEmbedding}
 
-\begin{figure}[htp]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=7 cm]{images/graph_emb_3.png}
+	\begin{tikzpicture}
+		\begin{axis}[
+			axis lines=box,
+			xmin=0, xmax=3,
+			ymin=-3, ymax=3,
+			xtick={0, 0.75, 1.5, 2.25, 3},
+			ytick={-3, -1.5, 0, 1.5, 3},
+			grid=both,
+			grid style={line width=0.3pt, draw=gray!30},
+			major grid style={line width=0.4pt, draw=gray!50},
+			ticklabel style={font=\small},
+			width=8cm, height=8cm,
+			enlargelimits=false,
+			scatter/classes={
+				green={mark=triangle*,draw=black,fill=green!50},
+				orange={mark=triangle*,draw=black,fill=orange!60},
+				blue={mark=triangle*,draw=black,fill=blue!60},
+				yellow={mark=triangle*,draw=black,fill=yellow!80},
+				purple={mark=triangle*,draw=black,fill=violet!70}
+			},
+			axis on top,
+			clip=false
+			]
+			
+			% Plot edge embeddings as triangles
+			\addplot[
+			scatter, only marks, scatter src=explicit symbolic, mark size=4pt
+			] table[meta=class] {
+				x     y     label   class
+				0.5   0.2   e_{13}  green
+				0.7   1.1   e_{12}  green
+				1.2   1.1   e_{23}  green
+				
+				0.8   0.3   e_{45}  orange
+				1.0   0.0   e_{46}  orange
+				1.8   0.1   e_{56}  orange
+				
+				0.4  -0.8   e_{78}  blue
+				0.8  -1.3   e_{79}  blue
+				
+				2.0  -0.8   e_{67}  purple
+				2.2  -1.0   e_{34}  yellow
+			};
+			
+			% Labels near triangles
+			\node[font=\bfseries] at (axis cs:0.5,0.45) {e\textsubscript{13}};
+			\node[font=\bfseries] at (axis cs:0.7,1.35) {e\textsubscript{12}};
+			\node[font=\bfseries] at (axis cs:1.2,1.35) {e\textsubscript{23}};
+			
+			\node[font=\bfseries] at (axis cs:0.8,0.55) {e\textsubscript{45}};
+			\node[font=\bfseries] at (axis cs:1.0,0.3) {e\textsubscript{46}};
+			\node[font=\bfseries] at (axis cs:1.8,0.35) {e\textsubscript{56}};
+			
+			\node[font=\bfseries] at (axis cs:0.4,-0.55) {e\textsubscript{78}};
+			\node[font=\bfseries] at (axis cs:0.8,-1.05) {e\textsubscript{79}};
+			
+			\node[font=\bfseries] at (axis cs:2.0,-0.55) {e\textsubscript{67}};
+			\node[font=\bfseries] at (axis cs:2.2,-0.75) {e\textsubscript{34}};
+			
+		\end{axis}
+	\end{tikzpicture}
+	
 	\caption{Edge embedding with each vector representing edge features}
 	\label{fig:edgeEmbedding}
 \end{figure}
+
 
 In contrast to node embedding, edge embedding aims to represent an edge as a low-dimensional vector. Edge embedding is useful in two cases:
 
@@ -156,9 +273,48 @@ Second, some methods embed a pair of nodes as a vector to compare it with other 
 
 \textbf{Hybrid Embedding}
 
-\begin{figure}[htp]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=6 cm]{images/graph_emb_4.png}
+	\begin{tikzpicture}
+		\begin{axis}[
+			axis lines=box,
+			xmin=0, xmax=3,
+			ymin=-3, ymax=3,
+			xtick={0, 0.75, 1.5, 2.25, 3},
+			ytick={-3, -1.5, 0, 1.5, 3},
+			grid=both,
+			grid style={line width=0.3pt, draw=gray!30},
+			major grid style={line width=0.4pt, draw=gray!50},
+			ticklabel style={font=\small},
+			width=8cm, height=8cm,
+			enlargelimits=false,
+			scatter/classes={
+				green={mark=diamond*,draw=black,fill=green!50},
+				orange={mark=diamond*,draw=black,fill=orange!60},
+				blue={mark=diamond*,draw=black,fill=blue!60}
+			},
+			axis on top,
+			clip=false
+			]
+			
+			% Cluster centroids
+			\addplot[
+			scatter, only marks, scatter src=explicit symbolic, mark size=4pt
+			] table[meta=class] {
+				x     y     label       class
+				2.0   0.5   G_{1,2,3}    green
+				1.5   0.0   G_{4,5,6}    orange
+				1.0  -1.5   G_{7,8,9}    blue
+			};
+			
+			% Cluster labels near markers
+			\node[font=\bfseries\Large] at (axis cs:2.0,0.85)  {G\textsubscript{\{1,2,3\}}};
+			\node[font=\bfseries\Large] at (axis cs:1.5,0.35)  {G\textsubscript{\{4,5,6\}}};
+			\node[font=\bfseries\Large] at (axis cs:1.0,-1.15) {G\textsubscript{\{7,8,9\}}};
+			
+		\end{axis}
+	\end{tikzpicture}
+	
 	\caption{Embedding a graph substructure}
 	\label{fig:substructureEmbedding}
 \end{figure}
@@ -167,9 +323,35 @@ Hybrid embedding refers to embedding combinations of different graph components,
 
 \textbf{Whole-Graph Embedding}
 
-\begin{figure}[htp]
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=6 cm]{images/graph_emb_5.png}
+	\begin{tikzpicture}
+		\begin{axis}[
+			axis lines=box,
+			xmin=0, xmax=3,
+			ymin=-3, ymax=3,
+			xtick={0, 0.75, 1.5, 2.25, 3},
+			ytick={-3, -1.5, 0, 1.5, 3},
+			grid=both,
+			grid style={line width=0.3pt, draw=gray!30},
+			major grid style={line width=0.4pt, draw=gray!50},
+			ticklabel style={font=\small},
+			width=8cm, height=8cm,
+			enlargelimits=false,
+			axis on top,
+			clip=false
+			]
+			
+			% Manually place a filled black hexagon
+			\node[regular polygon, regular polygon sides=6, minimum size=8pt,
+			fill=black, draw=black] at (axis cs:1.2,0.4) {};
+			
+			% Label G1 near the hexagon
+			\node[font=\bfseries\Large] at (axis cs:1.0,0.0) {G\textsubscript{1}};
+			
+		\end{axis}
+	\end{tikzpicture}
+	
 	\caption{Whole-graph embedding}
 	\label{fig:wholeGraphEmbedding}
 \end{figure}
@@ -760,53 +942,118 @@ To achieve the goal of learning embedding vectors such that $\overrightarrow{h} 
 \end{equation}
 
 
-% \begin{figure}[htp]
-	% 	\centering
-	% 	\begin{tikzpicture}[
-		% 		arrow/.style={->,thick},
-		% 		vector/.style={arrow, ultra thick},
-		% 		mapping/.style={->, thin},
-		% 		distArrow/.style={thin, <->},
-		% 		dashLine/.style={very thin, dash pattern=on 1mm off 0.5mm},
-		% 		formal/.style={font=\sffamily}]
-		
-		% 		\coordinate (root) at (0,0);
-		% 		\coordinate [formal, label=above left:$\overrightarrow{h'}$] (c1) at (-1.5, 3);
-		% 		\coordinate [formal, label=above:$\overrightarrow{t}$] (c2) at (2, 5);
-		% 		\coordinate [formal, label=above:$\overrightarrow{t'}$] (c3) at (3.2, 4.5);
-		% 		\coordinate [formal, label=above right :$\overrightarrow{h'} + \overrightarrow{r}$] (c4) at (4.5, 4);
-		% 		\coordinate [formal, label=right:$\overrightarrow{r}$] (c5) at (6, 1);
-		
-		% 		\draw [arrow] ([yshift=-1.5em] root) -> (0, 5) node (yaxis)[above] {$y$};
-		% 		\draw [arrow] ([xshift=-5em] root) -> (7, 0) node (xaxis)[above] {$x$};
-		
-		% 		\foreach \x in {1, 5}
-		% 		{\draw [vector, color=black] (root) -> (c1);}
-		% 		{\draw [vector, color=black] (root) -> (c2);}
-		% 		{\draw [vector, color=awesome] (root) -> (c3);}
-		% 		{\draw [vector, color=azure] (root) -> (c4);}
-		% 		{\draw [vector, color=black] (root) -> (c5);}
-		
-		% 		\draw [dashLine] (c2) -> (2, -1.5) node (mapc2){};
-		% 		\draw [dashLine] (c4) -> (4.5, -1.5) node (mapc4){};
-		
-		% 		\draw [dashLine, color=amber] (c3) -> (3.2, -0.7) node (mapc3){};
-		% 		\draw [dashLine, color=amber] (c4) -> (4.5, -0.7) node (mapc4){};
-		
-		% 		\draw [distArrow] (2, -1.5) node (map1c2) {} -> (3.5, -1.5) node (alpha)[yshift=2mm] {$\Delta$} -> (4.5, -1.5) node (mapc4){};
-		% 		\draw [distArrow] (3.2, -0.7) node (map1c3) {} -> (4, -0.7) node (alpha)[yshift=2mm] {$\Delta'$} ->  (4.5, -0.7) node (mapc4){};
-		% 	\end{tikzpicture}
-	% 	\caption{Minh học về độ đo hàm loss trong TransE}
-	% 	
-	% \end{figure}
-	
-	
-\begin{figure}[htp]
+
+
+\begin{figure}[htbp]
 	\centering
-	\resizebox{\textwidth}{!}{%
-		\includegraphics{images/transe.png}
-	}
-	\caption{TransE embedding model}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\begin{tikzpicture}[>=Stealth, scale=0.8]
+			% ------------------------------------------------------------------
+			% GRID & AXES
+			% ------------------------------------------------------------------
+			\draw[step=1cm, thin, gray!60] (-5,-1) grid (5,9);
+			\draw[very thick] (-5,0) -- (5,0);    % x–axis
+			\draw[very thick] (0,-1) -- (0,9);    % y–axis
+			
+			% ------------------------------------------------------------------
+			% STYLE DEFINITIONS
+			% ------------------------------------------------------------------
+			\tikzset{
+				point/.style = {circle, fill=blue!70, inner sep=2pt},
+				vblue/.style  = {thick, blue!70},
+				vblack/.style = {thick, black},
+				vred/.style   = {thick, red},
+				vgreen/.style = {thick, green!60!black},
+			}
+			
+			% ------------------------------------------------------------------
+			% POINTS & VECTORS
+			% ------------------------------------------------------------------
+			% 1.  h = (2, 3)   ----  A(1,1) → B(3,4)
+			\node[point,label=below left:A] (A) at (1,1) {};
+			\node[point,label=above right:B] (B) at (3,4) {};
+			\draw[vblue,->] (A) -- (B) node[midway, below right=2pt] {\small$h=(2,3)$};
+			
+			% 2.  r = (0, 2)   ----  C(1,3) → D(1,5)
+			\node[point,label=left:C]  (C) at (1,3) {};
+			\node[point,label=left:D]  (D) at (1,5) {};
+			\draw[vblack,->] (C) -- (D) node[midway, left=4pt] {\small$r=(0,2)$};
+			
+			% 3.  t' = (2, 1)  ----  E(2,6) → F(4,7)
+			\node[point,label=below left:E] (E) at (2,6) {};
+			\node[point,label=above right:F] (F) at (4,7) {};
+			\draw[vred,->] (E) -- (F) node[midway, above=2pt, sloped] {\small$t'=(2,1)$};
+			
+			% 4.  t = (-1, 2)  ----  G(-2,5) → H(-3,7)
+			\node[point,label=right:G] (G) at (-2,5) {};
+			\node[point,label=above left:H] (H) at (-3,7) {};
+			\draw[vgreen,->] (G) -- (H) node[midway, right=2pt] {\small$t=(-1,2)$};
+			
+		\end{tikzpicture}
+		
+		\caption{Initial TransE embedding vector}
+		\label{fig:TransEEmbeddingBefore}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\begin{tikzpicture}[>=Stealth, scale=0.8]
+			% ------------------------------------------------------------------
+			% GRID & AXES
+			% ------------------------------------------------------------------
+			\draw[step=1cm, thin, gray!60] (-5,-1) grid (5,9);
+			\draw[very thick] (-5,0) -- (5,0);    % x–axis
+			\draw[very thick] (0,-1) -- (0,9);    % y–axis
+			
+			% ------------------------------------------------------------------
+			% STYLE DEFINITIONS
+			% ------------------------------------------------------------------
+			\tikzset{
+				point/.style = {circle, fill=blue!70, inner sep=2pt},
+				vblue/.style  = {thick, blue!70},
+				vblack/.style = {thick, black},
+				vred/.style   = {thick, red},
+				vgreen/.style = {thick, green!60!black},
+				vdash/.style  = {thick, dashed, gray!80}
+			}
+			
+			% --- Points and vectors ---
+			% h = (2, 3): A → B
+			\node[point,label=below right:A] (A) at (1,3) {};
+			\node[point,label=right:B] (B) at (3,6	) {};
+			\draw[vblue,->] (A) -- (B) node[midway, below right=2pt] {\small$h=(2,3)$};
+			
+			% r = (0, 2): C → D
+			\node[point,label=below left:C] (C) at (1,3) {};
+			\node[point,label=left:D] (D) at (1,5) {};
+			\draw[vblack,->] (C) -- (D) node[midway, left=4pt] {\small$r=(0,2)$};
+			
+			% t' = (2, 1): E → F
+			\node[point,label=below:E] (E) at (2,6) {};
+			\node[point,label=above:F] (F) at (4,7) {};
+			\draw[vred,->] (E) -- (F) node[midway, above=2pt, sloped] {\small$t'=(2,1)$};
+			
+			% t = (-1, 2): G → H
+			\node[point,label=right:G] (G) at (-2,5) {};
+			\node[point,label=above:H] (H) at (-3,7) {};
+			\draw[vgreen,->] (G) -- (H) node[midway, right=2pt] {\small$t=(-1,2)$};
+			
+			% Additional points: K, I, J
+			\node[point,label=above left:K] (K) at (-2.5,6) {};
+			\node[point,label=above:I] (I) at (2.45,6.2) {};
+			\node[point,label=below:J] (J) at (2.6,5.4) {};
+			
+			% Dashed lines for distances
+			\draw[vdash] (K) -- (J) node[midway, below=3pt] {\small$d$};
+			\draw[vdash] (J) -- (I) node[midway, right=3pt] {\small$d'$};
+			
+		\end{tikzpicture}
+		
+		\caption{Embedding after transformation}
+		\label{fig:TransEEmbeddingAfter}
+	\end{subfigure}
+	\caption{The TransE graph embedding vector}
 	\label{fig:TransEExplain}
 \end{figure}
 
@@ -892,7 +1139,7 @@ After obtaining the embedding vectors that capture spatial features of the knowl
 			\end{scope}
 			\draw node[textbox][left=1.5em of layer3, text width=5.5em, minimum width=5.8em, minimum height=16em] (graphAttention1) {\small Graph Attention Layer $1_{\ref{eq:graphAttention1}}$ };
 			
-			\draw node[textbox][minimum width=12.3em, minimum height=21em, left=1.5em of graphAttention1] (layer1) {};
+			\draw node[textbox][minimum width=12.8em, minimum height=21em, left=1.5em of graphAttention1] (layer1) {};
 			% Layer 1
 			\draw node[embBox][minimum height=10.5em, yshift=1em,right=3em of layer1.center, left=2em of graphAttention1] (box4) {};
 			\begin{scope}
