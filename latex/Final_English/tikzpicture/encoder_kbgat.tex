@@ -1,0 +1,407 @@
+%\begin{tikzpicture}[
+%	emb/.style={draw, circle,minimum width=.1em, thin, anchor=center},
+%	entityInit/.style={emb, fill=amber},
+%	relationInit/.style={emb, fill=azure},
+%	entityEmb/.style={emb, fill=gray},
+%	relationEmb/.style={emb, fill=deepcarminepink},
+%	entityPretrain/.style={emb, fill=deepmagenta},
+%	entityOut/.style={emb, fill=deepskyblue},
+%	box/.style={draw,rectangle, fill=none},
+%	embBox/.style={box ,rounded corners=0.2em, minimum width=1.3em},
+%	layerBox/.style={color=azure!80, box ,very thick,rounded corners=0.2em, minimum width=1.3em},
+%	textbox/.style={box,rounded corners=0.3em, fill=none, align=center, execute at begin node=\setlength{\baselineskip}{1em}},
+%	arrowStrong/.style={thick,->,>=stealth},
+%	arrowDash/.style={thick, ->,>=stealth, dash pattern=on 1.5mm off 0.7mm, postaction={decorate}},
+%	row/.style={draw, rectangle, font=\fontsize{0.6em}{1}\sffamily, align=center, text width=3.9em},
+%	arrowStyle/.style={-latex', font=\sffamily},
+%	mydot/.style={draw, circle, minimum size=0.1em, scale=0.2},
+%	]
+%	% 5
+%	% Root
+%	\draw node[textbox][text width=5.7em] (graphAttention2) {\small Graph Attention Layer $2$};
+%	
+%	\draw node[textbox][minimum width=9.5em, minimum height=21em, left=1.5em of graphAttention2] (layer3) {};
+%	
+%	\draw node[embBox][minimum height=20.3em, left=2em of graphAttention2] (box10) {};
+%	\begin{scope}[every node/.style={below=0mm of box10.center}]
+%		\foreach \x in {1,...,12}
+%		{\draw node[entityEmb][yshift=(\x-4)*1.1em+0.55em] (ex10\x) {};}
+%		
+%		\foreach \x in {1,...,6}
+%		{\draw node[relationEmb](ey10\x)[yshift=-(\x+3)*1.1em+0.55em]{};}
+%	\end{scope}
+%	
+%	\draw node[embBox][minimum height=7em, left=2em of box10, yshift=5em] (box7) {};
+%	\draw node[embBox][minimum height=7em, left=2em of box10, yshift=-5em] (box9) {};
+%	\begin{scope}
+%		\foreach \x in {1,...,6}
+%		{\draw node[entityEmb](e7\x)[yshift=(\x-3)*1.1em, below=0mm of box7.center]{};}
+%		
+%		\foreach \x in {1,...,6}
+%		{\draw node[relationEmb](e9\x)[yshift=(\x-3)*1.1em, below=0mm of box9.center]{};}
+%	\end{scope}
+%	
+%	\draw node[embBox][minimum height=4em, left=2em of box7, yshift=2.5em] (box5) {};
+%	\draw node[embBox][minimum height=4em, left=2em of box7, yshift=-2.5em] (box6) {};
+%	\draw node[embBox][minimum height=5em, left=2em of box9] (box8) {};
+%	\begin{scope}
+%		\foreach \x in {1,...,3}
+%		{\draw node[entityEmb](e5\x)[yshift=(\x-2)*1.1em+0.55em, below=0mm of box5.center]{};}
+%		
+%		\foreach \x in {1,...,3}
+%		{\draw node[entityEmb](e6\x)[yshift=-(\x-2)*1.1em+0.55em, below=0mm of box6.center]{};}
+%		
+%		\foreach \x in {1,...,4}
+%		{\draw node[relationInit](e8\x)[yshift=(\x-2)*1.1em, below=0mm of box8.center]{};}
+%	\end{scope}
+%	\draw node[layerBox][minimum height=8em,minimum width=5.5em, left=1.5em of box10, yshift=-5em] (fc1) {};
+%	
+%	% Left
+%	\begin{scope}[every node/.style={left=2em of layer3}]
+%		\draw node[textbox][yshift=5.5em, text width=4em] (attentionHead1) {\small Attention Head 1};
+%		\draw node[textbox][yshift=-5.5em, text width=4em] (attentionHead2) {\small Attention Head 2};
+%	\end{scope}
+%	\draw node[textbox][left=1.5em of layer3, text width=5.5em, minimum width=5.8em, minimum height=16em] (graphAttention1) {\small Graph Attention Layer $1$ };
+%	
+%	\draw node[textbox][minimum width=13em, minimum height=21em, left=1.5em of graphAttention1] (layer1) {};
+%	% Layer 1
+%	\draw node[embBox][minimum height=10.5em, yshift=1em,right=3em of layer1.center, left=2em of graphAttention1] (box4) {};
+%	\begin{scope}
+%		\foreach \x in {1,...,6}
+%		{\draw node[entityInit](ex4\x)[yshift=(\x-2)*1.1em-0.4em, above=0em of box4.center]{};}
+%		
+%		\foreach \x in {1,...,3}
+%		{\draw node[relationInit](e4y\x)[yshift=-(\x)*1.1em-0.6em, below=0mm of box4.center]{};}
+%	\end{scope}
+%	
+%	% Start Initial
+%	\draw node[embBox][minimum height=4em, yshift=4.5em, left=2em of box4] (box1) {};
+%	\foreach \x in {1,...,3}
+%	{\draw node[entityInit](e1\x)[yshift=(\x-2)*1.1em+0.5em, below=0mm of box1.center]{};}
+%	
+%	\draw node[embBox][minimum height=4em, left=2em of box4] (box2) {};
+%	\foreach \x in {1,...,3}
+%	{\draw node[relationInit](e2\x)[yshift=(\x-2)*1.1em+0.5em, below=0mm of box2.center]{};}
+%	
+%	\draw node[embBox][minimum height=4em, yshift=-4.5em, left=2em of box4] (box3) {};
+%	\foreach \x in {1,...,3}
+%	{\draw node[entityInit](e3\x)[yshift=(\x-2)*1.1em+0.5em, below=0mm of box3.center]{};}
+%	% Start Initial
+%	
+%	\begin{scope}[every node/.style={left=of box2, row}]
+%		\draw node (relation1) {richest\_of};
+%		\draw node[above=0mm of relation1] (entity1) {Elon Musk};
+%		\draw node[above=0mm of entity1] (triple1) {Triple 1};
+%		\draw node[below=0mm of relation1] (entity2) {United States};	
+%	\end{scope}
+%	
+%	\begin{scope}[every node/.style={row}]
+%		\draw node[below=3em of entity2] (triple2) {Triple N};
+%		\draw node[below=0mm of triple2] (entity3) {Tom Cruise};
+%		\draw node[below=0mm of entity3] (relation2) {born\_in};
+%		\draw node[below=0mm of relation2] (entity4) {New York};	
+%	\end{scope}
+%	
+%	% Right
+%	\draw node[textbox][minimum height=16em, minimum width=2.3em, yshift=-4em, right=1.5em of graphAttention2] (layer4){};
+%	\draw node[embBox][minimum height=7em, right=2em of graphAttention2] (box11) {};
+%	\begin{scope}
+%		\foreach \x in {1,...,6}
+%		{\draw node[entityEmb](e11\x)[yshift=(\x-3)*1.1em, below=0mm of box11.center]{};}
+%	\end{scope}
+%	
+%	\draw node[embBox][minimum height=7em, below=0.7em of box11] (box12) {};
+%	\begin{scope}
+%		\foreach \x in {1,...,6}
+%		{\draw node[relationEmb](e12\x)[yshift=(\x-3)*1.1em, below=0mm of box12.center]{};}
+%	\end{scope}
+%	
+%	\draw node[embBox][minimum height=7em, above=1.5em of box11] (box13) {};
+%	\begin{scope}
+%		\foreach \x in {1,...,6}
+%		{\draw node[entityPretrain](e13\x)[yshift=(\x-3)*1.1em, below=0mm of box13.center]{};}
+%	\end{scope}
+%	
+%	\draw node[embBox][minimum height=5em, left=1.7em of box13] (box14) {};
+%	\begin{scope}
+%		\foreach \x in {1,...,4}
+%		{\draw node[entityInit](e14\x)[yshift=(\x-2)*1.1em, below=0mm of box14.center]{};}
+%	\end{scope}
+%	\draw node[layerBox][minimum height=8em, minimum width=5.5em, above=1.5em of box11, yshift=-0.5em, xshift=-1.5em] (fc2) {};
+%	
+%	\draw node[right=2em of box11, yshift=3.7em] (bigOTimes) {$\bigotimes$};
+%	
+%	\draw node[textbox][minimum height=16em, minimum width=2.3em, yshift=-3.95em, right=1.5em of bigOTimes] (layer5) {};
+%	\draw node[embBox][minimum height=7em, above=1em of layer5.center, yshift=-0.5em] (box15) {};
+%	\begin{scope}
+%		\foreach \x in {1,...,6}
+%		{\draw node[entityOut](e15\x)[yshift=(\x-3)*1.1em, below=0mm of box15.center]{};}
+%	\end{scope}
+%	
+%	\draw node[embBox][minimum height=7em, below=1em of layer5.center, yshift=0.5em] (box16) {};
+%	\begin{scope}
+%		\foreach \x in {1,...,6}
+%		{\draw node[relationEmb](e16\x)[yshift=(\x-3)*1.1em, below=0mm of box16.center]{};}
+%	\end{scope}
+%	
+%	\draw node[textbox][right=1.5em of layer5] (final) {$\mathcal{L}$};
+%	%16
+%	% Arrow
+%	\draw [arrowStrong] (box10) -- (graphAttention2.west);
+%	
+%	\draw [arrowStrong] (entity1.east) -- (box1.west);
+%	\draw [arrowStrong] (relation1) -- (box2.west);
+%	\draw [arrowStrong] (entity2.east) -- (box3.west);
+%	
+%	\draw [arrowStrong] (graphAttention2.east) -- (box11.west);
+%	\draw [arrowStrong] (graphAttention2.east) -- (box12.west);
+%	
+%	\draw [arrowStrong] (box11.east) to ([xshift=0.35em] bigOTimes.west);
+%	\draw [arrowStrong] (box13.east) to ([xshift=0.35em] bigOTimes.west);
+%	
+%	\draw [arrowStrong] ([xshift=-1.5mm] bigOTimes.east) -- (box15.west);
+%	
+%	\draw [arrowStrong] (box16.east) -- (final.west);
+%	\draw [arrowStrong] (box15.east) -- (final.west);
+%	
+%	\foreach \x in {1,2}
+%	\draw [arrowStrong] (layer1.east) -- (attentionHead\x.west);
+%	
+%	\foreach \x in {1,2}
+%	\draw [arrowStrong] (attentionHead\x.east) -- (layer3.west);
+%	
+%	\foreach \x in {1,2,3}
+%	\draw [arrowDash] (box\x.east) -- (box4.west);
+%	
+%	\foreach \x in {7,9}
+%	{\draw [arrowDash] (box\x) -- (box10.west);}
+%	
+%	\foreach \x in {5,6}
+%	{\draw [arrowDash] (box\x) -- (box7.west);}
+%	
+%	\foreach \x in {1, ..., 6}
+%	{\draw [thick] (e81) -- (e9\x);}
+%	\foreach \x in {1, ..., 6}
+%	{\draw [thick] (e82) -- (e9\x);}
+%	\foreach \x in {1, ..., 6}
+%	{\draw [thick] (e83) -- (e9\x);}
+%	\foreach \x in {1, ..., 6}
+%	{\draw [thick] (e84) -- (e9\x);}
+%	
+%	\foreach \x in {1, ..., 6}
+%	{\draw [thick] (e141) -- (e13\x);}
+%	\foreach \x in {1, ..., 6}
+%	{\draw [thick] (e142) -- (e13\x);}
+%	\foreach \x in {1, ..., 6}
+%	{\draw [thick] (e143) -- (e13\x);}
+%	\foreach \x in {1, ..., 6}
+%	{\draw [thick] (e144) -- (e13\x);}
+%	
+%	\draw node[mydot][below=1.1em of entity2] (dot1) {};
+%	\draw node[mydot][below=1.4em of entity2] (dot2) {};
+%	\draw node[mydot][below=1.7em of entity2] (dot3) {};
+%\end{tikzpicture}
+
+\begin{tikzpicture}[
+	emb/.style={draw, circle,minimum width=.1em, thin, anchor=center},
+	entityInit/.style={emb, fill=amber},
+	relationInit/.style={emb, fill=azure},
+	entityEmb/.style={emb, fill=gray},
+	relationEmb/.style={emb, fill=deepcarminepink},
+	entityPretrain/.style={emb, fill=deepmagenta},
+	entityOut/.style={emb, fill=deepskyblue},
+	box/.style={draw,rectangle, fill=none},
+	embBox/.style={box ,rounded corners=0.2em, minimum width=1.3em},
+	layerBox/.style={color=azure!80, box ,very thick,rounded corners=0.2em, minimum width=1.3em},
+	textbox/.style={box,rounded corners=0.3em, fill=none, align=center, execute at begin node=\setlength{\baselineskip}{1em}},
+	arrowStrong/.style={thick,->,>=stealth},
+	arrowDash/.style={thick, ->,>=stealth, dash pattern=on 1.5mm off 0.7mm, postaction={decorate}},
+	row/.style={draw, rectangle, font=\fontsize{0.6em}{1}\sffamily, align=center, text width=3.9em},
+	arrowStyle/.style={-latex', font=\sffamily},
+	mydot/.style={draw, circle, minimum size=0.1em, scale=0.2},
+	]
+	% 5
+	% Root
+	\draw node[textbox][text width=5.7em] (graphAttention2) {\small Graph Attention Layer $2_{\ref{eq:graphAttention2}}$};
+	
+	\draw node[textbox][minimum width=9.5em, minimum height=21em, left=1.5em of graphAttention2] (layer3) {};
+	
+	\draw node[embBox][minimum height=20.3em, left=2em of graphAttention2] (box10) {};
+	\begin{scope}[every node/.style={below=0mm of box10.center}]
+		\foreach \x in {1,...,12}
+		{\draw node[entityEmb][yshift=(\x-4)*1.1em+0.55em] (ex10\x) {};}
+		
+		\foreach \x in {1,...,6}
+		{\draw node[relationEmb](ey10\x)[yshift=-(\x+3)*1.1em+0.55em]{};}
+	\end{scope}
+	
+	\draw node[embBox][minimum height=7em, left=2em of box10, yshift=5em] (box7) {};
+	\draw node[embBox][minimum height=7em, left=2em of box10, yshift=-5em] (box9) {};
+	\begin{scope}
+		\foreach \x in {1,...,6}
+		{\draw node[entityEmb](e7\x)[yshift=(\x-3)*1.1em, below=0mm of box7.center]{};}
+		
+		\foreach \x in {1,...,6}
+		{\draw node[relationEmb](e9\x)[yshift=(\x-3)*1.1em, below=0mm of box9.center]{};}
+	\end{scope}
+	
+	\draw node[embBox][minimum height=4em, left=2em of box7, yshift=2.5em] (box5) {};
+	\draw node[embBox][minimum height=4em, left=2em of box7, yshift=-2.5em] (box6) {};
+	\draw node[embBox][minimum height=5em, left=2em of box9] (box8) {};
+	\begin{scope}
+		\foreach \x in {1,...,3}
+		{\draw node[entityEmb](e5\x)[yshift=(\x-2)*1.1em+0.55em, below=0mm of box5.center]{};}
+		
+		\foreach \x in {1,...,3}
+		{\draw node[entityEmb](e6\x)[yshift=-(\x-2)*1.1em+0.55em, below=0mm of box6.center]{};}
+		
+		\foreach \x in {1,...,4}
+		{\draw node[relationInit](e8\x)[yshift=(\x-2)*1.1em, below=0mm of box8.center]{};}
+	\end{scope}
+	\draw node[layerBox][minimum height=8em,minimum width=5.5em, left=1.5em of box10, yshift=-5em] (fc1) {};
+	
+	% Left
+	\begin{scope}[every node/.style={left=2em of layer3}]
+		\draw node[textbox][yshift=5.5em, text width=4em] (attentionHead1) {\small Attention Head 1};
+		\draw node[textbox][yshift=-5.5em, text width=4em] (attentionHead2) {\small Attention Head 2};
+	\end{scope}
+	\draw node[textbox][left=1.5em of layer3, text width=5.5em, minimum width=5.8em, minimum height=16em] (graphAttention1) {\small Graph Attention Layer $1_{\ref{eq:graphAttention1}}$ };
+	
+	\draw node[textbox][minimum width=12.8em, minimum height=21em, left=1.5em of graphAttention1] (layer1) {};
+	% Layer 1
+	\draw node[embBox][minimum height=10.5em, yshift=1em,right=3em of layer1.center, left=2em of graphAttention1] (box4) {};
+	\begin{scope}
+		\foreach \x in {1,...,6}
+		{\draw node[entityInit](ex4\x)[yshift=(\x-2)*1.1em-0.4em, above=0em of box4.center]{};}
+		
+		\foreach \x in {1,...,3}
+		{\draw node[relationInit](e4y\x)[yshift=-(\x)*1.1em-0.6em, below=0mm of box4.center]{};}
+	\end{scope}
+	
+	% Start Initial
+	\draw node[embBox][minimum height=4em, yshift=4.5em, left=2em of box4] (box1) {};
+	\foreach \x in {1,...,3}
+	{\draw node[entityInit](e1\x)[yshift=(\x-2)*1.1em+0.5em, below=0mm of box1.center]{};}
+	
+	\draw node[embBox][minimum height=4em, left=2em of box4] (box2) {};
+	\foreach \x in {1,...,3}
+	{\draw node[relationInit](e2\x)[yshift=(\x-2)*1.1em+0.5em, below=0mm of box2.center]{};}
+	
+	\draw node[embBox][minimum height=4em, yshift=-4.5em, left=2em of box4] (box3) {};
+	\foreach \x in {1,...,3}
+	{\draw node[entityInit](e3\x)[yshift=(\x-2)*1.1em+0.5em, below=0mm of box3.center]{};}
+	% Start Initial
+	
+	\begin{scope}[every node/.style={left=of box2, row}]
+		\draw node (relation1) {richest\_of};
+		\draw node[above=0mm of relation1] (entity1) {Elon Musk};
+		\draw node[above=0mm of entity1] (triple1) {Triple 1};
+		\draw node[below=0mm of relation1] (entity2) {United States};	
+	\end{scope}
+	
+	\begin{scope}[every node/.style={row}]
+		\draw node[below=3em of entity2] (triple2) {Triple N};
+		\draw node[below=0mm of triple2] (entity3) {Tom Cruise};
+		\draw node[below=0mm of entity3] (relation2) {born\_in};
+		\draw node[below=0mm of relation2] (entity4) {New York};	
+	\end{scope}
+	
+	% Right
+	\draw node[textbox][minimum height=16em, minimum width=2.3em, yshift=-4em, right=1.5em of graphAttention2] (layer4){};
+	\draw node[embBox][minimum height=7em, right=2em of graphAttention2] (box11) {};
+	\begin{scope}
+		\foreach \x in {1,...,6}
+		{\draw node[entityEmb](e11\x)[yshift=(\x-3)*1.1em, below=0mm of box11.center]{};}
+	\end{scope}
+	
+	\draw node[embBox][minimum height=7em, below=0.7em of box11] (box12) {};
+	\begin{scope}
+		\foreach \x in {1,...,6}
+		{\draw node[relationEmb](e12\x)[yshift=(\x-3)*1.1em, below=0mm of box12.center]{};}
+	\end{scope}
+	
+	\draw node[embBox][minimum height=7em, above=1.5em of box11] (box13) {};
+	\begin{scope}
+		\foreach \x in {1,...,6}
+		{\draw node[entityPretrain](e13\x)[yshift=(\x-3)*1.1em, below=0mm of box13.center]{};}
+	\end{scope}
+	
+	\draw node[embBox][minimum height=5em, left=1.7em of box13] (box14) {};
+	\begin{scope}
+		\foreach \x in {1,...,4}
+		{\draw node[entityInit](e14\x)[yshift=(\x-2)*1.1em, below=0mm of box14.center]{};}
+	\end{scope}
+	\draw node[layerBox][minimum height=8em, minimum width=5.5em, above=1.5em of box11, yshift=-0.5em, xshift=-1.5em] (fc2) {};
+	
+	\draw node[right=2em of box11, yshift=3.7em] (bigOTimes) {$\bigotimes^{\ref{eq:reInitEmbedding}}$};
+	
+	\draw node[textbox][minimum height=16em, minimum width=2.3em, yshift=-3.95em, right=1.5em of bigOTimes] (layer5) {};
+	\draw node[embBox][minimum height=7em, above=1em of layer5.center, yshift=-0.5em] (box15) {};
+	\begin{scope}
+		\foreach \x in {1,...,6}
+		{\draw node[entityOut](e15\x)[yshift=(\x-3)*1.1em, below=0mm of box15.center]{};}
+	\end{scope}
+	
+	\draw node[embBox][minimum height=7em, below=1em of layer5.center, yshift=0.5em] (box16) {};
+	\begin{scope}
+		\foreach \x in {1,...,6}
+		{\draw node[relationEmb](e16\x)[yshift=(\x-3)*1.1em, below=0mm of box16.center]{};}
+	\end{scope}
+	
+	\draw node[textbox][right=1.5em of layer5] (final) {$\mathcal{L}_{\ref{eq:KBGATLoss}}$};
+	%16
+	% Arrow
+	\draw [arrowStrong] (box10) -- (graphAttention2.west);
+	
+	\draw [arrowStrong] (entity1.east) -- (box1.west);
+	\draw [arrowStrong] (relation1) -- (box2.west);
+	\draw [arrowStrong] (entity2.east) -- (box3.west);
+	
+	\draw [arrowStrong] (graphAttention2.east) -- (box11.west);
+	\draw [arrowStrong] (graphAttention2.east) -- (box12.west);
+	
+	\draw [arrowStrong] (box11.east) to ([xshift=0.35em] bigOTimes.west);
+	\draw [arrowStrong] (box13.east) to ([xshift=0.35em] bigOTimes.west);
+	
+	\draw [arrowStrong] ([xshift=-1.7em] bigOTimes.east) -- (box15.west);
+	
+	\draw [arrowStrong] (box16.east) -- (final.west);
+	\draw [arrowStrong] (box15.east) -- (final.west);
+	
+	\foreach \x in {1,2}
+	\draw [arrowStrong] (layer1.east) -- (attentionHead\x.west);
+	
+	\foreach \x in {1,2}
+	\draw [arrowStrong] (attentionHead\x.east) -- (layer3.west);
+	
+	\foreach \x in {1,2,3}
+	\draw [arrowDash] (box\x.east) -- (box4.west);
+	
+	\foreach \x in {7,9}
+	{\draw [arrowDash] (box\x) -- (box10.west);}
+	
+	\foreach \x in {5,6}
+	{\draw [arrowDash] (box\x) -- (box7.west);}
+	
+	\foreach \x in {1, ..., 6}
+	{\draw [thick] (e81) -- (e9\x);}
+	\foreach \x in {1, ..., 6}
+	{\draw [thick] (e82) -- (e9\x);}
+	\foreach \x in {1, ..., 6}
+	{\draw [thick] (e83) -- (e9\x);}
+	\foreach \x in {1, ..., 6}
+	{\draw [thick] (e84) -- (e9\x);}
+	
+	\foreach \x in {1, ..., 6}
+	{\draw [thick] (e141) -- (e13\x);}
+	\foreach \x in {1, ..., 6}
+	{\draw [thick] (e142) -- (e13\x);}
+	\foreach \x in {1, ..., 6}
+	{\draw [thick] (e143) -- (e13\x);}
+	\foreach \x in {1, ..., 6}
+	{\draw [thick] (e144) -- (e13\x);}
+	
+	\draw node[mydot][below=1.1em of entity2] (dot1) {};
+	\draw node[mydot][below=1.4em of entity2] (dot2) {};
+	\draw node[mydot][below=1.7em of entity2] (dot3) {};
+\end{tikzpicture}

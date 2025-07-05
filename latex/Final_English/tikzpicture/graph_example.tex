@@ -1,0 +1,81 @@
+\begin{tikzpicture}[>=Stealth,
+	entityStyle/.style={draw, color=white, thin, align=center, circle, text width=20mm},
+	us/.style = {entityStyle, fill=amber},
+	entity/.style={entityStyle, fill=azure},
+	arrowStyle/.style={-latex', >=stealth },
+	entityId/.style={draw, color=white,  thin, align=center, circle},]
+	
+	\node[us] (us) {\textbf{U.S}};
+	
+	\begin{scope}[every node/.style={entity}]
+		\node[above left=2cm of us, xshift=-20mm] (c1) {\textbf{Donald Trump}};
+		\node[above right=2cm of us, xshift=1cm] (c2) {\textbf{Elon Musk}};
+		\node[below left=2cm of us, xshift=-20mm] (c3) {\textbf{New York}};
+		\node[below right=2cm of us, xshift=1cm] (c4) {\textbf{Tesla Inc.}};
+		
+		\node[below left=3cm of c1, yshift=25mm, xshift=-15mm] (c1x) {\textbf{Melania Trump}};
+		\node[above left=3cm of c3, yshift=-25mm, xshift=-15mm] (c3x) {\textbf{Tom Cruise}};
+		
+		%\node[left=1cm of c1x, yshift=25mm, xshift=-15mm] (c8) {\textbf{Thanh}};
+	\end{scope}
+	
+	%\draw[->, line width=0.8mm, azure] (c8) -> (c1x);
+	%\path[arrowStyle] (c8)--node[rotate=-31, yshift=4mm]{friend\_of} %node[rotate=-31, yshift=-3mm]{} (c1x);
+	
+	\foreach \value in {1,...,4}
+	\draw[->, line width=0.8mm, azure] (c\value) -> (us);
+	\foreach \value in {1,3}
+	\draw[->, line width=0.8mm, azure] (c\value x) -> (c\value);
+	
+	\foreach \value in {1,3}
+	\draw[->, line width=0.8mm, azure!60, dash pattern=on 3mm off 1mm, postaction={decorate}] (c\value x) -> (us);
+	
+	\path[arrowStyle] (c1)--node[rotate=-31, yshift=4mm]{president\_of} node[rotate=-31, yshift=-3mm]{$\alpha_{i4}$} (us);
+	
+	\path[arrowStyle] (c3)--node[rotate=30, yshift=4mm]{state\_of} node[rotate=30, yshift=-4mm]{$\alpha_{i3}$} (us);
+	
+	\path[arrowStyle] (c2)--node[rotate=41, yshift=4mm]{richest\_of} node[rotate=41, yshift=-4mm]{$\alpha_{i1}$} (us);
+	
+	\path[arrowStyle] (c4)--node[rotate=-41, yshift=4mm]{founded\_in} node[rotate=-41, yshift=-4mm]{$\alpha_{i2}$} (us);
+	
+	\path[arrowStyle] (c1x)--node[rotate=15, yshift=4mm]{wife\_of} (c1);
+	\path[arrowStyle] (c3x)--node[rotate=-15, yshift=4mm]{born\_in} (c3);
+	
+	\path[arrowStyle] (c1x)--node[rotate=-8, yshift=4mm]{\textbf{first\_lady}} node[rotate=-8, yshift=-3mm]{$\alpha_{i5}$} (us);
+	\path[arrowStyle] (c3x)--node[rotate=8, yshift=4mm]{\textbf{native\_of}} node[rotate=8, yshift=-3mm]{$\alpha_{i6}$} (us);
+	
+	%%%%%%%%%%%
+	\node[entityId][fill=amber][right=11cm of us] (country) {$e_3$};
+	\path[arrowStyle] (us)--node[yshift=2mm]{\LARGE $\rightarrow$} (country);
+	
+	\begin{scope}[every node/.style={entityId, fill=azure}]
+		\node[above left=1cm of country, xshift=-5mm] (c1s) {$e_2$};
+		\node[above right=1cm of country, xshift=5mm] (c2s) {$e_4$};
+		\node[below left=1cm of country, xshift=-5mm] (c3s) {$e_6$};
+		\node[below right=1cm of country, xshift=5mm] (c4s) {$e_7$};
+		
+		\node[below left=1.5cm of c1s, yshift=15mm, xshift=-5mm] (c1xs) {$e_1$};
+		\node[above left=1.5cm of c3s, yshift=-15mm, xshift=-5mm] (c3xs) {$e_5$};
+	\end{scope}
+	\foreach \value in {1,...,4}
+	\draw[->, line width=0.8mm, azure] (c\value s) -> (country);
+	\foreach \value in {1,3}
+	\draw[->, line width=0.8mm, azure] (c\value xs) -> (c\value s);
+	
+	\foreach \value in {1,3}
+	\draw[->, line width=0.8mm, azure!60, dash pattern=on 3mm off 1mm, postaction={decorate}] (c\value xs) -> (country);
+	
+	\path[arrowStyle] (c1s)--node[rotate=-31, yshift=2mm]{$r_2$} (country);
+	
+	\path[arrowStyle] (c3s)--node[rotate=30, yshift=2mm]{$r_5$} (country);
+	
+	\path[arrowStyle] (c2s)--node[rotate=41, yshift=2mm]{$r_3$} (country);
+	
+	\path[arrowStyle] (c4s)--node[rotate=-41, yshift=2mm]{$r_6$} (country);
+	
+	\path[arrowStyle] (c1xs)--node[rotate=15, yshift=2mm]{$r_1$} (c1s);
+	\path[arrowStyle] (c3xs)--node[rotate=-15, yshift=2mm]{$r_4$} (c3s);
+	
+	\path[arrowStyle] (c1xs)--node[rotate=-8, yshift=2mm]{$r_7$} (country);
+	\path[arrowStyle] (c3xs)--node[rotate=8, yshift=2mm]{$r_8$} (country);
+\end{tikzpicture}

@@ -1,0 +1,43 @@
+\clearpage
+\setcounter{page}{1}
+\maketitlesupplementary
+
+
+%\section{Rationale}
+%\label{sec:rationale}
+%% 
+%Having the supplementary compiled together with the main paper means that:
+%% 
+%\begin{itemize}
+%\item The supplementary can back-reference sections of the main paper, for example, we can refer to \cref{sec:intro};
+%\item The main paper can forward reference sub-sections within the supplementary explicitly (e.g. referring to a particular experiment); 
+%\item When submitted to arXiv, the supplementary will already included at the end of the paper.
+%\end{itemize}
+%% 
+%To split the supplementary pages from the main paper, you can use \href{https://support.apple.com/en-ca/guide/preview/prvw11793/mac#:~:text=Delete%20a%20page%20from%20a,or%20choose%20Edit%20%3E%20Delete).}{Preview (on macOS)}, \href{https://www.adobe.com/acrobat/how-to/delete-pages-from-pdf.html#:~:text=Choose%20%E2%80%9CTools%E2%80%9D%20%3E%20%E2%80%9COrganize,or%20pages%20from%20the%20file.}{Adobe Acrobat} (on all OSs), as well as \href{https://superuser.com/questions/517986/is-it-possible-to-delete-some-pages-of-a-pdf-document}{command line tools}.
+
+%\chapter{Parameters in Diffusion}
+%\label{appendix:Appendix1}
+
+\section{Optimal Hyperparameters}
+\label{appendix:Appendix1}
+
+In this section, we present the set of optimal hyperparameters used for both models: the attention-based model and the ConvKB model. The hyperparameter optimization process was conducted using grid search based on the Hits@10 evaluation metric. For the attention-based model, we trained on the entire dataset without any data splitting. In contrast, for the ConvKB model, we applied the same hyperparameter configuration across all datasets. The detailed hyperparameters are shown in the following table:
+
+
+\begin{table}[htbp]
+	\begin{center}
+		\resizebox{\textwidth}{!}{%
+			\begin{tabular}{llllllllll}
+				\hline
+				& $\mu$  & Weight decay & Epochs & negative ratio  & Dropouts  & $\alpha_{\text{LeakyRELU}}$ & $N_{\text{head}}$ & $D_{\text{final}}$ & $\gamma$ \\
+				\hline
+				FB15k     & 1e-3 & 1e-5 & 3000 & 2 & 0.3 & 0.2 & 2 & 200 & 1 \\
+				FB15k-237 & 1e-3 & 1e-5 & 3000 & 2 & 0.3 & 0.2 & 2 & 200 & 1 \\
+				WN18      & 1e-3 & 5e-6 & 3600 & 2 & 0.3 & 0.2 & 2 & 200 & 5 \\
+				WN18RR    & 1e-3 & 5e-6 & 3600 & 2 & 0.3 & 0.2 & 2 & 200 & 5 \\
+				\hline
+			\end{tabular}
+		}
+	\end{center}
+\end{table}

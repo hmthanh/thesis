@@ -1,0 +1,39 @@
+\begin{tikzpicture}[scale=0.85]
+    \begin{axis}[
+        axis lines=box,
+        xmin=0, xmax=3,
+        ymin=-3, ymax=3,
+        xtick={0, 0.75, 1.5, 2.25, 3},
+        ytick={-3, -1.5, 0, 1.5, 3},
+        grid=both,
+        grid style={line width=0.3pt, draw=gray!30},
+        major grid style={line width=0.4pt, draw=gray!50},
+        ticklabel style={font=\small},
+        width=\textwidth, height=\textwidth,
+        enlargelimits=false,
+        scatter/classes={
+            green={mark=diamond*,draw=black,fill=darkpastelgreen},
+            orange={mark=diamond*,draw=black,fill=amber},
+            blue={mark=diamond*,draw=black,fill=deepskyblue}
+        },
+        axis on top,
+        clip=false
+        ]
+        
+        % Cluster centroids
+        \addplot[
+        scatter, only marks, scatter src=explicit symbolic, mark size=4pt
+        ] table[meta=class] {
+            x     y     label       class
+            2.0   0.5   G_{1,2,3}    green
+            1.5   0.0   G_{4,5,6}    orange
+            1.0  -1.5   G_{7,8,9}    blue
+        };
+        
+        % Cluster labels near markers
+        \node[font=\bfseries\Large] at (axis cs:2.0,0.85)  {G\textsubscript{\{1,2,3\}}};
+        \node[font=\bfseries\Large] at (axis cs:1.5,0.35)  {G\textsubscript{\{4,5,6\}}};
+        \node[font=\bfseries\Large] at (axis cs:1.0,-1.15) {G\textsubscript{\{7,8,9\}}};
+        
+    \end{axis}
+\end{tikzpicture}

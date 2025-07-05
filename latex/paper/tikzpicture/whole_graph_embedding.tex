@@ -1,0 +1,26 @@
+\begin{tikzpicture}[scale=0.85]
+        \begin{axis}[
+            axis lines=box,
+            xmin=0, xmax=3,
+            ymin=-3, ymax=3,
+            xtick={0, 0.75, 1.5, 2.25, 3},
+            ytick={-3, -1.5, 0, 1.5, 3},
+            grid=both,
+            grid style={line width=0.3pt, draw=gray!30},
+            major grid style={line width=0.4pt, draw=gray!50},
+            ticklabel style={font=\small},
+            width=\textwidth, height=\textwidth,
+            enlargelimits=false,
+            axis on top,
+            clip=false
+            ]
+            
+            % Manually place a filled black hexagon
+            \node[regular polygon, regular polygon sides=6, minimum size=8pt,
+            fill=black, draw=black] at (axis cs:1.2,0.4) {};
+            
+            % Label G1 near the hexagon
+            \node[font=\bfseries\Large] at (axis cs:1.0,0.0) {G\textsubscript{1}};
+            
+        \end{axis}
+    \end{tikzpicture}

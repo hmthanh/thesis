@@ -1,0 +1,94 @@
+\begin{tikzpicture}[
+	emb/.style={draw, circle,minimum width=.1em, thin, anchor=center},
+	head/.style={emb, fill=amber},
+	relation/.style={emb, fill=azure},
+	tail/.style={emb, fill=awesome},
+	conv/.style={emb, fill=gray},
+	box/.style={draw,rectangle, fill=none},
+	embBox/.style={box ,rounded corners=0.2em},
+	convBox/.style={box, minimum height=1.3em, minimum width=4.8em,rounded corners=0.2em},
+	convolution/.style={box, minimum height=1.3em, minimum width=4.5em,rounded corners=0.2em},
+	convLayer/.style={box, minimum height=1.05em, minimum width=5em, rounded corners=0.2em},
+	textbox/.style={box,rounded corners=0.3em, fill=none, align=center},
+	title/.style={fill=none, align=center},
+	arrow/.style={thick,>=stealth},
+	arrowStrong/.style={thick,->,>=stealth},
+	arrowStyle/.style={-latex'},
+	mydot/.style={draw, circle, minimum size=0.1em, scale=0.2},
+	]
+	% 5
+	%			\draw node[textbox] (lossConvKB) {$\mathcal{L}\ref{eq:lossConvKB}$};
+	\draw node[textbox] (lossConvKB) {score};
+	
+	\draw node[embBox][minimum width=1.3em, minimum height=14em, left=2em of lossConvKB] (box9) {};
+	\foreach \x in {1,...,4}
+	{\draw node[head](e9\x)[yshift=-(\x-7)*1.1em, below=0mm of box9.center]{};}
+	
+	\foreach \x in {1,...,4}
+	{\draw node[relation](e8\x)[yshift=(\x-2)*1.1em, below=0mm of box9.center]{};}
+	
+	\foreach \x in {1,...,4}
+	{\draw node[tail](e7\x)[yshift=(\x-6)*1.1em, below=0mm of box9.center]{};}
+	
+	%
+	\draw node[convBox][yshift=3.8em, left=2em of box9] (box6) {};
+	\foreach \x in {1,...,4}
+	{\draw node[head](e6\x)[yshift=0.5em, xshift=(\x-2)*1.1em-0.5em, below=0mm of box6.center]{};}
+	
+	\draw node[convBox][left=2em of box9] (box5) {};
+	\foreach \x in {1,...,4}
+	{\draw node[relation](e5\x)[yshift=0.5em, xshift=(\x-2)*1.1em-0.5em, below=0mm of box5.center]{};}
+	
+	\draw node[convBox][yshift=-3.8em, left=2em of box9] (box4) {};
+	\foreach \x in {1,...,4}
+	{\draw node[tail](e4\x)[yshift=0.5em, xshift=(\x-2)*1.1em-0.5em, below=0mm of box4.center]{};}
+	
+	%
+	\draw node[convolution][left=2em of box5] (filterBox1) {};
+	\foreach \x in {1,...,3}
+	{\draw node[conv, fill=amber](filter1\x)[yshift=0.5em, xshift=(\x-2)*1.1em, below=0mm of filterBox1.center]{};}
+	\foreach \x in {1,...,3}
+	{\draw node[conv, fill=azure](filter2\x)[yshift=0.5em, xshift=(\x-2)*1.1em+0.2em, below=0mm of filterBox1.center]{};}
+	\foreach \x in {1,...,3}
+	{\draw node[conv, fill=awesome](filter3\x)[yshift=0.5em, xshift=(\x-2)*1.1em+0.4em, below=0mm of filterBox1.center]{};}
+	
+	\draw node[embBox][minimum width=1.3em, minimum height=5em, xshift=-1.5em, left=4em of filterBox1] (box1) {};
+	\foreach \x in {1,...,4}
+	{\draw node[head, fill=amber!30](e1\x)[yshift=(\x-2)*1.1em, below=0mm of box1.center]{};}
+	\draw node[title][above=0mm of box1] (headText) {\small $\text{h}$};
+	
+	\draw node[embBox][minimum width=1.3em, minimum height=5em, left=4em of filterBox1] (box2) {};
+	\foreach \x in {1,...,4}
+	{\draw node[relation, fill=azure!30](e2\x)[yshift=(\x-2)*1.1em, below=0mm of box2.center]{};}
+	\draw node[title][above=0mm of box2] (relationText) {\small $\text{r}$};
+	
+	\draw node[embBox][minimum width=1.3em, minimum height=5em, xshift=1.5em,left=4em of filterBox1] (box3) {};
+	\draw node[title][above=0mm of filterBox1] (filterTitle) {\small $3.\omega^{\text{1} \times \text{3}}$};
+	\foreach \x in {1,...,4}
+	{\draw node[tail, fill=awesome!30](e3\x)[yshift=(\x-2)*1.1em, below=0mm of box3.center]{};}
+	\draw node[title][above=0mm of box3] (tailText) {\small $\text{t}$};
+	
+	\draw node[convLayer, color=red][yshift=1.71em, left=2em of filterBox1] (conv1){};
+	\draw node[convLayer, color=green][yshift=0.61em, left=2em of filterBox1] (conv2){};
+	\draw node[convLayer, color=blue][yshift=-0.5em, left=2em of filterBox1] (conv3){};
+	\draw node[convLayer, color=amber][yshift=-1.6em, left=2em of filterBox1] (conv4){};
+	
+	% Arrow
+	\foreach \x in {1,...,4}
+	\draw [arrowStrong] (conv\x.east) -- (filterBox1.west);
+	
+	\foreach \x in {4,...,6}
+	\draw [arrowStrong] (filterBox1.east) -- (box\x.west);
+	
+	\draw [arrow] (box4.east) -- ([xshift=0.2mm, yshift=0.5mm]box9.south west);
+	\draw [arrow] (box5.east) -- (box9.west);
+	\draw [arrow] (box6.east) -- ([xshift=0.2mm, yshift=-0.5mm] box9.north west);
+	
+	\foreach \x in {1,...,4}
+	\draw [arrow] (e9\x.east) -- (lossConvKB.west);
+	\foreach \x in {1,...,4}
+	\draw [arrow] (e8\x.east) -- (lossConvKB.west);
+	\foreach \x in {1,...,4}
+	\draw [arrow] (e7\x.east) -- (lossConvKB.west);
+	
+\end{tikzpicture}

@@ -1,0 +1,52 @@
+\begin{tikzpicture}[>=Stealth, scale=0.7]
+	% ------------------------------------------------------------------
+	% GRID & AXES
+	% ------------------------------------------------------------------
+	\draw[step=1cm, thin, gray!60] (-5,-1) grid (5,9);
+	\draw[very thick] (-5,0) -- (5,0);    % x–axis
+	\draw[very thick] (0,-1) -- (0,9);    % y–axis
+	
+	% ------------------------------------------------------------------
+	% STYLE DEFINITIONS
+	% ------------------------------------------------------------------
+	\tikzset{
+		point/.style = {circle, fill=azure, inner sep=2pt},
+		vblue/.style  = {thick, amber},
+		vblack/.style = {thick, black},
+		vred/.style   = {thick, awesome},
+		vgreen/.style = {thick, darkpastelgreen},
+		vdash/.style  = {thick, dashed, deepmagenta},
+		vline/.style  = {thick, dashed, gray!80}
+	}
+	
+	% --- Points and vectors ---
+	% h = (2, 3): A → B
+	\node[point,label=below right:A] (A) at (1,3) {};
+	\node[point,label=right:B] (B) at (3,6	) {};
+	\draw[vblue,->] (A) -- (B) node[midway, below right=2pt] {\small$h=(2,3)$};
+	
+	% r = (0, 2): C → D
+	\node[point,label=below left:C] (C) at (1,3) {};
+	\node[point,label=left:D] (D) at (1,5) {};
+	\draw[vblack,->] (C) -- (D) node[midway, left=4pt] {\small$r=(0,2)$};
+	
+	% t' = (2, 1): E → F
+	\node[point,label=above left:E] (E) at (2,6) {};
+	\node[point,label=above right:F] (F) at (4,7) {};
+	\draw[vred,->] (E) -- (F) node[midway, above=10pt, sloped] {\small$t'=(2,1)$};
+	
+	% t = (-1, 2): G → H
+	\node[point,label=right:G] (G) at (-2,5) {};
+	\node[point,label=above:H] (H) at (-3,7) {};
+	\draw[vgreen,->] (G) -- (H) node[midway, right=2pt] {\small$t=(-1,2)$};
+	
+	% Additional points: K, I, J
+	\node[point,label=left:K] (K) at (-2.5,6) {};
+	\node[point,label=above:I] (I) at (2.45,6.2) {};
+	\node[point,label=below:J] (J) at (2.6,5.4) {};
+	
+	% Dashed lines for distances
+	\draw[vline] (K) -- (J) node[midway, above=0pt, xshift=3mm] {\small$\color{deepmagenta}{d}$};
+	\draw[vline] (J) -- (I) node[midway, xshift=-2mm] {\small$\color{deepmagenta}{d'}$};
+	
+\end{tikzpicture}

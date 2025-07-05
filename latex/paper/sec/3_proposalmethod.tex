@@ -1,11 +1,9 @@
-%\chapter{METHOD PROPOSAL}
-%\label{chap:Chapter3}
-\chapter{DEEP LEARNING-BASED METHODS}
+\section{Deep Learning-Based Methods}
 \label{chap:DeeLearning}
 
 In this chapter, we present Knowledge Graphs and describe the task of Graph Embedding, providing an overview of current graph embedding techniques. We will revisit the attention mechanism and explain how it is applied to knowledge graphs through the Graph Attention Network (GAT) model \cite{velivckovic2017graph}. Additionally, we present an improved method based on the graph attention model - KBGAT \cite{nathani2019learning} - which incorporates relation information and neighboring relations.
 
-\section{Graph Embedding}
+\subsection{Graph Embedding}
 \label{sec:graphEmbedding}
 
 In the real world, representing entities and relations as vectors can be intuitively understood as the process of mapping features and attributes of an object into a lower-dimensional space, with each component representing a specific unit-level feature.
@@ -13,7 +11,9 @@ In the real world, representing entities and relations as vectors can be intuiti
 For example, we know Donald Trump is 1.9 meters tall and has a wife named Melania. Thus, we could represent the entity "Donald Trump" as a vector:
 
 \[
+\resizebox{\linewidth}{!}{$
 \overrightarrow{e_\text{Trump}} = [1.9_{\text{height}}, 0_{\text{area}}, 1_{\text{wife is Melania}}, 0_{\text{wife is Taylor}}].
+$}
 \]
 
 For features that cannot be measured or have no value (e.g., \texttt{.area}), we assign 0. For categorical features without magnitude (e.g., \texttt{.wife}), we represent them using probabilities of unit features (e.g., \texttt{.wife is Melania}, \texttt{.wife is Taylor}). Therefore, any object in the real world can be \textit{embedded} as a vector in an interpretable way.
@@ -42,13 +42,17 @@ To understand graph embedding techniques, we begin with several fundamental defi
 	For example, in \autoref{fig:graphInput}, the second-order proximity \(s^{(2)}_{12}\) is the similarity between \(s^{(1)}_1\) and \(s^{(1)}_2\). As introduced above:
 	
 	\[
+	\resizebox{\linewidth}{!}{$
 	s^{(1)}_1 = \begin{bmatrix} 0, 1.2, 1.5, 0, 0, 0, 0, 0, 0 \end{bmatrix}, \quad s^{(1)}_2 = \begin{bmatrix} 1.2, 0, 0.8, 0, 0, 0, 0 , 0, 0 \end{bmatrix}.
+	$}
 	\]
 	
 	We compute the cosine similarity:
 	
 	\[
+	\resizebox{\linewidth}{!}{$
 	s^{(2)}_{12} = \cos(s^{(1)}_1, s^{(1)}_2) = 0.43, \quad s^{(2)}_{15} = \cos(s^{(1)}_1, s^{(1)}_5) = 0.
+	$}
 	\]
 	
 	We observe that the second-order proximity between \(v_1\) and \(v_5\) is 0 because they share no common 1-hop neighbors. \(v_1\) and \(v_2\) share a common neighbor \(v_3\), thus their second-order proximity \(s^{(2)}_{12}\) is greater than 0.
@@ -62,12 +66,23 @@ To understand graph embedding techniques, we begin with several fundamental defi
 \end{itemize}
 
 
+
+\begin{figure}[htp]
+	\centering
+	
+	\input{tikzpicture/graph_embedding_input.tex}
+	\caption{Example of an input graph}
+	\label{fig:graphInput}
+\end{figure}
+
 Graph embedding is the process of transforming graph features into vectors or sets of low-dimensional vectors. The more effective the embedding, the higher the accuracy in subsequent graph mining and analysis tasks. The biggest challenge in graph embedding depends on the problem setting, which includes both the embedding input and output, as illustrated in \autoref{fig:graphEmbeddingSettingTree}.
 
 \begin{figure}[htp]
 	\centering
 	\normalsize
+	\resizebox{\linewidth}{!}{%
 		\input{tikzpicture/emb_input_output.tex}
+	}
 	\caption{Graph Embedding Techniques}
 	\label{fig:graphEmbeddingSettingTree}
 \end{figure}
@@ -86,151 +101,107 @@ For instance, the most common embedding output is \textbf{node embedding}, which
 However, in some cases, the tasks may involve more fine-grained graph components such as node pairs, subgraphs, or the entire graph. Therefore, the first challenge of embedding is to determine the appropriate type of embedding output for the application of interest. Four types of embedding outputs are illustrated in \autoref{fig:graphInput}, including: \textbf{Node Embedding} (\ref{fig:nodeEmbedding}), \textbf{Edge Embedding} (\ref{fig:edgeEmbedding}), \textbf{Hybrid Embedding} (\ref{fig:substructureEmbedding}), and \textbf{Whole-Graph Embedding} (\ref{fig:wholeGraphEmbedding}). Different output granularities have distinct criteria and present different challenges. For example, a good node embedding retains similarity with its neighbors in the embedding space. Conversely, a good whole-graph embedding represents the entire graph as a vector that preserves graph-level similarity.
 
 
-\subsection{Graph Embedding Problem Settings}
+\subsubsection{Graph Embedding Problem Settings}
 
 While the input is determined by the type of information to be preserved, the output varies depending on the downstream graph mining task. Therefore, we discuss in more detail the embedding methods based on the type of output required by the embedding problem.
+
+
+\begin{figure*}[htbp]
+	\centering
+%	\resizebox{1.8\linewidth}{!}{%
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\input{tikzpicture/node_embedding.tex}
+		\caption{Node embedding with each vector representing node features}
+		\label{fig:nodeEmbedding}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\input{tikzpicture/edge_embedding.tex}
+		\caption{Edge embedding with each vector representing edge features}
+		\label{fig:edgeEmbedding}
+	\end{subfigure}
+	
+	\vspace{0.5em}
+	
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\input{tikzpicture/substructure_embedding.tex}
+		\caption{Embedding a graph substructure}
+		\label{fig:substructureEmbedding}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\input{tikzpicture/whole_graph_embedding.tex}
+		\caption{Whole-graph embedding}
+		\label{fig:wholeGraphEmbedding}
+	\end{subfigure}
+%	}
+	\caption{Graph embedding methods.}
+	\label{fig:GraphEmbeddingMethods}
+\end{figure*}
+
+
+
+
+
+%\begin{figure*}[htbp]
+%	\centering
+%	
+%	\rule{\textwidth}{1pt} 
+%	\begin{subfigure}[b]{0.3\textwidth}
+%		\centering
+%		\rule{\textwidth}{1pt}
+%		
+%		\input{tikzpicture/node_embedding.tex}
+%		\caption{
+%			Node embedding with each vector representing node features}
+%		\label{fig:nodeEmbedding}
+%	\end{subfigure}
+%	
+%	\begin{subfigure}[b]{0.3\textwidth}
+%		\centering
+%		\input{tikzpicture/edge_embedding.tex}
+%		\caption{Edge embedding with each vector representing edge features}
+%		\label{fig:edgeEmbedding}
+%	\end{subfigure}
+%	
+%	\begin{subfigure}[b]{0.3\textwidth}
+%		\centering
+%		\input{tikzpicture/substructure_embedding.tex}
+%		
+%		\caption{Embedding a graph substructure}
+%		\label{fig:substructureEmbedding}
+%	\end{subfigure}
+%	\begin{subfigure}[b]{0.3\textwidth}
+%		\centering
+%		
+%		\input{tikzpicture/whole_graph_embedding.tex}
+%		
+%		
+%		\caption{Whole-graph embedding}
+%		\label{fig:wholeGraphEmbedding}
+%	\end{subfigure}
+%	
+%	\caption{Graph embedding methods.}
+%	\label{fig:GraphEmbeddingMethods}
+%\end{figure*}
+
+
 
 \textbf{Node Embedding}
 \label{sec:nodeEmbedding}
 
-\begin{figure}[H]
-	\centering
-	\begin{tikzpicture}
-		\begin{axis}[
-			axis lines=box,
-			xmin=0, xmax=3,
-			ymin=-3, ymax=3,
-			xtick={0, 0.75, 1.5, 2.25, 3},
-			ytick={-3, -1.5, 0, 1.5, 3},
-			grid=both,
-			grid style={line width=0.3pt, draw=gray!30},
-			major grid style={line width=0.4pt, draw=gray!50},
-			ticklabel style={font=\small},
-			width=8cm, height=8cm,
-			enlargelimits=false,
-			scatter/classes={
-				a={mark=*,draw=black,fill=green!50},
-				b={mark=*,draw=black,fill=orange!60},
-				c={mark=*,draw=black,fill=blue!60}
-			},
-			axis on top,
-			clip=false
-			]
-			
-			% Plot points
-			\addplot[
-			scatter, only marks, scatter src=explicit symbolic, mark size=2.8pt
-			] table[meta=class] {
-				x     y     label  class
-				0.4   1.8   1       a
-				0.6   1.2   3       a
-				0.8   2.2   2       a
-				
-				0.9   0.5   4       b
-				1.0   0.0   5       b
-				1.3   0.2   6       b
-				
-				1.7   0.3   7       c
-				1.6  -0.3   8       c
-				2.0  -0.2   9       c
-			};
-			
-			% Labels placed further above the nodes
-			\node[font=\bfseries] at (axis cs:0.4,2.1) {1};
-			\node[font=\bfseries] at (axis cs:0.6,1.5) {3};
-			\node[font=\bfseries] at (axis cs:0.8,2.5) {2};
-			
-			\node[font=\bfseries] at (axis cs:0.9,0.8) {4};
-			\node[font=\bfseries] at (axis cs:1.0,0.3) {5};
-			\node[font=\bfseries] at (axis cs:1.3,0.5) {6};
-			
-			\node[font=\bfseries] at (axis cs:1.7,0.6) {7};
-			\node[font=\bfseries] at (axis cs:1.6,-0.0) {8};
-			\node[font=\bfseries] at (axis cs:2.0,0.1) {9};
-			
-		\end{axis}
-	\end{tikzpicture}
-	
-	\caption{
-		Node embedding with each vector representing node features}
-	\label{fig:nodeEmbedding}
-\end{figure}
 
-Node embedding represents each node as a low-dimensional vector. Nodes that are \textit{close} in the graph have similar vector representations. The difference among graph embedding methods lies in how they define the \textit{closeness} between two nodes. First-order proximity (Definition \ref{def:firstOrderProximity}) and second-order proximity (Definition \ref{def:secondOrderProximity}) are two commonly used metrics to measure pairwise node similarity. Higher-order proximity has also been explored to some extent. For example, capturing k-step (k = 1, 2, 3, ···) neighborhood relationships during embedding is discussed in the study by Cao, Shaosheng \cite{cao2015grarep}.
+
+Node embedding \autoref{fig:nodeEmbedding} represents each node as a low-dimensional vector. Nodes that are \textit{close} in the graph have similar vector representations. The difference among graph embedding methods lies in how they define the \textit{closeness} between two nodes. First-order proximity (Definition \ref{def:firstOrderProximity}) and second-order proximity (Definition \ref{def:secondOrderProximity}) are two commonly used metrics to measure pairwise node similarity. Higher-order proximity has also been explored to some extent. For example, capturing k-step (k = 1, 2, 3, ···) neighborhood relationships during embedding is discussed in the study by Cao, Shaosheng \cite{cao2015grarep}.
 
 \textbf{Edge Embedding}
 \label{sec:edgeEmbedding}
 
-\begin{figure}[H]
-	\centering
-	\begin{tikzpicture}
-		\begin{axis}[
-			axis lines=box,
-			xmin=0, xmax=3,
-			ymin=-3, ymax=3,
-			xtick={0, 0.75, 1.5, 2.25, 3},
-			ytick={-3, -1.5, 0, 1.5, 3},
-			grid=both,
-			grid style={line width=0.3pt, draw=gray!30},
-			major grid style={line width=0.4pt, draw=gray!50},
-			ticklabel style={font=\small},
-			width=8cm, height=8cm,
-			enlargelimits=false,
-			scatter/classes={
-				green={mark=triangle*,draw=black,fill=green!50},
-				orange={mark=triangle*,draw=black,fill=orange!60},
-				blue={mark=triangle*,draw=black,fill=blue!60},
-				yellow={mark=triangle*,draw=black,fill=yellow!80},
-				purple={mark=triangle*,draw=black,fill=violet!70}
-			},
-			axis on top,
-			clip=false
-			]
-			
-			% Plot edge embeddings as triangles
-			\addplot[
-			scatter, only marks, scatter src=explicit symbolic, mark size=4pt
-			] table[meta=class] {
-				x     y     label   class
-				0.5   0.2   e_{13}  green
-				0.7   1.1   e_{12}  green
-				1.2   1.1   e_{23}  green
-				
-				0.8   0.3   e_{45}  orange
-				1.0   0.0   e_{46}  orange
-				1.8   0.1   e_{56}  orange
-				
-				0.4  -0.8   e_{78}  blue
-				0.8  -1.3   e_{79}  blue
-				
-				2.0  -0.8   e_{67}  purple
-				2.2  -1.0   e_{34}  yellow
-			};
-			
-			% Labels near triangles
-			\node[font=\bfseries] at (axis cs:0.5,0.45) {e\textsubscript{13}};
-			\node[font=\bfseries] at (axis cs:0.7,1.35) {e\textsubscript{12}};
-			\node[font=\bfseries] at (axis cs:1.2,1.35) {e\textsubscript{23}};
-			
-			\node[font=\bfseries] at (axis cs:0.8,0.55) {e\textsubscript{45}};
-			\node[font=\bfseries] at (axis cs:1.0,0.3) {e\textsubscript{46}};
-			\node[font=\bfseries] at (axis cs:1.8,0.35) {e\textsubscript{56}};
-			
-			\node[font=\bfseries] at (axis cs:0.4,-0.55) {e\textsubscript{78}};
-			\node[font=\bfseries] at (axis cs:0.8,-1.05) {e\textsubscript{79}};
-			
-			\node[font=\bfseries] at (axis cs:2.0,-0.55) {e\textsubscript{67}};
-			\node[font=\bfseries] at (axis cs:2.2,-0.75) {e\textsubscript{34}};
-			
-		\end{axis}
-	\end{tikzpicture}
-	
-	\caption{Edge embedding with each vector representing edge features}
-	\label{fig:edgeEmbedding}
-\end{figure}
-
-
-In contrast to node embedding, edge embedding aims to represent an edge as a low-dimensional vector. Edge embedding is useful in two cases:
+In contrast to node embedding, edge embedding \autoref{fig:edgeEmbedding} aims to represent an edge as a low-dimensional vector. Edge embedding is useful in two cases:
 
 First, in knowledge graph embedding. Each edge is a triple $\langle h, r, t \rangle$ (Definition \ref{def:knowledgeGraph}). The embedding is learned to preserve the relation $r$ between $h$ and $t$ in the embedding space so that a missing entity or relation can be accurately predicted given the other two components in $\langle h, r, t \rangle$.
 
@@ -238,105 +209,25 @@ Second, some methods embed a pair of nodes as a vector to compare it with other 
 
 \textbf{Hybrid Embedding}
 
-\begin{figure}[H]
-	\centering
-	\begin{tikzpicture}
-		\begin{axis}[
-			axis lines=box,
-			xmin=0, xmax=3,
-			ymin=-3, ymax=3,
-			xtick={0, 0.75, 1.5, 2.25, 3},
-			ytick={-3, -1.5, 0, 1.5, 3},
-			grid=both,
-			grid style={line width=0.3pt, draw=gray!30},
-			major grid style={line width=0.4pt, draw=gray!50},
-			ticklabel style={font=\small},
-			width=8cm, height=8cm,
-			enlargelimits=false,
-			scatter/classes={
-				green={mark=diamond*,draw=black,fill=green!50},
-				orange={mark=diamond*,draw=black,fill=orange!60},
-				blue={mark=diamond*,draw=black,fill=blue!60}
-			},
-			axis on top,
-			clip=false
-			]
-			
-			% Cluster centroids
-			\addplot[
-			scatter, only marks, scatter src=explicit symbolic, mark size=4pt
-			] table[meta=class] {
-				x     y     label       class
-				2.0   0.5   G_{1,2,3}    green
-				1.5   0.0   G_{4,5,6}    orange
-				1.0  -1.5   G_{7,8,9}    blue
-			};
-			
-			% Cluster labels near markers
-			\node[font=\bfseries\Large] at (axis cs:2.0,0.85)  {G\textsubscript{\{1,2,3\}}};
-			\node[font=\bfseries\Large] at (axis cs:1.5,0.35)  {G\textsubscript{\{4,5,6\}}};
-			\node[font=\bfseries\Large] at (axis cs:1.0,-1.15) {G\textsubscript{\{7,8,9\}}};
-			
-		\end{axis}
-	\end{tikzpicture}
-	
-	\caption{Embedding a graph substructure}
-	\label{fig:substructureEmbedding}
-\end{figure}
 
-Hybrid embedding refers to embedding combinations of different graph components, e.g., node + edge (i.e., substructure), or node + parts. Substructure or part embeddings can also be derived by aggregating individual node and edge embeddings. However, such \textit{indirect} approaches are not optimized to capture the structure of the graph. Moreover, node and part embeddings can reinforce each other. Node embeddings improve by learning from high-order neighborhood attention, while part embeddings become more accurate due to the collective behavior of their constituent nodes.
+
+Hybrid embedding refers to embedding combinations of different graph components, e.g., node + edge (i.e., substructure), or node + parts. Substructure or part embeddings \autoref{fig:substructureEmbedding} can also be derived by aggregating individual node and edge embeddings. However, such \textit{indirect} approaches are not optimized to capture the structure of the graph. Moreover, node and part embeddings can reinforce each other. Node embeddings improve by learning from high-order neighborhood attention, while part embeddings become more accurate due to the collective behavior of their constituent nodes.
 
 \textbf{Whole-Graph Embedding}
 
-\begin{figure}[H]
+Whole-graph embedding \autoref{fig:wholeGraphEmbedding} is typically used for small graphs such as proteins, molecules, etc. In this case, an entire graph is represented as a vector, and similar graphs are embedded close to each other. Whole-graph embedding is useful for graph classification tasks by providing a simple and effective solution for computing graph similarity. To balance embedding time (efficiency) and information retention (expressiveness), \textbf{hierarchical graph embedding} \cite{mousavi2017hierarchical} introduces a hierarchical embedding framework. It argues that accurate understanding of global graph information requires processing substructures at multiple scales. A graph pyramid is formed where each level is a coarsened graph at a different scale. The graph is embedded at all levels and then concatenated into a single vector. Whole-graph embedding requires collecting features from the entire graph, thus is generally more time-consuming than other settings.
+
+
+\subsubsection{Graph Embedding Techniques}
+
+\begin{figure*}[htp]
 	\centering
-	\begin{tikzpicture}
-		\begin{axis}[
-			axis lines=box,
-			xmin=0, xmax=3,
-			ymin=-3, ymax=3,
-			xtick={0, 0.75, 1.5, 2.25, 3},
-			ytick={-3, -1.5, 0, 1.5, 3},
-			grid=both,
-			grid style={line width=0.3pt, draw=gray!30},
-			major grid style={line width=0.4pt, draw=gray!50},
-			ticklabel style={font=\small},
-			width=8cm, height=8cm,
-			enlargelimits=false,
-			axis on top,
-			clip=false
-			]
-			
-			% Manually place a filled black hexagon
-			\node[regular polygon, regular polygon sides=6, minimum size=8pt,
-			fill=black, draw=black] at (axis cs:1.2,0.4) {};
-			
-			% Label G1 near the hexagon
-			\node[font=\bfseries\Large] at (axis cs:1.0,0.0) {G\textsubscript{1}};
-			
-		\end{axis}
-	\end{tikzpicture}
-	
-	\caption{Whole-graph embedding}
-	\label{fig:wholeGraphEmbedding}
-\end{figure}
-
-Whole-graph embedding is typically used for small graphs such as proteins, molecules, etc. In this case, an entire graph is represented as a vector, and similar graphs are embedded close to each other. Whole-graph embedding is useful for graph classification tasks by providing a simple and effective solution for computing graph similarity. To balance embedding time (efficiency) and information retention (expressiveness), \textbf{hierarchical graph embedding} \cite{mousavi2017hierarchical} introduces a hierarchical embedding framework. It argues that accurate understanding of global graph information requires processing substructures at multiple scales. A graph pyramid is formed where each level is a coarsened graph at a different scale. The graph is embedded at all levels and then concatenated into a single vector. Whole-graph embedding requires collecting features from the entire graph, thus is generally more time-consuming than other settings.
-
-
-\subsection{Graph Embedding Techniques}
-
-\begin{figure}[htp]
-	\centering
-%	\makebox[\textwidth][l]{
-%		\hspace{-25mm}
-		\resizebox{\textwidth}{!}{%
-		\input{tikzpicture/graph_emb_tree.tex}
-%}
+		\resizebox{1\textwidth}{!}{%
+			\input{tikzpicture/graph_emb_tree.tex}
 	}
 	\caption{Graph Embedding Techniques}
 	\label{fig:graphEmbeddingTechniquesTree}
-\end{figure}
+\end{figure*}
 
 In this section, we categorize graph embedding methods based on the techniques used. As previously stated, the goal of graph embedding is to represent a graph in a lower-dimensional space while preserving as much of the original graph information as possible. The main differences among embedding techniques lie in how they define which intrinsic graph properties should be preserved. Since the primary focus of our work is on graph embedding methods based on deep learning, we provide only brief overviews of the other method categories.
 
@@ -432,100 +323,100 @@ A generative model is defined by specifying a joint distribution over input feat
 	In this method, each vertex is associated with graph semantics and should be embedded closer to semantically relevant vertices. These semantic relationships can be derived from descriptive nodes via a generative model.
 \end{itemize}
 
-\textbf{Summary}: Each graph embedding method has its own strengths and weaknesses, which have been summarized by Cai, Hongyun \cite{cai2018comprehensive} and are presented in \autoref{tab:graphEmbeddingTechCompare}. The \textit{matrix factorization} group learns embeddings by analyzing pairwise global similarities. The \textit{deep learning} group, in contrast, achieves promising results and is suitable for graph embedding because it can learn complex representations from complex graph structures.
+\textbf{Summary}: Each graph embedding method has its own strengths and weaknesses, which have been summarized by Cai, Hongyun \cite{cai2018comprehensive}. The \textit{matrix factorization} group learns embeddings by analyzing pairwise global similarities. The \textit{deep learning} group, in contrast, achieves promising results and is suitable for graph embedding because it can learn complex representations from complex graph structures.
 
-\newcolumntype{L}{>{\arraybackslash}m{0.25\textwidth}}
-\newcolumntype{M}{>{\arraybackslash}m{0.2\textwidth}}
-\begingroup
-\normalsize
-\setlength{\tabcolsep}{8pt}
-\begin{longtable}{|p{0.2\textwidth}|p{0.22\textwidth}|L|p{0.22\textwidth}|}
-	\caption{Comparison of Advantages and Disadvantages of Graph Embedding Techniques} \label{tab:graphEmbeddingTechCompare} \\
-	\hline
-	Method & Subcategory & Advantages & Disadvantages \\
-	\hline \hline
-	\endfirsthead
-	
-	%	\multicolumn{4}{c}%
-	%	{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
-	\hline
-	Method & Subcategory & Advantages & Disadvantages \\
-	\hline \hline
-	\endhead
-	
-	%	\hline \multicolumn{4}{|r|}{{Continued on next page}} \\ \hline
-	\endfoot
-	
-	\hline
-	\endlastfoot
-	
-	Matrix Factorization & Graph Laplacian Eigenmaps & \multirow{3}{=}{Considers global neighborhood structure} &
-	\multirow{2}{=}{Requires large computation time and space} \\ \cline{2-2}
-	& Node Proximity Matrix Factorization & & \\
-	\hline
-	\multirow{3}{=}{Edge Reconstruction} & Maximize edge reconstruction probability & \multirow{3}{=}{Relatively efficient training} & \multirow{3}{=}{Only optimizes local information, e.g., first-order neighbors or ranked node pairs} \\ \cline{2-2}
-	& Minimize distance-based loss & & \\ \cline{2-2}
-	& Minimize margin-based ranking loss & & \\ \hline
-	\multirow{3}{=}{Graph Kernels} & Based on graphlet & \multirow{3}{=}{Efficient, considers only desired primitive structures} & \multirow{3}{=}{Substructures are not independent. Embedding dimensionality increases exponentially} \\ \cline{2-2}
-	& Based on subtree patterns & & \\ \cline{2-2}
-	& Based on random walk & & \\ \hline
-	
-	Generative Model & Embedding into latent space & Embedding is interpretable & Difficult to tune distribution selection \\ \cline{2-3}
-	
-	& Incorporate semantics & Leverages multiple information sources & Requires a large amount of naturally labeled data\\
-	\hline
-	
-	Deep Learning & With random walk & \multirow{2}{=}{Efficient and fast. No need for manual feature extraction} & Considers only local path content. Difficult to find optimal sampling strategy \\ \cline{2-2} \cline{4-4} 
-	& Without random walk & & High computational cost \\ \hline
-\end{longtable}
-\endgroup
+%\newcolumntype{L}{>{\arraybackslash}m{0.25\textwidth}}
+%\newcolumntype{M}{>{\arraybackslash}m{0.2\textwidth}}
+%\begingroup
+%\normalsize
+%\setlength{\tabcolsep}{8pt}
+%\begin{longtable}{|p{0.2\textwidth}|p{0.22\textwidth}|L|p{0.22\textwidth}|}
+%	\caption{Comparison of Advantages and Disadvantages of Graph Embedding Techniques} \label{tab:graphEmbeddingTechCompare} \\
+%	\hline
+%	Method & Subcategory & Advantages & Disadvantages \\
+%	\hline \hline
+%	\endfirsthead
+%	
+%	%	\multicolumn{4}{c}%
+%	%	{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+%	\hline
+%	Method & Subcategory & Advantages & Disadvantages \\
+%	\hline \hline
+%	\endhead
+%	
+%	%	\hline \multicolumn{4}{|r|}{{Continued on next page}} \\ \hline
+%	\endfoot
+%	
+%	\hline
+%	\endlastfoot
+%	
+%	Matrix Factorization & Graph Laplacian Eigenmaps & \multirow{3}{=}{Considers global neighborhood structure} &
+%	\multirow{2}{=}{Requires large computation time and space} \\ \cline{2-2}
+%	& Node Proximity Matrix Factorization & & \\
+%	\hline
+%	\multirow{3}{=}{Edge Reconstruction} & Maximize edge reconstruction probability & \multirow{3}{=}{Relatively efficient training} & \multirow{3}{=}{Only optimizes local information, e.g., first-order neighbors or ranked node pairs} \\ \cline{2-2}
+%	& Minimize distance-based loss & & \\ \cline{2-2}
+%	& Minimize margin-based ranking loss & & \\ \hline
+%	\multirow{3}{=}{Graph Kernels} & Based on graphlet & \multirow{3}{=}{Efficient, considers only desired primitive structures} & \multirow{3}{=}{Substructures are not independent. Embedding dimensionality increases exponentially} \\ \cline{2-2}
+%	& Based on subtree patterns & & \\ \cline{2-2}
+%	& Based on random walk & & \\ \hline
+%	
+%	Generative Model & Embedding into latent space & Embedding is interpretable & Difficult to tune distribution selection \\ \cline{2-3}
+%	
+%	& Incorporate semantics & Leverages multiple information sources & Requires a large amount of naturally labeled data\\
+%	\hline
+%	
+%	Deep Learning & With random walk & \multirow{2}{=}{Efficient and fast. No need for manual feature extraction} & Considers only local path content. Difficult to find optimal sampling strategy \\ \cline{2-2} \cline{4-4} 
+%	& Without random walk & & High computational cost \\ \hline
+%\end{longtable}
+%\endgroup
 
 
 
 %\newcolumntype{L}{>{\arraybackslash}m{5cm}}
 %\begin{table}[htbp]
 %	\begin{center}
-%		\caption{Bảng so sánh ưu và nhược điểm của kỹ thuật nhúng đồ thị}
-%		\label{tab:graphEmbeddingTechCompare2}
-%		\resizebox{\textwidth}{!}{
-%			\begin{tabular}{|p{2cm}|p{8cm}|L|p{8cm}|}
-%				\hline
-%				Phương pháp & Danh mục con & Ưu điểm & Nhược điểm \\
-%				\hline \hline
-%				Phân rã ma trận & Đồ thị toán tử Laplace Eigenmap & \multirow{3}{5cm}{Xem xét toàn cục các đỉnh lân cận}&
-%				\multirow{2}{8cm}{Sử dụng không gian và thời gian tính toán lớn }\\
-%				\cline{2-2}
-%				& Phân rã ma trận bằng xấp xỉ đỉnh & & \\
-%				\hline
-%				\multirow{3}{2cm}{Tái cấu trúc cạnh} & Cực đại hóa xác suất tái cấu trúc cạnh & \multirow{3}{5cm}{Huấn luyện tương đối hiệu quả} & \multirow{3}{8cm}{Tối ưu chỉ sử dụng thông tin cục bộ. Ví dụ như các cạnh (hàng xóm 1 nước) hoặc cặp đỉnh xếp hạng } \\ \cline{2-2}
-%				& Tối thiểu hóa mất mát dựa trên khoảng cách & & \\ \cline{2-2}
-%				& Tối thiểu hóa xếp hạng mất mát dựa trên lề & & \\ \hline
-%				\multirow{3}{2cm}{Đồ thị lõi} & Dựa trên graphlet & \multirow{3}{5cm}{Hiệu quả, chỉ tính những nhánh cấu trúc đơn vị mong muốn} & \multirow{3}{8cm}{Nhánh cấu trúc thì không độc lập. Số chiều nhúng tăng lên theo hàm mũ} \\ \cline{2-2}
-%				& Dựa trên mẫu nhánh cây   & & \\ \cline{2-2}
-%				& Dựa trên bước nhảy ngẫu nhiên & & \\ \hline
-%				
-%				Mô hình sinh & Nhúng đồ thị dựa trên không gian ẩn & Phép nhúng có thể giải thích được & Khó điều chỉnh lựa chọn phân bố \\ \cline{2-3}
-%				
-%				& Nhúng kết hợp ngữ nghĩa & Tận dụng nhiều thông tin nguồn & Yêu cầu một lượng lớn dữ liệu huấn luyện một cách tự nhiên\\
-%				\hline
-%				
-%				Học sâu & Sử dụng bước ngẫu nhiên & \multirow{2}{5cm}{Hiệu quả và nhanh chóng Không phải trích đặc trưng} & Chỉ xem xét đến nội dung cục bộ trong một đường đi. Khó để tìm kiếm chiến lược lấy mẫu tối ưu \\ \cline{2-2} \cline{4-4} 
-%				& Không sử dụng bước ngẫu nhiên &  & Chi phí tính toán cao \\ \hline
-%			\end{tabular}
-%		}
-%	\end{center}
+	%		\caption{Bảng so sánh ưu và nhược điểm của kỹ thuật nhúng đồ thị}
+	%		\label{tab:graphEmbeddingTechCompare2}
+	%		\resizebox{\textwidth}{!}{
+		%			\begin{tabular}{|p{2cm}|p{8cm}|L|p{8cm}|}
+			%				\hline
+			%				Phương pháp & Danh mục con & Ưu điểm & Nhược điểm \\
+			%				\hline \hline
+			%				Phân rã ma trận & Đồ thị toán tử Laplace Eigenmap & \multirow{3}{5cm}{Xem xét toàn cục các đỉnh lân cận}&
+			%				\multirow{2}{8cm}{Sử dụng không gian và thời gian tính toán lớn }\\
+			%				\cline{2-2}
+			%				& Phân rã ma trận bằng xấp xỉ đỉnh & & \\
+			%				\hline
+			%				\multirow{3}{2cm}{Tái cấu trúc cạnh} & Cực đại hóa xác suất tái cấu trúc cạnh & \multirow{3}{5cm}{Huấn luyện tương đối hiệu quả} & \multirow{3}{8cm}{Tối ưu chỉ sử dụng thông tin cục bộ. Ví dụ như các cạnh (hàng xóm 1 nước) hoặc cặp đỉnh xếp hạng } \\ \cline{2-2}
+			%				& Tối thiểu hóa mất mát dựa trên khoảng cách & & \\ \cline{2-2}
+			%				& Tối thiểu hóa xếp hạng mất mát dựa trên lề & & \\ \hline
+			%				\multirow{3}{2cm}{Đồ thị lõi} & Dựa trên graphlet & \multirow{3}{5cm}{Hiệu quả, chỉ tính những nhánh cấu trúc đơn vị mong muốn} & \multirow{3}{8cm}{Nhánh cấu trúc thì không độc lập. Số chiều nhúng tăng lên theo hàm mũ} \\ \cline{2-2}
+			%				& Dựa trên mẫu nhánh cây   & & \\ \cline{2-2}
+			%				& Dựa trên bước nhảy ngẫu nhiên & & \\ \hline
+			%				
+			%				Mô hình sinh & Nhúng đồ thị dựa trên không gian ẩn & Phép nhúng có thể giải thích được & Khó điều chỉnh lựa chọn phân bố \\ \cline{2-3}
+			%				
+			%				& Nhúng kết hợp ngữ nghĩa & Tận dụng nhiều thông tin nguồn & Yêu cầu một lượng lớn dữ liệu huấn luyện một cách tự nhiên\\
+			%				\hline
+			%				
+			%				Học sâu & Sử dụng bước ngẫu nhiên & \multirow{2}{5cm}{Hiệu quả và nhanh chóng Không phải trích đặc trưng} & Chỉ xem xét đến nội dung cục bộ trong một đường đi. Khó để tìm kiếm chiến lược lấy mẫu tối ưu \\ \cline{2-2} \cline{4-4} 
+			%				& Không sử dụng bước ngẫu nhiên &  & Chi phí tính toán cao \\ \hline
+			%			\end{tabular}
+		%		}
+	%	\end{center}
 %\end{table}
-	
+
 
 Graph embedding methods based on random walk in deep learning have lower computational cost compared to those using full deep learning models. Traditional methods often treat graphs as grids; however, this does not reflect the true nature of graphs. In the \textit{edge reconstruction} group, the objective function is optimized based on observed edges or by ranking triplets. While this approach is more efficient, the resulting embedding vectors do not account for the global structure of the graph. The \textit{graph kernel} methods transform graphs into vectors, enabling graph-level tasks such as graph classification. Therefore, they are only effective when the desired primitive structures in a graph can be enumerated. The \textit{generative model} group naturally integrates information from multiple sources into a unified model. Embedding a graph into a latent semantic space produces interpretable embedding vectors using semantics. However, assuming the modeling of observations using specific distributions can be difficult to justify. Moreover, generative approaches require a large amount of training data to estimate a model that fits the data well. Hence, they may perform poorly on small graphs or when only a few graphs are available.
 
 Among these methods, deep learning-based graph embedding allows learning complex representations and has shown the most promising results. Graph attention networks (GATs), which are based on attention mechanisms, aggregate the information of an entity using attention weights from its neighbors relative to the central entity. We believe this research direction is aligned with studies on the relationship between attention and memory \cite{memoryandattention:2020}, where the distribution of attention determines the weight or importance of one entity relative to another. Likewise, the embedding vector representing an entity is influenced by the attention or importance of its neighboring embeddings. Therefore, this is the approach we selected among the existing graph embedding methods.
 
-\section{Multi-head Attention Mechanism}
+\subsection{Multi-head Attention Mechanism}
 
 In 2014, the multi-head attention mechanism was introduced by Bahdanau, Dzmitry \cite{bahdanau2014neural}, but it only gained widespread popularity in 2017 through the Transformer model by Vaswani, Ashish \cite{vaswani2017attention}. The attention mechanism is an effective method to indicate the importance of a word with respect to other words in a sentence, and it has been shown to be a generalization of any convolution operation as reported by Cordonnier, Jean-Baptiste \cite{cordonnier2019relationship}. To understand how multi-head attention is applied to graphs, in this section we will detail the mechanism so we can better understand how it is used in link prediction tasks within knowledge graphs.
 
-\subsection{Attention Mechanism}
+\subsubsection{Attention Mechanism}
 \label{sec:attentionMechanism}
 
 The input of the attention mechanism consists of two embedding matrices $\mathbf{X} = \Big\{\overrightarrow{x_1}, \overrightarrow{x_2}, ...,  \overrightarrow{x_{N_x}}\Big\}$ and $\mathbf{Y} = \Big\{\overrightarrow{y_1}, \overrightarrow{y_2}, ...,  \overrightarrow{y_{N_y}}\Big\}$, where each row $i^{\text{th}}$ or $j^{\text{th}}$ in matrix $\mathbf{X}$ or $\mathbf{Y}$ is an embedding vector $\overrightarrow{x_i} \in \mathbb{R}^{1 \times D_{\text{in}}}$, $\overrightarrow{y_j} \in \mathbb{R}^{1 \times D_{\text{in}}}$.
@@ -548,7 +439,7 @@ are used to parameterize the transformation from input embedding vectors of dime
 If $\mathbf{X} = \mathbf{Y}$, we are computing the importance of each element with respect to other elements in the same input matrix, which is referred to as the self-attention mechanism.
 
 
-\subsection{Multi-Head Attention}
+\subsubsection{Multi-Head Attention}
 
 The multi-head attention mechanism is a way of combining multiple attention layers to stabilize the learning process. Similar to the standard attention mechanism above, the multi-head attention mechanism transforms the initial $N_x$ embedding vectors of dimension $D_{\text{in}}$ into output embedding vectors of dimension $D_{\text{multi-head}}$, aggregating information from various other nodes to provide greater stability during training. Multi-head attention stacks $N_{\text{head}}$ attention output matrices $\mathbf{H}$, and then applies a weight matrix to transform the original embedding matrix $\mathbf{X} \in \mathbb{R}^{N_x \times D_\text{in}}$ into a new embedding matrix $\mathbf{X}' \in \mathbb{R}^{N_x \times D_{\text{multi-head}}}$ using the following formula:
 
@@ -568,17 +459,8 @@ At this point, we have presented the attention mechanism for computing attention
 
 %\cite{weng2018attention}
 
-\section{Graph Attention Network}
+\subsection{Graph Attention Network}
 \label{sec:GAT}
-
-\begin{figure}[htp]
-	\centering
-	\resizebox{\textwidth}{!}{%
-	\input{tikzpicture/graph_example.tex}
-}
-	\caption{Knowledge graph and normalized attention coefficients of the entity}
-	\label{fig:graphExample}
-\end{figure}
 
 With the success of the \textit{multi-head attention mechanism} in natural language processing, it has also been studied for applications in image processing models \cite{ramachandran2019stand}. Consequently, the multi-head attention mechanism has been explored for replacing convolutional operations in knowledge graph embedding models, such as Graph Convolutional Networks (GCNs \cite{kipf2016semi}). In this section, we present in detail how the attention mechanism from \ref{sec:attentionMechanism} is applied to graph embedding via the Graph Attention Network (GAT \cite{velivckovic2017graph}) method.
 
@@ -669,26 +551,32 @@ where $\sigma$ is any non-linear activation function, and $\alpha_{ij}^h$ is the
 
 \textbf{Summary}: Up to this point, we have presented how the attention mechanism aggregates a knowledge graph entity embedding vector from its neighboring embeddings and concatenates them to produce the final embedding. In the next section, we will present our complete embedding model based on the KBGAT model proposed by Nathani, Deepak\cite{nathani2019learning}.
 
-\section{KBGAT Model}
+\subsection{KBGAT Model}
 
 In a knowledge graph, a single entity cannot fully represent an edge, as the entity can play multiple roles depending on the type of relation. For example, in \autoref{fig:graphExample}, Donald Trump serves both as a president and as a husband. To address this issue, the knowledge graph attention-based embedding model — KBGAT (graph attention based embeddings \cite{nathani2019learning}) — improves upon the GAT model by incorporating additional information from \textit{relations and neighboring node features} into the attention mechanism. In this section, we will detail the KBGAT model. The structure of KBGAT follows an encoder-decoder framework, where the encoder is implemented using the Graph Attention Network (GAT), and the decoder uses the ConvKB model for prediction. The steps of the KBGAT model are illustrated in \ref{eq:KBGATProcess}.
 
-\begin{equation}
+\begin{equation*}
 	\label{eq:KBGATProcess}
-	entities \xrightarrow{\text{Embedding}^{\ref{sec:initTransE}}} \overrightarrow{e_{\text{TransE}}} \xrightarrow{\text{Embedding} ^{\ref{sec:encodeKBGAT}}} \overrightarrow{e_{\text{KBGAT}}} \xrightarrow{\text{ConvKB}^{\ref{sec:predictionConvKB}}} e_{\text{prob}}
-\end{equation}
+	\resizebox{\linewidth}{!}{$
+		entities \xrightarrow{\text{Embedding}^{\ref{sec:initTransE}}} \overrightarrow{e_{\text{TransE}}} \xrightarrow{\text{Embedding}^{\ref{sec:encodeKBGAT}}} \overrightarrow{e_{\text{KBGAT}}} \xrightarrow{\text{ConvKB}^{\ref{sec:predictionConvKB}}} e_{\text{prob}}
+		$}
+\end{equation*}
+
 
 First, the embedding vectors of each entity are initialized using the TransE model to capture the spatial characteristics among nodes and obtain the initial embeddings. These embeddings are then further trained using an encoder model to capture neighborhood features, resulting in updated embeddings. Finally, these embeddings are passed through a prediction layer using the ConvKB model. All equations presented here are based on those in the work of Nathani, Deepak\cite{nathani2019learning}.
 
 
 
 
-\subsection{Embedding Initialization}
+\subsubsection{Embedding Initialization}
 \label{sec:initTransE}
 
 \begin{figure}[htp]
 	\centering
+	\resizebox{\linewidth}{!}{
+	
 	\input{tikzpicture/transe_embedding.tex}
+	}
 	\caption{Illustration of embedding vectors in the TransE model}
 	\label{fig:TransEAnimation}
 \end{figure}
@@ -702,9 +590,33 @@ Similar to the Word2Vec method \cite{mikolov2013efficient}, the model \textit{Tr
 Initially, the entity and relation embedding vectors are randomly initialized using a normal distribution with dimensionality $D_{\text{in}}$, and then normalized according to the size of the entity and relation embedding sets.
 
 
+
+
+\begin{figure*}[htbp]
+	\centering
+	\resizebox{0.9\linewidth}{!}{%
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\input{tikzpicture/transe_embedding_before.tex}
+		\caption{Initial TransE embedding vector}
+		\label{fig:TransEEmbeddingBefore}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\input{tikzpicture/transe_embedding_after.tex}
+		
+		\caption{Embedding after transformation}
+		\label{fig:TransEEmbeddingAfter}
+	\end{subfigure}
+	}
+	\caption{The TransE graph embedding vector}
+	\label{fig:TransEExplain}
+\end{figure*}
+
 Next, we perform sampling from the training dataset to obtain a batch of valid triples ($S_{\text{batch}}$). For each such triple, we sample an invalid triple by replacing either the head or the tail entity with a random entity from the entity set, yielding a batch of invalid triples ($S'_{\text{batch}}$). We then pair each valid triple with an invalid one to form the training batch ($T_{\text{batch}}$). Finally, we update the embedding vectors to satisfy the condition in \ref{eq:conditionTransE}.
 
-\begin{algorithm}[H]
+\begin{algorithm}
 	\caption{TransE Embedding Learning Algorithm \protect\cite{bordes2013translating}}\label{alg:TransE}
 	\begin{algorithmic}[1]
 		\Statex \textbf{Input} :
@@ -752,54 +664,18 @@ To achieve the goal of learning embedding vectors such that $\overrightarrow{h} 
 
 
 
-
-\begin{figure}[htbp]
-	\centering
-	\begin{subfigure}[b]{0.45\textwidth}
-		\centering
-		
-		\input{tikzpicture/transe_embedding_before.tex}
-		
-		\caption{Initial TransE embedding vector}
-		\label{fig:TransEEmbeddingBefore}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[b]{0.45\textwidth}
-		\centering
-		\input{tikzpicture/transe_embedding_after.tex}
-		
-		\caption{Embedding after transformation}
-		\label{fig:TransEEmbeddingAfter}
-	\end{subfigure}
-	\caption{The TransE graph embedding vector}
-	\label{fig:TransEExplain}
-\end{figure}
-
 Here, $\gamma > 0$ is the margin, and $h'$ and $t'$ are entities sampled as defined in Equation \ref{eq:sampleTransE}. $\Delta$ and $\Delta'$ represent the difference vectors for the embeddings in valid and invalid triples, respectively, with $d = \big\|\Delta \big\|_{1} = \big\| \overrightarrow{h} + \overrightarrow{r} - \overrightarrow{t} \big\|_{1}$ and $d' = \big\|\Delta' \big\|_{1} = \big\| \overrightarrow{h'} + \overrightarrow{r} - \overrightarrow{t'} \big\|_{1}$, where $\|\cdot\|_{1}$ denotes the L1 norm.
 
-As illustrated in \autoref{fig:TransEExplain}, if $d > d'$ or $d - d' > 0$, then $\overrightarrow{h} + \overrightarrow{r}$ is closer to $\overrightarrow{t}$ than to $\overrightarrow{t'}$. Since we want the embedding vectors to satisfy the condition in Equation \ref{eq:conditionTransE}, $\overrightarrow{h} + \overrightarrow{r}$ should be as close as possible to $\overrightarrow{t}$. That means, the closer $\overrightarrow{h} + \overrightarrow{r}$ is to $\overrightarrow{t'}$, the more incorrect it becomes.
+As illustrated in \autoref{fig:TransEEmbeddingBefore}, \autoref{fig:TransEEmbeddingAfter}, if $d > d'$ or $d - d' > 0$, then $\overrightarrow{h} + \overrightarrow{r}$ is closer to $\overrightarrow{t}$ than to $\overrightarrow{t'}$. Since we want the embedding vectors to satisfy the condition in Equation \ref{eq:conditionTransE}, $\overrightarrow{h} + \overrightarrow{r}$ should be as close as possible to $\overrightarrow{t}$. That means, the closer $\overrightarrow{h} + \overrightarrow{r}$ is to $\overrightarrow{t'}$, the more incorrect it becomes.
 
 Therefore, during training, we aim for $\Delta'$ to be as large as possible relative to $\Delta$. If $\Delta' > \Delta$ or $d' - d > 0$, there is no need to update the embedding weights further. Hence, in the loss function \ref{eq:KBGATLoss}, the term $[d - d' + \gamma]_{+}$ captures only the positive part because the negative part already satisfies the correctness of the condition in Equation \ref{eq:conditionTransE} during training.
 
 
 
-\subsection{Encoder Model}
+\subsubsection{Encoder Model}
 \label{sec:encodeKBGAT}
 
 After obtaining the embedding vectors that capture spatial features of the knowledge graph, these embeddings are passed through the next embedding layer to further aggregate the neighborhood information of each entity.
-
-
-\begin{figure}[htp]
-	\centering
-	\resizebox{\textwidth}{!}{%
-			\input{tikzpicture/encoder_kbgat.tex}
-	}
-
-%}
-	\caption{Illustration of the encoder layers in the KBGAT model}
-	\label{fig:encoderKBGAT}
-\end{figure}
-
 
 The model transforms the entity embedding matrix
 
@@ -816,6 +692,15 @@ Simultaneously, it transforms the relation embedding matrix
 with $\mathbf{R} \in \mathbb{R}^{N_r \times P_{\text{in}}}$ and $\mathbf{R''} \in \mathbb{R}^{N_r \times P''}$.
 
 Similar to the GAT model described in Section~\ref{sec:GAT}, the model transforms the entity embedding vectors from $D_{\text{in}}$ dimensions to $D''$ dimensions by aggregating neighborhood information through attention coefficients. $P_{\text{in}}$ and $P''$ are the input and output dimensions of the relation embedding vectors, respectively. $N_e$ and $N_r$ are the sizes of the entity and relation sets in $\mathcal{G}_{know}$, respectively.
+
+\begin{figure*}[htp]
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\input{tikzpicture/encoder_kbgat.tex}
+	}
+	\caption{Illustration of the encoder layers in the GCAT model}
+	\label{fig:encoderKBGAT}
+\end{figure*}
 
 The KBGAT model concatenates the entity and relation embedding vectors according to the following structure:
 
@@ -926,21 +811,17 @@ where $\gamma > 0$ is the margin parameter, $S$ is the set of valid triples, and
 	{S'} ={\underbrace{\{ t^k_{i'j} | e'_i \in \mathcal{E}\setminus e_i\}}_{\text{head entity replacement}} \cup \underbrace{\{ t^k_{ij'} | e'_j \in \mathcal{E}\setminus e_j\}}_{\text{tail entity replacement}}}
 \end{equation}
 
-The output of the KBGAT model is the set of entity and relation embedding vectors, which are subsequently fed into the ConvKB model for final prediction.
+The output of the GCAT model is the set of entity and relation embedding vectors, which are subsequently fed into the ConvKB model for final prediction.
 
 
-
-
-\subsection{ConvKB Prediction Model}
+\subsubsection{ConvKB Prediction Model}
 \label{sec:predictionConvKB}
 
 \begin{figure}[htp]
 	\centering
-	\resizebox{\textwidth}{!}{%
-		
+	\resizebox{\linewidth}{!}{%
 		\input{tikzpicture/decoder_convkb.tex}
 	}
-	
 	\caption{Illustration of the decoder layers of the ConvKB model with 3 filters}
 	\label{fig:decoderConvKB}
 \end{figure}

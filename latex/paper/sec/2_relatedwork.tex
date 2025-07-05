@@ -1,21 +1,30 @@
-%\chapter{RELATED WORK}
 
-%\chapter{Các công trình liên quan}
-\chapter{RELATED WORK}
+\begin{figure*}[htp]
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\input{tikzpicture/graph_example.tex}
+	}
+	\caption{Knowledge graph and normalized attention coefficients of the entity}
+	\label{fig:graphExample}
+\end{figure*}
+
+
+\section{Related Work}
 \label{chap:RelatedWork}
 
 In this section, we present the basic definitions of knowledge graphs in order to understand the task of link prediction in knowledge graphs, as well as other related research directions.
 
-\section{Definition of Knowledge Graphs}
+\subsection{Definition of Knowledge Graphs}
 
 The basic definitions of knowledge graphs are compiled and categorized by Cai, Hongyun \cite{cai2018comprehensive} and Goyal, Palash \cite{goyal2018graph} as follows:
 
-\begin{figure}[htp]
-	\centering
-	\input{tikzpicture/graph_embedding_input.tex}
-	\caption{Example of an input graph}
-	\label{fig:graphInput}
-\end{figure}
+%\begin{figure}[htp]
+%	\centering
+%	\includegraphics[width=7 cm]{figures/graph_emb_1.png}
+%	\caption{Example of an input graph}
+%	\label{fig:graphInput}
+%\end{figure}
+
 
 \begin{itemize}
 	\item \begin{definition}[Graph]\label{def:defGraph}
@@ -47,7 +56,7 @@ The basic definitions of knowledge graphs are compiled and categorized by Cai, H
 	and $\langle \text{New York, state\_of, U.S} \rangle$. Note that entities and relations in a knowledge graph often belong to different types. Therefore, a knowledge graph can be viewed as a specific case of a heterogeneous graph.
 \end{itemize}
 
-\section{Link Prediction in Knowledge Graphs}
+\subsection{Link Prediction in Knowledge Graphs}
 
 
 Link prediction, also known as knowledge graph completion, is the task of exploiting known facts (events) in a knowledge graph to infer missing ones. This is equivalent to predicting the correct tail entity in a triple $\langle h, r, ? \rangle$ (tail prediction) or the correct head entity in $\langle ?, r, t \rangle$ (head prediction). For simplicity, instead of distinguishing between head and tail prediction, we generally refer to the known entity as the \textit{source entity} and the entity to be predicted as the \textit{target entity}.
@@ -55,8 +64,6 @@ Link prediction, also known as knowledge graph completion, is the task of exploi
 Most current research on link prediction in knowledge graphs is related to approaches that focus on embedding a given graph into a low-dimensional vector space. In contrast to these approaches is a rule-based method explored in \cite{burl}. Its core algorithm samples arbitrary rules and generalizes them into Horn clauses \cite{wiki:Horn}, then uses statistics to compute the confidence of these generalized rules. When predicting a new link (edge) in the graph, the task is to infer whether an edge with a specific label exists between two given nodes. Many methods have been proposed to learn rules from graphs, such as in RuDiK \cite{ortona2018robust}, AMIE \cite{galarraga2015fast}, and RuleN \cite{meilicke2018fine}.
 
 As mentioned earlier, there are two main approaches to this problem: one is optimizing an objective function to find a small set of rules that cover the majority of correct examples with minimal error, as explored in RuDiK \cite{ortona2018robust}. The other approach, which we adopt in this thesis, aims to explore all possible rules and then generate a top-\(k\) ranking of candidate triples, each associated with a confidence score measured on the training set.
-
-Our rule-based method is largely based on the \textit{Anytime Bottom-Up Rule Learning for Knowledge Graph Completion} method \cite{meilicke2019anytime}, hereafter referred to as \textbf{AnyBURL}. As its name suggests, this method primarily focuses on completing the graph by filling in missing parts. A key limitation of this model is that when a new edge or fact is added to the graph, the entire model must be retrained. We address this issue using two strategies: the \textit{offline-to-online} strategy, which retrains a portion of the graph only after a batch of new edges is added; and the \textit{online-to-online} strategy, which immediately retrains the affected portion of the graph whenever a new edge is added.
 
 % GAT
 In the deep learning branch of approaches, many successful techniques from image processing and natural language processing have been applied to knowledge graphs, such as Convolutional Neural Networks (CNNs \cite{lecun1999object}), Recurrent Neural Networks (RNNs \cite{hopfield2007hopfield}), and more recently, Transformers \cite{yang2019xlnet} and Capsule Neural Networks (CapsNets \cite{sabour2017dynamic}). In addition, other techniques such as random walks and hierarchical structure-based models have also been explored. The common advantage of these deep learning methods on knowledge graphs is their ability to automatically extract features and generalize complex graph structures based on large amounts of training data. However, some methods focus mainly on grid-like structures and fail to preserve the spatial characteristics of knowledge graphs.
@@ -66,30 +73,20 @@ The attention mechanism, particularly the multi-head attention layer, has been a
 
 The attention mechanism is currently one of the most effective (state-of-the-art) deep learning structures, as it has been proven to substitute any convolution operation \cite{cordonnier2019relationship}. Moreover, it serves as a core component in leading models for natural language processing, such as Megatron-LM \cite{shoeybi2019megatron}, and image segmentation, such as HRNet-OCR (Hierarchical Multi-Scale Attention \cite{tao2020hierarchical}). Some recent works \cite{cordonnier2020multi} have proposed interesting improvements based on the attention mechanism. However, these advancements have not yet been applied to knowledge graphs, which motivates us to adopt this family of methods to integrate the latest innovations into knowledge graph modeling.
 
-\section{Research Areas in Knowledge Graphs}
 
-\begin{figure}[htp]
+\begin{figure*}[htbp]
 	\centering
-	\tikzset{
-		category/.style  = {draw=none, thin, align=center},
-		subcat/.style={rectangle, rounded corners=6pt},
-		center/.style = {category, ellipse, fill=azure, text width=4em},
-		group/.style = {category, subcat, fill=deepskyblue, rounded corners=3pt, text width=6em},
-		yellowbox/.style = {category, subcat, fill=amber},
-		greenbox/.style = {category, subcat, fill=darkpastelgreen},
-		redbox/.style = {category, subcat, fill=awesome},
-		bluebox/.style = {category, subcat, fill=deepmagenta!70},
-		leafbox/.style = {category, subcat, fill=black!10, rounded corners=3pt}
-	}
-	\makebox[\textwidth][l]{
-		\hspace{-2cm}
-	\resizebox{1.2\textwidth}{!}{%
+	
+	\resizebox{1\textwidth}{!}{%
 		\input{tikzpicture/taxonomy_knowledge_graphs.tex}
-}}
+	}
 	\caption{
 		A taxonomy of research areas in knowledge graphs}
 	\label{fig:categoriesResearch}
-\end{figure}
+\end{figure*}
+
+
+\subsection{Research Areas in Knowledge Graphs}
 
 
 Knowledge representation has a long-standing history in logic and artificial intelligence. In the context of knowledge graphs, four major research areas have been categorized and summarized in the survey \cite{ji2020survey}, including: Knowledge Representation Learning, Knowledge Acquisition, Temporal Knowledge Graphs, and Knowledge-aware Applications. All research categories are illustrated in \autoref{fig:categoriesResearch}.
@@ -115,3 +112,158 @@ Knowledge acquisition focuses on how to extract or obtain knowledge based on kno
 Entity discovery tasks include entity recognition, disambiguation, typing, and ranking. Relation extraction models often employ attention mechanisms, graph convolutional networks (GCNs), adversarial training, reinforcement learning (RL), deep learning, and transfer learning, which is the foundation of the method proposed in our work.
 
 In addition, other major research directions in knowledge graphs include \textbf{temporal knowledge graphs} and \textbf{knowledge-aware applications}. Temporal knowledge graphs incorporate temporal information into the graph to learn temporal representations. Knowledge-aware applications include natural language understanding, question answering, recommendation systems, and many other real-world tasks where integrating knowledge improves representation learning.
+
+
+
+% All text must be in a two-column format.
+% The total allowable size of the text area is $6\frac78$ inches (17.46 cm) wide by $8\frac78$ inches (22.54 cm) high.
+% Columns are to be $3\frac14$ inches (8.25 cm) wide, with a $\frac{5}{16}$ inch (0.8 cm) space between them.
+% The main title (on the first page) should begin 1 inch (2.54 cm) from the top edge of the page.
+% The second and following pages should begin 1 inch (2.54 cm) from the top edge.
+% On all pages, the bottom margin should be $1\frac{1}{8}$ inches (2.86 cm) from the bottom edge of the page for $8.5 \times 11$-inch paper;
+% for A4 paper, approximately $1\frac{5}{8}$ inches (4.13 cm) from the bottom edge of the
+% page.
+
+% %-------------------------------------------------------------------------
+% \subsubsection{Margins and page numbering}
+
+% All printed material, including text, illustrations, and charts, must be kept
+% within a print area $6\frac{7}{8}$ inches (17.46 cm) wide by $8\frac{7}{8}$ inches (22.54 cm)
+% high.
+% %
+% Page numbers should be in the footer, centered and $\frac{3}{4}$ inches from the bottom of the page.
+% The review version should have page numbers, yet the final version submitted as camera ready should not show any page numbers.
+% The \LaTeX\ template takes care of this when used properly.
+
+
+
+% %-------------------------------------------------------------------------
+% \subsubsection{Type style and fonts}
+
+% Wherever Times is specified, Times Roman may also be used.
+% If neither is available on your word processor, please use the font closest in
+% appearance to Times to which you have access.
+
+% MAIN TITLE.
+% Center the title $1\frac{3}{8}$ inches (3.49 cm) from the top edge of the first page.
+% The title should be in Times 14-point, boldface type.
+% Capitalize the first letter of nouns, pronouns, verbs, adjectives, and adverbs;
+% do not capitalize articles, coordinate conjunctions, or prepositions (unless the title begins with such a word).
+% Leave two blank lines after the title.
+
+% AUTHOR NAME(s) and AFFILIATION(s) are to be centered beneath the title
+% and printed in Times 12-point, non-boldface type.
+% This information is to be followed by two blank lines.
+
+% The ABSTRACT and MAIN TEXT are to be in a two-column format.
+
+% MAIN TEXT.
+% Type main text in 10-point Times, single-spaced.
+% Do NOT use double-spacing.
+% All paragraphs should be indented 1 pica (approx.~$\frac{1}{6}$ inch or 0.422 cm).
+% Make sure your text is fully justified---that is, flush left and flush right.
+% Please do not place any additional blank lines between paragraphs.
+
+% Figure and table captions should be 9-point Roman type as in \cref{fig:onecol,fig:short}.
+% Short captions should be centred.
+
+% \noindent Callouts should be 9-point Helvetica, non-boldface type.
+% Initially capitalize only the first word of section titles and first-, second-, and third-order headings.
+
+% FIRST-ORDER HEADINGS.
+% (For example, {\large \bf 1. Introduction}) should be Times 12-point boldface, initially capitalized, flush left, with one blank line before, and one blank line after.
+
+% SECOND-ORDER HEADINGS.
+% (For example, { \bf 1.1. Database elements}) should be Times 11-point boldface, initially capitalized, flush left, with one blank line before, and one after.
+% If you require a third-order heading (we discourage it), use 10-point Times, boldface, initially capitalized, flush left, preceded by one blank line, followed by a period and your text on the same line.
+
+% %-------------------------------------------------------------------------
+% \subsubsection{Footnotes}
+
+% Please use footnotes\footnote{This is what a footnote looks like.
+% It often distracts the reader from the main flow of the argument.} sparingly.
+% Indeed, try to avoid footnotes altogether and include necessary peripheral observations in the text (within parentheses, if you prefer, as in this sentence).
+% If you wish to use a footnote, place it at the bottom of the column on the page on which it is referenced.
+% Use Times 8-point type, single-spaced.
+
+
+% %-------------------------------------------------------------------------
+% \subsubsection{Cross-references}
+
+% For the benefit of author(s) and readers, please use the
+% {\small\begin{verbatim}
+%   \cref{...}
+% \end{verbatim}}  command for cross-referencing to figures, tables, equations, or sections.
+% This will automatically insert the appropriate label alongside the cross-reference as in this example:
+% \begin{quotation}
+%   To see how our method outperforms previous work, please see \cref{fig:onecol} and \cref{tab:example}.
+%   It is also possible to refer to multiple targets as once, \eg~to \cref{fig:onecol,fig:short-a}.
+%   You may also return to \cref{sec:formatting} or look at \cref{eq:also-important}.
+% \end{quotation}
+% If you do not wish to abbreviate the label, for example at the beginning of the sentence, you can use the
+% {\small\begin{verbatim}
+%   \Cref{...}
+% \end{verbatim}}
+% command. Here is an example:
+% \begin{quotation}
+%   \Cref{fig:onecol} is also quite important.
+% \end{quotation}
+
+% %-------------------------------------------------------------------------
+% \subsubsection{References}
+
+% List and number all bibliographical references in 9-point Times, single-spaced, at the end of your paper.
+% When referenced in the text, enclose the citation number in square brackets, for
+% example~\cite{Authors14}.
+% Where appropriate, include page numbers and the name(s) of editors of referenced books.
+% When you cite multiple papers at once, please make sure that you cite them in numerical order like this \cite{Alpher02,Alpher03,Alpher05,Authors14b,Authors14}.
+% If you use the template as advised, this will be taken care of automatically.
+
+% \begin{table}
+%   \centering
+%   \caption{\label{tab:example}%
+%     Results.
+%     Ours is better.
+%   }
+%   \begin{tabular}{lc}
+%     \toprule
+%     Method & Frobnability \\
+%     \midrule
+%     Theirs & Frumpy \\
+%     Yours & Frobbly \\
+%     Ours & Makes one's heart Frob\\
+%     \bottomrule
+%   \end{tabular}
+% \end{table}
+
+% %-------------------------------------------------------------------------
+% \subsubsection{Illustrations, graphs, and photographs}
+
+% All graphics should be centered.
+% In \LaTeX, avoid using the \texttt{center} environment for this purpose, as this adds potentially unwanted whitespace.
+% Instead use
+% {\small\begin{verbatim}
+%   \centering
+% \end{verbatim}}
+% at the beginning of your figure.
+% Please ensure that any point you wish to make is resolvable in a printed copy of the paper.
+% Resize fonts in figures to match the font in the body text, and choose line widths that render effectively in print.
+% Readers (and reviewers), even of an electronic copy, may choose to print your paper in order to read it.
+% You cannot insist that they do otherwise, and therefore must not assume that they can zoom in to see tiny details on a graphic.
+
+% When placing figures in \LaTeX, it's almost always best to use \verb+\includegraphics+, and to specify the figure width as a multiple of the line width as in the example below
+% {\small\begin{verbatim}
+%    \usepackage{graphicx} ...
+%    \includegraphics[width=0.8\linewidth]
+%                    {myfile.pdf}
+% \end{verbatim}
+% }
+
+
+% %-------------------------------------------------------------------------
+% \subsubsection{Color}
+
+% Please refer to the author guidelines on the \confName\ \confYear\ web page for a discussion of the use of color in your document.
+
+% If you use color in your plots, please keep in mind that a significant subset of reviewers and readers may have a color vision deficiency; red-green blindness is the most frequent kind.
+% Hence avoid relying only on color as the discriminative feature in plots (such as red \vs green lines), but add a second discriminative feature to ease disambiguation.

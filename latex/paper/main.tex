@@ -1,214 +1,92 @@
-\documentclass{article}
+% CVPR 2025 Paper Template; see https://github.com/cvpr-org/author-kit
+
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+%%%%%%%%% PAPER TYPE  - PLEASE UPDATE FOR FINAL VERSION
+ \usepackage{cvpr}              % To produce the CAMERA-READY version
+%\usepackage[review]{cvpr}      % To produce the REVIEW version
+% \usepackage[pagenumbers]{cvpr} % To force page numbers, e.g. for an arXiv version
+
+% Import additional packages in the preamble file, before hyperref
+\input{preamble}
+
+
+% It is strongly recommended to use hyperref, especially for the review version.
+% hyperref with option pagebackref eases the reviewers' job.
+% Please disable hyperref *only* if you encounter grave issues, 
+% e.g. with the file validation for the camera-ready version.
+%
+% If you comment hyperref and then uncomment it, you should delete *.aux before re-running LaTeX.
+% (Or just hit 'q' on the first LaTeX run, let it finish, and you should be clear).
+\definecolor{cvprblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=cvprblue]{hyperref}
+
+\input{package}
+
+%%%%%%%%% PAPER ID  - PLEASE UPDATE
+\def\paperID{*****} % *** Enter the Paper ID here
+\def\confName{CVPR}
+\def\confYear{2025}
+
+%%%%%%%%% TITLE - PLEASE UPDATE
+\title{Graph Collaborative Attention Network for Link Prediction in Knowledge Graphs}
+
+%%%%%%%%% AUTHORS - PLEASE UPDATE
+%\author{Thanh Hoang-Minh}
+%\email{hmthanhgm@gmail.com}
+%
+%\affiliation{
+%	\institution{OpenHuman.ai}
+%	\city{Ho Chi Minh City}
+%	\country{Vietnam}
+%}
+%
+%\affiliation{
+%	\institution{Department of Information Technology, VNUHCM - University of Science}
+%	\streetaddress{227 Nguyen Van Cu Street, Ward 4}
+%	\city{Ho Chi Minh City}
+%	%  \state{District 5}
+%	\postcode{70000}
+%	\country{Vietnam}
+%}
 
 
 
-\usepackage{arxiv}
-
-\usepackage[utf8]{inputenc} % allow utf-8 input
-\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
-\usepackage{hyperref}       % hyperlinks
-\usepackage{url}            % simple URL typesetting
-\usepackage{booktabs}       % professional-quality tables
-\usepackage{amsfonts}       % blackboard math symbols
-\usepackage{nicefrac}       % compact symbols for 1/2, etc.
-\usepackage{microtype}      % microtypography
-\usepackage{lipsum}		% Can be removed after putting your text content
-\usepackage{graphicx}
-
-
-
-\title{Collaborate Graph Attention Network}
-
-%\date{September 9, 1985}	% Here you can change the date presented in the paper title
-%\date{} 					% Or removing it
-
-\author{ \href{http://hmthanh.github.io/}{\hspace{1mm}Minh-Thanh~Hoang}\thanks{Main contribution} \\
-	Faculty of Information Technology\\
-	University of Science\\
-	VNU-HCM, Ho Chi Minh City, Vietnam \\
-	\texttt{hmthanhgm@gmail.com} \\
-	%% examples of more authors
-	\And
-	\href{https://github.com/MinhTamPhan}{\hspace{1mm}Phan~Minh~Tam} \\
-	Faculty of Information Technology\\
-	University of Science\\
-	VNU-HCM, Ho Chi Minh City, Vietnam \\
-	\texttt{phanminhtam247@gmail.com} \\
-	%% \AND
-	%% Coauthor \\
-	%% Affiliation \\
-	%% Address \\
-	%% \texttt{email} \\
-	%% \And
-	%% Coauthor \\
-	%% Affiliation \\
-	%% Address \\
-	%% \texttt{email} \\
-	%% \And
-	%% Coauthor \\
-	%% Affiliation \\
-	%% Address \\
-	%% \texttt{email} \\
-}
-
-% Uncomment to remove the date
-%\date{}
-
-% Uncomment to override  the `A preprint' in the header
-%\renewcommand{\headeright}{Technical Report}
-%\renewcommand{\undertitle}{Technical Report}
-
-%%% Add PDF metadata to help others organize their library
-%%% Once the PDF is generated, you can check the metadata with
-%%% $ pdfinfo template.pdf
-\hypersetup{
-pdftitle={A template for the arxiv style},
-pdfsubject={q-bio.NC, q-bio.QM},
-pdfauthor={Minh-Thanh~Hoang, Phan~Minh~Tam},
-pdfkeywords={knowledge~graph, linking~prediction, attention~mechanism},
+\author{\textbf{Thanh Hoang-Minh}\\
+%OpenHuman.ai\\
+Department of Information Technology, VNUHCM - University of Science\\
+Ho Chi Minh City, Vietnam \\
+{\tt\small hmthanhgm@gmail.com}
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+%\and
+%Second Author\\
+%Institution2\\
+%First line of institution2 address\\
+%{\tt\small secondauthor@i2.org}
 }
 
 \begin{document}
 \maketitle
-
-\begin{abstract}
-	\lipsum[1]
-\end{abstract}
-
-
-% keywords can be removed
-\keywords{Knowled Graph \and Linking Prediction \and Attention Mechanism}
+\input{sec/0_abstract}    
+\input{sec/1_intro}
+\input{sec/2_relatedwork}
+\input{sec/3_proposalmethod}
+\input{sec/4_experiment}
+\input{sec/5_conclusion}
 
 
-\section{Introduction}
-\label{sec:introduction}
+{
+    \small
+    \bibliographystyle{ieeenat_fullname}
+    \bibliography{reference}
+}
 
 
-\lipsum[2]
-\lipsum[3]
-
-Survey \cite{rossi2020knowledge}
-
-KGBAT \cite{nathani2019learning}
-
-TransE \cite{bordes2013translating}
-
-\section{Related work}
-\label{sec:related_work}
-
-\lipsum[4]
-See Section
-
-\section{Proposed Approach}
-\label{sec:approach}
-
-\lipsum[4]
-
-\subsection{Headings: second level}
-\lipsum[5]
-\begin{equation}
-	\xi _{ij}(t)=P(x_{t}=i,x_{t+1}=j|y,v,w;\theta)= {\frac {\alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}{\sum _{i=1}^{N} \sum _{j=1}^{N} \alpha _{i}(t)a^{w_t}_{ij}\beta _{j}(t+1)b^{v_{t+1}}_{j}(y_{t+1})}}
-\end{equation}
-
-\subsubsection{Headings: third level}
-\lipsum[6]
-
-\paragraph{Paragraph}
-\lipsum[7]
-
-\section{Experiments and Results}
-\label{sec:experiments}
-\lipsum[8] \cite{kour2014real,kour2014fast} and see \cite{hadash2018estimate}.
-
-The documentation for \verb+natbib+ may be found at
-\begin{center}
-	\url{http://mirrors.ctan.org/macros/latex/contrib/natbib/natnotes.pdf}
-\end{center}
-Of note is the command \verb+\citet+, which produces citations
-appropriate for use in inline text.  For example,
-\begin{verbatim}
-   \citet{hasselmo} investigated\dots
-\end{verbatim}
-produces
-\begin{quote}
-	Hasselmo, et al.\ (1995) investigated\dots
-\end{quote}
-
-\begin{center}
-	\url{https://www.ctan.org/pkg/booktabs}
-\end{center}
-
-
-\subsection{Figures}
-\lipsum[10]
-See Figure \ref{fig:fig1}. Here is how you add footnotes. \footnote{Sample of the first footnote.}
-\lipsum[11]
-
-\begin{figure}
-	\centering
-	\fbox{\rule[-.5cm]{4cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
-	\caption{Sample figure caption.}
-	\label{fig:fig1}
-\end{figure}
-
-\subsection{Tables}
-\lipsum[12]
-See awesome Table~\ref{tab:table}.
-
-\begin{table}
-	\caption{Sample table title}
-	\centering
-	\begin{tabular}{lll}
-		\toprule
-		\multicolumn{2}{c}{Part}                   \\
-		\cmidrule(r){1-2}
-		Name     & Description     & Size ($\mu$m) \\
-		\midrule
-		Dendrite & Input terminal  & $\sim$100     \\
-		Axon     & Output terminal & $\sim$10      \\
-		Soma     & Cell body       & up to $10^6$  \\
-		\bottomrule
-	\end{tabular}
-	\label{tab:table}
-\end{table}
-
-\subsection{Lists}
-\begin{itemize}
-	\item Lorem ipsum dolor sit amet
-	\item consectetur adipiscing elit.
-	\item Aliquam dignissim blandit est, in dictum tortor gravida eget. In ac rutrum magna.
-\end{itemize}
-
-\section{Conclusions}
-\lipsum[12]
-
-\bibliographystyle{unsrt}
-\bibliography{references}  %%% Remove comment to use the external .bib file (using bibtex).
-%%% and comment out the ``thebibliography'' section.
-
-
-%%% Comment out this section when you \bibliography{references} is enabled.
-% \begin{thebibliography}{1}
-% 	\bibitem{kour2014real}
-% 	George Kour and Raid Saabne.
-% 	\newblock Real-time segmentation of on-line handwritten arabic script.
-% 	\newblock In {\em Frontiers in Handwriting Recognition (ICFHR), 2014 14th
-% 			International Conference on}, pages 417--422. IEEE, 2014.
-
-% 	\bibitem{kour2014fast}
-% 	George Kour and Raid Saabne.
-% 	\newblock Fast classification of handwritten on-line arabic characters.
-% 	\newblock In {\em Soft Computing and Pattern Recognition (SoCPaR), 2014 6th
-% 			International Conference of}, pages 312--318. IEEE, 2014.
-
-% 	\bibitem{hadash2018estimate}
-% 	Guy Hadash, Einat Kermany, Boaz Carmeli, Ofer Lavi, George Kour, and Alon
-% 	Jacovi.
-% 	\newblock Estimate and replace: A novel approach to integrating deep neural
-% 	networks with existing applications.
-% 	\newblock {\em arXiv preprint arXiv:1804.09028}, 2018.
-
-% \end{thebibliography}
-
+% WARNING: do not forget to delete the supplementary pages from your submission 
+% \input{sec/X_suppl}
 
 \end{document}

@@ -1,0 +1,24 @@
+\section{Conclusion}
+\label{chap:Conclusion}
+
+% Although our rule-based method achieves performance comparable to modern deep learning approaches while requiring significantly less training time—only about 17 minutes compared to several hours—this does not diminish the importance of deep learning models. In fact, our analysis across multiple datasets shows that deep learning methods, particularly those employing attention mechanisms, are better suited to knowledge graphs with diverse relation types. For instance, on datasets like FreeBase that exhibit a rich relational structure, models such as KBGAT demonstrate clear advantages by effectively leveraging relational embeddings to capture complex graph structures.
+
+% Conversely, rule-based approaches show strong performance on datasets with many similar or inverse triples. However, when such redundant patterns are removed—as in filtered datasets like FB15k-237 or WN18RR—the effectiveness of rule-based methods decreases, since they often depend on recurring structural motifs. Deep learning models, by embedding entities and relations into continuous vector spaces, can better generalize to these more challenging settings.
+
+% An advantage of rule-based methods lies in their interpretability and low computational cost during training. Nevertheless, they often require extensive inference time, as predictions involve evaluating all learned rules. Deep learning models, in contrast, leverage trained weights for efficient probabilistic inference, though they generally lack transparency and are resource-intensive during training.
+
+% Regarding our two proposed algorithms for integrating new knowledge into the graph, experimental results show that they significantly outperform baseline deep learning methods. This highlights the effectiveness of our approach in dynamic knowledge graph settings.
+
+% Moreover, our findings suggest that current graph embedding techniques may benefit from reconsidering the dimensional encoding of entities and relations. Since these components capture different aspects of knowledge, assigning them the same vector space may limit expressiveness. Future work should explore variable-dimension embeddings and optimal dimensionality ratios.
+
+% Finally, we emphasize the importance of incorporating temporal information. In real-world applications, the meaning of facts can shift significantly over time. Integrating temporal features into attention mechanisms represents a promising direction to improve semantic accuracy and ensure more robust temporal reasoning in knowledge graph models.
+
+
+In this study, we proposed GCAT (Graph Collaborative Attention Network), a deep learning-based architecture designed for link prediction in knowledge graphs. Through extensive experiments across multiple benchmark datasets, GCAT consistently outperformed rule-based methods, particularly on complex and filtered datasets such as FB15k-237 and WN18RR. These results highlight GCAT’s superior ability to capture semantic nuances and relational diversity by leveraging attention-based collaborative message passing.
+
+While rule-based approaches offer advantages in interpretability and reduced training costs, their performance heavily depends on the presence of repetitive or inverse relational patterns. When such patterns are filtered out, as in more challenging benchmarks, their effectiveness drops significantly. In contrast, GCAT remains robust by embedding entities and relations into expressive latent spaces, allowing for more accurate generalization across diverse graph structures.
+
+Furthermore, the integration mechanisms introduced in GCAT for dynamic knowledge updates outperform traditional baselines, demonstrating strong adaptability in evolving graph environments. These contributions position GCAT as a state-of-the-art solution that not only addresses the limitations of symbolic reasoning but also scales effectively to real-world, temporally rich knowledge graphs.
+
+In future work, we plan to explore heterogeneous embedding dimensionality for entities and relations to further enhance model expressiveness. Additionally, integrating temporal attention mechanisms remains a promising direction to capture the dynamic nature of factual knowledge in time-evolving graph structures.
+% Không giống như các phương pháp nhúng đồ thị khác thao tác này có thể dễ dàng tính toán.

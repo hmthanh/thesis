@@ -1,0 +1,52 @@
+
+\begin{tikzpicture}[
+%	xscale=0.8
+	rec/.style  = {draw=none, rectangle, thin, execute at begin node=\setlength{\baselineskip}{1.2em}},
+	root/.style = {rec, rounded corners=3pt, align=center, fill=darkpastelgreen!70},
+	level 1/.style={sibling distance=52mm},
+	level 2/.style={rec, rounded corners=3pt, fill=deepskyblue!70},
+	level 3/.style = {rec, align=left, fill=amber!70, text width=40mm, yshift=-15pt, rounded corners=3pt},
+	edge from parent/.style={->,draw, very thick},
+	>=latex]
+	
+	\node[root] {Graph Embedding Techniques}
+	child {node[level 2] (c1) {Deep Learning}}
+	child {node[level 2] (c2) {Matrix Factorization}}
+	child {node[level 2] (c3) {Edge Reconstruction}}
+	child {node[level 2] (c4) {Core Graph}}
+	child {node[level 2] (c5) {Generative Models}};
+	
+	\begin{scope}[every node/.style={level 3}]
+		\node [below of = c1, xshift=15mm] (c11) {With random walk};
+		\node [below of = c11] (c12) {Without random walk};
+		
+		\node [below of = c2, xshift=15mm] (c21) {Laplacian Eigenmaps};
+		\node [below of = c21, yshift=-10pt] (c22) {Matrix factorization via node approximation};
+		
+		\node [below of = c3, xshift=15mm] (c31) {Maximizing edge reconstruction probability};
+		\node [below of = c31, yshift=-10pt] (c32) {Minimizing distance-based loss};
+		\node [below of = c32, yshift=-10pt] (c33) {Minimizing margin-based ranking loss};
+		
+		\node [below of = c4, xshift=15mm] (c41) {Graphlet-based};
+		\node [below of = c41] (c42) {Tree pattern-based};
+		\node [below of = c42] (c43) {Random walk-based};
+		
+		\node [below of = c5, xshift=15mm] (c51) {Latent space-based embedding};
+		\node [below of = c51, yshift=-10pt] (c52) {Semantic fusion embedding};
+	\end{scope}
+	
+	\foreach \value in {1,2}
+	\draw[->, very thick] (c1.195) |- (c1\value.west);
+	
+	\foreach \value in {1, 2}
+	\draw[->, very thick] (c2.195) |- (c2\value.west);
+	
+	\foreach \value in {1,...,3}
+	\draw[->, very thick] (c3.195) |- (c3\value.west);
+	
+	\foreach \value in {1,...,3}
+	\draw[->, very thick] (c4.195) |- (c4\value.west);
+	
+	\foreach \value in {1,...,2}
+	\draw[->, very thick] (c5.195) |- (c5\value.west);
+\end{tikzpicture}

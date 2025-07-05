@@ -1,0 +1,29 @@
+\begin{tikzpicture}[>=Stealth,
+	arrow/.style={->,thick},
+	vector/.style={arrow, ultra thick},
+	dashLine/.style={->, thin, dash pattern=on 1mm off 0.5mm},
+	formal/.style={font=\sffamily}]
+	\coordinate (root) at (0,0);
+	\coordinate [formal, label=above left:$\overrightarrow{\text{relation}}$] (c1) at (-1.5, 3);
+	\coordinate [formal, label=above:$\overrightarrow{\text{tail}_{\text{invalid}}}$] (c2) at (3.5, 5);
+	\coordinate [formal, label=right:$\overrightarrow{\text{tail}_{\text{valid}}}$] (c3) at (3.5, 4);
+	\coordinate [formal, label=above right :$\overrightarrow{\text{head}_{\text{invalid}}}$] (c4) at (5, 2);
+	\coordinate [formal, label=right:$\overrightarrow{\text{head}_{\text{valid}}}$] (c5) at (5, 1);
+	
+	\draw [arrow] ([yshift=-2em] root) -> (0, 5) node (yaxis)[above] {$y$};
+	\draw [arrow] ([xshift=-5em] root) -> (5, 0) node (xaxis)[above] {$x$};
+	
+	\foreach \x in {3, 5}
+	{\draw [vector, color=azure] (root) -> (c\x);}
+	
+	\foreach \x in {2, 4}
+	{\draw [vector, color=awesome] (root) -> (c\x);}
+	
+	\draw [vector, color=amber] (root) -> (c1);
+	
+	\foreach \x in {1, 4}
+	{\draw [dashLine, color=darkpastelgreen] (c\x) -> (c2);}
+	
+	\foreach \x in {1, 5}
+	{\draw [dashLine, color=darkpastelgreen] (c\x) -> (c3);}
+\end{tikzpicture}

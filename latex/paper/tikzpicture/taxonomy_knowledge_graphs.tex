@@ -1,0 +1,148 @@
+\tikzset{
+	category/.style  = {draw=none, thin, align=center},
+	subcat/.style={rectangle, rounded corners=6pt},
+	center/.style = {category, ellipse, fill=azure, text width=4em},
+	group/.style = {category, subcat, fill=deepskyblue, rounded corners=3pt, text width=6em},
+	yellowbox/.style = {category, subcat, fill=amber},
+	greenbox/.style = {category, subcat, fill=darkpastelgreen},
+	redbox/.style = {category, subcat, fill=awesome},
+	bluebox/.style = {category, subcat, fill=deepmagenta!70},
+	leafbox/.style = {category, subcat, fill=black!10, rounded corners=3pt}
+}
+
+\begin{tikzpicture}[>=Stealth]
+	\node[center][execute at begin node=\setlength{\baselineskip}{0.9em}] (root) {Knowledge Graph};
+	\node[group][above left=1cm of root, execute at begin node=\setlength{\baselineskip}{1em}] (c1) {Knowledge Representation Learning};
+	\node[group][above right=8mm of root, execute at begin node=\setlength{\baselineskip}{1em}] (c2) {Knowledge Inference};
+	\node[group][below left=5mm of root, execute at begin node=\setlength{\baselineskip}{1em}] (c3) {Knowledge Acquisition};
+	\node[group][below right=20mm of root, xshift=-2cm, execute at begin node=\setlength{\baselineskip}{0.9em}] (c4) {Temporal Knowledge Graph};
+	
+	\begin{scope}[every node/.style={yellowbox}]
+		\node[above=8mm of c1, xshift=-1cm] (c11) {Embedding Space};
+		\node[above left=of c1, yshift=9mm, xshift=0mm, yshift=-18mm] (c12) {Scoring Function};
+		\node[left=15mm of c1, xshift=5mm] (c13) {Model Encoding};
+		\node[below left=of c1, xshift=10mm,yshift=0mm] (c14) {Auxiliary Information};
+	\end{scope}
+	
+	\begin{scope}[every node/.style={redbox}]
+		\node[above left=of c2, text width=35mm, yshift=1mm, xshift=14mm, execute at begin node=\setlength{\baselineskip}{0.9em}] (c21) {Natural Language Understanding};
+		\node[above=1cm of c2, yshift=5mm, xshift=13mm] (c22) {Question Answering};
+		\node[right=of c2, yshift=15mm] (c23) {Dialogue System};
+		\node[right=of c2, yshift=4mm, xshift=7mm] (c24) {Recommendation System};
+		\node[below=5mm of c2, yshift=-10mm, xshift=5mm] (c25) {Other Applications};
+	\end{scope}
+	
+	\begin{scope}[every node/.style={greenbox}]
+		\node[left=1cm of c3, yshift=0mm] (c31) {Entity Discovery};
+		\node[below left=of c3, yshift=8mm, xshift=3mm] (c32) {Relation Extraction};
+		\node[below right=10mm of c3, xshift=-4cm] (c33) {Graph Completion};
+	\end{scope}
+	
+	\begin{scope}[every node/.style={bluebox}]
+		\node[below=of c4, xshift=2mm, yshift=-15mm] (c41) {Temporal Logic Reasoning};
+		\node[below=of c4, xshift=25mm, yshift=-5mm] (c42) {Time-Independent Relations};
+		\node[below right=of c4, xshift=0mm, yshift=5mm] (c43) {Dynamic Entities};
+		\node[right=of c4, xshift=0mm, yshift=-3mm] (c44) {Temporal Embeddings};
+	\end{scope}
+	
+	\begin{scope}[every node/.style={leafbox}]
+		\node[above=5mm of c11] (c11x) {
+			\begin{tabular}{@{}l@{}@{}l@{}}
+				- Point-wise & - Manifold \\
+				- Complex & - Gaussian \\
+				- Discrete & \\
+			\end{tabular}
+		};
+		\node[above=5mm of c12, xshift=-10mm, yshift=6mm] (c12x) {
+			\begin{tabular}{@{}l@{}}
+				- Distance-based \\
+				- Semantic \\
+				- Others \\
+			\end{tabular}
+		};
+		\node[left=of c13, yshift=5mm, xshift=3mm] (c13x) {
+			\begin{tabular}{@{}l@{}}
+				- Linear / Bilinear \\
+				- Matrix Factorization \\
+				- Neural Nets \\
+				- CNN \\
+				- RNN \\
+				- Transformers \\
+				- GCN \\
+			\end{tabular}
+		};
+		\node[left=5mm of c14, xshift=0mm, yshift=-5mm] (c14x) {
+			\begin{tabular}{@{}l@{}c@{}l@{}}
+				- Textual & - Type & - Visual \\
+			\end{tabular}
+		};
+		%%%%%%%%%%%% 
+		\node[below left=of c31, yshift=10mm] (c31x) {
+			\begin{tabular}{@{}l@{}}
+				- Recognition \\
+				- Typing \\
+				- Disambiguation \\
+				- Ranking \\
+			\end{tabular}
+		};
+		\node[below=of c32, xshift=-7mm] (c32x) {
+			\begin{tabular}{@{}l@{}}
+				- Neural Nets \\
+				- Attention \\
+				- GCN \\
+				- GAN \\
+				- RL \\
+				- Others \\
+			\end{tabular}
+		};
+		\node[below=5mm of c33, xshift=2mm] (c33x) {
+			\begin{tabular}{@{}l@{}}
+				- Ranking-based Embeddings \\
+				- Textual Reasoning \\
+				- Rule-based Reasoning \\
+				- Hyper-relational Learning \\
+				- Triple Classification \\
+			\end{tabular}
+		};
+		%%%%%%%%%%%%%%%%%
+		\node[above=5mm of c22] (c22x) {
+			\begin{tabular}{@{}l@{}}
+				- Single-fact QA \\
+				- Multi-step Reasoning \\
+			\end{tabular}
+		};
+		\node[right=5mm of c25, yshift=3mm] (c25x) {
+			\begin{tabular}{@{}l@{}}
+				- Question Generation \\
+				- Search Engines \\
+				- Medical Applications \\
+				- Health Recovery \\
+				- Zero-shot Image Classification \\
+				- Text Generation \\
+				- Semantic Analysis \\
+			\end{tabular}
+		};
+	\end{scope}
+	
+	\foreach \value in {1,...,4}
+	\draw[->, very thick] (root) -> (c\value);
+	
+	\foreach \value in {1,...,4}
+	\draw[->, thick] (c1) -> (c1\value);
+	\foreach \value in {1,...,4}
+	\draw[->, thick] (c1\value) -> (c1\value x);
+	
+	\foreach \value in {1,...,5}
+	\draw[->, thick] (c2) -> (c2\value);
+	\foreach \value in {2,5}
+	\draw[->, thick] (c2\value) -> (c2\value x);
+	
+	\foreach \value in {1,...,3}
+	\draw[->, thick] (c3) -> (c3\value);
+	\foreach \value in {1,...,3}
+	\draw[->, thick] (c3\value) -> (c3\value x);
+	
+	\foreach \value in {1,...,4}
+	\draw[->, thick] (c4) -> (c4\value);
+	
+\end{tikzpicture}
